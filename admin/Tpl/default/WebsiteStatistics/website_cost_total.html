@@ -1,0 +1,54 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">网站费用统计</div>
+<div class="blank5"></div>
+
+	<form name="search" id = "search_form"  action="__APP__" method="get">	
+			
+		<input type="hidden" value="Deal" name="m" />
+		<input type="hidden" value="site_money" name="a" />
+		<input type="submit" class="button" value="网站收益明细" />
+	</form>
+	
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+	
+	
+	
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	datasource="list" 
+	show="关联用户数:关联用户数
+		,提前回收|format_price:提前回收
+		,提现手续费|format_price:提现手续费
+		,借款管理费|format_price:借款管理费
+		,逾期管理费|format_price:逾期管理费
+		,人工充值|format_price:人工充值
+		,借款服务费|format_price:借款服务费
+		,债权转让管理费|format_price:债权转让管理费
+		,开户奖励|format_price:开户奖励
+		,投标管理费|format_price:投标管理费
+		,兑换|format_price:兑换
+		,邀请返利|format_price:邀请返利
+		,投标返利|format_price:投标返利
+		,签到成功|format_price:签到成功
+		,逾期罚金（垫付后）|format_price:逾期罚金（垫付后）
+		,其他费用|format_price:其他费用
+		"/> 
+					
+	
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+
+</div>
+
+<include file="Public:footer" />

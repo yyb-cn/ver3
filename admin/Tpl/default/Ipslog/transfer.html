@@ -1,0 +1,144 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<PHP>
+	function get_handle($id)
+	{
+		
+        $str = l("IPS_VIEW");
+        
+		$str = "<a href='".u("Ipslog/transfer_view",array("id"=>$id))."'>".$str."</a>";
+		
+		return $str;
+	}
+    function get_fee_type($f_id)
+    {
+    	return l('P_IPS_FEE_TYPE_'.$f_id);
+    }
+    function get_user_type($u_id)
+    {
+    	return l('P_USER_TYPE_'.$u_id);
+    }
+    function get_acct_type($a_id)
+    {
+    	return l('P_ACCT_TYPE_'.$a_id);
+    }
+    function get_out_type($o_id)
+    {
+    	return l('P_OUT_TYPE_'.$o_id);
+    }
+	function get_channel_type($c_id)
+	{
+		return l("P_CHANNEL_TYPE_".$c_id);
+	}
+    function get_is_callback($id)
+	{
+		return l("IPS_IS_CALLBACK_".$id);
+	}
+    function get_user_name_by_id($id)
+    {
+    	$data_info = M("ips_do_dw_trade")->getById($id);
+
+    	if($data_info["user_type"] == 0)
+        {
+        	return M("user")->where(" id=".$data_info["user_id"])->getField("user_name");
+        }
+        else if($data_info["user_type"] == 1)
+        {
+        	return M("deal_agency")->where(" id=".$data_info["user_id"])->getField("name");
+        }
+        return "";
+    }
+</php>
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">{%P_OUT_TITLE}</div>
+<div class="blank5"></div>
+<form name="search" action="__APP__" method="get">	
+<div class="button_row">
+	
+	<if condition="!$_REQUEST['referer']">
+	<input type="button" class="button" value="{%EXPORT}" onclick="m_export_csv('transfer_');" />
+	</if>
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+		
+       
+		{%P_MER_CODE}：<input type="text" class="textbox" name="pMerCode" value="{:trim($_REQUEST['pMerCode'])}" style="width:100px;" />
+		{%P_OUT_MER_BILL_NO}：<input type="text" class="textbox" name="pMerBillNo" value="{:trim($_REQUEST['pMerBillNo'])}" style="width:100px;" />
+       
+        {%P_IDENT_NO}：<input type="text" class="textbox" name="pIdentNo" value="{:trim($_REQUEST['pIdentNo'])}" style="width:100px;" />
+        {%P_CONTRACT_NO}：<input type="text" class="textbox" name="pContractNo" value="{:trim($_REQUEST['pContractNo'])}" style="width:100px;" />
+          
+        {%P_IPS_ACCT_NO}：<input type="text" class="textbox" name="pIpsAcctNo" value="{:trim($_REQUEST['pIpsAcctNo'])}" style="width:100px;" />
+     <div class="blank5"></div>
+        {%P_REAL_NAME}：<input type="text" class="textbox" name="pRealName" value="{:trim($_REQUEST['pRealName'])}" style="width:100px;" />
+        
+        {%P_IPS_BILL_NO}：<input type="text" class="textbox" name="pIpsBillNo" value="{:trim($_REQUEST['pIpsBillNo'])}" style="width:100px;" />
+        
+        
+        {%P_USER_TYPE}：<select name="user_type">
+				<option value="-1" <if condition="intval($_REQUEST['user_type']) eq -1 || $_REQUEST['user_type'] eq ''">selected="selected"</if>>{%ALL}</option>
+				<option value="0" <if condition="$_REQUEST['user_type'] neq '' && intval($_REQUEST['user_type']) eq 0">selected="selected"</if>>{%IPS_TYPE_0}</option>		
+                <option value="1" <if condition="intval($_REQUEST['user_type']) eq 1">selected="selected"</if>>{%IPS_TYPE_1}</option>	
+		</select>
+        
+         {%P_OUT_TYPE}：<select name="pOutType">
+				<option value="-1" <if condition="intval($_REQUEST['pOutType']) eq -1 || $_REQUEST['pOutType'] eq ''">selected="selected"</if>>{%ALL}</option>
+				<option value="1" <if condition="intval($_REQUEST['pOutType']) eq 1">selected="selected"</if>>{%P_OUT_TYPE_1}</option>		
+                <option value="2" <if condition="intval($_REQUEST['pOutType']) eq 2">selected="selected"</if>>{%P_OUT_TYPE_2}</option>	
+		</select>
+        
+        {%P_IPS_FEE_TYPE}：<select name="pIpsFeeType">
+				<option value="-1" <if condition="intval($_REQUEST['pIpsFeeType']) eq -1 || $_REQUEST['pIpsFeeType'] eq ''">selected="selected"</if>>{%ALL}</option>
+                <option value="1" <if condition="intval($_REQUEST['pIpsFeeType']) eq 1">selected="selected"</if>>{%P_IPS_FEE_TYPE_1}</option>	
+                <option value="2" <if condition="intval($_REQUEST['pIpsFeeType']) eq 2">selected="selected"</if>>{%P_IPS_FEE_TYPE_2}</option>		
+		</select>
+         <div class="blank5"></div>
+         {%P_SM_DATE}：
+		<input type="text" class="textbox" name="start_time" id="start_time" value="{:trim($_REQUEST['start_time'])}" onfocus="return showCalendar('start_time', '%Y-%m-%d', false, false, 'start_time');" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" />
+		
+        
+		<input type="hidden" value="Ipslog" name="m" />
+		<input type="hidden" value="transfer" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+
+</div>
+</form>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="recharge" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}
+    	 ,id|get_user_name_by_id:{%P_USER_NAME}
+    	 ,user_type|get_user_type:{%P_USER_TYPE}
+   		 ,pMerCode:{%P_MER_CODE}
+         ,pMerBillNo:{%P_OUT_MER_BILL_NO}
+         ,pAcctType|get_acct_type:{%P_ACCT_TYPE}
+         ,pOutType|get_out_type:{%P_OUT_TYPE}
+         ,pBidNo:{%P_BID_NO}
+         ,pContractNo:{%P_CONTRACT_NO}
+         ,pIdentNo:{%P_IDENT_NO}
+         ,pRealName:{%P_REAL_NAME}
+		 ,pIpsAcctNo:{%P_IPS_ACCT_NO}
+		 ,pDwDate:{%P_DW_DATE}
+         ,pTrdAmt:{%P_TRD_AMT}
+         ,pIpsFeeType|get_fee_type:{%P_IPS_FEE_TYPE}
+         ,pIpsBillNo:{%P_IPS_BILL_NO}
+		 "
+	actionlist="id|get_handle" /> 
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

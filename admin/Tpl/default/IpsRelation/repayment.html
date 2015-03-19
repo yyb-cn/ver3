@@ -1,0 +1,98 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<PHP>
+	function get_handle($id)
+	{
+		
+        $str = l("IPS_VIEW");
+        
+		$str = "<a href='".u("IpsRelation/view",array("id"=>$id))."'>".$str."</a>";
+		
+		$str.="&nbsp;&nbsp;<a href='".u("IpsRelation/deal_list",array("id"=>$id))."'>".l("IPS_VIEW_DETAIL")."</a>";
+
+		return $str;
+	}
+    function get_repay_type($id)
+    {
+    	return l("P_REPAY_TYPE_".$id);
+    }
+	
+</php>
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">{%IPS_REPAYMENT_TITLE}</div>
+<div class="blank5"></div>
+<form name="search" action="__APP__" method="get">	
+<div class="button_row">
+	<if condition="!$_REQUEST['referer']">
+	<input type="button" class="button" value="{%EXPORT}" onclick="m_export_csv('repayment_');" />
+	</if>
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+
+		{%P_ARG_MER_CODE}：<input type="text" class="textbox" name="pMerCode" value="{:trim($_REQUEST['pMerCode'])}" style="width:100px;" />
+		{%P_MER_BILL_NO}：<input type="text" class="textbox" name="pMerBillNo" value="{:trim($_REQUEST['pMerBillNo'])}" style="width:100px;" />
+        {%P_BID_NO}：<input type="text" class="textbox" name="pBidNo" value="{:trim($_REQUEST['pBidNo'])}" style="width:100px;" />
+		
+		{%P_REPAY_TYPE}：<select name="pRepayType">
+				<option value="-1" <if condition="intval($_REQUEST['pRepayType']) eq -1 || $_REQUEST['pRepayType'] eq ''">selected="selected"</if>>{%ALL}</option>
+				<option value="1" <if condition="$_REQUEST['pRepayType'] neq '' && intval($_REQUEST['pRepayType']) eq 1">selected="selected"</if>>{%P_REPAY_TYPE_1}</option>
+				<option value="2" <if condition="intval($_REQUEST['pRepayType']) eq 2">selected="selected"</if>>{%P_REPAY_TYPE_2}</option>		
+		</select>
+		
+		{%P_IPS_AUTH_NO}：<input type="text" class="textbox" name="pIpsAuthNo" value="{:trim($_REQUEST['pIpsAuthNo'])}" style="width:100px;" />
+		<div class="blank5"></div>
+		{%P_OUT_ACCT_NO}：<input type="text" class="textbox" name="pOutAcctNo" value="{:trim($_REQUEST['pOutAcctNo'])}" style="width:100px;" />
+		 
+		{%P_IPS_BILL_NO}：<input type="text" class="textbox" name="pIpsBillNo" value="{:trim($_REQUEST['pIpsBillNo'])}" style="width:100px;" />
+
+        {%P_REPAYMENT_DATE}：
+		<input type="text" class="textbox" name="start_time" id="start_time" value="{:trim($_REQUEST['start_time'])}" onfocus="return showCalendar('start_time', '%Y-%m-%d', false, false, 'start_time');" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" />
+		
+
+		<input type="hidden" value="IpsRelation" name="m" />
+		<input type="hidden" value="repayment" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+
+</div>
+</form>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="repayment" 
+	action="true" 
+	datasource="list" 
+	show="mid:{%ID}
+    	 ,deal_name:{%DEAL_NAME}
+         ,pMerCode:{%P_ARG_MER_CODE}
+         ,pMerBillNo:{%P_MER_BILL_NO}
+         ,pBidNo:{%P_BID_NO}
+         ,pRepaymentDate:{%P_REPAYMENT_DATE}
+         ,pRepayType|get_repay_type:{%P_REPAY_TYPE}
+		 ,pIpsAuthNo:{%P_IPS_AUTH_NO}
+		 ,pOutAcctNo:{%P_OUT_ACCT_NO}
+		 ,pOutAmt:{%P_OUT_AMT}
+         ,pOutFee:{%P_OUT_FEE}
+		 ,pMemo1:{%P_MEMO_1}
+         ,pMemo2:{%P_MEMO_2}
+         ,pMemo3:{%P_MEMO_3}
+         ,pIpsBillNo:{%P_IPS_BILL_NO}
+         ,pOutIpsFee:{%P_OUT_IPS_FEE}
+         ,pIpsDate:{%P_IPS_DATE}
+         "         
+	actionlist="mid|get_handle" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

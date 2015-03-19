@@ -1,0 +1,121 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_refund_mobile.css";
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_quick_refund.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--已还款详情-->
+<div class="uc_quick_refund">
+	<div class="head">
+		<h5>{$data.deal.name}</h5>
+		<ul class="clearfix info_list">
+			<li>
+				<span>借款金额</span>
+				<span>{$data.deal.load_money_format}</span>
+			</li>
+			<li>
+				<span>年利率</span>
+				<span class="specialfont">{$data.deal.rate_foramt_w}</span>
+			</li>
+			<li>
+				<span>期限</span>
+				<span>{$data.deal.repay_time}个月</span>
+			</li>
+			<li>
+				<span>已还本息</span>
+				<span>{$data.deal.repay_money}</span>
+			</li>
+			<li>
+				<span>管理费</span>
+				<span class="specialfont">{$data.manage_fee}</span>
+			</li>
+			<li>
+				<span>违约金</span>
+				<span class="specialfont">{$data.impose_money}</span>
+			</li>
+			<li>
+				<span>还款方式</span>
+				<span class="specialfont">{if $data.deal.loantype eq 0}等额本息{elseif $data.deal.loantype eq 1}付息还本{elseif $data.deal.loantype eq 2}到期还本息{/if}	</span>
+			</li>
+		</ul>
+	</div>
+	<div class="content detail_content">
+		<h6>还款记录</h6>
+		<dl>
+			{foreach  from= $data.loan_list item="item"}
+			<dd>
+				<div class="clearfix detail_list">
+					<div class="f_l">
+						<span class="header">还款日</span>
+						<span class="text">{$item.repay_time_format}</span>
+					</div>
+					<div class="f_l">
+						<span class="header">实际还款日</span>
+						<span class="text">{$item.true_repay_time_format}</span>
+					</div>
+					<div class="f_l">
+						<span class="header">已还金额</span>
+						<span class="text specialfont">{$item.repay_money_format}</span>
+					</div>
+					<div class="f_l">
+						<span class="header">借款管理费</span>
+						<span class="text specialfont">{$item.manage_money_format}</span>
+					</div>
+					<div class="f_l">
+						<span class="header">逾期/违约费</span>
+						<span class="text specialfont">{$item.impose_money_format}</span>
+					</div>
+					<div class="f_l">
+						<span class="header">状态</span>
+						<span class="text">{$item.status_format}</span>
+					</div>
+				</div>
+				<!--  
+				<a href="javascript:viewLoanItem('.Text-{$key}',{$item.id},{$item.l_key});">查看</a>
+				-->
+			</dd>
+			{/foreach}
+		</dl>
+	</div>
+	<div class="clearfix pay_block">
+		<div class="total f_l">
+			<p class="specialfont"><span>管理费：</span>{$data.manage_fee}</p>
+			<p class="specialfont"><span>本息还款：</span>{$data.deal.repay_money}</p>
+			
+		</div>
+		
+	</div>
+	
+</div>
+{include file="./inc/footer.html"}
+
+
+
+<script >
+/**
+ * @param {Object} obj
+ * @param {Object} deal_id
+ * @param {Object} l_key
+
+function viewLoanItem(obj,deal_id,l_key){
+	if($(obj).hasClass("hide")){
+		$(obj).removeClass("hide");
+	}
+	else{
+		$(obj).addClass("hide");
+	}
+	if($.trim($(obj+" div").html()) == "" || $.trim($(obj+" div").html()) == "loading..."){
+		getLoanItem(obj,deal_id,l_key,1);
+	}
+}
+
+function getLoanItem(obj,deal_id,l_key,p){
+	var query = new Object();
+	url:  get_user_load_item
+	query.deal_id = deal_id;
+	query.l_key = l_key;
+	query.obj = obj;
+	
+} */
+</script>
+

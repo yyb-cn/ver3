@@ -1,0 +1,92 @@
+<script type="text/javascript" src="{$TMPL}/js/jscharts_cr.js"></script>
+<div class="list">
+	<div class="list_cont">
+	
+	
+	<form action="{url x="index" r="manageagency#add_pingzheng"}"  method="post" id="J_add" enctype="multipart/form-data">
+		<div class="i_deal_list clearfix">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr  border="0" style="background-color:#00bef0; color:#fff; height:34px;">
+						<th width="20%">凭证名称</th>
+						<th>添加照片</th>
+					</tr>
+					
+					<tr>
+						<td align="left">
+							<input name="file_name[]" class="f-input"  value=''/>
+						</td>
+						<td style=" text-align: center;">
+							<input class="img_int" type="file" name="img_data[]" id="img_1"/>
+						</td>
+					</tr>
+					
+					<tr>
+						<td align="left">
+							<input name="file_name[]" class="f-input"  value=''/>
+						</td>
+						<td style=" text-align: center;">
+							<input class="img_int" type="file" name="img_data[]" id="img_2"/>
+						</td>
+					</tr>
+					
+					<tr>
+						<td align="left">
+							<input name="file_name[]" class="f-input"  value=''/>
+						</td>
+						<td style=" text-align: center;">
+							<input class="img_int" type="file" name="img_data[]" id="img_3"/>
+						</td>
+					</tr>
+					
+					<tr>
+					<td><input class="true_btn" type="button" name="add_img" onclick="$.Add_Img()" value="添加"/>	</td>
+					<td><button class="J_add true_btn" style=" margin-right: 10px; margin-top: 4px;" type="submit">保存</button></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="pages">{$pages}</div>
+		</div>
+	</form>	
+		
+		
+	</div>
+</div>
+
+<script type="text/javascript">
+
+/*
+$(".J_add").click(function(){
+		//var obj = $("#signup-password-confirmss");
+		$.ajax({
+			url:APP_ROOT+"/index.php?ctl=manageagency&act=add_pingzheng",
+			data:$('#J_adds').serialize(),
+			type:"post",
+			dataType:"json",
+			success:function(result){
+				if(result.status == 1){
+					//window.location.reload();
+				}
+				else{
+					$.showErr(result.info);
+				}
+			}
+		});
+});
+*/
+
+$(function(){
+    var img_count =3;
+    $.Add_Img = function(){
+        $("#img_"+img_count).parent().parent().after('<tr><td align="left"><input name="file_name[]" class="f-input" /></td>  <td style=" text-align: center;"> <input class="img_int" type="file" name="img_data[]" id="img_'+(img_count+1)+'"/></td></tr>');
+        img_count++;
+    };
+});
+
+</script>
+
+
+		
+
+					
+					

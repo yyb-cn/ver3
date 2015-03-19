@@ -1,0 +1,133 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<PHP>
+	function get_handle($id)
+	{
+		
+        $str = l("IPS_VIEW");
+        
+		$str = "<a href='".u("IpsFullscale/relation_view",array("id"=>$id))."'>".$str."</a>";
+		return $str;
+	}
+    function get_f_a_type($id)
+    {
+    	return l("P_ACCT_TYPE_".$id);
+    }
+    function get_user_name_by_id($id)
+    {
+    	return M("user")->where(" id=".$id)->getField("user_name");
+    }
+    function get_is_repay($id)
+    {
+    	return l("IS_REPAY_".$id);
+    }
+    function get_is_rebate($id)
+    {
+    	return l("IS_REBATE_".$id);
+    }
+    function get_is_has_loans($id)
+    {
+    	return l("IS_HAS_LOANS_".$id);
+    }
+    function get_is_auto($id)
+    {
+    	return l("IS_AUTO_".$id);
+    }
+    function get_p_status($id)
+    {
+    	if($id)
+    		return l("P_TRANSFER_STATUS_".$id);
+    }
+	function get_deal_name($deal_id)
+    {
+    	if($deal_id)
+    		return M("deal")->where(" id=".$deal_id)->getField("name");
+    }
+	
+</php>
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">{%IPS_FULL_RELATION_TITLE}
+	<a href="{:u("IpsFullscale/index")}" class="back_list">{%BACK_LIST}</a>
+</div>
+<div class="blank5"></div>
+<form name="search" action="__APP__" method="get">	
+<div class="button_row">
+
+	<if condition="!$_REQUEST['referer']">
+	<input type="button" class="button" value="{%EXPORT}" onclick="m_export_csv('relation_');" />
+	</if>
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+
+		{%P_ORI_MER_BILL_NO}：<input type="text" class="textbox" name="pOriMerBillNo" value="{:trim($_REQUEST['pOriMerBillNo'])}" style="width:100px;" />
+        
+        {%P_T_IPS_ACCT_NO}：<input type="text" class="textbox" name="pTIpsAcctNo" value="{:trim($_REQUEST['pTIpsAcctNo'])}" style="width:100px;" />
+        
+        {%P_F_IPS_ACCT_NO}：<input type="text" class="textbox" name="pFIpsAcctNo" value="{:trim($_REQUEST['pFIpsAcctNo'])}" style="width:100px;" />
+        
+        {%P_IPS_DETAIL_BILL_NO}：<input type="text" class="textbox" name="pIpsDetailBillNo" value="{:trim($_REQUEST['pIpsDetailBillNo'])}" style="width:100px;" />
+
+        <br/>
+        
+        {%P_F_ACCT_TYPE}：<select name="pFAcctType">
+				<option value="-1" <if condition="intval($_REQUEST['pFAcctType']) eq -1 || $_REQUEST['pFAcctType'] eq ''">selected="selected"</if>>{%ALL}</option>
+				<option value="0" <if condition="$_REQUEST['pFAcctType'] eq '0'">selected="selected"</if>>{%P_ACCT_TYPE_0}</option>
+				<option value="1" <if condition="$_REQUEST['pFAcctType'] eq '1'">selected="selected"</if>>{%P_ACCT_TYPE_1}</option>		
+		</select>
+        
+        {%P_T_ACCT_TYPE}：<select name="pTAcctType">
+				<option value="-1" <if condition="intval($_REQUEST['pTAcctType']) eq -1 || $_REQUEST['pTAcctType'] eq ''">selected="selected"</if>>{%ALL}</option>
+				<option value="0" <if condition="$_REQUEST['pTAcctType'] eq '0'">selected="selected"</if>>{%P_ACCT_TYPE_0}</option>
+				<option value="1" <if condition="$_REQUEST['pTAcctType'] eq '1'">selected="selected"</if>>{%P_ACCT_TYPE_1}</option>		
+		</select>
+        
+        
+        {%P_TRANSFER_STATUS}：<select name="pStatus">
+				<option value="-1" <if condition="intval($_REQUEST['pStatus']) eq -1 || $_REQUEST['pStatus'] eq ''">selected="selected"</if>>{%ALL}</option>
+				<option value="Y" <if condition="$_REQUEST['pStatus'] eq 'Y'">selected="selected"</if>>{%P_TRANSFER_STATUS_Y}</option>
+				<option value="N" <if condition="$_REQUEST['pStatus'] eq 'N'">selected="selected"</if>>{%P_TRANSFER_STATUS_N}</option>		
+		</select>
+        
+		<input type="hidden" value="IpsFullscale" name="m" />
+		<input type="hidden" value="relation_list" name="a" />
+        <input type="hidden" value="{$id}" name="id" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+
+</div>
+</form>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="repayment" 
+	action="true" 
+	datasource="list" 
+    pk = "mid"
+	show="mid:{%ID}
+    	 ,pOriMerBillNo:{%P_ORI_MER_BILL_NO}
+         ,pTrdAmt:{%P_TRD_AMT}
+         ,pFAcctType|get_f_a_type:{%P_F_ACCT_TYPE}
+         ,pFIpsAcctNo:{%P_F_IPS_ACCT_NO}|71
+         ,pFTrdFee:{%P_F_TRD_FEE}
+		 ,pTAcctType|get_f_a_type:{%P_T_ACCT_TYPE}
+		 ,pTIpsAcctNo:{%P_T_IPS_ACCT_NO}|71
+		 ,pTTrdFee:{%P_T_TRD_FEE}
+		 ,pIpsDetailBillNo:{%P_IPS_DETAIL_BILL_NO}
+         ,pIpsDetailTime:{%P_IPS_DETAIL_TIME}
+         ,pIpsFee:{%P_IPS_FEE}
+         ,pStatus|get_p_status:{%P_TRANSFER_STATUS}
+         "         
+	actionlist="mid|get_handle" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

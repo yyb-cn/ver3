@@ -1,0 +1,118 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+<style type="text/css">  
+.list_cont td{font-size: 13px;}
+.sub_nav {float: left; margin-bottom: 13px; } 
+.sub_nav1 {float: right; margin-bottom: 13px;} 
+.nav span.act a{background: none repeat scroll 0 0 #00bef2;}
+.nav span a{background: none repeat scroll 0 0 #7fd4f3; border-radius: 16px; color: #fff; display: inline-block; font-family: "Microsoft YaHei"; font-size: 14px; height: 25px; line-height: 25px; padding: 0 11px;}
+.select_btn { font-size: 12px; font-weight: bold; height: 28px; line-height: 28px; }
+.f_input{
+    width: 80px;}
+</style>
+
+<script type="text/javascript">
+jQuery(function(){
+	$("input#time").datepicker({showAnim:'fadeIn'});
+	$("form#search-form").submit(function(){
+		var val = $("input#time").val();
+		$("input[name='time']").val(val.replace(/-/g,""));
+	});
+});
+</script>
+
+
+<div class="list">
+	<div class="list_title clearfix">
+	<div class="cur"><a href="{url x="index"r="uc_deal#borrowed"}">{$page_title}</a></div>
+	</div>
+</div>
+
+	<div class="list_cont">
+		<div class="i_deal_list clearfix">
+		
+		
+		<div style="clear: both; overflow:hidden;"></div>
+<div class="nav">
+	<form name="search" id="search-form" action="{url x="shop" r="uc_repay_plan"}" method="get">  		
+		<div class="sub_nav">
+			贷款名称：<input class="f-input" name="deal_name" type="text" value="{$deal_name}">
+			<input name="ctl"  type="hidden" value="uc_repay_plan">
+			还款日：<input class="f-input f_input" id="time" type="text" value="{$time}">
+			<input type="hidden" name="time" type="text" value="" />
+			<!-- <span class="act"><a href="javascript:void(0);" onclick='add_condition()'>收索</a></span> -->
+			<button class="true_btn select_btn" type="submit">搜索</button>
+		</div>
+	</form>
+	
+	<div class="sub_nav1">
+		<span {if $status eq 4} class="act"{/if}><a href="{url x="shop" r="uc_repay_plan" p="stauts=4"}">全部</a></span>
+		<span {if $status eq 1} class="act"{/if}><a href="{url x="shop" r="uc_repay_plan"  p="stauts=1"}">待还款</a></span>
+		<span {if $status eq 2} class="act"{/if}><a href="{url x="shop" r="uc_repay_plan"  p="stauts=2"}">已还款</a></span>
+		<span {if $status eq 3} class="act"{/if}><a href="{url x="shop" r="uc_repay_plan" p="stauts=3"}">近期还款</a></span>
+	</div>
+</div>
+<div style="clear: both; overflow:hidden;"></div>
+			{if $list}
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr border="0" style="background-color:#00bef0; color:#fff; height:34px;">
+						<th>贷款名称</th>
+						<th style="width:10%">第几期</th>
+						<th style="width:15%">待收款</th>
+						<th style="width:12%">预期收益</th>
+						<th style="width:12%">实际收益</th>
+						<th style="width:10%">还款日</th>
+						<th style="width:10%">还款状态</th>
+					</tr>
+	
+					{foreach from="$list" item="item" key=key}
+					<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+						<td class="tl">
+							<div class=" pl10">
+							<a href="{url x="index" r="deal" p="id=$item.deal_id"}" class="f_blue" target="_blank">{$item.name}</a>
+	            	    	</div>
+						</td>
+						<td>
+							{$item.l_key_index}
+						</td>
+						<td>
+							{$item.repay_money_format}
+						</td>
+						<td>
+						{$item.yuqi_money} 
+						</td>
+						<td>
+							{if $item.has_repay eq 1}	{$item.shiji_money} {else} 0 {/if}
+						</td>
+						<td>
+							{function name="to_date" v=$item.repay_time f="Y-m-d"}     
+						</td>
+						<td>
+							{$item.status_format} 
+						</td>
+					</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			<div class="pages">{$pages}</div>
+			{else}	
+			<div align="center" style="padding:20px 0">暂无记录</div>
+			{/if}
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	

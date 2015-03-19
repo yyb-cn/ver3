@@ -1,0 +1,101 @@
+<style>
+	td{ font-size:14px; text-align:center; }
+</style>
+<div class="uc_r_bl">
+	<div class="inc_main">
+		<div class="list_title clearfix">
+        	<div {if $ACTION_NAME eq 'index'}class="cur"{/if}>
+				<a href="{url x="index" r="agency_money#index"}">{$LANG.UC_LOGS}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge'}class="cur"{/if}>
+				<a href="{url x="index" r="agency_money#incharge"}">{$LANG.UC_MONEY_INCHARGE}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge_log'}class="cur"{/if}>
+				<a href="{url x="index" r="agency_money#incharge_log"}">{$LANG.UC_MONEY_INCHARGE_LOG}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'bank'}class="cur"{/if}>
+				<a href="{url x="index" value="agency_money#bank"}">{$LANG.UC_CARRY}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'carry_log'}class="cur"{/if}>
+				<a href="{url x="index" value="agency_money#carry_log"}">提现日志</a>
+			</div>
+		</div>
+		<div class="uc_r_bl_box clearfix pt10">
+			<div  class="uc-table i_deal_list">
+				<table width="100%;" border="0" cellspacing="0" cellpadding="0">
+					<tr border="0" style="background-color:#00bef0; color:#fff; height:34px;">
+						<th style="width:22%">{$LANG.INCHARGE_SN}</th>
+						<th style="width:10%">充值总金额</th>
+						<th style="width:10%">实际到账金额</th>
+						<th style="width:12%">手续费</th>
+						<th style="width:12%">手续费支付方</th>
+						<th style="width:15%">{$LANG.PAYMENT_PAID_TIME}</th>
+					</tr>
+					{foreach from=$list item=order key=key}
+					<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+						<td style="font-size:12px;">
+							商户充值订单号：<br />{$order.pMerBillNo}<br />
+							IPS充值订单号：<br />{$order.pIpsBillNo}
+						</td>
+                        <td style="font-size:12px;">
+                            	<?PHP echo format_price($this->_var['order']['pTrdAmt']);?>
+						</td>
+						<td style="font-size:12px;">
+                        	{if $order.pIpsFeeType==1}
+                            	<?PHP echo format_price($this->_var['order']['pTrdAmt']);?>
+                            {else}
+							<?PHP echo format_price($this->_var['order']['pTrdAmt']-$this->_var['order']['pMerFee']);?>
+                            {/if}
+						</td>
+						<td style="font-size:12px;">
+							{function name="format_price" value=$order.pMerFee}
+						</td>
+						<td style="font-size:12px;">
+                        	{if $order.pIpsFeeType==1}
+								平台支付
+                            {else}
+                            	用户支付
+                            {/if}
+						</td>
+						<td style="font-size:12px;">
+							{$order.pTrdDate}
+						</td>
+					</tr>
+					{/foreach}
+				</table>
+				<div class="pages">{$pages}</div>
+			</div>				
+		</div>
+	</div>
+	<div class="inc_foot"></div>
+</div>
+<script type="text/javascript">
+	{if $below_payment}
+	function SelectPayType(i){
+		switch(i){
+			case 0:
+				$("#J_online_pay").show();
+				$("#J_below_pay").hide();
+				break;
+			case 1:
+				$("#J_online_pay").hide();
+				$("#J_below_pay").show();
+				break;
+		}
+	}
+	{/if}
+	$(document).ready(function(){
+		$("#incharge_done").click(function(){
+			if(!($("input[name='money']").val()!=''&&!isNaN($("input[name='money']").val())&&$("input[name='money']").val()>0))			
+			{
+				$.showErr("{$LANG.PLEASE_INPUT_CORRECT_INCHARGE}");
+				return false;
+			}
+			else if(!$("input[name='payment']:checked").val())
+			{
+				$.showErr("{$LANG.PLEASE_SELECT_PAYMENT}");
+				return false;
+			}
+		});
+	});
+</script>

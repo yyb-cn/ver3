@@ -1,0 +1,54 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">所有投资人</div>
+<div class="blank5"></div>
+
+		
+						
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" id = "search_form"  action="__APP__" method="get">
+		投资人：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}"  />	
+		
+		<input type="hidden" value="StatisticsBorrow" name="m" />
+		<input type="hidden" value="tender_total_info" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		
+	</form>
+</div>
+
+<div class="blank5"></div>
+	
+	
+	
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	
+	datasource="list" 
+	show="投资人:投资人
+		,成功投资金额|format_price:成功投资金额
+		,奖励总额|format_price:奖励总额
+		,待收总额|format_price:待收总额
+		,待收本金总额|format_price:待收本金总额
+		,待收利润总额|format_price:待收利润总额
+		,已收总额|format_price:已收总额
+		,已收本金总额|format_price:已收本金总额
+		,已收利润总额|format_price:已收利润总额
+		,提前还款罚息总额|format_price:提前还款罚息总额
+		,逾期还款罚金总额|format_price:逾期还款罚金总额
+		"/>
+			
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+
+</div>
+
+<include file="Public:footer" />

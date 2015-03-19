@@ -1,0 +1,106 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_quick_refund.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--偿还贷款 ==>还款列表 ===>还款-->
+<div class="uc_quick_refund">
+	<div class="head">
+		<h5>{$data.deal.name}</h5>
+		<ul class="clearfix info_list">
+			<li>
+				<span>借款金额</span>
+				<span>{$data.deal.borrow_amount_format}</span>
+			</li>
+			<li>
+				<span>年利率</span>
+				<span class="specialfont">{$data.deal.rate_foramt_w}</span>
+			</li>
+			<li>
+				<span>期限</span>
+				<span>{$data.deal.repay_time}个月</span>
+			</li>
+			<li>
+				<span>已还总额</span>
+				<span>{$data.deal.repay_money}</span>
+			</li>
+			<li>
+				<span>待还金额</span>
+				<span class="specialfont">{$data.deal.need_remain_repay_money}</span>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="content">
+		<h6>还款记录</h6>
+		<ul class="record">
+		{foreach from=$data.loan_list item="item" name="loan_list"}
+			<li>
+				<div class="top clearfix">
+					<span class="f_l specialfont">待还金额{$item.month_repay_money_format}</span>
+					<span class="f_r">{$item.repay_day_format}</span>
+				</div>
+				<div class="detail clearfix">
+					<div class="check_but">
+					<!-- //has_repay：1：已还款;0:未还款 -->
+					<!-- //status 1提前,2准时还款，3逾期还款 4严重逾期 5部分还款 6还款中 -->
+					
+						{if $item.has_repay eq 0 && $item.flag == 1}
+						<input id="l_key" type="hidden" value="{$item.l_key}" />
+						<input name="status" checked="checked" type="checkbox" value="{$item.i_key}" class="mt"/>
+						{/if}
+					</div>
+					<div class="money_info clearfix">
+						<div class="f_l">
+							<p>已还金额 {$item.month_has_repay_money_all_format}</p>
+							<p>待还本息{$item.month_need_all_repay_money_format}</p>
+						</div>
+						<div class="f_r">
+							<p>管理费{$item.month_manage_money_format}</p>
+							<p>逾期费{$item.impose_money_format}</p>
+						</div>
+					</div>
+				</div>
+			</li>
+			{/foreach}
+			
+		</ul>
+	</div>
+	<div class="clearfix pay_block">
+		<div class="total f_l">
+			<p class="specialfont">{$data.deal.true_month_repay_money}</p>
+			<span>合计还款</span>
+		</div>
+		<div class="detail_foot f_r">
+			<input id="deal_id" type="hidden" value="{$data.deal.id}" />
+            <div id="submitt" class="I_Investment">确认还款</div>
+			<div class="lookdetail"><a href="{url a="index" r="uc_incharge"}">充值</a></div>
+		</div>
+	</div>
+	
+</div>
+{include file="./inc/footer.html"}
+<script type="text/javascript">
+
+$("#submitt").click(function(){
+		var ajaxurl = '{url a="index" r="uc_do_quick_refund"}';
+		var deal_id =  $.trim($("#deal_id").val());
+		var query = new Object();
+		query.ids = $.trim($("#l_key").val());
+		query.id = $.trim($("#deal_id").val());
+		
+		query.post_type = "json";
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"Post",
+			dataType:"json",
+			success:function(data){
+				alert(data.show_err);
+					window.location.href = '{url a="index" r="uc_quick_refund"}&id='+deal_id;
+			}
+		});
+	});
+</script>	
+
+

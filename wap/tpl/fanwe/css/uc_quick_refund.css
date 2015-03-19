@@ -1,0 +1,105 @@
+.uc_quick_refund .head{
+	background:#fdfde0;
+	border-bottom:1px solid @border_color;
+	padding-left:15px;
+}
+.uc_quick_refund .head h5{
+	color:@main_color;
+	font-size:18px;
+	line-height:50px;
+	border-bottom:@thin_color 1px solid;
+}
+.info_list li{
+	float:left;
+	white-space:nowrap;
+	font-size:16px;
+	color:@font_main;
+	padding-right:15px;
+	line-height:25px;
+}
+.info_list{
+	padding:5px 0;
+}
+.uc_quick_refund .content{
+	padding:0 10px;
+}
+.uc_quick_refund .content h6{
+	font-size:16px;
+	color:@font_main;
+	line-height:40px;
+	padding-left:5px;
+}
+
+.record li{
+	border:1px solid 	@border_color;
+	border-radius:5px;
+	overflow:hidden;
+	background:@box_color;
+	margin-bottom:10px;
+}
+
+.record li .top{
+	background:#f4f2f3;
+	height:30px;
+	line-height:30px;
+	padding:0 5px;
+	color:@font_main;
+	font-size:16px;
+	border-bottom:2px solid @border_color;
+}
+
+.record li .detail{
+	
+	position:relative;
+	padding-left:40px;
+}
+.money_info{
+	border-left:1px solid @border_color;
+	margin:5px 0;
+	padding:0px 5px;
+	font-size:14px;
+	line-height:25px;
+	color:@font_main;
+}
+.check_but{
+	height:40px;
+	width:40px;
+	position:absolute;
+    top:0px;
+	left:0px;
+}
+
+.uc_quick_refund .detail_foot{
+	width:60%;
+	padding:8px 10px;
+}
+.uc_quick_refund .lookdetail{
+	margin-right:2%;
+	float:right;
+}
+.uc_quick_refund .I_Investment{
+	float:right;
+}
+.total{
+	padding:3px 0 8px 10px;
+}
+
+.total p{
+	font-size:18px;
+	line-height:20px;
+}
+.total span{
+	color:@font_main;
+	font-size:15px;
+	line-height:20px;
+}
+.pay_block{
+	background:@box_color;
+	border-bottom:1px solid @border_color;
+	border-top:1px solid @border_color;
+}
+.mt{
+	position:absolute;
+	right:8px;
+	top:15px;
+}

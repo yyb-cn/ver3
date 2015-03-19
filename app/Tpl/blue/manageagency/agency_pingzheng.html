@@ -1,0 +1,112 @@
+<script type="text/javascript" src="{$TMPL}/js/jscharts_cr.js"></script>
+<div class="list">
+	<div class="list_title clearfix">
+		<div class="cur"><a href="{url x="index" r="manageagency#agencydeal"}">{$page_title}</a></div>
+	<button id="add_pingzheng" class="J_add true_btn" style="float: right; margin-right: 10px; margin-top: 4px;" type="button">新增</button>
+	</div>
+	<div class="list_cont">
+		<div class="i_deal_list clearfix">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr  border="0" style="background-color:#00bef0; color:#fff; height:34px;">
+						<th width="20%">凭证名称</th>
+						<th>凭证展示</th>
+						<th>操作</th>
+					</tr>
+					{foreach from=$list item="item"  key=key}
+					<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+						<td align="left">
+							<div class="pl10">
+							<!-- <a href="{url x="index" r="deal" p="id=$item.id"}"></a> -->
+	                       		<a href="javascript:void(0);">{$item.name}</a>
+							</div>
+						</td>
+						<td style=" text-align: center;">
+								<a href="{$item.img}"><img width="70" height="70"  alt="{$item.name}" src="{$item.img}"></a>
+						</td>
+						<td style=" text-align: center;">
+							<a href="javascript:void(0);" dataid="{$key}" class="J_delete f_blue">删除</a>
+						</td>
+					</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			<div class="pages">{$pages}</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(".J_delete").click(function(){
+		//var obj = $("#signup-password-confirmss");
+		var query = new Object();
+		var id = $(this).attr("dataid");
+		query.view_info_id = id;
+		
+		$.ajax({
+			url:APP_ROOT+"/index.php?ctl=manageagency&act=delete_pingzheng",
+			data:query,
+			type:"post",
+			dataType:"json",
+			success:function(result){
+				if(result.status == 1){
+					//window.location.reload();
+					window.location.href = window.location.href;
+				}
+				else{
+					$.showErr(result.info);
+				}
+			}
+		});
+		
+});
+
+
+/*
+$(".J_add").click(function(){
+	//var obj = $("#signup-password-confirmss");
+	var query = new Object();
+	var id = $(this).attr("dataid");
+	query.view_info_id = id;
+	
+	$.ajax({
+		url:APP_ROOT+"/index.php?ctl=manageagency&act=add_pingzheng",
+		data:query,
+		type:"post",
+		dataType:"json",
+		success:function(result){
+			if(result.status == 1){
+				//window.location.reload();
+				window.location.href = window.location.href;
+			}
+			else{
+				$.showErr(result.info);
+			}
+		}
+	});
+	
+});
+*/
+
+
+jQuery(function(){
+	$(".J_add").click(function(){
+		var ajaxurl =APP_ROOT+"/index.php?ctl=manageagency&act=adds_pingzheng";
+		$.weeboxs.open(
+				ajaxurl,{
+					contentType:'ajax',
+					showButton:false,
+					title:"添加凭证",
+					width:550,
+					height:300,
+					type:'wee'
+					});
+	});
+})
+
+
+
+</script>
+
+
+		

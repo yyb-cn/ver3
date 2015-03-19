@@ -1,0 +1,72 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">借还款明细</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		还款ID：<input type="text" class="textbox" name="id" value="{:trim($_REQUEST['id'])}" style="width:100px;" />
+		借款人：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		借款标识：<input type="text" class="textbox" name="deal_sn" value="{:trim($_REQUEST['deal_sn'])}" style="width:100px;" />
+		借款标题：<input type="text" class="textbox" name="sub_name" value="{:trim($_REQUEST['sub_name'])}" style="width:100px;" />
+		状态: 
+		<select name="has_repay">
+				<option value="4" <if condition="intval($_REQUEST['has_repay']) eq 4" >selected="selected"</if>>{%ALL}</option>
+				<option value="3" <if condition="intval($_REQUEST['has_repay']) eq 3">selected="selected"</if>>未还</option>
+				<option value="1" <if condition="intval($_REQUEST['has_repay']) eq 1">selected="selected"</if>>已还</option>
+				<option value="2" <if condition="intval($_REQUEST['has_repay']) eq 2">selected="selected"</if>>部分还款</option>
+				
+		</select>
+		
+		<div class="blank5"></div>
+		应还时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" style="width:130px" />
+		<input type="button" class="button" id="btn_begin_time" value="{%SELECT_TIME}" onclick="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" />	
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" style="width:130px" />
+		<input type="button" class="button" id="btn_end_time" value="{%SELECT_TIME}" onclick="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" />	
+		
+		<input type="hidden" value="StatisticsLoan" name="m" />
+		<input type="hidden" value="loan_deal_info" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+    	
+	</form>
+</div>
+		
+						
+<div class="blank5"></div>
+		
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	
+	datasource="list" 
+	show="还款ID:还款ID
+		,借款人:借款人
+		,借款标识名:借款标识名
+		,借款标题:借款标题
+		,借款期数:借款期数
+		,借款类型:借款类型
+		,应还时间:应还时间
+		,应还本息|format_price:应还本息
+		,管理费用|format_price:管理费用
+		,罚息|format_price:罚息
+		,实还总额|format_price:实还总额
+		,逾期天数:逾期天数
+		,实还时间:实还时间
+		,状态:状态
+		,是否坏账:是否坏账
+		"/>
+			
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+
+</div>
+
+<include file="Public:footer" />

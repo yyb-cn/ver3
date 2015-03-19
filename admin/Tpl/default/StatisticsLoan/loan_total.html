@@ -1,0 +1,48 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">借入总统计</div>
+<div class="blank5"></div>
+
+	<form name="search" id = "search_form"  action="__APP__" method="get">	
+			
+		<input type="hidden" value="StatisticsLoan" name="m" />
+		<input type="hidden" value="loan_borrowers_list" name="a" />
+		<input type="submit" class="button" value="查看所有借款人" />
+	</form>
+	
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+	
+	
+	
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="load" 
+	datasource="list" 
+	show="成功借入金额|format_price:成功借入金额
+		,总支出奖励|format_price:总支出奖励
+		,待还总额|format_price:待还总额
+		,待还本金总额|format_price:待还本金总额
+		,待还利息总额|format_price:待还利息总额
+		,已还总额|format_price:已还总额
+		,已还总本金|format_price:已还总本金
+		,已还总利息|format_price:已还总利息
+		,总提前还款罚息|format_price:总提前还款罚息
+		,总逾期还款罚金|format_price:总逾期还款罚金
+		"/> 
+					
+	
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+
+</div>
+
+<include file="Public:footer" />

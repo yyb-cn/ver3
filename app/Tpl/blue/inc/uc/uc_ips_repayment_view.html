@@ -1,0 +1,132 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+<style type="text/css">  
+.list_cont td{font-size: 13px;}
+.sub_nav {float: left; margin-bottom: 13px; } 
+.sub_nav1 {float: right; margin-bottom: 13px;} 
+.nav span.act a{background: none repeat scroll 0 0 #00bef2;}
+.nav span a{background: none repeat scroll 0 0 #7fd4f3; border-radius: 16px; color: #fff; display: inline-block; font-family: "Microsoft YaHei"; font-size: 14px; height: 25px; line-height: 25px; padding: 0 11px;}
+.select_btn { font-size: 12px; font-weight: bold; height: 28px; line-height: 28px; }
+.f_input{
+    width: 80px;}
+</style>
+
+<script type="text/javascript">
+jQuery(function(){
+	$("input#end_time").datepicker({showAnim:'fadeIn'});
+	$("input#start_time").datepicker({showAnim:'fadeIn'});
+	$("form#search-form").submit(function(){
+		var val1 = $("input#end_time").val();
+		$("input[name='end_time']").val(val1);
+		var val2 = $("input#start_time").val();
+		$("input[name='start_time']").val(val2);
+	});
+});
+</script>
+<div class="list">
+	<div class="list_title clearfix">
+	<div class="cur"><a href="{url x="index" r="uc_ips#repayment_view" p="id=$id"}">{$page_title}</a></div>
+    <div ><a href="{url x="index"r="uc_ips#repayment"}">返回列表</a></div>
+	</div>
+</div>
+
+	<div class="list_cont">
+		<div class="i_deal_list clearfix">
+		
+		
+		<div style="clear: both; overflow:hidden;"></div>
+<div style="clear: both; overflow:hidden;"></div>
+			{if $list}
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr border="0" style="background-color:#00bef0; color:#fff; height:34px;">
+                    
+                    	<th>贷款名称</th>
+						<th style="width:5%">罚息</th>
+						<th style="width:10%">均摊下来的逾期管理费</th>
+                        <th style="width:8%">本金</th>
+                        <th style="width:8%">还款金额</th>
+                        <th style="width:5%">还款日</th>
+                        <th style="width:8%">实际还款时间</th>
+                        <th style="width:8%">还款状态</th>
+                        <th style="width:8%">付款方式</th>
+                        <th style="width:5%">还款期号</th>
+                        <th style="width:5%">还款顺序</th>
+                        <th style="width:8%">订单状态</th>
+                        <th style="width:10%">均摊下来的管理费</th>
+                        <th style="width:5%">投标人</th>
+					</tr>
+	
+					{foreach from="$list" item="item" key=key}
+					<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+						<td class="tl">
+							{$item.deal_name}
+						</td>
+                        <td>
+                        	{function name="number_format" v=$item.impose_money f=2}
+						</td>
+                        <td>
+                        	{function name="number_format" v=$item.repay_manage_impose_money f=2}
+						</td>
+                        <td>
+                        	{function name="number_format" v=$item.self_money f=2}
+						</td>
+						<td>
+                        	{function name="number_format" v=$item.repay_money f=2}
+						</td>
+                        <td>
+                        	{if $item.repay_time}
+                            	{function name="to_date" v=$item.repay_time f="Y-m-d"}
+                            {/if}
+						</td>
+                        <td>
+                        	{if $item.true_repay_time}
+                            	{function name="to_date" v=$item.true_repay_time f="Y-m-d"}
+                            {/if}
+						</td>
+						<td>
+							{$item.status}
+						</td>
+                        <td>
+							{if $item.is_site_repay == 0}自付{elseif $item.is_site_repay == 1}网站垫付{elseif $item.is_site_repay == 2}担保机构垫付{/if}
+						</td>
+                        <td>
+							{$item.l_key}
+						</td>
+                        <td>
+							{$item.u_key}
+						</td>
+                        <td>
+							{if $item.has_repay == 0}未收到返款{elseif $item.has_repay == 1}已收到返款{/if}
+						</td>
+                        <td>
+                        	{function name="number_format" v=$item.repay_manage_money f=2}
+						</td>
+                        <td>
+							{$item.user_name}
+						</td>
+					</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			<div class="pages">{$pages}</div>
+			{else}	
+			<div align="center" style="padding:20px 0">暂无记录</div>
+			{/if}
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	

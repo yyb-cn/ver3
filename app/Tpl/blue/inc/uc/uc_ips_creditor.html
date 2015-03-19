@@ -1,0 +1,155 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+<style type="text/css">  
+.list_cont td{font-size: 13px;}
+.sub_nav {float: left; margin-bottom: 13px; } 
+.sub_nav1 {float: right; margin-bottom: 13px;} 
+.nav span.act a{background: none repeat scroll 0 0 #00bef2;}
+.nav span a{background: none repeat scroll 0 0 #7fd4f3; border-radius: 16px; color: #fff; display: inline-block; font-family: "Microsoft YaHei"; font-size: 14px; height: 25px; line-height: 25px; padding: 0 11px;}
+.select_btn { font-size: 12px; font-weight: bold; height: 28px; line-height: 28px; }
+.f_input{
+    width: 80px;}
+</style>
+
+<script type="text/javascript">
+jQuery(function(){
+	$("input#end_time").datepicker({showAnim:'fadeIn'});
+	$("input#start_time").datepicker({showAnim:'fadeIn'});
+	$("form#search-form").submit(function(){
+		var val1 = $("input#end_time").val();
+		$("input[name='end_time']").val(val1);
+		var val2 = $("input#start_time").val();
+		$("input[name='start_time']").val(val2);
+	});
+});
+</script>
+
+
+<div class="list">
+	<div class="list_title clearfix">
+	<div class="cur"><a href="{url x="index"r="uc_ips#creditor"}">{$page_title}</a></div>
+	</div>
+</div>
+
+	<div class="list_cont">
+		<div class="i_deal_list clearfix">
+		
+		
+		<div style="clear: both; overflow:hidden;"></div>
+<div class="nav">
+	<form name="search" id="search-form" action="{url x="shop" r="uc_ips#creditor"}" method="get">  	
+    		
+		<div class="sub_nav">
+        	<input type="hidden" name="ctl" value="uc_ips"/>
+            <input type="hidden" name="act" value="creditor"/>
+            
+			投资日期：<input class="f-input f_input" id="start_time" type="text" value="{$start_time}">
+			<input type="hidden" name="start_time" type="text" value="" />
+            至
+            <input class="f-input f_input" id="end_time" type="text" value="{$end_time}">
+			<input type="hidden" name="end_time" type="text" value="" />
+			<!-- <span class="act"><a href="javascript:void(0);" onclick='add_condition()'>收索</a></span> -->
+			<button class="true_btn select_btn" type="submit">搜索</button>
+		</div>
+	</form>
+	
+</div>
+<!--
+	:	ddd
+会员名称:	fanwe
+平台账号:	3
+商户开户流水号:	4
+:	2014-12-22
+:	6
+:	7
+:	手动投标
+授权号:	9
+:	10.00
+:	11.00
+:	12.00
+账户类型:	个人
+:	14
+:	15
+投资人账户:	16
+借款用途:	17
+备注1:	18
+备注2:	19
+备注3:	20
+投资人编号:	21
+标的编号:	22
+业务类型:	1
+实际冻结金额:	24.00
+债权人状态:	进行中
+IPS P2P订单号:	26
+IPS处理时间:	0000-00-00 00:00:00
+
+-->
+<div style="clear: both; overflow:hidden;"></div>
+			{if $list}
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr border="0" style="background-color:#00bef0; color:#fff; height:34px;">
+						<th>贷款名称</th>
+						<th style="width:10%">商户日期</th>
+                        <th style="width:10%">标的号</th>
+						<th style="width:10%">合同号</th>
+                        <th style="width:10%">登记方式</th>
+						<th style="width:10%">交易金额</th>
+                        <th style="width:10%">投资人手续费</th>
+                        <th style="width:10%">实际冻结金额</th>
+                        <th style="width:10%">IPS处理时间</th>
+					</tr>
+	
+					{foreach from="$list" item="item" key=key}
+					<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+						<td class="tl">
+							{$item.deal_name}
+						</td>
+                        <td class="tl">
+							{$item.pMerDate}
+						</td>
+                        <td>
+							{$item.pBidNo}
+						</td>
+						<td>
+							{$item.pContractNo}
+						</td>
+						<td>
+							{if $item.pRegType == 1}手动投标{elseif $item.pRegType == 2}自动投标{/if}
+						</td>
+						<td>
+							{$item.pTrdAmt}
+						</td>
+						<td>{$item.pFee}    
+						</td>
+                        <td>
+							{$item.pTransferAmt}
+						</td>
+                        <td>
+                        	{$item.pIpsTime} 
+						</td>
+					</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			<div class="pages">{$pages}</div>
+			{else}	
+			<div align="center" style="padding:20px 0">暂无记录</div>
+			{/if}
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	

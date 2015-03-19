@@ -1,0 +1,108 @@
+<style>
+	td{ font-size:14px; text-align:center; }
+ .uc_r_bl_box{padding: 0px 0;}
+</style>
+<div class="uc_r_bl">
+	<div class="inc_main">
+		<div class="list_title clearfix">
+			<div {if $ACTION_NAME eq 'index'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_money#index"}">{$LANG.UC_LOGS}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_money#incharge"}">{$LANG.UC_MONEY_INCHARGE}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge_log'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_money#incharge_log"}">{$LANG.UC_MONEY_INCHARGE_LOG}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'carry'}class="cur"{/if}>
+				<a href="{url x="index" value="uc_money#carry"}">{$LANG.UC_CARRY}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'carry_log'}class="cur"{/if}>
+				<a href="{url x="index" value="uc_money#carry_log"}">提现日志</a>
+			</div>
+		</div>
+		<div class="uc_r_bl_box">
+		<div class="sub_nav">
+				<span {if $is_paid eq '0'}class="act"{/if}><a href="{url x="index" r="uc_money#incharge_log" p="is_paid=0"}">未支付</a></span>
+				<span {if $is_paid eq '1'}class="act"{/if}><a href="{url x="index" r="uc_money#incharge_log" p="is_paid=1"}">已支付</a></span>
+		</div>
+		</div>
+		<div class="uc_r_bl_box clearfix pt10">
+			<div  class="uc-table i_deal_list">
+				<table width="100%;" border="0" cellspacing="0" cellpadding="0">
+					<tr border="0" style="background-color:#00bef0; color:#fff; height:34px;">
+						<th style="width:22%">支付单号</th>
+						<th style="width:15%">应付金额</th>
+						<th style="width:10%">下单时间</th>
+						<th style="width:10%">付款时间</th>
+						<th style="width:13%">付款方式</th>
+						<th style="width:15%">付款单备注</th>
+						<th style="width:8%">是否已支付</th>
+					</tr>
+					<!-- {$LANG.INCHARGE_SN} /{$LANG.INCHARGE_MONEY}/{$LANG.PAYMENT_FEE}/{$LANG.PAYMENT_INFO}/{$LANG.PAYMENT_STATUS}/{$LANG.PAYMENT_GEN_TIME}/{$LANG.PAYMENT_PAID_TIME}/{$LANG.OPERATION}/-->
+					{foreach from=$list item=item key=key}
+					<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+						<td style="font-size:12px;">
+							{$LANG.INCHARGE_SN}：{$item.notice_sn}
+						</td>
+						
+						<td style="font-size:12px;">
+							{$item.money_format}
+						</td>
+						<td style="font-size:12px;">
+							{$item.create_time_format}
+						</td>
+						<td style="font-size:12px;">
+							{$item.pay_time_format}
+						</td>
+						
+						<td style="font-size:12px;">
+							{$item.name}&nbsp;
+						</td>
+						<td style="font-size:12px;">
+							{$item.memo}&nbsp;
+						</td>
+						
+						<td style="font-size:12px;">
+							{$item.is_paid_format}
+						</td>
+					</tr>
+					{/foreach}
+				</table>
+				<div class="pages">{$pages}</div>
+			</div>				
+		</div>
+	</div>
+	<div class="inc_foot"></div>
+</div>
+<script type="text/javascript">
+/*
+{if $below_payment}
+	function SelectPayType(i){
+		switch(i){
+			case 0:
+				$("#J_online_pay").show();
+				$("#J_below_pay").hide();
+				break;
+			case 1:
+				$("#J_online_pay").hide();
+				$("#J_below_pay").show();
+				break;
+		}
+	}
+	{/if}
+	$(document).ready(function(){
+		$("#incharge_done").click(function(){
+			if(!($("input[name='money']").val()!=''&&!isNaN($("input[name='money']").val())&&$("input[name='money']").val()>0))			
+			{
+				$.showErr("{$LANG.PLEASE_INPUT_CORRECT_INCHARGE}");
+				return false;
+			}
+			else if(!$("input[name='payment']:checked").val())
+			{
+				$.showErr("{$LANG.PLEASE_SELECT_PAYMENT}");
+				return false;
+			}
+		});
+	});*/
+</script>

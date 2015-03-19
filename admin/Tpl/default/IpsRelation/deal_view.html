@@ -1,0 +1,178 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/user_edit.js' />
+<load href='__TMPL__Common/js/conf.js' />
+<load href='__ROOT__/system/region.js' />
+<div class="main">
+<div class="main_title">{%EDIT}<a href="{:u("IpsRelation/deal_list",array("id"=>$ips_info['pid']))}" class="button">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+    <tr>
+		<td class="item_title">{%ID}:</td>
+		<td class="item_input">
+			{$ips_info.mid}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%P_CRE_MER_BILL_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pCreMerBillNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_IN_ACCT_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pInAcctNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_IN_FEE}:</td>
+		<td class="item_input">
+			{$ips_info.pInFee}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_OUT_INFO_FEE}:</td>
+		<td class="item_input">
+			{$ips_info.pOutInfoFee}
+		</td>
+    </tr>
+	<tr>
+		<td class="item_title">{%P_IN_AMT}:</td>
+		<td class="item_input">
+			{$ips_info.pInAmt}
+		</td>
+    </tr>
+	<tr>
+		<td class="item_title">{%P_RELATION_STATUS}:</td>
+		<td class="item_input">
+			{$ips_info.pStatus}
+		</td>
+    </tr>
+	<tr>
+		<td class="item_title">{%P_MESSAGE}:</td>
+		<td class="item_input">
+			{$ips_info.pMessage}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%IMPOSE_MONEY}:</td>
+		<td class="item_input">
+			{$ips_info.impose_money}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%REPAY_MANAGE_IMPOSE_MONEY}:</td>
+		<td class="item_input">
+			{$ips_info.repay_manage_impose_money}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%DEAL_name}:</td>
+		<td class="item_input">
+			{$ips_info.deal_name}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%SELF_MONEY}:</td>
+		<td class="item_input">
+			{$ips_info.self_money}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%REPAY_MONEY}:</td>
+		<td class="item_input">
+			{$ips_info.repay_money}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%MANAGE_MONEY}:</td>
+		<td class="item_input">
+			{$ips_info.manage_money}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%RELATION_REPAY_TIME}:</td>
+		<td class="item_input">
+			{$ips_info.repay_time}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%TRUE_REPAY_TIME}:</td>
+		<td class="item_input">
+			{$ips_info.true_repay_time}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%REPAY_STATUS}:</td>
+		<td class="item_input">
+			{$ips_info.status}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%IS_SITE_REPAY}:</td>
+		<td class="item_input">
+			{$ips_info.is_site_repay}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%L_KEY}:</td>
+		<td class="item_input">
+			{$ips_info.l_key}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%U_KEY}:</td>
+		<td class="item_input">
+			{$ips_info.u_key}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%HAS_REPAY}:</td>
+		<td class="item_input">
+			{$ips_info.has_repay}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%REPAY_MANAGE_MONEY}:</td>
+		<td class="item_input">
+			{$ips_info.repay_manage_money}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%RELATION_USER_NAME}:</td>
+		<td class="item_input">
+			{$ips_info.user_name}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%RELATION_T_USER_NAME}:</td>
+		<td class="item_input">
+			{$ips_info.t_user_name}
+		</td>
+	</tr>
+</table>
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<a href="{:u("IpsRelation/deal_list",array("id"=>$ips_info['pid']))}" class="button">{%BACK_LIST}</a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 	 
+</div>
+<include file="Public:footer" />

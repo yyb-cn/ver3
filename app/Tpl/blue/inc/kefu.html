@@ -1,0 +1,28 @@
+<?php
+$this->_var['kfcss'][] = $this->_var['TMPL_REAL']."/css/kefu.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$kfcss"}" />
+<script type="text/javascript" src="{$TMPL}/js/kefu.js"></script>
+<!--kefu-->
+<div id="floatTools" class="rides-cs">
+  <div class="floatL">
+  	<a style="display:block" id="aFloatTools_Show" class="btnOpen" title="查看在线客服" style="top:20px" href="javascript:void(0);">展开</a>
+  	<a style="display:none" id="aFloatTools_Hide" class="btnCtn" title="关闭在线客服" style="top:20px" href="javascript:void(0);">收缩</a>
+  </div>
+  <div id="divFloatToolsView" class="floatR" style="display: none;width: 140px;">
+    <div class="cn">
+      <h3 class="titZx">{function name="app_conf" value="SITE_TITLE"}在线客服</h3>
+      <ul>
+      	{foreach from="$online_qq" item="qq"}
+        <li><span>{$qq.name}</span> <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={$qq.qq}&site=qq&menu=yes"><img border="0" src="{$TMPL}/images/button-custom-qq.gif" alt="点击这里给我发消息" title="点击这里给我发消息"/></a> </li>
+       {/foreach}
+        <li>
+           {function name="app_conf" value="ONLINE_TIME"} 
+            <div class="div_clear"></div>
+        </li>
+        <li style="border:none;"><span>{$LANG.TEL}：{function name="app_conf" value="SHOP_TEL"}</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!--kefu-->

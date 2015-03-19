@@ -1,0 +1,152 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+<script type="text/javascript">
+jQuery(function(){
+	$("#time_normal").datepicker({showAnim:'fadeIn'});
+	
+	$("#qiehuan").click(function(){
+		if ($(".sub_nav .cc").hasClass('hide')) {
+			$(".sub_nav .cc").removeClass("hide")
+			$(".sub_nav .bb").addClass("hide");
+     	 }else{
+     		$(".sub_nav .cc").addClass("hide");
+     		
+     		$(".sub_nav .bb").removeClass("hide")
+     	 };
+     	 
+     	 if($.trim($(this).html()) == "切换简单查询" )
+   		 {
+		 	$("#time_status").val(0);
+   			$(this).html("切换高级查询");
+   		 }
+     	 else
+  		 {
+		 	$("#time_status").val(1);
+  			$(this).html("切换简单查询");
+  		 }
+     	
+	});
+	
+	$("#search-form").submit(function(){
+		var val= $("#time_normal").val();
+		$("#time_format").val(val.replace(/-/g,""));
+	});
+	
+	
+});
+</script>
+<style>
+.select_btn {
+    font-size: 12px;
+    font-weight: bold;
+    height: 28px;
+    line-height: 28px;
+}
+.uc-table table{
+	font-size:14px;
+}
+.balance{
+	background:#f0fcff;
+	border:1px solid #e3e3e3;
+	overflow:hidden;
+	border-radius:3px;
+	width:816px;
+}
+.balance .balance_l{
+	width:250px;
+	float:left;
+	display:inline;
+}
+.balance .balance_r{
+	width:555px;
+	float:left;
+	display:inline;
+	border-left:1px solid #e3e3e3;
+}
+.balance .balance_r li{
+	height:50px;
+	padding:5px 0;
+}
+.balance .balance_r li.first{
+	border-bottom:1px solid #ddd;
+}
+.balance .balance_r li div{
+	float:left;
+	width:40%;
+}
+.balance .balance_r li .inchange_box{margin-top:10px; width:20%}
+.balance .balance_r li .inchange_box a:hover{ color:#fff; }
+.balance .balance_r li .inchange_box .true_btn{
+	height:30px;
+	line-height:30px;
+}
+</style>
+<div class="uc_r_bl">
+	<div class="inc_main">
+		<div class="list_title clearfix">
+			<div {if $ACTION_NAME eq 'index'}class="cur"{/if}>
+				<a href="{url x="index" r="agency_money#index"}">{$LANG.UC_LOGS}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge'}class="cur"{/if}>
+				<a href="{url x="index" r="agency_money#incharge"}">{$LANG.UC_MONEY_INCHARGE}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge_log'}class="cur"{/if}>
+				<a href="{url x="index" r="agency_money#incharge_log"}">{$LANG.UC_MONEY_INCHARGE_LOG}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'bank'}class="cur"{/if}>
+				<a href="{url x="index" value="agency_money#bank"}">{$LANG.UC_CARRY}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'carry_log'}class="cur"{/if}>
+				<a href="{url x="index" value="agency_money#carry_log"}">提现日志</a>
+			</div>
+		</div>
+		<div class="uc_r_bl_box clearfix">
+			<div class="balance p20 m10">
+				<div class="balance_l">
+					<p class="f20">账户余额</p>
+					<span class="J_u_money_1">
+					<span class="f_red f16"><?php echo format_price($this->_var['user_info']['money']['pBalance'] + $this->_var['user_info']['money']['pLock'] + $this->_var['user_info']['money']['pNeedstl'] ); ?><em class="f14">元</em></span>
+					</span>
+				</div>	
+				<div class="balance_r pl10">
+					<ul>
+						<li class="first">
+							<div>
+								<p class="f16">可用资金</p>
+								<span class="J_u_money_0"><span class="f_red">{function name="format_price" v=$user_info.money.pBalance}</span></span>
+							</div>
+                            <div class="tl">
+								<p calss="f16">未结算余额</p>
+								<span>{if $user_info.money.pNeedstl}{function name="format_price" v=$user_info.money.pNeedstl}{else}0.00{/if}</span>
+							</div>
+							<div class="inchange_box tr">
+								<a href="{url x="index" r="agency_money#incharge"}" class="true_btn" style="display:inline-block;background:#FF4E00">充值</a>
+							</div>
+						</li>
+						<li>
+							<div>
+								<p class="f16">冻结资金</p>
+								<span class="J_u_money_2"><span>{if $user_info.money.pLock}{function name="format_price" v=$user_info.money.pLock}{else}0.00{/if}</span></span>
+							</div>
+							<div class="tl">
+								<p calss="f16">已提现总额</p>
+								<span>{if $user_info.total_money}{function name="format_price" v=$user_info.total_money}{else}0.00{/if}</span>
+							</div>
+							<div class="inchange_box tr">
+								<a href="{url x="index" r="agency_money#bank"}" class="true_btn" style="display:inline-block">提现</a>
+							</div>
+						</li>
+					</ul>
+				</div>	
+			</div>
+			<div class="blank0"></div>
+		</div>		
+	</div>
+	<div class="inc_foot"></div>
+</div>

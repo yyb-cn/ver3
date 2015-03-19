@@ -1,0 +1,155 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/deal.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--投资借款简单详情-->
+<div class="detail">
+<div class="mainblok mainborder">
+            <div class="detail_tit">
+                <h3>{$data.deal.name}</h3>
+                <span>借款编号:{$data.deal.id}</span>
+            </div>
+            <div class="detail_list">
+                <ul>
+                    <li>
+                        <label>借款金额</label>
+                        <div class="list_con">{$data.deal.borrow_amount_format}</div>
+                    </li>
+                    <li>
+                        <label>可投金额</label>
+                        <div class="list_con detail_Orange">{$data.deal.need_money}</div>
+                    </li>
+                    <li>
+                        <label>最低金额</label>
+                        <div class="list_con">{$data.deal.min_loan_money_format}</div>
+                    </li>
+                </ul>
+            </div>
+        </div><!--mainblok——end--> 
+
+        <div class="mainblok mainborder">
+            <div class="detail_list">
+                <ul>
+                    <li>
+                        <label>年利率</label>
+                        <div class="list_con detail_Orange">{$data.deal.rate_foramt}%</div>
+                    </li>
+                    <li>
+                        <label>期限</label>
+                        <div class="list_con">{$data.deal.repay_time}{if $data.deal.repay_time_type eq 0}天{else}月{/if}</div>
+                    </li>
+                    <li>
+                        <label>还款方式</label>
+                        <div class="list_con">
+                        {if $deal.loantype eq 0}等额本息{elseif $deal.loantype eq 1}付息还本{elseif $deal.loantype eq 2}到期还本息{/if}
+						</div>
+                    </li>
+                    <li>
+                        <label>风险等级</label>
+                        <div class="list_con">
+                        	{if $data.deal.rish_rank eq 0}低{elseif $data.deal.rish_rank eq 1}中{elseif $data.deal.rish_rank eq 2}高{/if}
+						</div>
+                    </li>
+                    <li>
+                        <label>剩余时间</label>
+                        <div class="list_con">{$data.deal.remain_time_format}</div>
+                    </li>
+                </ul>
+            </div>
+        </div><!--mainblok——end--> 
+
+		<div class="blank15"></div>
+       
+        <div class="mainblok mainborder">
+         {if $data.deal.deal_status eq 1}
+            <div class="detail_list">
+                <ul>
+                    <li>
+                        <label>可用余额</label>
+                        <div class="list_con">
+                        	<em class="detail_Orange">{$data.user_money}</em>元
+							{if $is_login eq 0}
+							<a href="{url a="index" r="login"}" class="recharge">我要充值</a>
+							{else}
+							<a href="{url a="index" r="uc_incharge"}" class="recharge">我要充值</a>
+							{/if}
+						</div>
+                    </li>
+                    <li>
+                        <label>投标金额</label>
+                        <div class="list_con">
+                        <input id="deal_id" type="hidden" value="{$data.deal.id}"  />
+                        <input id="pay_inmoney" class="ui-button_login ui_width" type="text" placeholder="输入金额，最低投标金额50元">
+                        </div>
+                    </li>
+					<li class="reset_pay_pwd">
+                        <label>支付密码</label>
+                        <div class="list_con">
+                        <input id="pay_inmoney_password" class="ui-button_login ui_width" type="password" placeholder="输入密码">
+                        {if $is_login eq 0}
+							<a href="{url a="index" r="login"}" class="recharge">设置支付密码</a>
+							{else}
+							<a href="{url a="index" r="reset_pay_pwd"}" class="recharge">设置支付密码</a>
+							{/if}
+						</div>
+					 </li>
+                </ul>
+            </div>
+			{/if}
+        </div><!--mainblok——end--> 
+   </div>
+<div class="detail_foot">
+    <div class="lookdetail"><a href="{url a="index" r="deal_mobile" p="id=$data.deal.id"}">查看详情</a></div>
+    {if $is_login eq 1}
+	            {if $data.deal.deal_status eq 1}<div id="pay_deal" class="I_Investment">我要投资</div>{/if}
+				{if $data.deal.deal_status eq 2}<div class="I_Investment disabled">满标</div>{/if}
+				{if $data.deal.deal_status eq 3}<div class="I_Investment disabled">流标</div>{/if}
+				{if $data.deal.deal_status eq 4}<div class="I_Investment disabled">还款中</div>{/if}
+				{if $data.deal.deal_status eq 5}<div class="I_Investment disabled">已还款</div>{/if}
+				{if $data.deal.deal_status eq 0}<div class="I_Investment disabled">等待材料</div>{/if}
+   	{else}
+	            {if $data.deal.deal_status eq 1}<div id="pay_deal" class="I_Investment"><a href="{url a="index" r="login"}">我要投资</a></div>{/if}
+				{if $data.deal.deal_status eq 2}<div class="I_Investment disabled">满标</div>{/if}
+				{if $data.deal.deal_status eq 3}<div class="I_Investment disabled">流标</div>{/if}
+				{if $data.deal.deal_status eq 4}<div class="I_Investment disabled">还款中</div>{/if}
+				{if $data.deal.deal_status eq 5}<div class="I_Investment disabled">已还款</div>{/if}
+				{if $data.deal.deal_status eq 0}<div class="I_Investment disabled">等待材料</div>{/if}
+	{/if}
+</div>
+{include file="./inc/footer.html"}
+
+<script type="text/javascript">
+$("#pay_deal").click(function(){
+	
+		var ajaxurl = '{url a="index" r="deal_dobid"}';
+		var query = new Object();
+		
+		query.id = $.trim($("#deal_id").val());
+		query.bid_money = $.trim($("#pay_inmoney").val());
+		query.bid_paypassword = $.trim($("#pay_inmoney_password").val());
+	
+		
+		query.post_type = "json";
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"Post",
+			dataType:"json",
+			success:function(data){
+				alert(data.show_err);
+				if(data.response_code == 1){
+					window.location.href = '{url a="index" r="uc_invest"}';
+				}
+			}
+		});
+	});
+</script>	
+
+
+
+
+
+
+
+
