@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // +----------------------------------------------------------------------
 // | Fanwe 方维p2p借贷系统
 // +----------------------------------------------------------------------
@@ -66,7 +66,8 @@ class PaymentNoticeAction extends CommonAction{
 	}
 	
 	public function index()
-	{
+	{	
+		//tagged by nix 此index() 方法处理 ： 资金管理->在线充值订单
 		
 		$map = $this->com_search();
 		
@@ -84,7 +85,12 @@ class PaymentNoticeAction extends CommonAction{
 		}	
 		
 		if($map['start_time'] != '' && $map['end_time'] && ( !isset($_REQUEST['is_paid']) || intval($_REQUEST['is_paid'])==-1 || intval($_REQUEST['is_paid']==1) ) ){
-			$condition['pay_date']= array("between",array($map['start_time'],$map['end_time']));
+			// tagged by nix 数据库中的pay_date 字段并没有使用，数据为 0000-00-00
+			//$condition['pay_date']= array("between",array($map['start_time'],$map['end_time']));
+
+			// tagged by nix 改用 create_time
+			$condition['create_time']= array("between",array(to_timespan($map['start_time'],"Y-m-d"),to_timespan(dec_date($map['end_time'],-1),"Y-m-d")));
+
 		}
 		
 		if($_REQUEST['is_paid']==0)
@@ -92,8 +98,9 @@ class PaymentNoticeAction extends CommonAction{
 			$condition['create_time']= array("between",array(to_timespan($map['start_time'],"Y-m-d"),to_timespan(dec_date($map['end_time'],-1),"Y-m-d")));
 		}
 	
-		$payment_id = M("Payment")->where("class_name = 'Otherpay'")->getField("id");
-		$condition['payment_id'] = array("neq",$payment_id);
+		//此处不应该获取Otherpay 分类，因为Otherpay为线下充值订单
+		//$payment_id = M("Payment")->where("class_name = 'Otherpay'")->getField("id");
+		//$condition['payment_id'] = array("neq",$payment_id);
 		
 		if(intval($_REQUEST['payment_id'])==0)unset($_REQUEST['payment_id']);
 		if(intval($_REQUEST['is_paid'])==-1 || !isset($_REQUEST['is_paid']))unset($_REQUEST['is_paid']);
@@ -105,6 +112,9 @@ class PaymentNoticeAction extends CommonAction{
 	
 	public function online()
 	{
+
+		//tagged by nix 此index() 方法处理 ： 资金管理->线下充值单
+
 		$map = $this->com_search();
 		if(trim($_REQUEST['order_sn'])!='')
 		{
