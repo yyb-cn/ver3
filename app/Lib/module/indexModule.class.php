@@ -16,6 +16,7 @@ class indexModule extends SiteBaseModule
 		$GLOBALS['tmpl']->caching = true;
 		$GLOBALS['tmpl']->cache_lifetime = 600;  //首页缓存10分钟
 		$cache_id  = md5(MODULE_NAME.ACTION_NAME);	
+		
 		if (!$GLOBALS['tmpl']->is_cached("page/index.html", $cache_id))
 		{	
 			make_deal_cate_js();
