@@ -1,0 +1,6 @@
+public/db_config.php
+public/sys_config.php
+install/Runtime/
+public/install.lock
+public/runtime/
+
