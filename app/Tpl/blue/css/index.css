@@ -34,7 +34,7 @@ a:hover { color:#069;}
 	.header_top { width:1100px; height:80px; background:#FFF; display:none;}
 		.header_top .logo1 { float:left; width:189px; height:61px; margin-top:10px; margin-left:30px;}
 		
-		.header_top .hreder_nav1 { float:right; width:648px; margin-top:20px; margin-right:30px;}
+		.header_top .hreder_nav1 { float:right; min-width:648px; margin-top:20px; margin-right:30px;}
 			.header_top .hreder_nav1 ul li { float:left; width:108px; min-height:4px; text-align:center; font-size:16px; font-weight:bold; line-height:36px; position:relative;}
 				.header_top .hreder_nav1 ul li .hreder_nav1_chird { display:none; position:absolute; background:#eee; padding-bottom:10px; z-index:200;}
 					.header_top .hreder_nav1 ul li .hreder_nav1_chird li { float:left; width:108px; height:24px; line-height:24px; font-weight:normal; font-size:14px;}
