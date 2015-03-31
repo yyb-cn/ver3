@@ -23,7 +23,11 @@
 				</a>
             </li>
             <li class="login1">
-                <p><a href="">登录</a> / <a href="">注册</a></p>
+                {if $user_info}
+               		<p style="font-size:12px;"><span>您好，</span><a href="{url x="shop" r="uc_center"}">{$user_info.user_name}</a></p>
+                {else}
+                    <p><a href="{url x="index" u="user#login" }">登录</a> / <a href="{url x="index" u="user#register" }">注册</a></p>
+                {/if}
             </li>
             <li class="hreder_nav1">
                 <ul>
@@ -73,13 +77,21 @@
             
             <div class="hreder_nav1">
                 <ul>
+                	<li>
+                    {if $user_info}
+                        <span style="font-size:12px;"><span>您好，</span><a href="{url x="shop" r="uc_center"}">{$user_info.user_name}</a></span>
+                    {else}
+                        <span style="font-size:12px;"><a href="{url x="index" u="user#login" }">登录</a> / <a href="{url x="index" u="user#register" }">注册</a></span>
+                    {/if}
+					</li>
+                    
                 	{foreach from=$nav_list item=nav_item}
-                        <li><a href="{$nav_item.url}" target="{if $nav_item.blank eq 1}_blank{/if}">{$nav_item.name}</a></li>
+                    <li><a href="{$nav_item.url}" target="{if $nav_item.blank eq 1}_blank{/if}">{$nav_item.name}</a></li>
                     {/foreach}
+                    
                     <li>
                         <a href="javascript:void(0);" onClick="showNextNav(this);">产品资料</a>
                         <ul class="hreder_nav1_chird">
-                            <li class="h8">^</li>
                             <li><a href="">信贷赢</a></li>
                             <li><a href="">南京轻飞</a></li>
                             <li><a href="">南京轻飞</a></li>
