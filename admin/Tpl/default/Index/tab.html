@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<title>{:conf("APP_NAME")}{:l("ADMIN_PLATFORM")}</title>
+<load href='__TMPL__Common/style/style.css' />
+<load href='__TMPL__Common/js/jquery.js' />
+<load href='__TMPL__Common/js/jquery.timer.js' />
+
+
+<script type="text/javascript" src="__ROOT__/public/runtime/admin/lang.js"></script>
+<style>
+.tab_main { width:99%; height:30px; background:#2191C3; margin-top:5px; margin-left:0.5%; overflow-y:auto; overflow-x:hidden;}
+	.tab_main li { float:left; height:28px; border:1px solid #ddd; border-bottom:none; border-top-left-radius:2px; border-top-right-radius:2px; margin-left:2px; margin-top:2px; padding:0 2px 0 8px; text-align:center; line-height:28px; font-size:14px;}
+	.tab_main .tab_current { background:#FFF;}
+		.tab_main li a { text-decoration:none; color:#FFF; float:left;}
+		.tab_main li .tab_out { display:block; width:20px; height:20px; margin-left:3px; font-weight:bold; line-height:22px; text-align:center; border-radius:50%; overflow:hidden;}
+			.tab_main li .tab_out:hover { background:#FFF; color:#2191C3;}
+			.tab_main .tab_current .tab_out:hover { background:#2191C3; color:#FFF;}
+			.tab_main .tab_current a { color:#2191C3;}
+</style>
+
+<script>
+var htmlLi;	//新曾li标签的字符串代码
+var tabNow;	//是否已经有该标签
+function tabHref(href,menuName){
+	//alert(menuName)	
+	$(".tab_main li").each(function () {
+		if ($(this).children('.tab_url').html() == menuName) {
+			tabNow = 1;
+		}
+	})
+	
+	if( tabNow == 1 ){
+		tabNow = 0;
+		$(".tab_main li").each(function () {
+			if($(this).children('.tab_url').html() == menuName){
+				$(this).children('.tab_url').click();
+				return false;
+			}
+		})
+		return false;
+	}
+	else{
+		tabNow = 0;
+		$(".tab_main").find('li').removeClass('tab_current');
+		htmlLi = '<li class="tab_current"><a class="tab_url" href="'+href+'" onClick="tabClick(this);return false;">'+menuName+'</a><a class="tab_out" href="javascript:void(0);" onClick="tabOff(this);">×</a></li>';
+		$(".tab_main").append(htmlLi);
+		parent.main.location.href = href;
+		return false;
+	}
+}
+
+function tabClick(tab){
+	$(".tab_main").find('li').removeClass('tab_current');
+	$(tab).parent('li').addClass('tab_current');
+	parent.main.location.href = tab.href;
+	return false;
+}
+
+function tabOff(off){
+	if($(off).parent('li').hasClass('tab_current')){
+		$(off).parent('li').prev('li').find('.tab_url').click();
+	}
+	$(off).parent('li').remove();
+}
+</script>
+</head>
+
+<body>
+	
+	<ul class="tab_main">
+    	
+    </ul>
+
+</body>
+</html>
