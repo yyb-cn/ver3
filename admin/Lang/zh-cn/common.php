@@ -3,7 +3,7 @@ return array(
 	//后台管理框架语言
 	'HOME'	=>	'待办事务',
 	'NO_RESULT'	=>	'没有结果',
-	'ADMIN_PLATFORM'	=>	'管理平台',
+	'ADMIN_PLATFORM'	=>	'后台管理系统',
 	'TOKEN_ON'			=>	'令牌验证失败',
 	'LOGIN_OUT'			=>	'注销',
 	'CLEAR_CACHE'		=>	'清除缓存',

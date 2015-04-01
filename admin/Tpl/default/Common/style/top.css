@@ -14,5 +14,5 @@ a{ color:#333;}
 
 #tips{ text-align:right; padding:10px 10px 0 10px; height:24px; line-height:24px;}
 #tips a{ display:inline-block; color:#fff; }
-#logo{ background:url(../images/logo.png) 10px 3px no-repeat; width:130px; margin-top:15px; height:40px;float:left;}
+#logo{ background:url(../images/logo.png) no-repeat; width:138px; margin-top:13px; margin-left:3px; height:53px; float:left;}
 
