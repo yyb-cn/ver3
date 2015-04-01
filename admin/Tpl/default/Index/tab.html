@@ -11,7 +11,7 @@
 
 <script type="text/javascript" src="__ROOT__/public/runtime/admin/lang.js"></script>
 <style>
-.tab_main { width:99%; height:30px; background:#2191C3; margin-top:5px; margin-left:0.5%; overflow-y:auto; overflow-x:hidden;}
+.tab_main { width:99%; height:31px; background:#2191C3; margin-top:5px; margin-left:0.5%; overflow-y:auto; overflow-x:hidden;}
 	.tab_main li { float:left; height:28px; border:1px solid #ddd; border-bottom:none; border-top-left-radius:2px; border-top-right-radius:2px; margin-left:2px; margin-top:2px; padding:0 2px 0 8px; text-align:center; line-height:28px; font-size:14px;}
 	.tab_main .tab_current { background:#FFF;}
 		.tab_main li a { text-decoration:none; color:#FFF; float:left;}
@@ -60,10 +60,18 @@ function tabClick(tab){
 }
 
 function tabOff(off){
-	if($(off).parent('li').hasClass('tab_current')){
-		$(off).parent('li').prev('li').find('.tab_url').click();
+	if( $(".tab_main li:first").children('.tab_url').html() != $(".tab_main li:last").children('.tab_url').html()){	//是否只剩下一个
+		if($(off).parent('li').hasClass('tab_current')){
+			if($(off).prev('.tab_url').html() == $(".tab_main li:first").children('.tab_url').html()){	//当前tab是否在第一个
+				$(off).parent('li').next('li').find('.tab_url').click();
+			}
+			else{
+				$(off).parent('li').prev('li').find('.tab_url').click();
+			}
+		}
+		$(off).parent('li').remove();
 	}
-	$(off).parent('li').remove();
+	return false;
 }
 </script>
 </head>
