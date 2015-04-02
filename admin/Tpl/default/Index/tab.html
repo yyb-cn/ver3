@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<title>{:conf("APP_NAME")}{:l("ADMIN_PLATFORM")}</title>
+<load href='__TMPL__Common/style/style.css' />
+<load href='__TMPL__Common/js/jquery.js' />
+<load href='__TMPL__Common/js/jquery.timer.js' />
+
+
+<script type="text/javascript" src="__ROOT__/public/runtime/admin/lang.js"></script>
+<style>
+.tab_main { width:99%; height:31px; background:#2191C3; margin-top:5px; margin-left:0.5%; overflow-y:auto; overflow-x:hidden;}
+	.tab_main li { float:left; height:28px; border:1px solid #ddd; border-bottom:none; border-top-left-radius:2px; border-top-right-radius:2px; margin-left:2px; margin-top:2px; padding:0 2px 0 8px; text-align:center; line-height:28px; font-size:14px;}
+	.tab_main .tab_current { background:#FFF;}
+		.tab_main li a { text-decoration:none; color:#FFF; float:left;}
+		.tab_main li .tab_out { display:block; width:20px; height:20px; margin-left:3px; font-weight:bold; line-height:22px; text-align:center; border-radius:50%; overflow:hidden;}
+			.tab_main li .tab_out:hover { background:#FFF; color:#2191C3;}
+			.tab_main .tab_current .tab_out:hover { background:#2191C3; color:#FFF;}
+			.tab_main .tab_current a { color:#2191C3;}
+			
+.tab_main_div { width:100%; overflow-x:auto; min-width:1400px; min-height:800px;}
+</style>
+
+<script>
+var htmlLi;	//新曾li标签的字符串代码
+var tabNow;	//是否已经有该标签
+var mainID = 0;	//tab标示ID
+var htmlMain;	//main标签字符串代码
+function tabHref(href,menuName){
+	$(".tab_main li").each(function () {
+		if ($(this).children('.tab_url').html() == menuName) {
+			tabNow = 1;
+		}
+	})
+	
+	if( tabNow == 1 ){
+		tabNow = 0;
+		$(".tab_main li").each(function () {
+			if($(this).children('.tab_url').html() == menuName){
+				$(this).children('.tab_url').click();
+				return false;
+			}
+		})
+		return false;
+	}
+	else{
+		tabNow = 0;
+		mainID++;
+		$(".tab_main").find('li').removeClass('tab_current');
+		htmlLi = '<li class="tab_current"><a class="tab_url" href="'+href+'" id="mainid'+mainID+'" onClick="tabClick(this);return false;">'+menuName+'</a><a class="tab_out" id="mmainid'+mainID+'" href="javascript:void(0);" onClick="tabOff(this);">×</a></li>';
+		$(".tab_main").append(htmlLi);
+		
+		htmlMain = '<div class="tab_main_div mmainid'+mainID+'"><iframe SRC="'+href+'" FRAMEBORDER=0 width="100%" height="800"></iframe></div>';
+		$('.tab_main_div').hide();
+		$(".tab_main").after(htmlMain);
+		return false;
+	}
+}
+
+function tabClick(tab){
+	$(".tab_main").find('li').removeClass('tab_current');
+	$(tab).parent('li').addClass('tab_current');
+	$('.tab_main_div').hide();
+	$(".m"+tab.id).show();
+	return false;
+}
+
+function tabOff(off){
+	if( $(".tab_main li:first").children('.tab_url').html() != $(".tab_main li:last").children('.tab_url').html()){	//是否只剩下一个
+		if($(off).parent('li').hasClass('tab_current')){
+			if($(off).prev('.tab_url').html() == $(".tab_main li:first").children('.tab_url').html()){	//当前tab是否在第一个
+				$(off).parent('li').next('li').find('.tab_url').click();
+			}
+			else{
+				$(off).parent('li').prev('li').find('.tab_url').click();
+			}
+		}
+		$(off).parent('li').remove();
+		$("."+off.id).remove();
+	}
+	return false;
+}
+</script>
+</head>
+
+<body>
+	<ul class="tab_main"></ul>
+    <div class="tab_main_div"><iframe SRC="{:u($node["module"]."/main")}" FRAMEBORDER=0 width="100%" height="800"></iframe></div>
+</body>
+</html>

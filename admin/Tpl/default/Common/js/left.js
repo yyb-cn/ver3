@@ -1,10 +1,14 @@
+var href;
+var menuName;
 $(document).ready(function(){
 	$(".menu").find("a").bind("click",function(){
 		$(".menu").find("a").removeClass("current");
-		parent.main.location.href = $(this).attr("href");
+		href = $(this).attr("href");
+		menuName = $(this).html();
+		parent.tab.tabHref(href,menuName);
 		$(this).addClass("current");
 		return false;
 	});
 	
-	$(".menu").find("a").first().click();
+	//$(".menu").find("a").first().click();
 });
