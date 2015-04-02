@@ -234,5 +234,153 @@ class ArticleAction extends CommonAction{
 		clear_auto_cache("get_help_cache");
 		$this->ajaxReturn($n_is_effect,l("SET_EFFECT_".$n_is_effect),1)	;	
 	}
+	//首页幻灯片管理
+	//图片列表
+    public function img_list()
+	{
+	 $img_list_nav=M("ImgListNav");
+	// var_dump($img_list_nav);exit;
+	  $img_data=$img_list_nav->select();
+	  // var_dump($img_data);exit;
+		foreach($img_data as $k=>$v){
+		$img_data[$k]['url']=$v['url'].'?rand='.rand(1111,9999);
+		}
+		
+	  $this->assign("img_data",$img_data);
+	  $this->display();
+	}
+	
+	
+	//图片上传
+	public function img_add()
+	{
+	
+		 $img_list_nav=M("ImgListNav");
+		 $c=$img_list_nav->count();  //6个
+		//查询有多少图片
+		//图片上传
+		if($_FILES['file']['name']!=''){
+				$File = $this -> uploadfile($ARG=array(
+				'File'     => array('name'=>$_FILES['file']['name'],'tmp_name' => $_FILES['file']['tmp_name']),
+				'Dir'=>'app/Tpl/blue/images/',
+				'newname'=>($c+1)
+				));
+				$img=$File['uploadfile'];//路径
+				$name=$File['newname'];//图片名
+			}
+			
+			if($_POST){
+			
+			$data['name']=$name;
+			$data['url']=$img;
+			$data['nav_url']=$_POST['nav_url'];
+			$data['target']=$_POST['target'];
+			
+			$a=$img_list_nav->add($data);
+		 if($a){
+			header("location:?m=Article&a=img_list");
+		 }
+		 else{
+		 die('上传失败');
+		 }
+			}
+		
+		$this->display();
+	 
+   }
+ 
+ //图片修改
+   public function img_edit()
+	{
+	if($_GET['id']){
+		$img_list_nav=M("ImgListNav");
+		$one=$img_list_nav->find($_GET['id']);
+		$tmp = explode('.',$one['name']);
+		$name = $tmp[0];
+		$this->assign("img",$one);
+		$this->display();
+	}
+	if($_POST){
+			$img_list_nav=M("ImgListNav");
+			$id=$_POST['id'];
+			$one=$img_list_nav->find($_POST['id']);
+			$tmp = explode('.',$one['name']);
+			$name = $tmp[0];
+			rename($one['url'],	'app/Tpl/blue/images/'.$_POST['name']);
+			$data['url']='app/Tpl/blue/images/'.$_POST['name'];
+			$data['nav_url']=$_POST['nav_url'];
+			$data['target']=$_POST['target'];
+			$data['name']=$_POST['name'];
+			if($_FILES['file']['name']!=''){
+				$File = $this -> uploadfile($ARG=array(
+				'File'     => array('name'=>$_FILES['file']['name'],'tmp_name' => $_FILES['file']['tmp_name']),
+				'Dir'=>'app/Tpl/blue/images/',
+				'newname'=> $name
+				));
+				$img=$File['uploadfile'];//路径
+				$name=$File['newname'];//图片名
+				
+			}
+			$a=$img_list_nav->where(array('id'=>$id))->save($data);
+		
+			header("location:?m=Article&a=img_list");
+		
+		
+			}
+	
+   }
+   //删除图片
+	public function img_del()
+	{
+     if(!empty($_GET['id'])){
+      $img_list=M("ImgListNav");
+	  $img_list->delete($_GET['id']);
+     }
+	 	$this->success(l("操作成功"));
+    }
+	
+	public  function uploadfile($ARG=array(
+	'File'  => array(),
+	'Dir'   => '',
+	'newname'=> '')){
+		//默认目录
+		$dir = "upload/";
+		//文件原始名称
+		$oldname = $ARG['File']['name'];
+		//文件类型
+		$tmp = explode('.',$oldname);
+		$filetype = $tmp[1];
+		//重命名(文件新名称)
+		$newname = $ARG['newname'].".".$filetype;
+		//上传目录处理
+		if(!isset($ARG['Dir']) || $ARG['Dir']==''){
+			$dir .= '';
+		}else{
+			$dir = $ARG['Dir'];
+		}
+		if(file_exists($dir)){
+			$uploaddir = $dir;
+		}
+		
+		//上传
+		$uploadfile = $uploaddir.$newname;
+		//echo $ARG['File']['tmp_name'];
+		if(is_uploaded_file($ARG['File']['tmp_name'])){
+			if(move_uploaded_file($ARG['File']['tmp_name'],$uploadfile)){
+			
+			}
+			else{
+			
+			}
+		}
+		//返回数据，便于操作。
+		$File  = array();
+		$File['oldname']    =  $oldname;
+		$File['newname']  =  $newname;
+		$File['uploadfile']  =  $uploadfile;
+		return $File;
+	}
+	
+	
 }
 ?>

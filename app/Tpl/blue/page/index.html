@@ -110,21 +110,17 @@
             <div class="next"></div>
             <div class="smalltitle">
               <ul>
-                <li class="thistitle"></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+			  {foreach from=$nav_img item=nav_img key=key}
+				<li  {if $key eq 0}class="thistitle"{/if}></li>
+                
+				{/foreach}		
               </ul>
             </div>
             <ul class="oUlplay">
-               <li><a href="" target="_blank"><img src="{$TMPL}/images/1.gif"  width="1100px" height="400"/></a></li>
-               <li><a href="" target="_blank"><img src="{$TMPL}/images/2.jpg" /></a></li>
-               <li><a href="" target="_blank"><img src="{$TMPL}/images/3.jpg" /></a></li>
-               <li><a href="" target="_blank"><img src="{$TMPL}/images/4.jpg" /></a></li>
-               <li><a href="" target="_blank"><img src="{$TMPL}/images/5.jpg" /></a></li>
-               <li><a href="" target="_blank"><img src="{$TMPL}/images/6.jpg" /></a></li>
+			{foreach from=$nav_img item=nav_img}
+               <li><a href="{$nav_img.nav_url}" target="{if $nav_img.target eq 1}_blank{/if}"><img src="{$nav_img.url}"  width="1100px" height="400"/></a></li>
+            
+			   {/foreach}
             </ul>
           </div>
         </div>
