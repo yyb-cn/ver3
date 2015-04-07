@@ -91,6 +91,17 @@ return array(
 							array("name"=>"留言列表","module"=>"Message","action"=>"index"),
 					),
 			),
+			"deal_click"	=>	array(
+					"name"	=>	"一键购买贷款",
+					"key"	=>	"deal_click",
+					"nodes"	=>	array(
+							array("name"=>"luo","module"=>"deal","action"=>"deal_click"),
+					),
+			),
+			
+			
+			
+			
 			
 		),
 	),
@@ -150,6 +161,13 @@ return array(
 							"nodes"	=>	array(
 									array("name"=>"消息群发","module"=>"MsgSystem","action"=>"index"),
 									array("name"=>"消息列表","module"=>"MsgBox","action"=>"index"),
+							),
+					),
+					"virtual_currency"	=>	array(
+							"name"	=>	"浦发币（虚拟币）",
+							"key"	=>	"virtual_currency",
+							"nodes"	=>	array(
+									array("name"=>"浦发币（虚拟币）","module"=>"pfcf_virtual_currency","action"=>"index"),
 							),
 					),
 					

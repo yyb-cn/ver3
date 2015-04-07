@@ -78,9 +78,9 @@ jQuery(function(){
 		<div class="uc_r_bl_box clearfix">
 			<div class="balance p20 m10">
 				<div class="balance_l">
-					<p class="f20">账户余额</p>
+					<p class="f20">浦发币账户余额</p>
 					<span class="J_u_money_1">
-					<span class="f_red f16"><?php echo format_price($this->_var['user_info']['money'] + $this->_var['user_info']['lock_money']); ?><em class="f14">元</em></span>
+					<span class="f_red f16">{$user_info.pfcf_money}(元)浦发币</em></span>
 					</span>
 				</div>	
 				<div class="balance_r pl10">
@@ -88,11 +88,11 @@ jQuery(function(){
 						<li class="first">
 							<div>
 								<p class="f16">可用资金</p>
-								<span class="J_u_money_0"><span class="f_red">{function name="format_price" v=$user_info.money}</span></span>
+								<span class="J_u_money_0"><span class="f_red">{$user_info.pfcf_money}(元)浦发币</span></span>
 							</div>
 							<div class="tl">
-								<p calss="f16">已充值总额</p>
-								<span>{if $incharge_money}{function name="format_price" v=$incharge_money}{else}0.00{/if}</span>
+								<p calss="f16"></p>
+								<span>                      </span>
 							</div>
 							<div class="inchange_box tr">
 								<a href="{url x="index" r="uc_money#incharge"}" class="true_btn" style="display:inline-block;background:#FF4E00">充值</a>
@@ -100,12 +100,12 @@ jQuery(function(){
 						</li>
 						<li>
 							<div>
-								<p class="f16">冻结资金</p>
-								<span class="J_u_money_2"><span>{function name="format_price" v=$user_info.lock_money}</span></span>
+								<p class="f16">可提现</p>
+								<span class="J_u_money_2"><span>{$money}元</span></span>
 							</div>
 							<div class="tl">
 								<p calss="f16">已提现总额</p>
-								<span>{if $carry_money}{function name="format_price" v=$carry_money}{else}0.00{/if}</span>
+								<span>{$interest_money}</span>
 							</div>
 							<div class="inchange_box tr">
 								<a href="{url x="index" r="uc_money#bank"}" class="true_btn" style="display:inline-block">提现</a>
@@ -117,9 +117,7 @@ jQuery(function(){
 			<div class="blank0"></div>
 
 			<div class="sub_nav">
-				<span {if $t eq ''}class="act"{/if}><a href="{url x="index" r="uc_money#index"}">资金日志</a></span>
-				<span {if $t eq 'lock_money'}class="act"{/if}><a href="{url x="index" r="uc_money#index" p="t=lock_money"}">冻结金额日志</a></span>
-				<span {if $t eq 'point'}class="act"{/if}><a href="{url x="index" r="uc_money#index" p="t=point"}">信用积分日志</a></span>
+				<span {if $t eq ''}class="act"{/if}><a href="{url x="index" r="uc_money#index"}">浦发币操作日志</a></span>
 			</div>
 		
 			<div class="nav">
@@ -170,27 +168,23 @@ jQuery(function(){
 			        <tbody>
 			            <tr border="0" style="background-color:#00bef0; color:#fff; height:34px;">
 							<th style="width:14%">时间</th>
-							<th style="width:17%">操作类型</th>
-							{if $t=="point"}
-							<th style="width:14%">操作积分</th>
-							{else}
-							<th style="width:14%">操作金额</th>
-							{/if}
-							<th style="width:14%">结余</th>
-							<th>备注</th>
+							<th style="width:17%">操作类型</th>						
+							<th style="width:14%">操作浦发币金额</th>
+							<th style="width:17%">投标所得</th>
+							<th style="width:30%"> memo</th>
 						</tr>
 						{foreach from=$list item=log key=key name="log"}
 						 <tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.log.last}style="border-bottom:0"{/if}>
-							<td>{$log.create_time_ymd}</td>
-							<td>{$log.title}</td>
-							{if $t=="point"}
-							<td>{if $log.point gt 0}<span class="f_gr">+{$log.point}</span>{elseif $log.point eq 0}{$log.point}{else}<span class="f_red">{$log.point}</span>{/if}</td>
-							<td> {$log.account_point}</td>
-							{else}
-							<td>{if $log.money gt 0}<span class="f_gr">+{$log.money}</span>{elseif $log.money eq 0}{$log.money}{else}<span class="f_red">{$log.money}</span>{/if}</td>
-							<td> {$log.account_money}</td>
+							<td>{$log.create_time}</td>
+							{ if $log.status eq 0}
+							<td>投标中</td>
 							{/if}
-							<td>{$log.memo}</td>
+							{ if $log.status eq 1}
+							<td>投标成功</td>
+							{/if}
+							<td> {$log.virtual_currency}元</td>
+							<td> {$log.interest_money}元</td>	
+							<td> {$log.memo}</td>
 						</tr>
 						{/foreach}
 					</tbody>

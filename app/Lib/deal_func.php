@@ -859,10 +859,10 @@ function check_dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc = 0){
 		return $root;
 	}
 	
-	if(md5($bid_paypassword)!=$GLOBALS['user_info']['paypassword']){
-		$root["show_err"] = $GLOBALS['lang']['PAYPASSWORD_ERROR'];
-		return $root;
-	}
+	// if(md5($bid_paypassword)!=$GLOBALS['user_info']['paypassword']){
+		// $root["show_err"] = $GLOBALS['lang']['PAYPASSWORD_ERROR'];
+		// return $root;
+	// }
 	
 	$deal = get_deal($deal_id);
 	if(!$deal){
@@ -900,25 +900,25 @@ function check_dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc = 0){
 	//@file_put_contents("/Public/sqlog.txt",print_r($_REQUEST,1));
 	//手机端或者 按份数 默认跑到这里
 	if ($deal['uloadtype'] == 0 || $is_pc == 0){
-		if($bid_money <=0 || $bid_money < $deal['min_loan_money'] || ($bid_money * 100)%100!=0){
-			$root["show_err"] = $GLOBALS['lang']['BID_MONEY_NOT_TRUE'];
-			//print_r($deal);
-			return $root;
-		}
-		if(floatval($deal['max_loan_money']) >0){
-			if($bid_money > floatval($deal['max_loan_money'])){
-				$root["show_err"] = $GLOBALS['lang']['BID_MONEY_NOT_TRUE'];
-				//print_r($deal);
-				/*
-				 $root["bid_money"] = $bid_money;
-				$root["max_loan_money"] = floatval($deal['max_loan_money']);
-				$root["show_err"] = 'ddd2';
-				print_r($root);
-				die();
-				*/
-				return $root;
-			}
-		}
+		// if($bid_money <=0 || $bid_money < $deal['min_loan_money'] || ($bid_money * 100)%100!=0){
+			// $root["show_err"] = $GLOBALS['lang']['BID_MONEY_NOT_TRUE'];
+		///	print_r($deal);
+			// return $root;
+		// }
+		// if(floatval($deal['max_loan_money']) >0){
+			// if($bid_money > floatval($deal['max_loan_money'])){
+				// $root["show_err"] = $GLOBALS['lang']['BID_MONEY_NOT_TRUE'];
+			// /*	//print_r($deal);
+				// /*
+				 // $root["bid_money"] = $bid_money;
+				// $root["max_loan_money"] = floatval($deal['max_loan_money']);
+				// $root["show_err"] = 'ddd2';
+				// print_r($root);
+				// die();
+				// */////
+				// return $root;
+			// }
+		// }
 		
 		if((int)strim(app_conf('DEAL_BID_MULTIPLE')) > 0){
 			if($bid_money%(int)strim(app_conf('DEAL_BID_MULTIPLE'))!=0){
