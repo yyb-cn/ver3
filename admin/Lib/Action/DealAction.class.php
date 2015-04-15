@@ -1707,6 +1707,10 @@ class DealAction extends CommonAction{
 		$deal_info = M("Deal")->getById($id);
 		$this->assign("deal_info",$deal_info);
 		
+		
+			$deal_stat=$deal_info['deal_status'];
+		$this->assign("deal_stat",$deal_stat);
+		
 		$true_repay_money  =  M("DealLoadRepay")->where("deal_id=".$id)->sum("repay_money");
 		
 		$this->assign("true_repay_money",floatval($true_repay_money) + 1);
@@ -2315,6 +2319,39 @@ class DealAction extends CommonAction{
 		else
 			$this->error($result['info']);
 	}
+	
+		/**
+	 * 满标返还
+	 */
+	function do_full(){
+		$id = intval($_REQUEST['id']);
+	
+		$data['deal_status']=2;
+		
+		
+		
+			$one = M("Deal")->where("id=$id")->save($data);
+		
+	
+	if($one==1){
+		
+	
+		//操作成功跳转;
+		$this->success(L("UPDATE_SUCCESS"));
+		
+		
+		
+		}
+	
+	$this->error(L("UPDATE_FAILED"));
+	
+		
+	
+	
+
+	}
+	
+	
 	
 	/**
 	 * 流标返还

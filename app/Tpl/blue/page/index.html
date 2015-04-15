@@ -1,212 +1,140 @@
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>{if $page_title}{$page_title} - {/if}{if $show_site_titile eq 1}{function name='app_conf' value='SHOP_SEO_TITLE'} - {/if}{$site_info.SHOP_TITLE}</title>
+{include file="inc/header_new.html"}
+<!-- index -->
 <link rel="stylesheet" href="{$TMPL}/css/index.css">
-<script src="{$TMPL}/js/jquery-1.11.2.min.js"></script>
+<link rel="stylesheet" href="{$TMPL}/css/animate.css">
 <script src="{$TMPL}/js/index.js"></script>
-<meta name="keywords" content="{if $page_keyword}{$page_keyword}{/if}{$site_info.SHOP_KEYWORD}" />
-<meta name="description" content="{if $page_description}{$page_description}{/if}{$site_info.SHOP_DESCRIPTION}" />
-</head>
 
-<body>
-<div class="index">
-    <div class="header">
-        <ul>
-            <li class="logo1">
-			<a href="{$APP_ROOT}/">
-					<?php
-						$this->_var['logo_image'] = app_conf("FOOTER_LOGO");
-					?>
-					{function name="load_page_png" v=$logo_image}
-				</a>
-            </li>
-            <li class="login1">
-                {if $user_info}
-               		<p style="font-size:12px;"><span>您好，</span><a href="{url x="shop" r="uc_center"}">{$user_info.user_name}</a></p>
-                {else}
-                    <p><a href="{url x="index" u="user#login" }">登录</a> / <a href="{url x="index" u="user#register" }">注册</a></p>
-                {/if}
-            </li>
-            <li class="hreder_nav1">
-                <ul>
-				
-				{foreach from=$nav_list item=nav_item}
-                    <li><a href="{$nav_item.url}" target="{if $nav_item.blank eq 1}_blank{/if}">{$nav_item.name}</a></li>
-				{/foreach}
-					 <li>
-                        <a href="javascript:void(0);" onClick="showNextNav(this);">产品资料</a>
-                        <ul class="hreder_nav1_chird">
-                            <li class="h8">^</li>
-                            <li><a href="">信贷赢</a></li>
-                            <li><a href="">南京轻飞</a></li>
-                            <li><a href="">南京轻飞</a></li>
-                            <li><a href="">南京轻飞</a></li>
-                            <li><a href="">南京轻飞</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="QR1">
-                <img src="{$TMPL}/images/QR.png" />
-                <p>关注官方微信</p>
-            </li>
-            <li class="qq1" style=" height:25px; margin-top:5px;">
-				<script charset="utf-8" type="text/javascript" src="http://wpa.b.qq.com/cgi/wpa.php?key=XzkzODAwMjU4OV8yNTMwNzdfNDAwOTkwNDM4OF8"></script>
-            </li>
-            <li class="qq1">
-                <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=0a45a253f49737ed65c06df186751fe8b658bc8fbfc2dbaab3f8484418463391"><img  style=" margin-top:10px"border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="浦发财富在线理财" title="浦发财富在线理财"></a>
-            </li>
-            <li class="contact">
-                <p style="font-size:20px; line-height:20px;">{function name="app_conf" v="SHOP_TEL"}</p>
-                <p>客服时间：09:00-18:00</p>
-                <p>官方邮箱：kf@pfcf.cn</p>
-            </li>
-        </ul>
-    </div>
-    
-    <div class="wraper">
-    
-        <!--横向头部-->
-        <div class="header_top">
-            <div class="logo1">
-                <a href=""><?php
-						$this->_var['logo_image'] = app_conf("SHOP_LOGO");
-					?>
-					{function name="load_page_png" v=$logo_image}
-                </a>
-            </div>
-            
-            <div class="hreder_nav1">
-                <ul>
-                	<li>
-                    {if $user_info}
-                        <span style="font-size:12px;"><span>您好，</span><a href="{url x="shop" r="uc_center"}">{$user_info.user_name}</a></span>
-                    {else}
-                        <span style="font-size:12px;"><a href="{url x="index" u="user#login" }">登录</a> / <a href="{url x="index" u="user#register" }">注册</a></span>
-                    {/if}
-					</li>
-                    
-                	{foreach from=$nav_list item=nav_item}
-                    <li><a href="{$nav_item.url}" target="{if $nav_item.blank eq 1}_blank{/if}">{$nav_item.name}</a></li>
-                    {/foreach}
-                    
-                    <li>
-                        <a href="javascript:void(0);" onClick="showNextNav(this);">产品资料</a>
-                        <ul class="hreder_nav1_chird">
-                            <li><a href="">信贷赢</a></li>
-                            <li><a href="">南京轻飞</a></li>
-                            <li><a href="">南京轻飞</a></li>
-                            <li><a href="">南京轻飞</a></li>
-                            <li><a href="">南京轻飞</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        
-        <!--内容-->
-        <div class="banner">
-          <div id="playBox">
-            <div class="pre"></div>
+
+<div class="wraper">
+	<div class="banner">
+    	<div id="playBox">
+        	<div class="pre"></div>
             <div class="next"></div>
             <div class="smalltitle">
-              <ul>
-                <li class="thistitle"></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-              </ul>
+                <ul>
+                	<!--有多	少个张banner图片就有多少个li-->
+                    <li class="thistitle"></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            	</ul>
             </div>
             <ul class="oUlplay">
-               <li><a href="" target="_blank"><img src="{$TMPL}/images/1.gif"  width="1100px" height="400"/></a></li>
-               <li><a href="" target="_blank"><img src="{$TMPL}/images/2.jpg" /></a></li>
-               <li><a href="" target="_blank"><img src="{$TMPL}/images/3.jpg" /></a></li>
-               <li><a href="" target="_blank"><img src="{$TMPL}/images/4.jpg" /></a></li>
-               <li><a href="" target="_blank"><img src="{$TMPL}/images/5.jpg" /></a></li>
-               <li><a href="" target="_blank"><img src="{$TMPL}/images/6.jpg" /></a></li>
+                <li><a href="" target="_blank"><img src="{$TMPL}/images/1.png" /></a></li>
+                <li><a href="" target="_blank"><img src="{$TMPL}/images/1.png" /></a></li>
+                <li><a href="" target="_blank"><img src="{$TMPL}/images/1.png" /></a></li>
+                <li><a href="" target="_blank"><img src="{$TMPL}/images/1.png" /></a></li>
+                <li><a href="" target="_blank"><img src="{$TMPL}/images/1.png" /></a></li>
             </ul>
-          </div>
         </div>
-        
-        <div class="ms1">
-        	<div class="ms_bg"></div>
-            <h2 class="write">新手入门</h2>
-            <p class="write">三分钟学会玩转投资</p>
-            <p><a class="organ" href="">浦发财富安全保障</a><span class="write"> | </span><a class="write" href="">浦发财富抢购攻略</a></p>
-            <a href="{url x="index" r="usagetip"}" class="goto write"><span class="go">＞</span>查看新手入门</a>
-        </div>
-        
-        <div class="ms2">
-            <div class="ms_bg"></div>
-            <h2 class="write">“浦”惠特区</h2>
-            <p class="write">活动大奖区</p>
-            <p class="write">点击就有<span style="font-size:14px; font-weight:bold; color:#e85100">奖金</span>拿</p>
-            <a href="" class="goto write"><span class="go">＞</span>查看活动详情</a>
-        </div>
-        
-        <div class="ms3">
-        	<div class="ms_bg"></div>
-            <p>最靠“浦”专业的理财机构</p>
-            <p>最靠“浦”专业的理财机构</p>
-            <h2 class="organ">靠浦才会发！</h2>
-            <a href="{url x="index" r="deals"}" title="{$LANG.MORE}" class="goto write" style="background:#e85100;"><span class="go">＞</span>购买理财产品</a>
-        </div>
-        
-        <div class="ms4">
-        	<div class="ms_bg"></div>
-            <h2 class="write">浦发财富</h2>
-            <p class="write">因为专业，所以安全</p>
-            <p class="organ">网络投资平台全新上线</p>
-            <a href="index.php?ctl=help&id=1" class="goto write"><span class="go">＞</span>关于浦发财富</a>
-        </div>
-        
-        <ul class="news_link">
-        	<li class="news_link_tit">媒体报道</li>
-        	<li><a target="_blank" href="http://news.sina.com.cn/o/2014-04-02/230829851865.shtml"><img src="{$TMPL}/images/news_01.png" /></a></li>
-            <li><a target="_blank" href="http://finance.china.com/fin/lc/201410/23/8290640.html"><img src="{$TMPL}/images/news_02.png" /></a></li>
-            <li><a target="_blank" href="http://finance.21cn.com/stock/cfgd/a/2014/0316/13/26708264.shtml"><img src="{$TMPL}/images/news_03.png" /></a></li>
-            <li><a target="_blank" href="http://finance.qq.com/a/20140519/027699.htm"><img src="{$TMPL}/images/news_04.png" /></a></li>
-            <li><a target="_blank" href="http://stock.sohu.com/20140403/n397675966.shtml"><img src="{$TMPL}/images/news_05.png" /></a></li>
-            <li><a target="_blank" href="http://news.163.com/15/0127/18/AH035RK200014AEE.html"><img src="{$TMPL}/images/news_06.png" /></a></li>
-            <li><a target="_blank" href="http://bank.hexun.com/2014-10-24/169663456.html"><img src="{$TMPL}/images/news_07.png" /></a></li>
-            <li><a target="_blank" href="http://www.jinfuzi.com/wz/id-3208752.html"><img src="{$TMPL}/images/news_08.png" /></a></li>
-        </ul>
-        
-        <div class="notice">
-        	<div class="notice_tit">
-            	<span>网站公告</span>
-                <a href="{url x="index" r="notice#list_notice"}">更多</a>
-            </div>
-            <div class="notice_msg">
-			{foreach from=$notice_list item="notice"}
-            	<a href="{$notice.url}" title="{$notice.title}"><li><span class="notice_msg_l">{function name="msubstr" v=$notice.title s=0 e=18}</span><span class="notice_msg_r">{function name="to_date" v="$notice.create_time" f="Y/m/d"}</span></li></a>
-            {/foreach}	
-            </div>
-        </div>
+    </div>
+    {insert name="index_login_box"}
+   
+        <div class="hot_adv">
+    	<a target="_blank" href="#"><img src="{$TMPL}/images/hot_adv.png" /></a>
     </div>
     
-</div>
-
-<div class="footer">
-	<div class="footer_wrap">
-    	<div class="footer_wrap_l">
-            <a href="http://www.jlpefund.com/" target="_blank"><img border="0" height="41" src="{$TMPL}/images/link_jl.gif"/></a>
-            <a href="http://webscan.360.cn/index/checkwebsite/url/pfcf88.com"><img border="0" height="41" src="http://img.webscan.360.cn/status/pai/hash/bf536e243596ba70172fbc1ababf1150"/></a>
-            <a id='___szfw_logo___' href='https://search.szfw.org/cert/l/CX20141027005360005888' target='_blank'><img src='{$TMPL}/images/chengxin.png'></a>
-            <a class="aqlm"  key ="54535291efbfb01998949ee9"  logo_size="124x47"  logo_type="business"  href="http://www.anquan.org" ><script src="http://static.anquan.org/static/outer/js/aq_auth.js"></script></a>
+    <ul class="left_four">
+    	<li class="left_four_1">
+        	<div class="left_four_bg"></div>
+            <p>最靠"浦"专业的理财机构</p>
+            <p>最稳定的理财收益利率</p>
+            <p class="organ">靠浦才会发！</p>
+            <a class="left_goto" href="{url x="index" r="deals"}" title="{$LANG.MORE}" class="goto write" > <span class="go">＞</span>购买理财产品</a>
+        </li>
+    	<li class="left_four_2">
+        
+        	<div class="left_four_bg"></div>
+        	<p class="organ">赚钱神奇</p>
+            <p>收益优势明显！</p>
+            <p>同期限收益高出银行<span style="color:#e85100; font-size:20px;">3倍</span></p>
+            <a class="left_goto" href="#"><span class="go">＞</span>查看理财产品项目</a>
+        </li>
+    	<li class="left_four_3">
+        	<div class="left_four_bg"></div>
+        	<p class="organ">浦发财富</p>
+            <p>&nbsp;&nbsp;更高收益！安全性高！</p>
+            <p>网络投平台全新上线</p>
+        	<a class="left_goto" href="index.php?ctl=help&id=1"><span class="go">＞</span>了解浦发财富</a>
+        </li>
+    	<li class="left_four_4">
+        	<div class="left_four_bg"></div>
+        	<p class="organ">新手入门</p>
+            <p>三分钟学会赚钱</p>
+            <p><a href="#">安全保障</a> | <a href="#">抢购攻略</a></p>
+        	<a class="left_goto" href="{url x="index" r="usagetip"}" class="goto write" > <span class="go">＞</span>查看新手入门</a>
+        </li>
+    </ul>
+    
+    <div class="goods">
+    	<ul>
+        	<li class="goods_1">
+            	<p class="goods_tit">15天理财体验产品</p>
+                <p>(最低投资额度：1000元)</p>
+                <p>(此项目产品不参与活动)</p>
+                <div class="goods_b">
+                	<p><span class="big_font">7</span><span>%</span></p>
+                </div>
+                <div class="goods_button">
+                	<p>投资期限：15天</p>
+                    <a href="#">立即投资</a>
+                </div>
+            </li>
+        	<li class="goods_2">
+            	<p class="goods_tit">信贷赢1个月产品</p>
+                <p>(最低投资额度：1000元)</p>
+                <p>&nbsp;</p>
+                <div class="goods_b">
+                	<p><span class="big_font">7.5</span><span>%</span></p>
+                </div>
+                <div class="goods_button">
+                	<p>投资期限：1个月</p>
+                    <a href="#">立即投资</a>
+                </div>
+            </li>
+        	<li class="goods_3">
+            	<p class="goods_tit">信贷赢3个月产品</p>
+                <p>(最低投资额度：1000元)</p>
+                <p>&nbsp;</p>
+                <div class="goods_b">
+                	<p><span class="big_font">9.3</span><span>%</span></p>
+                </div>
+                <div class="goods_button">
+                	<p>投资期限：3个月</p>
+                    <a href="#">立即投资</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    <ul class="news_link">
+        <li class="news_link_tit">媒体报道</li>
+        <li><a target="_blank" href="http://news.sina.com.cn/o/2014-04-02/230829851865.shtml"><img src="{$TMPL}/images/news_01.png" /></a></li>
+        <li><a target="_blank" href="http://finance.china.com/fin/lc/201410/23/8290640.html"><img src="{$TMPL}/images/news_02.png" /></a></li>
+        <li><a target="_blank" href="http://finance.21cn.com/stock/cfgd/a/2014/0316/13/26708264.shtml"><img src="{$TMPL}/images/news_03.png" /></a></li>
+        <li><a target="_blank" href="http://finance.qq.com/a/20140519/027699.htm"><img src="{$TMPL}/images/news_04.png" /></a></li>
+        <li><a target="_blank" href="http://stock.sohu.com/20140403/n397675966.shtml"><img src="{$TMPL}/images/news_05.png" /></a></li>
+        <li><a target="_blank" href="http://news.163.com/15/0127/18/AH035RK200014AEE.html"><img src="{$TMPL}/images/news_06.png" /></a></li>
+        <li><a target="_blank" href="http://bank.hexun.com/2014-10-24/169663456.html"><img src="{$TMPL}/images/news_07.png" /></a></li>
+        <li><a target="_blank" href="http://www.jinfuzi.com/wz/id-3208752.html"><img src="{$TMPL}/images/news_08.png" /></a></li>
+    </ul>
+	
+    <div class="notice">
+        <div class="notice_tit">
+            <span>网站公告</span>
+            <a href="{url x="index" r="notice#list_notice"}">更多</a>
         </div>
-        <div class="footer_wrap_r">
-		
-        	<p>客服热线（周一至周六 9:00-18:00）</p>
-            <h1 class="write">{function name="app_conf" v="SHOP_TEL"}</h1>
-        	<p>©2014 深圳浦发财富管理有限公司 粤ICP备14022713号-1</p>
+        <div class="notice_msg">
+        {foreach from=$notice_list item="notice"}
+            <a href="{$notice.url}" title="{$notice.title}"><li><span class="notice_msg_l">{function name="msubstr" v=$notice.title s=0 e=18}</span><span class="notice_msg_r">{function name="to_date" v="$notice.create_time" f="Y/m/d"}</span></li></a>
+             {/foreach}	
+       
         </div>
     </div>
+
+
 </div>
-<script type='text/javascript'>(function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();</script> <!--诚信认证-->
-</body>
-</html>
+
+<!-- index结束 -->
+{include file="inc/footer_new.html"}

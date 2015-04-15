@@ -1,0 +1,102 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/user_edit.js' />
+<load href='__TMPL__Common/js/conf.js' />
+<load href='__ROOT__/system/region.js' />
+<div class="main">
+<div class="main_title">{%EDIT} <a href="{:u("User/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<div class="blank5"></div>
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+    <tr>
+		<td class="item_title">生成时间:</td>
+		<td class="item_input">
+			<input type="hidden" class="textbox require" name="create_time" value="{$create_time}" />
+			{$create_time}
+		</td>
+	</tr>
+     <tr>
+	<td class="item_title">生产来源:</td>
+		<td class="item_input">
+			<label><input type="radio" class="f-radio" value="1" name="create_source"  <if condition="$create_source eq 1">checked="checked"</if>>抽奖获得</label>
+			<label><input type="radio" class="f-radio" value="0" name="create_source"  <if condition="$create_source eq 0">checked="checked"</if>>管理员添加</label>
+		</td>
+	</tr>
+     <tr>
+		<td class="item_title">收益率:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" name="yields" value="{$yields}" />
+			
+		</td>
+        </tr>
+         <tr>
+	<td class="item_title">是否使用:</td>
+		<td class="item_input">
+			<label><input type="radio" class="f-radio" value="1" name="is_used"  <if condition="$is_used eq 1">checked="checked"</if>>使用了</label>
+			<label><input type="radio" class="f-radio" value="0" name="is_used"  <if condition="$is_used eq 0">checked="checked"</if>>没使用</label>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">拥有加息劵的{%USER_NAME}:</td>
+		<td class="item_input"><input type="hidden" class="textbox require" name="user_name" value="{$user_name}" />{$user_name}</td>
+	</tr>
+    <tr>
+		<td class="item_title">加息劵使用时间:</td>
+		<td class="item_input">
+			<input type="hidden" class="textbox require" name="used_time" value="{$used_time}" />
+			{$used_time}
+		</td>
+        </tr>
+         <tr>
+		<td class="item_title">使用到标的名称:</td>
+		<td class="item_input">
+			<input type="hidden" class="textbox require" name="target_name" value="0" />
+			{$target_name}
+		</td>
+        </tr>
+    <tr>
+		<td class="item_title">添加加息管理员:</td>
+		<td class="item_input">
+			<input type="hidden" class="textbox require" name="adm_name" value="{$adm_name}" />
+			{$adm_name}
+		</td>
+	</tr>
+     <tr>
+		<td class="item_title">加息劵到期时间:</td>
+		<td class="item_input">
+			<input type="hidden" class="textbox require" name="expires_time" value="{$expires_time}" />
+			{$expires_time}
+		</td>
+	</tr>
+	
+</table>
+
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="Increase" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%EDIT}" />
+			<input type="reset" class="button" value="{%RESET}" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 	 
+</form>
+</div>
+<include file="Public:footer" />

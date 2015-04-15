@@ -655,6 +655,7 @@ class uc_moneyModule extends SiteBaseModule
 		
 		$GLOBALS['tmpl']->assign("page_title",$GLOBALS['lang']['UC_CARRY']);
 		$GLOBALS['tmpl']->assign("inc_file","inc/uc/uc_money_carry.html");
+		
 		$GLOBALS['tmpl']->display("page/uc.html");
 	}
 	

@@ -1,0 +1,46 @@
+    {if $user_info}
+    <!--或用户中心-->
+    <div class="user">
+    	<div class="user_header">
+        	<div class="user_img">
+        		<img src="{$TMPL}/images/user_header.png" />
+            </div>
+            
+            <div class="user_name">{$user_info.user_name}</div>
+        </div>
+        <div class="user_main">
+        	<div class="user_main_1">
+            	<div class="user_main_up">
+                	<span style="color:#ea4e45">|&nbsp;&nbsp;</span>账户余额
+                </div>
+                <div class="user_main_down">
+                	<span>{function name="number_format" v="$user_info.money" f=2}</span>
+                    <a href="{url x="index" r="uc_money#incharge"}" class="user_moneny">充 值</a>
+                    <a href="{url x="index" r="uc_money#bank"}" class="user_moneny">提 现</a>
+                </div>
+            </div>
+            <div class="user_main_2">
+            	<div class="income">
+                	<p><span style="color:#ea4e45">|&nbsp;&nbsp;</span>资产总额</p>
+                    <p>{$user_statics}</p>
+                </div>
+                <div class="income">
+                	<p><span style="color:#ea4e45">|&nbsp;&nbsp;</span>冻结资金</p>
+                    <p>{function name="number_format" v="$user_info.lock_money" f=2}</p>
+                </div>
+            </div>
+            <div class="user_main_3">
+            	<a href="index.php?ctl=uc_center" class="user_moneny">进入个人中心</a>
+                <a href="index.php?ctl=user&act=loginout" class="user_moneny">安全退出</a>
+            </div>
+        </div>
+        <div class="user_r"></div>
+    </div>
+    {else}
+     <div class="register" >
+    	<a href="{url x="index" u="user#register" }" class="reg_button">注 册 领 红 包</a>
+        <div class="or_login"><span>已有账号？ </span><a href="{url x="index" u="user#login" }">立即登录</a></div>
+       
+        <div class="register_r"></div>
+    </div>
+    {/if}

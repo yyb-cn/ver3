@@ -9,7 +9,15 @@
 require APP_ROOT_PATH.'app/Lib/deal.php';
 class dealModule extends SiteBaseModule
 {
+	
+	
 	public function index(){
+		
+			//判断加息活动的开启和关闭的查询和传值
+		$ease_val=$GLOBALS['db']->getOne("SELECT `value` FROM ".DB_PREFIX."ease where name ='CACHE_PLUS'");
+	    $GLOBALS['tmpl']->assign("ease_val",$ease_val);
+		
+		
 		
 		/*if(!$GLOBALS['user_info']){
 			set_gopreview();

@@ -357,7 +357,10 @@ function get_deal_load_list($deal){
 		}
 		
 		$loan_list[$i]['repay_day'] = $v['repay_time'];
-		
+				
+			//加息劵利息
+			$loan_list[$i]['incerease_money'] = $v['incerease_money'];
+				
 		//月还本息
 		$loan_list[$i]['month_repay_money'] = $v['repay_money'];
 		//判断是否已经还完
@@ -386,7 +389,7 @@ function get_deal_load_list($deal){
 			
 			//逾期管理费
 			$loan_list[$i]['manage_impose_money'] = $v['manage_impose_money'];
-				
+		
 			//真实还多少
 			$loan_list[$i]['month_has_repay_money_all'] = $loan_list[$i]['month_has_repay_money'] + $loan_list[$i]['month_manage_money']+$loan_list[$i]['impose_money']+$loan_list[$i]['manage_impose_money'];
 			
@@ -472,7 +475,8 @@ function get_deal_load_list($deal){
 
 				//罚息
 				$loan_list[$i]['impose_money'] = $loan_list[$i]['month_repay_money']*$impose_fee*$day/100;
-				
+					//加息劵利息
+			     $loan_list[$i]['incerease_money'] = $v['incerease_money'];
 				
 				//罚管理费
 				$loan_list[$i]['manage_impose_money'] = $loan_list[$i]['month_repay_money']*$manage_impose_fee*$day/100;
@@ -500,6 +504,7 @@ function get_deal_load_list($deal){
 			$loan_list[$i]['month_need_all_repay_money'] =  $loan_list[$i]['month_repay_money'] + $loan_list[$i]['month_manage_money'] + $loan_list[$i]['impose_money'] + $loan_list[$i]['manage_impose_money'];
 		}
 
+
 		//还款日
 		$loan_list[$i]['repay_day_format'] = to_date($loan_list[$i]['repay_day'],'Y-m-d');
 		//已还金额
@@ -514,6 +519,8 @@ function get_deal_load_list($deal){
 		
 		//借款管理费
 		$loan_list[$i]['manage_money_impose_format'] = format_price($loan_list[$i]['manage_impose_money']);
+		//加息劵利息
+	     $loan_list[$i]['manage_incerease_money_format'] = format_price($loan_list[$i]['incerease_money']);
 
 		//逾期费用
 		$loan_list[$i]['impose_money_format'] = format_price($loan_list[$i]['impose_money']);

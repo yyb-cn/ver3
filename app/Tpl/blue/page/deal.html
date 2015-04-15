@@ -163,11 +163,22 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 							<input class="f-input"  autocomplete="off" name="bid_money" id="J_BIDMONEY"  />
 							<input type="hidden" name="id" value="{$deal.id}" />
 							<span class="unit">元</span>
+<<<<<<< HEAD
+					<!--		<input  name="pfcf_money" id="J_PFCFMONEY" value="0" />-->
+=======
 							<input  name="pfcf_money" id="J_PFCFMONEY" value="0" />
+>>>>>>> 396d16c3992496227921e2eed43ce85ece14ea23
 							<br>
 							<span >请输入要投资的虚拟币</span>
 							<div class="blank5"></div>
 							收益：<span class="J_u_money_sy f_red">0.00</span>
+                              {if $ease_val eq 1}
+                           
+                            	  <form name="edit" action="index.php?ctl=increase&act=in_add" method="post" enctype="multipart/form-data">
+                                              <input type="hidden"  name="deal_id" value="{$deal.id}" />
+                                              <input type="submit" class="tz_link"  style=" line-height:10px; font-size:20px" value="领取加息劵" />
+                                                      </form> 
+                            {/if}
 							{/if}
 							<a href="javascript:void(0);" class="tz_link" id="tz_link">立即投资</a>
 						</div>

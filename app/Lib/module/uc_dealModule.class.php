@@ -205,7 +205,9 @@ class uc_dealModule extends SiteBaseModule
 	
 	//正常还款操作界面
 	public function quick_refund(){
+		//标的ID
 		$id = intval($_REQUEST['id']);
+		
 		if($id == 0){
 			showErr("操作失败！");
 		}
@@ -223,9 +225,62 @@ class uc_dealModule extends SiteBaseModule
 		
 		$GLOBALS['tmpl']->assign('deal',$deal);
 		
+		
+		
+		
+		
+		//最后还款的时候吧是用来加息劵的利息加进去
+
+		//当前登陆的用户ID
+		$user_id=$deal['user_id'];
+		//用户对标使用了加息劵的标的利息；
+		$user_money=$GLOBALS['db']->getAll("SELECT `money` FROM ".DB_PREFIX."user_increase where target_id='$id' and is_used='1' and target_id=".$id);
+				
+		//根据用户ID查询还款deal_load_repay表获得ID
+	    $pay_id=$GLOBALS['db']->getAll("SELECT `id` FROM ".DB_PREFIX."deal_repay where deal_id=".$id);
+		foreach($pay_id as $k=>$v){
+			
+			
+		} 
+		
+		//差最后一次还款的那一条的ID
+		$repay_id=$GLOBALS['db']->getOne("SELECT `id` FROM ".DB_PREFIX."deal_repay where l_key='$k' and deal_id=".$id);
+		
+		
+		//判断使用了加息劵的金额
+		if($user_money){
+		//进行所有的是用来加息劵的利息加起来；
+		$r=0;
+		foreach($user_money as $k=>$v){
+			
+			
+			
+		
+		for($i=0;$i<=$k;$i++){
+			
+			$r=$r+$user_money[$i]['money'];
+			
+		}
+		
+			
+            }
+			
+			//使用加息劵的总利息$r加没使用加息劵$user_statics['load_repay_money']的金额；
+			$money=$r;
+			$data['incerease_money']=$money;
+		 
+			//进行修改
+			$one=$GLOBALS['db']->autoExecute(DB_PREFIX."deal_repay",$data,"UPDATE","id=".$repay_id);
+	
+		
+			}
+	
+		
+
 		//还款列表
 		$loan_list = get_deal_load_list($deal);
-		
+	//print_r($loan_list);exit;
+        		
 		$GLOBALS['tmpl']->assign("loan_list",$loan_list);
 		$GLOBALS['tmpl']->assign("deal_id",$id);
 		
@@ -266,8 +321,13 @@ class uc_dealModule extends SiteBaseModule
 		
 		
 		$status = getUcInrepayRefund($id);
+	      //使用加息劵的利息查询
+		$id=$status['deal']['id'];
+		  $pay=$GLOBALS['db']->getRow("SELECT * FROM ".DB_PREFIX."deal_repay where  deal_id='$id' order by id desc");
+		     
 		if ($status['status'] == 1){		
 			//$deal = $status['deal'];
+			$GLOBALS['tmpl']->assign("incere", $pay['incerease_money']);
 			$GLOBALS['tmpl']->assign("deal",$status['deal']);
 			$GLOBALS['tmpl']->assign("true_all_manage_money",$status['true_all_manage_money']);
 			
@@ -320,6 +380,9 @@ class uc_dealModule extends SiteBaseModule
 		}
 		$GLOBALS['tmpl']->assign('deal',$deal);
 		
+	
+	
+		
 		//还款列表
 		$loan_list = $GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."deal_repay where deal_id=$id ORDER BY repay_time ASC");
 		$manage_fee = 0;
@@ -331,7 +394,7 @@ class uc_dealModule extends SiteBaseModule
 			$impose_money += $v['impose_money'];
 			$repay_money += $v['true_repay_money'];
 			$manage_impose_fee +=$v['manage_impose_money'];
-			
+			$manage_impose_fee +=$v['manage_impose_money'];
 			//还款日
 			$loan_list[$k]['repay_time_format'] = to_date($v['repay_time'],'Y-m-d');
 			$loan_list[$k]['true_repay_time_format'] = to_date($v['true_repay_time'],'Y-m-d');

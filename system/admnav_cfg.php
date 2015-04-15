@@ -500,6 +500,15 @@ return array(
 					array("name"=>"SQL操作","module"=>"Database","action"=>"sql"),
 				),
 			),
+				"Increase"	=>	array(
+				"name"	=>	"加息配置", 
+				"key"	=>	"Increase", 
+				"nodes"	=>	array( 
+					array("name"=>"加息配置","module"=>"Increase","action"=>"index"),
+					array("name"=>"加息详细列表","module"=>"Increase","action"=>"details"),
+				),
+			),
+			
 			
 		),
 	),

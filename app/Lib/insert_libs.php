@@ -18,6 +18,15 @@ function insert_load_today_deal()
 	$GLOBALS['tmpl']->assign("today_deal",$today_deal);
 	return $GLOBALS['tmpl']->fetch("inc/insert/load_today_deal.html");
 }
+//动态加载首页banner用户登陆框
+function insert_index_login_box()
+{
+		
+	//输出未读的消息数2
+	$msg_count = $GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."msg_box where to_user_id = ".intval($GLOBALS['user_info']['id'])." and is_read = 0 and is_delete = 0 and type = 0");
+	$GLOBALS['tmpl']->assign("msg_count",intval($msg_count));
+	return $GLOBALS['tmpl']->fetch("page/index_login_box.html");
+}
 //动态加载用户提示
 function insert_load_user_tip()
 {
@@ -54,6 +63,43 @@ function insert_load_user_tip()
 	}
 	return $GLOBALS['tmpl']->fetch("inc/insert/load_user_tip.html");
 }
+
+function insert_load_user_top()
+{
+	if(intval($GLOBALS['user_info']['id']) > 0){
+		//输出未读的消息数
+		$msg_count = $GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."msg_box where to_user_id = ".intval($GLOBALS['user_info']['id'])." and is_read = 0 and is_delete = 0 and type = 0");
+		$GLOBALS['tmpl']->assign("msg_count",intval($msg_count));
+		$expire = array();
+		if($GLOBALS['user_info']){
+			$time = TIME_UTC;
+	    	$expire_time = 6*30*24*3600;
+	    	if($GLOBALS['user_info']['workpassed']==1){
+	    		if(($time - $GLOBALS['user_info']['workpassed_time']) > $expire_time){
+	    			$expire['workpassed_expire'] = 1;
+	    		}
+	    	}
+	    	if($GLOBALS['user_info']['incomepassed']==1){
+	    		if(($time - $GLOBALS['user_info']['incomepassed_time']) > $expire_time){
+	    			$expire['incomepassed_expire'] = 1;
+	    		}
+	    	}
+	    	if($GLOBALS['user_info']['creditpassed']==1){
+	    		if(($time - $GLOBALS['user_info']['creditpassed_time']) > $expire_time){
+	    			$expire['creditpassed_expire'] = 1;
+	    		}
+	    	}
+	    	if($GLOBALS['user_info']['residencepassed']==1){
+	    		if(($time - $GLOBALS['user_info']['residencepassed_time']) > $expire_time){
+	    			$expire['residencepassed_expire'] = 1;
+	    		}
+	    	}
+	    	$GLOBALS['tmpl']->assign("u_expire",$expire);
+		}
+	}
+	return $GLOBALS['tmpl']->fetch("inc/insert/load_user_top.html");
+}
+
 
 //动态加载用户提示
 function insert_load_user_tip_index()

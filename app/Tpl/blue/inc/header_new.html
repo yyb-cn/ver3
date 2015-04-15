@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{if $page_title}{$page_title} - {/if}{$site_info.SHOP_TITLE}</title>
+<link rel="stylesheet" href="{$TMPL}/css/header.css">
+<script src="{$TMPL}/js/jquery-1.11.2.min.js"></script>
+<script src="{$TMPL}/js/comm.js"></script>
+<body>
+
+<div class="header">
+	<div class="header_main">
+    	<a class="logo" href="{url x="index"}"><img src="{$TMPL}/	images/logo.png" /></a>
+      
+         <ul>
+         	{insert name="load_user_top"}
+            {foreach from=$nav_list item=nav_item key=key}
+        	<li><a href="{$nav_item.url}">{$nav_item.name}</a></li>
+            {/foreach}
+            <li class="weixin">
+            	<div class="weixin_QR"></div>
+            </li>
+            <a target="_blank" href="http://weibo.com/u/5149196976"><li class="weibo"></li></a>
+        </ul>
+    </div>
+</div>
+<div class="header_margin"></div>
+<!-- 头部结束 -->
