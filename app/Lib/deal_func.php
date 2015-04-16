@@ -62,8 +62,9 @@ function get_deal_list($limit="",$cate_id=0, $where='',$orderby = '',$user_name=
 {
 
 	$time = TIME_UTC;
-
+	
 	$count_sql = "select count(*) from ".DB_PREFIX."deal where 1=1 ";
+	
 	if($is_all==false)
 		$count_sql.=" and is_effect = 1 and is_delete = 0 ";
 		
@@ -71,7 +72,9 @@ function get_deal_list($limit="",$cate_id=0, $where='',$orderby = '',$user_name=
 		$extfield = ",(SELECT u.level_id FROM fanwe_user u WHERE u.id=user_id ) as ulevel";
 	}
 
+
 	$sql = "select *,start_time as last_time,(load_money/borrow_amount*100) as progress_point,(start_time + enddate*24*3600 - ".$time.") as remain_time $extfield from ".DB_PREFIX."deal where 1 = 1 ";
+	
 	if($is_all==false)
 		$sql.=" and is_effect = 1 and is_delete = 0 ";
 		
