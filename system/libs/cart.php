@@ -50,23 +50,59 @@ function payment_paid($payment_notice_id, $outer_notice_sn = '')
 	{
 		$payment_notice = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."payment_notice where id = ".$payment_notice_id);
 		$payment_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."payment where id = ".$payment_notice['payment_id']);
-		
+		if($payment_info['class_name'] == 'Voucher')
+		{
+			$GLOBALS['db']->query("update ".DB_PREFIX."deal_order set pay_amount = pay_amount + ".$payment_notice['money'].",ecv_money = ".$payment_notice['money']." where id = ".$payment_notice['order_id']." and is_delete = 0 and order_status = 0 and ((pay_amount + ".$payment_notice['money']." <= total_price) or ".$payment_notice['money'].">=total_price)");
+			$order_incharge_rs = $GLOBALS['db']->affected_rows();
+		}
+		elseif($payment_info['class_name'] == 'Account')
+		{
+			$GLOBALS['db']->query("update ".DB_PREFIX."deal_order set pay_amount = pay_amount + ".$payment_notice['money'].",account_money = account_money + ".$payment_notice['money']." where id = ".$payment_notice['order_id']." and is_delete = 0 and order_status = 0 and pay_amount + ".$payment_notice['money']." <= total_price");
+			$order_incharge_rs = $GLOBALS['db']->affected_rows();
+		}
+		else
+		{
+			$GLOBALS['db']->query("update ".DB_PREFIX."deal_order set pay_amount = pay_amount + ".$payment_notice['money']." where id = ".$payment_notice['order_id']." and is_delete = 0 and order_status = 0 and pay_amount + ".$payment_notice['money']." <= total_price");
+			$order_incharge_rs = $GLOBALS['db']->affected_rows();
+			
+		}
 		$GLOBALS['db']->query("update ".DB_PREFIX."payment set total_amount = total_amount + ".$payment_notice['money']." where class_name = '".$payment_info['class_name']."'");									
 		
-			
-		if (intval($payment_notice['order_id']) == 0){	
-			
-			//充值
+		if(!$order_incharge_rs)
+		{
+
+			//超出充值
 			require_once APP_ROOT_PATH."system/libs/user.php";
-			
-			$msg = sprintf($GLOBALS['lang']['PAYMENT_INCHARGE'],$payment_notice['notice_sn']);			
-			modify_account(array('money'=>$payment_notice['money'],'score'=>0),$payment_notice['user_id'],$msg,1);
-			
-			//在此处开始生成付款的短信及邮件
-			send_payment_sms($payment_notice_id);
-			send_payment_mail($payment_notice_id);
-		}
+			$order_info = $GLOBALS['db']->getRow("select is_delete,order_status from ".DB_PREFIX."deal_order where id = ".intval($payment_notice['order_id']));
+			if($order_info['is_delete']==1||$order_info['order_status']==1)
+                        {
+                            $msg = sprintf($GLOBALS['lang']['DELETE_INCHARGE'],$payment_notice['notice_sn']);
+                        }
+                        else
+                        {
+                            $msg = sprintf($GLOBALS['lang']['PAYMENT_INCHARGE'],$payment_notice['notice_sn']);			
+                            modify_account(array('money'=>$payment_notice['money'],'score'=>0),$payment_notice['user_id'],$msg);
+                            //更新订单的extra_status为1
+                            $GLOBALS['db']->query("update ".DB_PREFIX."deal_order set extra_status = 1 where is_delete = 0 and id = ".intval($payment_notice['order_id']));
+                        }
+                }
 		
+		//在此处开始生成付款的短信及邮件
+		send_payment_sms($payment_notice_id);
+		send_payment_mail($payment_notice_id);	
+                
+//		if (intval($payment_notice['order_id']) == 0){	
+//			
+//			//充值
+//			require_once APP_ROOT_PATH."system/libs/user.php";
+//			
+//			$msg = sprintf($GLOBALS['lang']['PAYMENT_INCHARGE'],$payment_notice['notice_sn']);			
+//			modify_account(array('money'=>$payment_notice['money'],'score'=>0),$payment_notice['user_id'],$msg,1);
+//			
+//			//在此处开始生成付款的短信及邮件
+//			send_payment_sms($payment_notice_id);
+//			send_payment_mail($payment_notice_id);
+//		}
 		
 	}
 	return $rs;

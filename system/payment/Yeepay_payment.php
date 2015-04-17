@@ -54,29 +54,30 @@ class Yeepay_payment implements payment {
 		$payment_info = $GLOBALS['db']->getRow("select id,config,logo from ".DB_PREFIX."payment where id=".intval($payment_notice['payment_id']));
 		$payment_info['config'] = unserialize($payment_info['config']);
 
-		
-		$data_return_url = SITE_DOMAIN.APP_ROOT.'/index.php?ctl=payment&act=response&class_name=Yeepay';
-		
-		
-        $data_merchant_id =  trim($payment_info['config']['yeepay_account']);
-        $data_order_id    = $payment_notice['notice_sn'];
-        $data_amount      = $money;
-        $message_type     = 'Buy';
-        $data_cur         = 'CNY';
-        $product_id       = '';
-        $product_cat      = '';
-        $product_desc     = '';
-        $address_flag     = '0';
-
-		
+	$message_type     = 'Buy';                                           //业务类型 固定值 “ Buy ”
+        $data_merchant_id =  trim($payment_info['config']['yeepay_account']);//商户编号
+        $data_order_id    = $payment_notice['notice_sn'];                    //商户订单号
+        $data_amount      = $money;                                          //支付金额
+        $data_cur         = 'CNY';                                           //交易币种 固定值 ” CNY ”
+        $product_id       = '';                                              //商品名称
+        $product_cat      = '';                                              //商品种类
+        $product_desc     = '';                                              //商品描述
+	$data_return_url = SITE_DOMAIN.APP_ROOT.'/index.php?ctl=payment&act=response&class_name=Yeepay';	//商户接收支 付成功数据的地址
+        $address_flag     = '0';                                             //送货地址
+        $mct_properties   = $payment_notice['notice_sn'];                    //商户扩展信息
+	$pd_FrpId = '';                                                      //支付通道编码
+        $pd_NeedResponse = '1';                                              //应答机制 
+        
         $data_pay_key     = trim($payment_info['config']['yeepay_key']);
         $data_pay_account = trim($payment_info['config']['yeepay_account']);
-        $mct_properties   = $payment_notice['notice_sn'];
         $def_url = $message_type . $data_merchant_id . $data_order_id . $data_amount . $data_cur . $product_id . $product_cat
                              . $product_desc . $data_return_url . $address_flag . $mct_properties ;
-        $MD5KEY = $this->HmacMd5($def_url, $data_pay_key);
-
-        $code  = "\n<form action='https://www.yeepay.com/app-merchant-proxy/node' method='post' target='_blank'>\n";
+        $MD5KEY = $this->HmacMd5($def_url, $data_pay_key);                      //签名数据
+        
+        #	产品通用接口请求地址
+	$reqURL_onLine = "https://www.yeepay.com/app-merchant-proxy/node";
+        
+        $code  = "\n<form action='".$reqURL_onLine."' method='post' target='_blank'>\n";
         $code .= "<input type='hidden' name='p0_Cmd' value='".$message_type."'>\n";
         $code .= "<input type='hidden' name='p1_MerId' value='".$data_merchant_id."'>\n";
         $code .= "<input type='hidden' name='p2_Order' value='".$data_order_id."'>\n";
@@ -88,8 +89,8 @@ class Yeepay_payment implements payment {
         $code .= "<input type='hidden' name='p8_Url' value='".$data_return_url."'>\n";
         $code .= "<input type='hidden' name='p9_SAF' value='".$address_flag."'>\n";
         $code .= "<input type='hidden' name='pa_MP' value='".$mct_properties."'>\n";
-        $code .= "<input type='hidden' name='pd_FrpId' value=''>\n";
-        $code .= "<input type='hidden' name='pd_NeedResponse' value='1'>\n";
+        $code .= "<input type='hidden' name='pd_FrpId' value='".$pd_FrpId."'>\n";
+        $code .= "<input type='hidden' name='pd_NeedResponse' value='".$pd_NeedResponse."'>\n";
         $code .= "<input type='hidden' name='hmac' value='".$MD5KEY."'>\n";
 		
 		if(!empty($payment_info['logo']))
@@ -116,13 +117,14 @@ class Yeepay_payment implements payment {
 		$payment = $GLOBALS['db']->getRow("select id,config from ".DB_PREFIX."payment where class_name='Yeepay'");  
     	$payment['config'] = unserialize($payment['config']);
     	
-    	
+    	#只有支付成功时易宝支付才会通知商户.
+        ##支付成功回调有两次，都会通知到在线支付请求参数中的p8_Url上：浏览器重定向;服务器点对点通讯.
         /* 检查数字签名是否正确 */        
     	$merchant_id    = $payment['config']['yeepay_account'];       // 获取商户编号
         $merchant_key   = $payment['config']['yeepay_key'];           // 获取秘钥
 
         $message_type   = trim($request['r0_Cmd']);
-        $succeed        = trim($request['r1_Code']);   // 获取交易结果,1成功,-1失败
+        $succeed        = trim($request['r1_Code']);   // 获取交易结果,1成功
         $trxId          = trim($request['r2_TrxId']);  //易宝的交易流水号
         
         $amount         = trim($request['r3_Amt']);    // 获取订单金额
@@ -142,7 +144,7 @@ class Yeepay_payment implements payment {
     	
     	
 		$payment_notice_sn = $orderid;
-    	$money = $amount;
+    	$money = $amount; 
     	$outer_notice_sn = $trxId;
     	
 		if (strtoupper($mac) == strtoupper($mymac))
