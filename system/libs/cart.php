@@ -52,17 +52,10 @@ function payment_paid($payment_notice_id, $outer_notice_sn = '')
 		$payment_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."payment where id = ".$payment_notice['payment_id']);
 		$GLOBALS['db']->query("update ".DB_PREFIX."payment set total_amount = total_amount + ".$payment_notice['money']." where class_name = '".$payment_info['class_name']."'");									
 		
-<<<<<<< .mine
-		if(!$order_incharge_rs)
-		{
-
-			//超出充值
-=======
 		$rs = $GLOBALS['db']->affected_rows();	
 		//if (intval($payment_notice['order_id']) == 0){//order_id为关联的订单号ID也就是fanwe_deal_order表的id字段，在v3版本已经去除fanwe_deal_order表。则order_id为0 应该判断 上个操作fanwe_payment表update 是否执行成功。 
 		if ($rs){	//	
 			//充值
->>>>>>> .theirs
 			require_once APP_ROOT_PATH."system/libs/user.php";
 			
 			//$msg = sprintf($GLOBALS['lang']['PAYMENT_INCHARGE'],$payment_notice['notice_sn']);	//lang 显示错误
@@ -74,9 +67,6 @@ function payment_paid($payment_notice_id, $outer_notice_sn = '')
 			send_payment_mail($payment_notice_id);
 		}
 		
-		//在此处开始生成付款的短信及邮件
-		send_payment_sms($payment_notice_id);
-		send_payment_mail($payment_notice_id);	
                 
 //		if (intval($payment_notice['order_id']) == 0){	
 //			
