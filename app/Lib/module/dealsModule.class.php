@@ -11,13 +11,47 @@ require APP_ROOT_PATH.'app/Lib/deal.php';
 class dealsModule extends SiteBaseModule
 {
 	public function index(){
+
 		$GLOBALS['tmpl']->caching = true;
 		$GLOBALS['tmpl']->cache_lifetime = 60;  //首页缓存10分钟
 		$field = es_cookie::get("shop_sort_field"); 
 		$field_sort = es_cookie::get("shop_sort_type"); 
 		$cache_id  = md5(MODULE_NAME.ACTION_NAME.implode(",",$_REQUEST).$field.$field_sort);	
 		if (!$GLOBALS['tmpl']->is_cached("page/deals.html", $cache_id))
-		{	
+		{
+			
+			
+			 $user_r = $GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."user where id > 0 ");
+	    $GLOBALS['tmpl']->assign('user_r',$user_r);
+		
+		$total_money = $GLOBALS['db']->getOne("SELECT sum(borrow_amount) FROM ".DB_PREFIX."deal WHERE deal_status in(2,4) ");
+		
+		$GLOBALS['tmpl']->assign("total_money",$total_money);
+
+			//预期收益额
+		$deal_m = $GLOBALS['db']->getAll("select `load_money`,`repay_time_type`,`rate`,`repay_time` from ".DB_PREFIX."deal where deal_status in(1,2,4,5)");
+	
+			$n=0;
+		foreach($deal_m as $k=>$v){
+			
+			if($v['repay_time_type']){         //月
+				  //公式
+				$n+=($v['load_money']*($v['rate']*0.01))*$v['repay_time']/12;
+				}
+			
+			else{                         //天
+			 //公式
+			$n+=($v['load_money']*($v['rate']*0.01))*$v['repay_time']/365;
+			}
+		}
+		$yuqishouyi=$n; 
+	
+			$GLOBALS['tmpl']->assign('yuqishouyi',$yuqishouyi);
+	   
+		$result = get_deal_list($limit,$n_cate_id,$condition,$orderby);
+				
+		$GLOBALS['tmpl']->assign("deal_list",$result['list']);
+
 			require APP_ROOT_PATH.'app/Lib/page.php';
 			$level_list = load_auto_cache("level");
 			$GLOBALS['tmpl']->assign("level_list",$level_list['list']);

@@ -217,7 +217,7 @@ class uc_msgModule extends SiteBaseModule
 		$GLOBALS['tmpl']->assign("inc_file","inc/uc/uc_msg_setting.html");
 		$GLOBALS['tmpl']->display("page/uc.html");	
 	}
-	
+
 	public function savesetting(){
 		if($GLOBALS['user_info']['id'] > 0){
 			$data['user_id'] = intval($GLOBALS['user_info']['id']);

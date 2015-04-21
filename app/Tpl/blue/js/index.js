@@ -1,67 +1,23 @@
-function showNextNav(a){
-	var show = $(a).next('ul').is(':hidden');
-	if(show){
-		$(a).next('ul').slideDown();
-	}
-	else{
-		$(a).next('ul').slideUp();
-	}
-}
-
-var bodyWidth;
-
-$(window).ready(function() {
-    bodyWidth = $(document.body).outerWidth(true);
-	if(bodyWidth <= 1320){
-		$('.header').hide();
-		$('.header_top').show();
-		$('.wraper').css('margin-left',0);
-	}
-	else{
-		$('.header_top').hide();
-		$('.header').show();
-		$('.wraper').css('margin-left',200);
-	}
-	if(bodyWidth <= 1850){
-		$('.wraper').css('width',1100);
-	}
+/* index */
+$(document).ready(function() {	
+	$('.goods').find('li').mouseenter(
+		function(){
+			$(this).find('a').addClass('bounce animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+				$(this).removeClass();
+			});
+		}
+    );
 	
-	var bodyHeight = $(window).height();
-	bodyHeight = bodyHeight - 100;
-	$('.header').css('height',bodyHeight);
+	$('.left_four').find('li').mouseenter(
+		function(){
+			$(this).find('.left_goto').addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+				$(this).removeClass('shake animated');
+			});
+		}
+    );
 });
 
-$(window).resize(function() {
-	bodyWidth = $(document.body).outerWidth(true);
-	if(bodyWidth <= 1320){
-		$('.header').hide();
-		$('.header_top').show();
-		$('.wraper').css('margin-left',0);
-	}
-	else{
-		$('.header_top').hide();
-		$('.header').show();
-		$('.wraper').css('margin-left',200);
-	}
-	if(bodyWidth <= 1850){
-		$('.wraper').css('width',1100);
-	}
-	else{
-		$('.wraper').css('width',1650);
-	}
-	//  $('.logo').html($(window).width());
-	//  alert($(window).width()); //浏览器时下窗口可视区域宽度 
-	//  alert($(window).height()); //浏览器时下窗口可视区域高度 
-	//  alert($(document).height()); //浏览器时下窗口文档的高度 
-	//  alert($(document.body).height());//浏览器时下窗口文档body的高度 
-	//  alert($(document.body).outerHeight(true));//浏览器时下窗口文档body的总高度 包括border padding margin 
-	//  
-	//  alert($(document).width());//浏览器时下窗口文档对于象宽度 
-	//  alert($(document.body).width());//浏览器时下窗口文档body的高度 
-	//  alert($(document.body).outerWidth(true));//浏览器时下窗口文档body的总宽度 包括border padding margin 
-})
-
-
+/* banner */
 function getStyle(obj,name)
 {
 	if(obj.currentStyle)
@@ -123,60 +79,60 @@ function startMove(obj,att,add)
 	},30)
 }
 
-  window.onload = function()
-  {
-	  var oDiv = document.getElementById('playBox');
-	  var oPre = getByClass(oDiv,'pre')[0];
-	  var oNext = getByClass(oDiv,'next')[0];
-	  var oUlBig = getByClass(oDiv,'oUlplay')[0];
-	  var aBigLi = oUlBig.getElementsByTagName('li');
-	  var oDivSmall = getByClass(oDiv,'smalltitle')[0]
-	  var aLiSmall = oDivSmall.getElementsByTagName('li');
-	  
-	  function tab()
-	  {
-	     for(var i=0; i<aLiSmall.length; i++)
-	     {
-		    aLiSmall[i].className = '';
-	     }
-	     aLiSmall[now].className = 'thistitle'
-	     startMove(oUlBig,'left',-(now*aBigLi[0].offsetWidth))
-	  }
-	  var now = 0;
-	  for(var i=0; i<aLiSmall.length; i++)
-	  {
-		  aLiSmall[i].index = i;
-		  aLiSmall[i].onclick = function()
-		  {
-			  now = this.index;
-			  tab();
-		  }
-	 }
-	  oPre.onclick = function()
-	  {
-		  now--
-		  if(now ==-1)
-		  {
-			  now = aBigLi.length;
-		  }
-		   tab();
-	  }
-	   oNext.onclick = function()
-	  {
-		   now++
-		  if(now ==aBigLi.length)
-		  {
-			  now = 0;
-		  }
-		  tab();
-	  }
-	  var timer = setInterval(oNext.onclick,3000) //滚动间隔时间设置
-	  oDiv.onmouseover = function()
-	  {
-		  clearInterval(timer)
-	  }
-	   oDiv.onmouseout = function()
-	  {
-		  timer = setInterval(oNext.onclick,3000) //滚动间隔时间设置
-	  }
-  }
+window.onload = function()
+{
+	var oDiv = document.getElementById('playBox');
+	var oPre = getByClass(oDiv,'pre')[0];
+	var oNext = getByClass(oDiv,'next')[0];
+	var oUlBig = getByClass(oDiv,'oUlplay')[0];
+	var aBigLi = oUlBig.getElementsByTagName('li');
+	var oDivSmall = getByClass(oDiv,'smalltitle')[0]
+	var aLiSmall = oDivSmall.getElementsByTagName('li');
+	
+	function tab()
+	{
+	   for(var i=0; i<aLiSmall.length; i++)
+	   {
+		  aLiSmall[i].className = '';
+	   }
+	   aLiSmall[now].className = 'thistitle'
+	   startMove(oUlBig,'left',-(now*aBigLi[0].offsetWidth))
+	}
+	var now = 0;
+	for(var i=0; i<aLiSmall.length; i++)
+	{
+		aLiSmall[i].index = i;
+		aLiSmall[i].onclick = function()
+		{
+			now = this.index;
+			tab();
+		}
+   }
+	oPre.onclick = function()
+	{
+		now--
+		if(now ==-1)
+		{
+			now = aBigLi.length;
+		}
+		 tab();
+	}
+	 oNext.onclick = function()
+	{
+		 now++
+		if(now ==aBigLi.length)
+		{
+			now = 0;
+		}
+		tab();
+	}
+	var timer = setInterval(oNext.onclick,3000) //婊氬姩闂撮殧鏃堕棿璁剧疆
+	oDiv.onmouseover = function()
+	{
+		clearInterval(timer)
+	}
+	 oDiv.onmouseout = function()
+	{
+		timer = setInterval(oNext.onclick,3000) //婊氬姩闂撮殧鏃堕棿璁剧疆
+	}
+}

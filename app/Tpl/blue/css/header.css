@@ -1,0 +1,48 @@
+@charset "utf-8";
+
+body{ font-size:12px; color:#333; background:#E9EBED; font-family:"微软雅黑", "黑体", "仿宋";}
+h1,h2,h3,h4,h5,h6,p,ul,li,img,table,td,tr,button,form{margin:0; padding:0;}
+ul{ list-style:none;}
+* { padding:0; margin:0; list-style:none;}
+img{border:0px;}
+a{ text-decoration:none; color:#333;}
+a:hover { color:#F00;}
+.clear{clear:both;}
+.top,.headf,.foot{width:100%;}
+
+.header { width:100%; height:85px; background:#FFF; position:fixed; z-index:20;}
+	.header_main { width:1200px; height:85px; margin:0 auto;}
+		.header_main .logo { float:left; margin:15px 0 0 30px;}
+		
+		.header_main ul { float:left; margin-left:35px; margin-top:30px; font-size:14px; font-weight:bold;}
+			.header_main ul li { float:left; margin-left:35px;}
+			.header_main ul .weixin { width:20px; height:20px; background:url(../images/weixin.png) no-repeat; position:relative; margin-top:-2px;}
+				.header_main ul .weixin:hover { background:url(../images/weixin.png) 0 -30px no-repeat;}
+				
+				.header_main ul .weixin .weixin_QR { display:none; width:164px; height:164px; border:1px solid #ccc; border-radius:2px; background:url(../images/QR.jpg) no-repeat; position:absolute; margin-top:21px; z-index:11;}
+			
+			.header_main ul .weibo { width:20px; height:18px; background:url(../images/weibo.png) no-repeat; margin-left:12px;}
+				.header_main ul .weibo:hover { background:url(../images/weibo.png) 0 -32px no-repeat;}
+.header_margin { width:100%; height:85px;}
+/* 头部结束 */
+
+
+/* 脚部 */
+.about_us_wrap { clear:both; width:100%; height:125px; background:#E9EBED;}	
+.about_us { width:1200px; height:125px; margin:0 auto;}
+	  .about_us ul { float:left; margin:30px 0 0 35px; color:#666; font-size:14px; width:450px;}
+		  .about_us ul li { float:left;}
+		  
+	  .about_us .about_us_r { float:right; margin-top:20px; margin-right:10px;}
+
+				
+.footer { clear:both; width:100%; height:185px; background:#FFF; border-top:3px #F00 solid;}
+	.footer .footer_main { width:1200px; height:185px; margin:0 auto;}
+		.ft_l { float:left; font-size:14px; margin-left:35px; margin-top:30px;}
+		
+		.ft_l2 { float:left; text-align:center; margin-left:20px; margin-top:10px;}
+		
+		.ft_r { float:right;}
+			.ft_r div { float:left; margin-top:50px; margin-right:10px;}
+				.aqlm { display:block; width:114px; height:41px;}
+					.aqlm img { width:100%; height:100%;}

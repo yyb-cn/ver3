@@ -62,8 +62,9 @@ function get_deal_list($limit="",$cate_id=0, $where='',$orderby = '',$user_name=
 {
 
 	$time = TIME_UTC;
-
+	
 	$count_sql = "select count(*) from ".DB_PREFIX."deal where 1=1 ";
+	
 	if($is_all==false)
 		$count_sql.=" and is_effect = 1 and is_delete = 0 ";
 		
@@ -71,7 +72,9 @@ function get_deal_list($limit="",$cate_id=0, $where='',$orderby = '',$user_name=
 		$extfield = ",(SELECT u.level_id FROM fanwe_user u WHERE u.id=user_id ) as ulevel";
 	}
 
+
 	$sql = "select *,start_time as last_time,(load_money/borrow_amount*100) as progress_point,(start_time + enddate*24*3600 - ".$time.") as remain_time $extfield from ".DB_PREFIX."deal where 1 = 1 ";
+	
 	if($is_all==false)
 		$sql.=" and is_effect = 1 and is_delete = 0 ";
 		
@@ -357,7 +360,10 @@ function get_deal_load_list($deal){
 		}
 		
 		$loan_list[$i]['repay_day'] = $v['repay_time'];
-		
+				
+			//加息劵利息
+			$loan_list[$i]['incerease_money'] = $v['incerease_money'];
+				
 		//月还本息
 		$loan_list[$i]['month_repay_money'] = $v['repay_money'];
 		//判断是否已经还完
@@ -386,7 +392,7 @@ function get_deal_load_list($deal){
 			
 			//逾期管理费
 			$loan_list[$i]['manage_impose_money'] = $v['manage_impose_money'];
-				
+		
 			//真实还多少
 			$loan_list[$i]['month_has_repay_money_all'] = $loan_list[$i]['month_has_repay_money'] + $loan_list[$i]['month_manage_money']+$loan_list[$i]['impose_money']+$loan_list[$i]['manage_impose_money'];
 			
@@ -472,7 +478,8 @@ function get_deal_load_list($deal){
 
 				//罚息
 				$loan_list[$i]['impose_money'] = $loan_list[$i]['month_repay_money']*$impose_fee*$day/100;
-				
+					//加息劵利息
+			     $loan_list[$i]['incerease_money'] = $v['incerease_money'];
 				
 				//罚管理费
 				$loan_list[$i]['manage_impose_money'] = $loan_list[$i]['month_repay_money']*$manage_impose_fee*$day/100;
@@ -500,6 +507,7 @@ function get_deal_load_list($deal){
 			$loan_list[$i]['month_need_all_repay_money'] =  $loan_list[$i]['month_repay_money'] + $loan_list[$i]['month_manage_money'] + $loan_list[$i]['impose_money'] + $loan_list[$i]['manage_impose_money'];
 		}
 
+
 		//还款日
 		$loan_list[$i]['repay_day_format'] = to_date($loan_list[$i]['repay_day'],'Y-m-d');
 		//已还金额
@@ -514,6 +522,8 @@ function get_deal_load_list($deal){
 		
 		//借款管理费
 		$loan_list[$i]['manage_money_impose_format'] = format_price($loan_list[$i]['manage_impose_money']);
+		//加息劵利息
+	     $loan_list[$i]['manage_incerease_money_format'] = format_price($loan_list[$i]['incerease_money']);
 
 		//逾期费用
 		$loan_list[$i]['impose_money_format'] = format_price($loan_list[$i]['impose_money']);
@@ -859,10 +869,10 @@ function check_dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc = 0){
 		return $root;
 	}
 	
-	if(md5($bid_paypassword)!=$GLOBALS['user_info']['paypassword']){
-		$root["show_err"] = $GLOBALS['lang']['PAYPASSWORD_ERROR'];
-		return $root;
-	}
+	// if(md5($bid_paypassword)!=$GLOBALS['user_info']['paypassword']){
+		// $root["show_err"] = $GLOBALS['lang']['PAYPASSWORD_ERROR'];
+		// return $root;
+	// }
 	
 	$deal = get_deal($deal_id);
 	if(!$deal){
@@ -900,25 +910,25 @@ function check_dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc = 0){
 	//@file_put_contents("/Public/sqlog.txt",print_r($_REQUEST,1));
 	//手机端或者 按份数 默认跑到这里
 	if ($deal['uloadtype'] == 0 || $is_pc == 0){
-		if($bid_money <=0 || $bid_money < $deal['min_loan_money'] || ($bid_money * 100)%100!=0){
-			$root["show_err"] = $GLOBALS['lang']['BID_MONEY_NOT_TRUE'];
-			//print_r($deal);
-			return $root;
-		}
-		if(floatval($deal['max_loan_money']) >0){
-			if($bid_money > floatval($deal['max_loan_money'])){
-				$root["show_err"] = $GLOBALS['lang']['BID_MONEY_NOT_TRUE'];
-				//print_r($deal);
-				/*
-				 $root["bid_money"] = $bid_money;
-				$root["max_loan_money"] = floatval($deal['max_loan_money']);
-				$root["show_err"] = 'ddd2';
-				print_r($root);
-				die();
-				*/
-				return $root;
-			}
-		}
+		// if($bid_money <=0 || $bid_money < $deal['min_loan_money'] || ($bid_money * 100)%100!=0){
+			// $root["show_err"] = $GLOBALS['lang']['BID_MONEY_NOT_TRUE'];
+		///	print_r($deal);
+			// return $root;
+		// }
+		// if(floatval($deal['max_loan_money']) >0){
+			// if($bid_money > floatval($deal['max_loan_money'])){
+				// $root["show_err"] = $GLOBALS['lang']['BID_MONEY_NOT_TRUE'];
+			// /*	//print_r($deal);
+				// /*
+				 // $root["bid_money"] = $bid_money;
+				// $root["max_loan_money"] = floatval($deal['max_loan_money']);
+				// $root["show_err"] = 'ddd2';
+				// print_r($root);
+				// die();
+				// */////
+				// return $root;
+			// }
+		// }
 		
 		if((int)strim(app_conf('DEAL_BID_MULTIPLE')) > 0){
 			if($bid_money%(int)strim(app_conf('DEAL_BID_MULTIPLE'))!=0){

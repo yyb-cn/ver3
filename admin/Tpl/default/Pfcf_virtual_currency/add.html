@@ -1,0 +1,48 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+
+<script type="text/javascript">
+</script>
+<div class="main">
+<div class="main_title">浦发币记录添加</div>
+<div class="blank5"></div>
+<div class="blank5"></div>
+<div class="search_row">
+<form name="search" action="__APP__" method="post">	
+	<br>
+		<br>
+			<br>
+				<br>
+		   &nbsp;&nbsp;&nbsp; 用户名：<input type="text" class="textbox" name="user_name" value="" />	
+	<br>
+	<br>
+		所操作的浦发币：<input type="text" class="textbox" name="virtual_currency" value="" />	
+	<br>
+	<br>
+	    现在拥有浦发币：<input type="text" class="textbox" name="account_virtual_currency" value="" />	
+	<br>
+	    标_id：<input type="text" class="textbox" name="deal_id" value="" />	
+	<br>
+	<br>		
+		<input type="hidden" value="Pfcf_virtual_currency" name="m" />
+		<input type="hidden" value="on_add" name="a" />
+	<br>
+	<br>
+		&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp; <input type="submit" class="button" value="添加" />
+</form>
+	
+</div>
+<div class="blank5"></div>
+
+
+<div class="blank5"></div>
+</div>
+<include file="Public:footer" />

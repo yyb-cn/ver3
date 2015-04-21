@@ -10,6 +10,7 @@
 <load href='__TMPL__Common/js/calendar/calendar.js' />
 <script type="text/javascript">
 	var is_do_lock = false;
+	//流标点击
 	jQuery(function(){
 		$("input[name='deal_status']").click(function(){
 			var rel= parseInt($(this).val());
@@ -31,6 +32,30 @@
 		$("#success_loans_box").hide();
 		$("#bad_loans_box").hide();
 	}
+	
+	//满标点击
+	jQuery(function(){
+		$("input[name='deal_full']").click(function(){
+			var rel= parseInt($(this).val());
+			switch(rel){
+				case 0:
+					$("#success_loans_full").show();
+					$("#bad_loans_full").hide();
+					break;
+				case 3:
+					$("#success_loans_full").hide();
+					$("#bad_loans_full").show();
+					break;
+			}
+		});
+	});
+	
+	function nothingdo(){
+		$("input[name='deal_full']").attr("checked",false);
+		$("#success_loans_full").hide();
+		$("#bad_loans_full").hide();
+	}
+	
 	/**
 	 * 满标放款
 	 */
@@ -107,7 +132,12 @@
 			}
 		});
 	}
-	
+	/**
+	*满标操作；
+	**/
+	function do_full(id){
+		window.location.href = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=do_full"+"&id="+id;
+	}
 	/**
 	*到导出投标列表
 	**/
@@ -186,12 +216,20 @@
 			</if>	
 			
 			<if condition="($deal_info['deal_status'] eq 3 || $deal_info['deal_status'] eq 2  || ((($deal_info['start_time'] + $deal_info['enddate'] *24*3600 - 1) lt TIME_UTC) && $deal_info['deal_status'] eq 1) || $deal_info['deal_status'] eq 1 || $deal_info['deal_status'] eq 0) && $deal_info['is_has_received'] eq 0 ">
-				<label><input type="radio" name="deal_status" value="1" />流标<if condition="$deal_info['buy_count'] gt 0">返还</if></lable>
+				<label><input type="radio" name="deal_status" value="1" />流标<if condition="$deal_info['buy_count'] gt 0">返还</if></label>   
+                        <if condition="$deal_stat eq 1">
+                        <label><input type="radio" name="deal_full" value="3" />满标<if condition="$deal_info['buy_count'] gt 0">返还</if>
+                        </label>
+                        </if>
+                        
+                </lable> 
+            
 			</if>
+        
 			<if condition="$loan_list">
 				<input type="button" class="button" value="导出投标列表" onclick="do_export_load({$deal_info.id});">
 			</if>
-		</td>
+		</td>   
 	</tr>
 	
 	<tr id="success_loans_box" style="display:none;">
@@ -238,7 +276,19 @@
 			<input type="button" class="button" value="取消" onclick="nothingdo();">
 		</td>
 	</tr>
+
 	
+	<tr id="bad_loans_full" style="display:none">
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			
+			<div class="blank1"></div>
+			<input type="button" class="button" value="确定满标" onclick="do_full({$deal_info.id});">
+			<input type="button" class="button" value="取消" onclick="nothingdo();">
+		</td>
+	</tr>
+    
+    
 	
 	<if condition="$loan_list">
 	<tr>

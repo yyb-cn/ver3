@@ -52,7 +52,7 @@ function tabHref(href,menuName){
 		htmlLi = '<li class="tab_current"><a class="tab_url" href="'+href+'" id="mainid'+mainID+'" onClick="tabClick(this);return false;">'+menuName+'</a><a class="tab_out" id="mmainid'+mainID+'" href="javascript:void(0);" onClick="tabOff(this);">×</a></li>';
 		$(".tab_main").append(htmlLi);
 		
-		htmlMain = '<div class="tab_main_div mmainid'+mainID+'"><iframe SRC="'+href+'" FRAMEBORDER=0 width="100%" height="800"></iframe></div>';
+		htmlMain = '<div class="tab_main_div mmainid'+mainID+'"><iframe src="'+href+'" FRAMEBORDER=0 width="100%" height="800"></iframe></div>';
 		$('.tab_main_div').hide();
 		$(".tab_main").after(htmlMain);
 		return false;
@@ -60,11 +60,18 @@ function tabHref(href,menuName){
 }
 
 function tabClick(tab){
-	$(".tab_main").find('li').removeClass('tab_current');
-	$(tab).parent('li').addClass('tab_current');
-	$('.tab_main_div').hide();
-	$(".m"+tab.id).show();
-	return false;
+	if($(tab).parent('li').attr('class') == 'tab_current'){
+		htmlMain = '<iframe src="'+tab.href+'" FRAMEBORDER=0 width="100%" height="800"></iframe>';
+		$('.m'+tab.id).html(htmlMain);
+		return false;
+	}
+	else{
+		$(".tab_main").find('li').removeClass('tab_current');
+		$(tab).parent('li').addClass('tab_current');
+		$('.tab_main_div').hide();
+		$(".m"+tab.id).show();
+		return false;
+	}
 }
 
 function tabOff(off){

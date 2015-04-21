@@ -1,0 +1,129 @@
+{include file="inc/header.html"}
+<?php
+$this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$dealcss"}" />
+<script type="text/javascript" src="{$TMPL}/lottery/every_lottery.js"></script>
+<script type="text/javascript" src="{$TMPL}/lottery/lottery_every.js"></script>
+	<div id="deal-default" class="clearfix">
+		<p class="pos">
+			<a href="{url x="index" r="index"}">首页</a> > <a href="{url x="index" r="deals"}">投资列表</a> > 加息劵详情
+		</p>
+		<div id="deal-intro" class="clearfix cf">
+			<div class="tl">
+				<div class="lf">
+					<span><a href="javascript:void(0);">{$deal_name}</a></span>
+					<img src="{$deal.cate_info.icon}" width="24" height="24" />
+				
+					
+					&nbsp;&nbsp;
+					领取人：<a href="{$u_info.url}" class="f_red" style="padding:0">{$u_info.user_name}</a>
+				</div>
+				<div class="rt detail_number">
+					<a href="javascript:void(0);" class="f_blue" onclick="openWeeboxFrame('{url x="index" r="tool#contact" p="win=1&id=$deal.id"}','借款协议（范本）',1024,400);" >借款协议（范本）&nbsp;&nbsp;&nbsp;&nbsp;</a>
+			
+				</div>
+			</div>
+            
+            
+            
+            
+            <form name="edit" action="index.php?ctl=increase&act=increase_use" method="post" enctype="multipart/form-data">
+             <input type="hidden"  name="deal_id" value="{$deal_id}" />
+             <input type="hidden"  name="user_id" value="{$user_id}" />  
+              {foreach from =$user_increase_yields item="cates" key=key}
+             <input type="hidden"  name="user_increase_yields" value="{$cates.yields}" />
+             {/foreach}
+			<div class="bd">
+				<div class="bd_lf">
+					 <select name="user_increase_id">
+					 {foreach from =$user_increase_yields item="cates" key=key}
+                   
+						<option value="{$cates.id}">
+							{$cates.yields}%
+						</option>
+					{/foreach}
+					</select>
+                             <input type="submit" class="button" value="使用加息劵" />
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+					<div class="bd_2">
+						<div>领取记录：</div>
+                         <p><span class="fc-red">领取时间：
+                       {foreach from =$arr item="cates" key=key}
+                        </span>{$cates}</p>
+                        {/foreach}	
+                        
+						<div class="rt">
+                       
+							<div class="f_l" style="width:140px;">
+							 	
+									<img src="{$TMPL}/images/load.png" alt="" width="134px" height="128px">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+                </div>
+                </form>
+                
+                
+                
+                
+                
+                
+				<div class="bd_rt">
+					<div class="dsjbox">
+						
+					</div>
+				
+					<input type="hidden" id="score_id" value="{$u_info.id}">
+					
+					<div class="blank1"></div>
+						
+						<div class="touzbox {if $deal.uloadtype eq 1}c_number-box{/if}">
+							
+                            <a href="javascript:void(0);" onclick="start_lottery();" class="tz_link"> 领取加息劵</a>
+							
+						</div>
+						
+				</div>
+			
+                     
+						
+					
+                 
+					
+					
+		
+		<div class="blank"></div>
+		<div class="blank"></div>
+		<div class="desc_inf wrap clearfix">
+	        <div class="list_title clearfix" id="J_deal_tab_select">
+	            <ul>
+	                <li class="list1 right_tab_select" style="cursor:pointer;" rel="1">加息劵领取规则</li>
+					
+	            </ul>
+	        </div>
+			<div class="cont clearfix" id="J_deal_tab_box">
+				  <div class="pull-left" style="width: 370px;">
+                            <h1 class="f16 mt5">【活动时间】：2015年2月1日-2月26日</h1>
+                            <h1 class="f16 mt5">【活动规则】</h1>
+                            <p><span class="fc-red">一、每天登录领加息券：</span> 浦发财富累计投资金额≥1000元用户，每天登录浦发财富网站即可领取一张加息券。</p>
+                            <p><span class="fc-red">二、推荐好友领加息券：</span>浦发财富所有用户，每成功推荐一位好友新注册并投资金发宝≥10元，推荐人可领取一张加息券，领加息券次数无上限。</p>
+                            <h1 class="f16 mt5">【加息券说明】</h1>
+                            <p>加息券分为1%、2%、3%、4%、5%、6%、8%六种，系统随机分配。多次领取的加息券自动累加，使用后只可加息一次，加息后的利率=浦发财富投标的利率+加息券总利率，加息后最高利率为100%，高于100%的部分可在下次加息使用。未使用的加息券于2月27日上午9:00到期，请在到期前使用。</p>
+                            <p><a href="{$Jin.WWW_URL}/news/detail/550.html" target="_blank" class="fc-orange">查看详情&gt;&gt;</a> </p>
+                        </div>
+				</div>
+					
+{include file="inc/footer.html"}
+
+
+
+								

@@ -1,7 +1,7 @@
 <?php
 return array(
 	//后台管理框架语言
-	'HOME'	=>	'待办事务',
+	'HOME'	=>	'待办事务asd',
 	'NO_RESULT'	=>	'没有结果',
 	'ADMIN_PLATFORM'	=>	'后台管理系统',
 	'TOKEN_ON'			=>	'令牌验证失败',
@@ -188,6 +188,23 @@ return array(
 	'TYPE_TREE'=>'借款用途',
 	'NO_SELECT_TYPE'=>'未选取类型',
 	
+
+
+
+
+
+          //=============加息配置===========//
+	        'INCREASE_INDEX'   =>	'加息配置',
+			'CONF_CACHE_PLUS'	=>	'加息开启',
+	        'CONF_CACHE_PLUS_1'	=>	'开启',
+	        'CONF_CACHE_PLUS_0'	=>	'关闭',
+			'INCREASE_DETAILS'	=>	'加息列表',
+            'CONF_GROUP_8'	=>	'加息开启设置',
+
+
+
+
+
 
 	//=============数据库备份===========//
 	'DATABASE_INDEX'	=>	'备份文件列表',

@@ -1,0 +1,72 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+
+<script type="text/javascript">
+	function show_detail(id)
+	{
+		window.location.href=ROOT+'?m=Deal&a=show_detail&id='+id;
+	}
+	function preview(id)
+	{
+		window.open("__ROOT__/index.php?ctl=deal&id="+id+"&preview=1");
+	}
+	function repay_plan(id)
+	{
+		window.location.href=ROOT+'?m=Deal&a=repay_plan&id='+id;
+	}
+  function deal_add()
+	{
+		window.location.href=ROOT+'?m=Pfcf_virtual_currency&a=add'
+	}
+
+</script>
+<php>	
+	function check_del($id){
+			return '<a href="__ROOT__/m.php?m=Pfcf_virtual_currency&a=del&id='.$id.'">删除</a>&nbsp;';
+	}
+</php>
+<div class="main">
+<div class="main_title">浦发币</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="deal_add();" />
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		{%DEAL_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['name'])}" />
+		<input type="hidden" value="Pfcf_virtual_currency" name="m" />
+		<input type="hidden" value="<php>echo ACTION_NAME;</php>" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>	
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="Pfcf_virtual_currency" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,user_id:用户_id
+		,user_name:用户名
+		,virtual_currency:操作虚拟币
+		,account_virtual_currency:现有虚拟币 
+	    ,create_time|:操作时间" 
+
+	actionlist="id|check_del"
+	actionwidth="200px" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

@@ -160,11 +160,25 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 							<div><span class="f_dgray">(已买<span class="f_red">{$has_bid_portion}</span>份{if $deal.max_portion}，最多可购买<span class="f_red">{$deal.max_portion}</span>份{/if})</div>
 							{else}
 							<span class="holder_tip">请输入投资金额</span>
-							<input class="f-input"  autocomplete="off" name="bid_money" id="J_BIDMONEY" />
+							<input class="f-input"  autocomplete="off" name="bid_money" id="J_BIDMONEY"  />
 							<input type="hidden" name="id" value="{$deal.id}" />
 							<span class="unit">元</span>
+<<<<<<< HEAD
+					<!--		<input  name="pfcf_money" id="J_PFCFMONEY" value="0" />-->
+=======
+							<input  name="pfcf_money" id="J_PFCFMONEY" value="0" />
+>>>>>>> 396d16c3992496227921e2eed43ce85ece14ea23
+							<br>
+							<span >请输入要投资的虚拟币</span>
 							<div class="blank5"></div>
 							收益：<span class="J_u_money_sy f_red">0.00</span>
+                              {if $ease_val eq 1}
+                           
+                            	  <form name="edit" action="index.php?ctl=increase&act=in_add" method="post" enctype="multipart/form-data">
+                                              <input type="hidden"  name="deal_id" value="{$deal.id}" />
+                                              <input type="submit" class="tz_link"  style=" line-height:10px; font-size:20px" value="领取加息劵" />
+                                                      </form> 
+                            {/if}
 							{/if}
 							<a href="javascript:void(0);" class="tz_link" id="tz_link">立即投资</a>
 						</div>
@@ -337,25 +351,25 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 		});
 		
 		$("#tz_link").click(function(){
-			{if $deal.uloadtype eq 0}
-			if($.trim($("#J_BIDMONEY").val())=="" || !$.checkNumber($("#J_BIDMONEY").val()){if (int)app_conf('DEAL_BID_MULTIPLE') gt 0} || parseFloat($("#J_BIDMONEY").val())%{function name='app_conf' v='DEAL_BID_MULTIPLE'}!=0{/if} || parseFloat($("#J_BIDMONEY").val())<=0 || parseFloat($("#J_BIDMONEY").val())<{$deal.min_loan_money} {if $deal.max_loan_money gt 0}|| parseFloat($("#J_BIDMONEY").val())>{$deal.max_loan_money}{/if}){
-				is_submit_lock = false;
-				$.showErr(LANG.BID_MONEY_NOT_TRUE,function(){
-					$("#J_BIDMONEY").focus();
-				});
+		//	{if $deal.uloadtype eq 0}
+//if($.trim($("#J_BIDMONEY").val())=="" || !$.checkNumber($("#J_BIDMONEY").val()){if (int)app_conf('DEAL_BID_MULTIPLE') gt 0} || parseFloat($("#J_BIDMONEY").val())%{function name='app_conf' v='DEAL_BID_MULTIPLE'}!=0{/if} || parseFloat($("#J_BIDMONEY").val())<=0 || parseFloat($("#J_BIDMONEY").val())<{$deal.min_loan_money} {if $deal.max_loan_money gt 0}|| parseFloat($("#J_BIDMONEY").val())>{$deal.max_loan_money}{/if}){
+			//	is_submit_lock = false;
+//$.showErr(LANG.BID_MONEY_NOT_TRUE,function(){
+		//			$("#J_BIDMONEY").focus();
+		//		});
+		//	
+		//		return false;
+		//	}
+		//	{else}
 			
-				return false;
-			}
-			{else}
-			
-				if($.trim($("#J_BIDMONEY").val())=="" || !$.checkNumber($("#J_BIDMONEY").val()) || parseInt($.trim($("#J_BIDMONEY").val())) <=0 || parseFloat($.trim($("#J_BIDMONEY").val()))%parseInt($.trim($("#J_BIDMONEY").val()))!=0){
-					is_submit_lock = false;
-					$.showErr("请输入正确的份数",function(){
-						$("#J_BIDMONEY").focus();
-					});
+				//if($.trim($("#J_BIDMONEY").val())=="" || !$.checkNumber($("#J_BIDMONEY").val()) || parseInt($.trim($("#J_BIDMONEY").val())) <=0 || parseFloat($.trim($("#J_BIDMONEY").val()))%parseInt($.trim($("#J_BIDMONEY").val()))!=0){
+				//	is_submit_lock = false;
+//$.showErr("请输入正确的份数",function(){
+//$("#J_BIDMONEY").focus();
+			//		});
 				
-					return false;
-				}
+//return false;
+//}
 				
 				{if $deal.max_portion gt 0}
 					if(parseInt($.trim($("#J_BIDMONEY").val())) > <?php echo $this->_var['deal']['max_portion'] - $this->_var['has_bid_portion'];  ?>){
@@ -452,6 +466,7 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 		var query = new Object();
 		query.bid_money=$.trim($("#J_BIDMONEY").val())
 		query.id="{$deal.id}";
+		query.pfcf_money=$.trim($("#J_PFCFMONEY").val())   //虚拟币值
 		query.bid_paypassword = FW_Password(bid_paypassword);
 		query.ajax=1;
 		

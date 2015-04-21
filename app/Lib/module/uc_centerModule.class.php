@@ -23,29 +23,30 @@ class uc_centerModule extends SiteBaseModule
 	}
 	
 	public function init_user(){
-		$this->user_data = $GLOBALS['user_info'];
-		
-		$province_str = $GLOBALS['db']->getOne("select name from ".DB_PREFIX."region_conf where id = ".$this->user_data['province_id']);
+		$this->user_data = $GLOBALS['user_info'];//
+		$province_str = $GLOBALS['db']->getOne("select name from ".DB_PREFIX."region_conf where id = ".$this->user_data['province_id']);//地址
 		$city_str = $GLOBALS['db']->getOne("select name from ".DB_PREFIX."region_conf where id = ".$this->user_data['city_id']);
+	
 		if($province_str.$city_str=='')
 			$user_location = $GLOBALS['lang']['LOCATION_NULL'];
+			
 		else 
 			$user_location = $province_str." ".$city_str;
-		
+	
 		$this->user_data['fav_count'] = $GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."topic where user_id = ".$this->user_data['id']." and fav_id <> 0");
 		$this->user_data['user_location'] = $user_location;
 		$this->user_data['group_name'] = $GLOBALS['db']->getOne("select name from ".DB_PREFIX."user_group where id = ".$this->user_data['group_id']." ");
 		
 		$this->user_data['user_statics'] =sys_user_status($GLOBALS['user_info']['id'],false);
 		$GLOBALS['tmpl']->assign('user_statics',$this->user_data['user_statics']);
+		
 	}
 	
 	public function index()
 	{	
 		$this->init_user();
 		$user_info = $this->user_data;
-		
-			 
+			
 		$ajax =intval($_REQUEST['ajax']);
 		if($ajax==0)
 		{
@@ -56,7 +57,6 @@ class uc_centerModule extends SiteBaseModule
 		
 		/***统计***/
 		$user_statics = $user_info['user_statics'];
-		
 		
 		//已赚收益
 		$user_statics["load_earnings"] = number_format(floatval($user_statics["load_earnings"]), 2);
@@ -69,7 +69,7 @@ class uc_centerModule extends SiteBaseModule
 		$user_statics["load_wait_self_money"] = floatval($user_statics["load_wait_self_money"]);
 		
 		$user_statics["clear_total_money"] = number_format((round($user_statics["load_wait_self_money"],2) + round($user_info["money"],2) + round($user_info["lock_money"],2) - round($user_statics["need_repay_amount"],2)),2);
-		
+
 		$user_statics["load_wait_self_money"] = number_format($user_statics["load_wait_self_money"]);
 		
 		//待收收益
@@ -146,7 +146,7 @@ class uc_centerModule extends SiteBaseModule
 		}
 		$user_statics["total_invest_money"] = number_format($user_statics["total_invest_money"],2);
 		//$user_statics["total_invest_count"] = $user_statics["this_month_count"]+$user_statics["next_month_count"]+$user_statics["year_count"];
-		
+		//print_r($user_statics);exit;
 		
 		$load_list_sql = "SELECT * FROM ".DB_PREFIX."deal_load WHERE user_id = ".$GLOBALS['user_info']['id']." ORDER BY id DESC limit 0,4";
 		//最近交易

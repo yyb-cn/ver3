@@ -11,8 +11,23 @@ define(MODULE_NAME,"index");
 require APP_ROOT_PATH.'app/Lib/deal.php';
 class indexModule extends SiteBaseModule
 {
+	
+	
+
+	
+	
+	
+	
+	
 	public function index()
+
 	{	
+			//print_r($user_statics["clear_total_money"]);exit;
+		$user_statics["clear_total_money"] = number_format((round($GLOBALS['user_info']['user_statics']["load_wait_self_money"],2) + round($GLOBALS['user_info']["money"],2) + round($GLOBALS['user_info']["lock_money"],2) - round($GLOBALS['user_info']['user_statics']["need_repay_amount"],2)),2); 
+	
+		$user_clear=$user_statics["clear_total_money"];
+	//	print_r($user_clear);exit;
+		$GLOBALS['tmpl']->assign("user_statics",$user_clear);	
 		$GLOBALS['tmpl']->caching = true;
 		$GLOBALS['tmpl']->cache_lifetime = 600;  //首页缓存10分钟
 		$cache_id  = md5(MODULE_NAME.ACTION_NAME);	
@@ -28,7 +43,7 @@ class indexModule extends SiteBaseModule
 			{
 				$g_links = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."link where is_effect = 1 and show_index = 1 and group_id = ".$v['id']." order by sort desc");
 				if($g_links)
-				{
+				{	
 					foreach($g_links as $kk=>$vv)
 					{
 						if(substr($vv['url'],0,7)=='http://')
@@ -62,8 +77,7 @@ class indexModule extends SiteBaseModule
 				$GLOBALS['tmpl']->assign("art_id",$art_id);
 				$GLOBALS['tmpl']->assign("compnay_active_list",$compnay_active_list['list']);	
 			}
-			
-			
+		
 			//投资排行
 			//天
 			$now_time = to_timespan(to_date(TIME_UTC,"Y-m-d"),"Y-m-d");
@@ -115,7 +129,7 @@ class indexModule extends SiteBaseModule
 			$stats['total_user'] = $statsU['total_user'];
 			
 			$GLOBALS['tmpl']->assign("stats",$stats);
-			
+		
 			//格式化统计代码
 			$VIRTUAL_MONEY_1_FORMAT =  format_conf_count(floatval(trim(app_conf("VIRTUAL_MONEY_1"))) + $stats['total_load']);
 			$VIRTUAL_MONEY_2_FORMAT =  format_conf_count(floatval(trim(app_conf("VIRTUAL_MONEY_2"))) + $stats['total_rate']);
@@ -124,13 +138,17 @@ class indexModule extends SiteBaseModule
 			$GLOBALS['tmpl']->assign("VIRTUAL_MONEY_2_FORMAT",$VIRTUAL_MONEY_2_FORMAT);
 			$GLOBALS['tmpl']->assign("VIRTUAL_MONEY_3_FORMAT",$VIRTUAL_MONEY_3_FORMAT);
 			
+			$GLOBALS['tmpl']->assign("user_info",$user_info);
 			$GLOBALS['tmpl']->assign("show_site_titile",1);
 			//首页图片幻灯片
 			$nav_img=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."img_list_nav order by name asc");
 			$GLOBALS['tmpl']->assign("nav_img",$nav_img);
 			
 		}
+						
 		
+				
+		//var_dum($user_info);exit;
 		$GLOBALS['tmpl']->display("page/index.html",$cache_id);
 	}
 }	

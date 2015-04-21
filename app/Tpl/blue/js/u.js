@@ -30,12 +30,28 @@ jQuery(function(){
 			$("#Jcarry_bankSuggestNote").html("提现时间约为3个工作日。");
 	});
 	$("#Jcarry_From").submit(function(){
-		if($.trim($("#Jcarry_amount").val())=="" || !$.checkNumber($("#Jcarry_amount").val()) || parseFloat($("#Jcarry_amount").val())<=0){
+		// if($.trim($("#Jcarry_amount").val())=="" || !$.checkNumber($("#Jcarry_amount").val()) || parseFloat($("#Jcarry_amount").val())<=0){
+			// $.showErr(LANG.CARRY_MONEY_NOT_TRUE,function(){
+				// $("#Jcarry_amount").focus();
+			// });
+			// return false;
+		// }
+		//虚拟币修改开始
+	if($.trim($("#Jcarry_pfcf_amount").val())=="" &&  $.trim($("#Jcarry_amount").val())=="" ){
 			$.showErr(LANG.CARRY_MONEY_NOT_TRUE,function(){
 				$("#Jcarry_amount").focus();
 			});
 			return false;
 		}
+	if( parseFloat($("#Jcarry_amount").val())<0){
+			$.showErr(LANG.CARRY_MONEY_NOT_TRUE,function(){
+				$("#Jcarry_amount").focus();
+			});
+			return false;
+		}
+	//	修改结束
+		
+		
 		if(parseFloat($("#Jcarry_acount_balance_res").val())<0){
 			$.showErr(LANG.CARRY_MONEY_NOT_ENOUGHT,function(){
 				$("#Jcarry_acount_balance_res").focus();

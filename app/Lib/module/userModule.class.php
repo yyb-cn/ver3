@@ -11,7 +11,7 @@ class userModule extends SiteBaseModule
 {
 	public function register()
 	{			
-		
+
 		$GLOBALS['tmpl']->assign("page_title",$GLOBALS['lang']['USER_REGISTER']);
 		
 		$field_list =load_auto_cache("user_field_list");

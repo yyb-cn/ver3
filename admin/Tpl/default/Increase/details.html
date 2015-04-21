@@ -1,0 +1,142 @@
+{// 引入标签库 }
+
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+
+<php>
+function get_create_source($create_source)
+	{
+   
+    
+    
+	
+		if($create_source==1)
+		{
+			return '抽奖生成';
+		}
+		else
+		{
+			return '后台管理员添加';
+		}
+	}
+
+	function get_user_group($user_id)
+	{
+		$group_name = M("User")->where("id=".$user_id)->getField("user_name");
+   
+		if($group_name)
+		{
+			return $group_name;
+		}
+		else
+		{return 加息劵没有用户拥有;
+			
+		}
+	}
+	function get_user_level($is_used)
+	{
+		
+		if($is_used==1)
+		{
+			return '使用了';
+		}
+		else
+		{
+			return '没使用';
+		}
+	}
+	function get_referrals_name($target_id)
+	{
+		$user_name = M("Deal")->where("id=".$target_id)->getField("name");
+		if($user_name)
+		return $user_name;
+		else
+			return '空';
+	}
+	function f_to_date($date){
+		return to_date($date,"Y-m-d H:i");
+	}
+
+	
+	function ips_status($admin_id){
+   
+		if($admin_id){
+			 $adm_name = M("Admin")->where("id=".$admin_id)->getField("adm_name");
+             
+             return "$adm_name";
+		}
+		else{
+			return "空";
+		}
+	}
+	function user_type_status($type){
+		if($type==1){
+			return "企业";
+		}
+		else{
+			return "普通";
+		}
+	}
+	function user_company($id,$user){
+		if($user['user_type']==1){
+			return "<a href='javascript:user_company(".$id.");'>公司</a>&nbsp;";
+		}
+	}
+</php>
+<div class="main">
+<div class="main_title">{:L(MODULE_NAME."_".ACTION_NAME)}</div>
+<div class="blank5"></div>
+<div class="button_row">
+
+</div>
+
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="post">	
+		拥有加息劵{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+	
+		加息劵状态: 
+		<select name="is_used">
+				<option value="0" <if condition="$is_used  eq  0">selected="selected"</if>>{%ALL}</option>
+			
+					<option value="1"  <if condition="$is_used eq 1">selected="selected"</if>>使用了</option>
+                    	<option value="2"   <if condition="$is_used eq 2">selected="selected"</if>>没使用</option>
+                        
+			
+		</select>
+		<div class="blank5"></div>
+		领取时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'begin_time');" style="width:130px" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'end_time');" style="width:130px" />
+		
+	
+		<input type="hidden" value="Increase" name="m" />
+		<input type="hidden" value="<php>echo ACTION_NAME;</php>" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+    	<input type="button" class="button" value="{%EXPORT}" onclick="export_csv();" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="user" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,create_time|f_to_date:生成时间:edit,create_source|get_create_source:生成来源,money:利息,yields:收益率,is_used|get_user_level:是否使用,user_id|get_user_group:拥有加息劵会员,used_time|f_to_date:加息劵使用时间,target_id|get_referrals_name:使用到标的名称,admin_id|ips_status:添加加息的管理员,expires_time|f_to_date:加息劵到期时间" 
+	actionlist="edit:{%EDIT}, del:{%DEL},id|user_company=$user"/> 
+   
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

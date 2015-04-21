@@ -57,6 +57,7 @@ function closeWeeboxs(){
                 <th width="12%">待还本息</th>
                 <th width="12%">管理费</th>
                 <th width="12%">逾期费用</th>
+                 <th width="12%">加息劵利息</th>
                 <th width="10%">状态</th>
 				<th width="6%">明细</th>
             </tr>
@@ -81,6 +82,8 @@ function closeWeeboxs(){
                 <td>{$loan.month_repay_money_format}</td>
                 <td>{$loan.month_manage_money_format}</td>
                 <td style="color:red">{$loan.impose_money_format}</td>
+                
+                   <td style="color:red">{$loan.manage_incerease_money_format}</td>
                 <td class="f_green">
                 	{$loan.status_format}
 				</td>
@@ -116,7 +119,7 @@ function closeWeeboxs(){
 		</div>
 		<div class="blank10"></div>
 		<span style="padding: 15px 0 15px 90px;">
-            <input type="hidden" name="loanId" value="46420" id="loanId">
+           <input type="hidden" name="loanId" value="46420" id="loanId">
             <input class="conf_refund" id="J_repay_borrow_money" type="button">
         </span>
 		<span style="padding-top:20px; font-size: 14px;">
