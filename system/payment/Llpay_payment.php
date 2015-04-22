@@ -64,11 +64,11 @@ class Llpay_payment implements payment {
                 
                 if($user_info['idcardpassed']!= 1||$user_info['idno']==''){
                    
-                   showErr("<div style='font-size:18px'>您的实名信息尚未认证！</div>为保护您的账户安全，请先完成实名认证。",1,url("index","uc_account#security")); 
+                   showErr("您的实名信息尚未认证！为保护您的账户安全，请先完成实名认证。",1,url("index","uc_account#security")); 
                    die(); 
                 }
                 if($user_info['mobilepassed']!=1||$user_info['mobile']==''){
-                   showErr("<div style='font-size:18px'>您的手机号尚未认证！</div>为保护您的账户安全，请先完成手机号认证。",1,url("index","uc_account#security")); 
+                   showErr("您的手机号尚未认证！为保护您的账户安全，请先完成手机号认证。",1,url("index","uc_account#security")); 
                    die(); 
                 }
                 /**************************请求参数**************************/
