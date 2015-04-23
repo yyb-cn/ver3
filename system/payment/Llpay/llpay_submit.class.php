@@ -99,39 +99,46 @@ class LLpaySubmit {
 		//待请求参数数组
 		$para = $this->buildRequestPara($para_temp);
                 //风控值去斜杠
-                $para['risk_item'] =stripslashes( $para['risk_item']);
-		$sHtml = "<form id='llpaysubmit' name='llpaysubmit' action='" . $this->llpay_gateway_new . "' method='" . $method . "'>";
-		$sHtml .= "<input type='hidden' name='version' value='" . $para['version'] . "'/>";
-		$sHtml .= "<input type='hidden' name='oid_partner' value='" . $para['oid_partner'] . "'/>";
-		$sHtml .= "<input type='hidden' name='user_id' value='" . $para['user_id'] . "'/>";
-		$sHtml .= "<input type='hidden' name='timestamp' value='" . $para['timestamp'] . "'/>";
-		$sHtml .= "<input type='hidden' name='sign_type' value='" . $para['sign_type'] . "'/>";
-		$sHtml .= "<input type='hidden' name='sign' value='" . $para['sign'] . "'/>";
-		$sHtml .= "<input type='hidden' name='busi_partner' value='" . $para['busi_partner'] . "'/>";
-		$sHtml .= "<input type='hidden' name='no_order' value='" . $para['no_order'] . "'/>";
-		$sHtml .= "<input type='hidden' name='dt_order' value='" . $para['dt_order'] . "'/>";
-		$sHtml .= "<input type='hidden' name='name_goods' value='" . $para['name_goods'] . "'/>";
-		$sHtml .= "<input type='hidden' name='info_order' value='" . $para['info_order'] . "'/>";
-		$sHtml .= "<input type='hidden' name='money_order' value='" . $para['money_order'] . "'/>";
-		$sHtml .= "<input type='hidden' name='notify_url' value='" . $para['notify_url'] . "'/>";
-		$sHtml .= "<input type='hidden' name='url_return' value='" . $para['url_return'] . "'/>";
-		$sHtml .= "<input type='hidden' name='userreq_ip' value='" . $para['userreq_ip'] . "'/>";
-		$sHtml .= "<input type='hidden' name='url_order' value='" . $para['url_order'] . "'/>";
-		$sHtml .= "<input type='hidden' name='valid_order' value='" . $para['valid_order'] . "'/>";
-		$sHtml .= "<input type='hidden' name='bank_code' value='" . $para['bank_code'] . "'/>";
-		$sHtml .= "<input type='hidden' name='pay_type' value='" . $para['pay_type'] . "'/>";
-		$sHtml .= "<input type='hidden' name='no_agree' value='" . $para['no_agree'] . "'/>";
-		$sHtml .= "<input type='hidden' name='shareing_data' value='" . $para['shareing_data'] . "'/>";
-		$sHtml .= "<input type='hidden' name='risk_item' value='" . $para['risk_item'] . "'/>";
-		$sHtml .= "<input type='hidden' name='id_type' value='" . $para['id_type'] . "'/>";
-		$sHtml .= "<input type='hidden' name='id_no' value='" . $para['id_no'] . "'/>";
-		$sHtml .= "<input type='hidden' name='acct_name' value='" . $para['acct_name'] . "'/>";
-		$sHtml .= "<input type='hidden' name='flag_modify' value='" . $para['flag_modify'] . "'/>";
-		$sHtml .= "<input type='hidden' name='card_no' value='" . $para['card_no'] . "'/>";
-		$sHtml .= "<input type='hidden' name='back_url' value='" . $para['back_url'] . "'/>";
-		//submit按钮控件请不要含有name属性
-		$sHtml = $sHtml . "<input type='submit' value='" . $button_name . "'></form>";
-		$sHtml = $sHtml."<script>document.forms['llpaysubmit'].submit();</script>";
+                $para['risk_item'] =stripslashes($para['risk_item']);
+		$sHtml = "<form id='llpaysubmit' name='llpaysubmit'target='_blank' action='" . $this->llpay_gateway_new . "' method='" . $method . "'>";
+                foreach ($para as $key =>$v){
+                
+                    $sHtml .= "<input type='hidden' name='".$key."' value='" . $v . "'/>";
+                    
+                }
+//		$sHtml .= "<input type='hidden' name='version' value='" . $para['version'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='oid_partner' value='" . $para['oid_partner'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='user_id' value='" . $para['user_id'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='timestamp' value='" . $para['timestamp'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='sign_type' value='" . $para['sign_type'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='sign' value='" . $para['sign'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='busi_partner' value='" . $para['busi_partner'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='no_order' value='" . $para['no_order'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='dt_order' value='" . $para['dt_order'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='name_goods' value='" . $para['name_goods'] . "'/>";
+//		//$sHtml .= "<input type='hidden' name='info_order' value='" . $para['info_order'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='money_order' value='" . $para['money_order'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='notify_url' value='" . $para['notify_url'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='url_return' value='" . $para['url_return'] . "'/>";
+//		//$sHtml .= "<input type='hidden' name='userreq_ip' value='" . $para['userreq_ip'] . "'/>";
+//		//$sHtml .= "<input type='hidden' name='url_order' value='" . $para['url_order'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='valid_order' value='" . $para['valid_order'] . "'/>";
+//		//$sHtml .= "<input type='hidden' name='bank_code' value='" . $para['bank_code'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='pay_type' value='" . $para['pay_type'] . "'/>";
+//		//$sHtml .= "<input type='hidden' name='no_agree' value='" . $para['no_agree'] . "'/>";
+//		//$sHtml .= "<input type='hidden' name='shareing_data' value='" . $para['shareing_data'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='risk_item' value='" . $para['risk_item'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='id_type' value='" . $para['id_type'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='id_no' value='" . $para['id_no'] . "'/>";
+//		$sHtml .= "<input type='hidden' name='acct_name' value='" . $para['acct_name'] . "'/>";
+//		//$sHtml .= "<input type='hidden' name='flag_modify' value='" . $para['flag_modify'] . "'/>";
+//		//$sHtml .= "<input type='hidden' name='card_no' value='" . $para['card_no'] . "'/>";
+//		//$sHtml .= "<input type='hidden' name='back_url' value='" . $para['back_url'] . "'/>";
+//		//submit按钮控件请不要含有name属性
+                
+		$sHtml = $sHtml . "<input type='submit' class='paybutton' value='" . $button_name . "'></form>";
+		$sHtml = $sHtml."<br /><div style='text-align:center' class='red'>".$GLOBALS['lang']['PAY_TOTAL_PRICE'].":".format_price($para['money_order'])."</div>";
+//		$sHtml = $sHtml."<script>document.forms['llpaysubmit'].submit();</script>";
 		return $sHtml;
 	}
 

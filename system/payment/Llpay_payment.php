@@ -2,18 +2,21 @@
 $payment_lang = array(
 	'name'	=>	'连连支付',
 	'llpay_account'	=>	'商户编号',
-	'llpay_key'	=>	'安全检验码',
+	'key'	=>	'安全检验码',
         'sign_type'     =>      '签名方式', 
         'sign_type_RSA' =>      'RSA 安全签名机制',
         'sign_type_MD5' =>      'MD5 安全签名机制',
         'PAY_FAILED'    =>      '支付失败',
         'SIGN_FAILED'   =>      '签名验证失败',
+        'FAILED'        =>      '操作有误',
+        'CODE_ERROR'    =>      '商户号错误，请联系客服',
+        
 );
 $config = array(
 	'llpay_account'	=>	array(
 		'INPUT_TYPE'	=>	'0',
 	), //商户编号是商户在连连钱包支付平台上开设的商户号码，为18位数字，如：201306081000001016
-	'llpay_key'	=>	array(
+	'key'	=>	array(
 		'INPUT_TYPE'	=>	'0'
 	), //安全检验码，以数字和字母组成的字符.
         'sign_type'    =>       array(
@@ -64,11 +67,11 @@ class Llpay_payment implements payment {
                 
                 if($user_info['idcardpassed']!= 1||$user_info['idno']==''){
                    
-                   showErr("您的实名信息尚未认证！为保护您的账户安全，请先完成实名认证。",1,url("index","uc_account#security")); 
+                   showErr("<div style='font-size:18px'>您的实名信息尚未认证！</div>为保护您的账户安全，请先完成实名认证。",0,url("index","borrow#applyamount")); 
                    die(); 
                 }
                 if($user_info['mobilepassed']!=1||$user_info['mobile']==''){
-                   showErr("您的手机号尚未认证！为保护您的账户安全，请先完成手机号认证。",1,url("index","uc_account#security")); 
+                   showErr("<div style='font-size:18px'>您的手机号尚未认证！</div>为保护您的账户安全，请先完成手机号认证。",0,url("index","borrow#applyamount")); 
                    die(); 
                 }
                 /**************************请求参数**************************/
@@ -131,8 +134,8 @@ class Llpay_payment implements payment {
                               "user_info_identify_type" => "3",//实名认证方式 是实名认证时，必填1：银行卡认证2：现场认证3：身份证远程认证4：其它认证
                         );        
                 //风险控制参数
-                $risk_item = json_encode($data);//采用 json 串的模式传入
-
+                $risk_item = json_encode($data);
+                $risk_item = stripslashes($risk_item);
                 //分账信息数据
                 $shareing_data = '';//分帐信息数据
 
@@ -150,11 +153,11 @@ class Llpay_payment implements payment {
                 $return_url = SITE_DOMAIN.APP_ROOT.'/llpay_return.php';
                 //需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
                 
-                $getip = '';
+                $formartip = '';
                 
                 $llpay_config = array(
                     "oid_partner" =>trim($payment_info['config']['llpay_account']), //商户编号是商户在连连钱包支付平台上开设的商户号码，为18位数字，如：201306081000001016
-                    "key" => trim($payment_info['config']['llpay_key']), //安全检验码，以数字和字母组成的字符
+                    "key" => trim($payment_info['config']['key']), //安全检验码，以数字和字母组成的字符
                     "version" => $this::VERSION,//版本号
 //                    "userreq_ip" => $formartip, //防钓鱼ip 可不传或者传下滑线格式 
                     "id_type" => '0', //证件类型 0为身份证
@@ -162,7 +165,6 @@ class Llpay_payment implements payment {
                     "valid_order" => $this::VALID_ORDER, //订单有效期
                     "input_charset" => $this::INPUT_CHARSET,//字符编码格式 目前支持 gbk 或 utf-8
                     "transport" => $this::TRANSPORT,//访问模式,根据自己的服务器是否支持ssl访问，若支持请选择https；若不支持请选择http
-                   
                 );
                 
                 /************************************************************/
@@ -198,7 +200,7 @@ class Llpay_payment implements payment {
                         //"back_url" => $back_url//返回修改信息地址
                 );
                 //建立请求
-                
+
                 $llpaySubmit = new LLpaySubmit($llpay_config);
                 $html_text = $llpaySubmit->buildRequestForm($parameter, "post", "确认");
 
@@ -208,172 +210,125 @@ class Llpay_payment implements payment {
 	
 	public function response($request)
 	{
-            require_once(APP_ROOT_PATH.'system/payment/Llpay/llpay_cls_json.php');
-                
+            $return_res = array(
+			'info'=>'',
+			'status'=>false,
+		);
+               
+            include_once(APP_ROOT_PATH.'system/payment/Llpay/llpay_cls_json.php');
+            require_once(APP_ROOT_PATH.'system/payment/Llpay/llpay_notify.class.php');
+  
 		$payment = $GLOBALS['db']->getRow("select id,config from ".DB_PREFIX."payment where class_name='Llpay'");  
                 $payment['config'] = unserialize($payment['config']);
-
-            if (empty ($request)) { //判断POST来的数组是否为空
-			return false;
-		} else {
-			//首先对获得的商户号进行比对
-			if (trim($request['oid_partner' ]) != trim($payment['config']['llpay_account'])) {
-				//商户号错误
-				return false;
-			}
-
-			//生成签名结果
-			$parameter = array (
-				'oid_partner' => $request['oid_partner'],//商户编号
-				'sign_type' => $request['sign_type'],//签名方式
-				'dt_order' => $request['dt_order'],//商户订单时间
-				'no_order' =>  $request['no_order'],//商户订单号
-				'oid_paybill' => $request['oid_paybill'],//支付单号
-				'money_order' => $request['money_order'],//交易金额
-				'result_pay' =>  $request['result_pay'],//支付结果
-				'settle_date' => $request['settle_date'],//清算日期
-				'info_order' =>$request['info_order'],//订单描述
-				'pay_type'=>$request['pay_type'],//支付方式
-				'bank_code'=>$request['bank_code'],//银行编号
-			);
-
-			if (!$this->getSignVeryfy($parameter, trim($request['sign'],$payment))) {
-				showErr($GLOBALS['payment_lang']["SIGN_FAILED"]);//签名验证失败
-			}
-                        
-                        if($parameter['result_pay'] == 'SUCCESS'){//成功支付
-                            
-                            $payment_notice_sn = $request['no_order' ];//订单ID
-                            $outer_notice_sn = $parameter['oid_paybill'];//交易流水号
-                            $payment_notice = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."payment_notice where notice_sn = '".$payment_notice_sn."'");
-                            require_once APP_ROOT_PATH."system/libs/cart.php";
-                            $rs = payment_paid($payment_notice['id'],$outer_notice_sn);	//$rs 为0时：更新 ".DB_PREFIX."payment_notice 表的is_paid = 1失败。
-                            $is_paid = intval($GLOBALS['db']->getOne("select is_paid from ".DB_PREFIX."payment_notice where id = '".intval($payment_notice['id'])."'"));
-                            if ($is_paid == 1){
-                                    app_redirect(url("index","payment#incharge_done",array("id"=>$payment_notice['id']))); //支付成功
-                            }else{
-                                    app_redirect(url("index","payment#pay",array("id"=>$payment_notice['id'])));
-                            }
-                            
-                        }else{
-                            
-                            showErr($GLOBALS['payment_lang']["PAY_FAILED"]);
-                            
-                        }
-		}
                 
+                $llpay_config = array(
+                        "oid_partner" =>trim($payment['config']['llpay_account']), //商户编号是商户在连连钱包支付平台上开设的商户号码，为18位数字，如：201306081000001016
+                        "key" => trim($payment['config']['key']), //安全检验码，以数字和字母组成的字符
+                        "version" => $this::VERSION,//版本号
+    //                  "userreq_ip" => $formartip, //防钓鱼ip 可不传或者传下滑线格式 
+                        "id_type" => '0', //证件类型 0为身份证
+                        "sign_type"=> trim($payment['config']['sign_type']),//签名方式 不需修改
+                        "valid_order" => $this::VALID_ORDER, //订单有效期
+                        "input_charset" => $this::INPUT_CHARSET,//字符编码格式 目前支持 gbk 或 utf-8
+                        "transport" => $this::TRANSPORT,//访问模式,根据自己的服务器是否支持ssl访问，若支持请选择https；若不支持请选择http
+                    );
+                
+                $result_pay =  $_POST['result_pay'];
+
+                $llpayNotify = new LLpayNotify($llpay_config);
+                $verify_result = $llpayNotify->verifyReturn();
+                if($verify_result) {//验证成功
+
+                    if($result_pay == 'SUCCESS') {
+                        
+                        $payment_notice_sn = $_POST['no_order'];//订单ID
+                        $outer_notice_sn = $_POST['oid_paybill'];//交易流水号
+                        $payment_notice = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."payment_notice where notice_sn = '".$payment_notice_sn."'");
+                        require_once APP_ROOT_PATH."system/libs/cart.php";
+                        $rs = payment_paid($payment_notice['id'],$outer_notice_sn);	//$rs 为0时：更新 ".DB_PREFIX."payment_notice 表的is_paid = 1失败。
+                        $is_paid = intval($GLOBALS['db']->getOne("select is_paid from ".DB_PREFIX."payment_notice where id = '".intval($payment_notice['id'])."'"));
+                        if ($is_paid == 1){
+                                app_redirect(url("index","payment#incharge_done",array("id"=>$payment_notice['id']))); //支付成功
+                        }else{
+                                app_redirect(url("index","payment#pay",array("id"=>$payment_notice['id'])));
+                        }
+                    }else {
+                       showErr($GLOBALS['payment_lang']["PAY_FAILED"]."  ".$result_pay);
+                    }
+                    file_put_contents("log.txt","同步通知:成功\n", FILE_APPEND);
+
+                }
+                else {
+                    //验证失败
+                    //如要调试，请看llpay_notify.php页面的verifyReturn函数
+                    file_put_contents("log.txt","同步通知 验证失败\n", FILE_APPEND);
+                }
+   
 	}
 	
-
         public function notify($request)
 	{
-            //生成签名结果
+            $return_res = array(
+            'info' => '',
+            'status' => false,
+            );
+            require_once(APP_ROOT_PATH.'system/payment/Llpay/llpay_notify.class.php');
             $payment = $GLOBALS['db']->getRow("select id,config from ".DB_PREFIX."payment where class_name='Llpay'");  //获取连连支付的基本配置信息
             $payment['config'] = unserialize($payment['config']);
-			$is_notify = true;
-			include_once (APP_ROOT_PATH.'system/payment/Llpay/llpay_cls_json.php');
-			$json = new JSON;
-			$str = file_get_contents("php://input");
-			$val = $json->decode($str);
-			$oid_partner = trim($val-> {
-				'oid_partner' });
-			$sign_type = trim($val-> {
-				'sign_type' });
-			$sign = trim($val-> {
-				'sign' });
-			$dt_order = trim($val-> {
-				'dt_order' });
-			$no_order = trim($val-> {
-				'no_order' });
-			$oid_paybill = trim($val-> {
-				'oid_paybill' });
-			$money_order = trim($val-> {
-				'money_order' });
-			$result_pay = trim($val-> {
-				'result_pay' });
-			$settle_date = trim($val-> {
-				'settle_date' });
-			$info_order = trim($val-> {
-				'info_order' });
-			$pay_type = trim($val-> {
-				'pay_type' });
-			$bank_code = trim($val-> {
-				'bank_code' });
-			$no_agree = trim($val-> {
-				'no_agree' });
-			$id_type = trim($val-> {
-				'id_type' });
-			$id_no = trim($val-> {
-				'id_no' });
-			$acct_name = trim($val-> {
-				'acct_name' });
-		
-		//首先对获得的商户号进行比对
-		if ($oid_partner != trim($payment['config']['llpay_account'])) {
-			//商户号错误
-			file_put_contents("log.txt", "异步通知:商户号错误,验证失败\n", FILE_APPEND);
-                        //验证失败
-                        die("{'ret_code':'9999','ret_msg':'验签失败'}");
-
-		}
-		$parameter = array (
-			'oid_partner' => $oid_partner,
-			'sign_type' => $sign_type,
-			'dt_order' => $dt_order,
-			'no_order' => $no_order,
-			'oid_paybill' => $oid_paybill,
-			'money_order' => $money_order,
-			'result_pay' => $result_pay,
-			'settle_date' => $settle_date,
-			'info_order' => $info_order,
-			'pay_type' => $pay_type,
-			'bank_code' => $bank_code,
-			'no_agree' => $no_agree,
-			'id_type' => $id_type,
-			'id_no' => $id_no,
-			'acct_name' => $acct_name
-		);
-		if (!$this->getSignVeryfy($parameter, $sign,$payment)) {
-			file_put_contents("log.txt", "异步通知:签名错误，验证失败\n", FILE_APPEND);
-                        //验证失败
-                        die("{'ret_code':'9999','ret_msg':'验签失败'}");
-		}
-		file_put_contents("log.txt", "异步通知 验证成功\n", FILE_APPEND);
-                die("{'ret_code':'0000','ret_msg':'交易成功'}"); //请不要修改或删除
-                
+            $llpay_config = array(
+                        "oid_partner" =>trim($payment['config']['llpay_account']), //商户编号是商户在连连钱包支付平台上开设的商户号码，为18位数字，如：201306081000001016
+                        "key" => trim($payment['config']['key']), //安全检验码，以数字和字母组成的字符
+                        "version" => $this::VERSION,//版本号
+    //                  "userreq_ip" => $formartip, //防钓鱼ip 可不传或者传下滑线格式 
+                        "id_type" => '0', //证件类型 0为身份证
+                        "sign_type"=> trim($payment['config']['sign_type']),//签名方式 不需修改
+                        "valid_order" => $this::VALID_ORDER, //订单有效期
+                        "input_charset" => $this::INPUT_CHARSET,//字符编码格式 目前支持 gbk 或 utf-8
+                        "transport" => $this::TRANSPORT,//访问模式,根据自己的服务器是否支持ssl访问，若支持请选择https；若不支持请选择http
+                    );
+            $llpayNotify = new LLpayNotify($llpay_config);
+            $verify_result = $llpayNotify->verifyNotify();
+            if ($verify_result) { //验证成功
+                    
+                    include_once(APP_ROOT_PATH.'system/payment/Llpay/llpay_cls_json.php');
+                    $json = new JSON;
+                    $str = file_get_contents("php://input");
+                    $val = $json->decode($str);
+                    $oid_partner = trim($val-> {
+                            'oid_partner' });
+                    $dt_order = trim($val-> {
+                            'dt_order' });
+                    $no_order = trim($val-> {
+                            'no_order' });
+                    $oid_paybill = trim($val-> {
+                            'oid_paybill' });
+                    $money_order = trim($val-> {
+                            'money_order' });
+                    $result_pay = trim($val-> {
+                            'result_pay' });
+                    $settle_date = trim($val-> {
+                            'settle_date' });
+                    $info_order = trim($val-> {
+                            'info_order' });
+                    $pay_type = trim($val-> {
+                            'pay_type' });
+                    $bank_code = trim($val-> {
+                            'bank_code' });
+                    $sign_type = trim($val-> {
+                            'sign_type' });
+                    $sign = trim($val-> {
+                            'sign' });
+                    file_put_contents("log.txt", "异步通知 验证成功\n", FILE_APPEND);
+                    die("{'ret_code':'0000','ret_msg':'交易成功'}"); //请不要修改或删除
+            } else {
+                    file_put_contents("log.txt", "异步通知 验证失败\n", FILE_APPEND);
+                    //验证失败
+                    die("{'ret_code':'9999','ret_msg':'验签失败'}");
+                    //调试用，写文本函数记录程序运行情况是否正常
+                    //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
+            }
 	}
 	
-        /**
-	 * 获取返回时的签名验证结果
-	 * @param $para_temp 通知返回来的参数数组
-	 * @param $sign 返回的签名结果
-         * @param $payment 获取设置连连支付的基本配置信息
-	 * @return 签名验证结果
-	 */
-	private function getSignVeryfy($para_temp, $sign,$payment) {
-		//除去待签名参数数组中的空值和签名参数
-		$para_filter = paraFilter($para_temp);
-
-		//对待签名参数数组排序
-		$para_sort = argSort($para_filter);
-
-		//把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
-		$prestr = createLinkstring($para_sort);
-
-		//file_put_contents("log.txt", "原串:" . $prestr . "\n", FILE_APPEND);
-		//file_put_contents("log.txt", "sign:" . $sign . "\n", FILE_APPEND);
-		$isSgin = false;
-		switch (strtoupper(trim($payment['config']['sign_type']))) {
-			case "MD5" :
-				$isSgin = md5Verify($prestr, $sign, $payment['config']['llpay_key']);
-				break;
-			default :
-				$isSgin = false;
-		}
-
-		return $isSgin;
-	}
-        
 	public function get_display_code()
 	{
 		$payment_item = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."payment where class_name='Llpay'");
