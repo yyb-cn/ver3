@@ -1,5 +1,5 @@
 {if $user_info}
-<li>您好，<a href="{url x="shop" r="uc_center"}">{$user_info.user_name}</a> | <a href="{url x="shop" r="user#loginout" }">退出</a></li>
+<li class="nav_bar">您好，<a href="{url x="shop" r="uc_center"}">{$user_info.user_name}</a> | <a href="{url x="shop" r="user#loginout" }">退出</a></li>
 {else}
-<li><a href="{url x="index" r="user" p="act=register"}">注册</a> / <a href="{url x="index" r="user" p="act=login"}">登录</a></li>
+<li class="nav_bar"><a href="{url x="index" r="user" p="act=register"}">注册</a> / <a href="{url x="index" r="user" p="act=login"}">登录</a></li>
 {/if}

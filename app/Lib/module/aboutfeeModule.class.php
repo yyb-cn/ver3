@@ -19,5 +19,37 @@ class aboutfeeModule  extends SiteBaseModule {
 		}
 		$GLOBALS['tmpl']->display("page/aboutfee.html",$cache_id);
     }
+	function fengkong(){
+		
+		$GLOBALS['tmpl']->display("page/index_fengkong.html");
+		}
+	function mechanism(){
+		
+		$GLOBALS['tmpl']->display("page/index_mechanism.html");
+	}
+	function jigou(){
+		
+		$GLOBALS['tmpl']->display("page/index_jigou.html");
+	}
+	function about_us_hzhb(){
+	
+		$GLOBALS['tmpl']->display("page/about_us_hzhb.html");
+	}
+	function about_us_join(){
+	
+		$GLOBALS['tmpl']->display("page/about_us_join.html");
+	}
+	function about_us_pfcf(){
+	
+		$GLOBALS['tmpl']->display("page/about_us_pfcf.html");
+	}
+	function about_us_tdjs(){
+	
+		$GLOBALS['tmpl']->display("page/about_us_tdjs.html");
+	}
+	function about_us_zzzs(){
+	
+		$GLOBALS['tmpl']->display("page/about_us_zzzs.html");
+	}
 }
 ?>
