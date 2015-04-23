@@ -478,6 +478,15 @@ define("ACCOUNT_NO_VERIFY_ERROR",3); //帐户未激活
 		{
 			$GLOBALS['db']->query("update ".DB_PREFIX."user set score = score + ".intval($data['score'])." where id =".$user_id);
 		}
+
+		if(floatval($data['pfcfb'])!=0)
+		{
+			$GLOBALS['db']->query("update ".DB_PREFIX."user set pfcfb = pfcfb + ".floatval($data['pfcfb'])." where id =".$user_id);
+		}
+		if(floatval($data['unjh_pfcfb'])!=0)
+		{
+			$GLOBALS['db']->query("update ".DB_PREFIX."user set unjh_pfcfb = unjh_pfcfb + ".floatval($data['unjh_pfcfb'])." where id =".$user_id);
+		}
 		if(intval($data['point'])!=0)
 		{
 			$GLOBALS['db']->query("update ".DB_PREFIX."user set point = point + ".intval($data['point'])." where id =".$user_id);
@@ -497,7 +506,7 @@ define("ACCOUNT_NO_VERIFY_ERROR",3); //帐户未激活
 			$GLOBALS['db']->query("update ".DB_PREFIX."user set lock_money = lock_money + ".floatval($data['lock_money'])." where id =".$user_id);
 		}
 		
-		if(intval($data['score'])!=0||floatval($data['money'])!=0||intval($data['point'])!=0||floatval($data['quota'])!=0 || floatval($data['lock_money']) != 0)
+		if(intval($data['score'])!=0||floatval($data['money'])!=0||intval($data['point'])!=0||floatval($data['quota'])!=0 || floatval($data['lock_money']) != 0 ||floatval($data['pfcfb'])!=0)
 		{		
 			$log_info['log_info'] = $log_msg;
 			$log_info['log_time'] = TIME_UTC;
@@ -512,6 +521,16 @@ define("ACCOUNT_NO_VERIFY_ERROR",3); //帐户未激活
 			{
 				$log_info['log_user_id'] = intval($user_info['id']);
 			}
+			/*pfcfb*/
+			if(floatval($data['pfcfb'])!=0){
+			  $data['money']=floatval($data['pfcfb']);
+			  $log_info['pfcfb'] = floatval($data['pfcfb']);
+			  }
+			if(floatval($data['unjh_pfcfb'])!=0){
+			  $data['unjh_pfcfb']=floatval($data['unjh_pfcfb']);
+			  }
+			/*pfcfb*/	
+	
 			$log_info['money'] = floatval($data['money']);
 			$log_info['score'] = intval($data['score']);
 			$log_info['point'] = intval($data['point']);

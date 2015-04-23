@@ -1031,7 +1031,7 @@
 	}	
 	
 	//用户提现;
-	function getUcSaveCarry($amount,$paypassword,$bid){
+	function getUcSaveCarry($amount,$paypassword,$bid,$pfcfb){
 		$status = array('status'=>0,'show_err'=>'');
 	
 		if($GLOBALS['user_info']['id'] > 0){
@@ -1040,6 +1040,12 @@
 			$bid = intval($bid);
 				
 			if($paypassword==""){
+				$status['status'] = 0;
+				$status['show_err'] = $GLOBALS['lang']['PAYPASSWORD_EMPTY'];
+				return $status;
+			}
+			
+			if($pfcfb<0){
 				$status['status'] = 0;
 				$status['show_err'] = $GLOBALS['lang']['PAYPASSWORD_EMPTY'];
 				return $status;
@@ -1108,13 +1114,14 @@
 			$data['region_lv4'] = intval($user_bank['region_lv4']);
 			$data['bankzone'] = trim($user_bank['bankzone']);
 			$data['bankcard'] = trim($user_bank['bankcard']);
-				
-				
+require APP_ROOT_PATH.'system/libs/user.php';	
+           if($pfcfb>0){
+               $data['pfcfb']=$pfcfb; 
+			   modify_account(array('pfcfb'=>-$data['pfcfb'],'lock_money'=>0),$data['user_id'],"提现红包(浦发币)提现申请",8);
+             }					
 			$data['create_time'] = TIME_UTC;
-			$GLOBALS['db']->autoExecute(DB_PREFIX."user_carry",$data,"INSERT");
-				
+			$GLOBALS['db']->autoExecute(DB_PREFIX."user_carry",$data,"INSERT");	
 			//更新会员账户信息
-			require APP_ROOT_PATH.'system/libs/user.php';
 			modify_account(array('money'=>-$data['money'],'lock_money'=>$data['money']),$data['user_id'],"提现申请",8);
 			modify_account(array('money'=>-$fee,'lock_money'=>$fee),$data['user_id'],"提现手续费",9);
 				
@@ -1215,156 +1222,7 @@
 			}
 		}
 		return $result;
-	}
-	
-	function getUcSaveCarry_pfcfmoney($virtual_currency,$paypassword,$bid,$money_status,$interest_money){
-		$status = array('status'=>0,'show_err'=>'');
-	   
-		if($GLOBALS['user_info']['id'] > 0){
-			$paypassword = strim($paypassword);
-			$virtual_currency = floatval($virtual_currency);
-			$bid = intval($bid);			
-			$data['user_id'] = intval($GLOBALS['user_info']['id']);
-			$data['money'] = $virtual_currency;
-			if($money_status==0){              //money_status 用户提现money是否成功状态
-			if($paypassword==""){
-				$status['status'] = 0;
-				$status['show_err'] = $GLOBALS['lang']['PAYPASSWORD_EMPTY'];
-				return $status;
-			 }
-				
-			// if(md5($paypassword)!=$GLOBALS['user_info']['paypassword']){
-				// $status['status'] = 0;
-				// $status['show_err'] = $GLOBALS['lang']['PAYPASSWORD_ERROR'];
-				// return $status;
-			 // }
-			}
-			
-			if($data['money'] <=0)
-			{
-				$status['status'] = 0;
-				$status['show_err'] = $GLOBALS['lang']['CARRY_MONEY_NOT_TRUE'];
-				return $status;
-			}
-			
-			$fee = 0;
-			$feel_type = 0;
-			//获取手续费配置表
-			$fee_config = load_auto_cache("user_carry_config");
-			//如果手续费大于最大的配置那么取这个手续费
-			if($data['money'] >=$fee_config[count($fee_config)-1]['max_price']){
-				$fee = $fee_config[count($fee_config)-1]['fee'];
-				$feel_type = $fee_config[count($fee_config)-1]['fee_type'];
-			}
-			else{
-				foreach($fee_config as $k=>$v){
-					if($data['money'] >= $v['min_price'] &&$data['money'] <= $v['max_price']){
-						$fee =  floatval($v['fee']);
-						$feel_type = $v['fee_type'];
-					}
-				}
-			}
-			
-			if($feel_type == 1){                                                                                                                      
-				$fee = $data['money'] * $fee * 0.01;
-			}		
-			if($fee > $GLOBALS['user_info']['money']){
-				$status['status'] = 0;
-				$status['show_err'] = $GLOBALS['lang']['CARRY_MONEY_NOT_ENOUGHT'];
-				return $status;
-			}
-			$data['fee'] = $fee;	
-			if($bid == 0)
-			{
-				$status['status'] = 0;
-				$status['show_err'] = $GLOBALS['lang']['PLASE_ENTER_CARRY_BANK'];
-				return $status;
-			}
-				
-			$user_bank = $GLOBALS['db']->getRow("SELECT * FROM ".DB_PREFIX."user_bank where user_id=".intval($GLOBALS['user_info']['id'])." AND id=$bid ");
-				
-			$data['bank_id'] = $user_bank['bank_id'];
-			$data['real_name'] = $user_bank['real_name'];
-			$data['region_lv1'] = intval($user_bank['region_lv1']);
-			$data['region_lv2'] = intval($user_bank['region_lv2']);
-			$data['region_lv3'] = intval($user_bank['region_lv3']);
-			$data['region_lv4'] = intval($user_bank['region_lv4']);
-			$data['bankzone'] = trim($user_bank['bankzone']);
-			$data['bankcard'] = trim($user_bank['bankcard']);
-				
-				
-			$data['create_time'] = TIME_UTC;
-			$GLOBALS['db']->autoExecute(DB_PREFIX."user_carry",$data,"INSERT");
-				
-			//更新会员账户信息
-			require APP_ROOT_PATH.'system/libs/user.php';
-			$user_id=intval($GLOBALS['user_info']['id']);       
-            //浦发币提现申请			
-		    $money_log_info_pfcf['memo'] = "提现申请(浦发币)";
-			$money_log_info_pfcf['money'] = floatval($data['money']);
-			$money_log_info_pfcf['account_money'] = $GLOBALS['db']->getOne("SELECT money FROM ".DB_PREFIX."user where is_delete = 0 and is_effect = 1 and id = ".$user_id);
-			$money_log_info_pfcf['user_id'] = $user_id;
-			$money_log_info_pfcf['create_time'] = TIME_UTC;
-			$money_log_info_pfcf['create_time_ymd'] = to_date(TIME_UTC,"Y-m-d");
-			$money_log_info_pfcf['create_time_ym'] = to_date(TIME_UTC,"Ym");
-			$money_log_info_pfcf['create_time_y'] = to_date(TIME_UTC,"Y");
-			$money_log_info_pfcf['type'] =8;
-			$GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info_pfcf);
-			 //提现手续费
-			$type=9;
-			$money_log_info['memo'] = "浦发币提现手续费";
-			$money_log_info['money'] = $fee;
-			$money_log_info['account_money'] = $GLOBALS['db']->getOne("SELECT money FROM ".DB_PREFIX."user where is_delete = 0 and is_effect = 1 and id = ".$user_id);
-			$money_log_info['user_id'] = $user_id;
-			$money_log_info['create_time'] = TIME_UTC;
-			$money_log_info['create_time_ymd'] = to_date(TIME_UTC,"Y-m-d");
-			$money_log_info['create_time_ym'] = to_date(TIME_UTC,"Ym");
-			$money_log_info['create_time_y'] = to_date(TIME_UTC,"Y");
-			$money_log_info['type'] = 9;
-			$GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info);
-			
-			//网站收益表  跟会员的刚好相反
-			$is_add = false;
-			switch((int)$type){ 
-				//case 7 : //提前回收 + 
-				case 9 : //提现手续费 +
-				case 10 : //借款管理费 +
-				case 12 : //逾期管理费 +
-				case 13 : //人工充值
-				case 14 : //借款服务费 +
-				case 17 : //债权转让管理费  +
-				case 18 : //开户奖励   -
-				case 20 : //投标管理费 +
-				case 22 : //兑换  
-				case 23 : //邀请返利 -
-				case 24 : //投标返利 -
-				case 25 : //签到成功 -
-				case 26 : //逾期罚金（垫付后）
-				case 27 : //其他费用
-					$is_add = true;
-					$site_money = floatval($data['money']);
-					$money_log_info['money'] = -floatval($data['money']);
-					break;
-			}
-			if($is_add == true){
-				$GLOBALS['db']->autoExecute(DB_PREFIX."site_money_log",$money_log_info);
-			}
-            $here_interest_money=intval($GLOBALS['user_info']['interest_money'])+$data['money'];			
-			$GLOBALS['db']->query("update ".DB_PREFIX."user set interest_money =  ".$here_interest_money." where id =".$user_id);
-			$GLOBALS['db']->query("update ".DB_PREFIX."user set money = money - ".$fee." where id =".$user_id);
-			$content = "您于".to_date($data['create_time'],"Y年m月d日 H:i:s")."提交的".format_price($data['money'])."浦发币提现申请我们正在处理，如您填写的账户信息正确无误，您的资金将会于3个工作日内到达您的银行账户.";
-			send_user_msg("",$content,0,$data['user_id'],TIME_UTC,0,true,5);
-			$status['status'] = 1;
-			$status['show_err'] = $GLOBALS['lang']['CARRY_SUBMIT_SUCCESS'];	
-		}else{
-			$status['show_err'] ="未登录";
-		}
-		return $status;
 	}	
-	
-	
-	
-	
 	
 	
 	

@@ -163,13 +163,6 @@ return array(
 									array("name"=>"消息列表","module"=>"MsgBox","action"=>"index"),
 							),
 					),
-					"virtual_currency"	=>	array(
-							"name"	=>	"浦发币（虚拟币）",
-							"key"	=>	"virtual_currency",
-							"nodes"	=>	array(
-									array("name"=>"浦发币（虚拟币）","module"=>"pfcf_virtual_currency","action"=>"index"),
-							),
-					),
 					
 			),
 	),	

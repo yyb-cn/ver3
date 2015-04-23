@@ -163,14 +163,22 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 							<input class="f-input"  autocomplete="off" name="bid_money" id="J_BIDMONEY"  />
 							<input type="hidden" name="id" value="{$deal.id}" />
 							<span class="unit">元</span>
-<<<<<<< HEAD
-					<!--		<input  name="pfcf_money" id="J_PFCFMONEY" value="0" />-->
-=======
-							<input  name="pfcf_money" id="J_PFCFMONEY" value="0" />
->>>>>>> 396d16c3992496227921e2eed43ce85ece14ea23
-							<br>
-							<span >请输入要投资的虚拟币</span>
 							<div class="blank5"></div>
+			             {if $deal.repay_time_type eq 1 }  <!--1个月-->
+				            	{if $user_info.unjh_pfcfb}
+					    <tr>
+							<td class="tit tr w100 btm">
+							浦发币：
+							</td>
+							<td class="f_red bg btm">
+								<input   id="UNJH_PFCFBMONEY"  value="{function name="round" v=$user_info.unjh_pfcfb}"  />元&nbsp;&nbsp;
+							<span class="f_dgray">说明：浦发币投资到期后即可激活提现</span>
+							</td>
+						</tr>
+				        	{/if}
+							<br>
+				         {/if}
+						 
 							收益：<span class="J_u_money_sy f_red">0.00</span>
                               {if $ease_val eq 1}
                            
@@ -463,10 +471,11 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 			return false;
 		}
 		is_submit_lock = true;
+	
 		var query = new Object();
 		query.bid_money=$.trim($("#J_BIDMONEY").val())
 		query.id="{$deal.id}";
-		query.pfcf_money=$.trim($("#J_PFCFMONEY").val())   //虚拟币值
+		query.unjh_pfcfb=$.trim($("#UNJH_PFCFBMONEY").val());   //虚拟币值
 		query.bid_paypassword = FW_Password(bid_paypassword);
 		query.ajax=1;
 		
