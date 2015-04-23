@@ -25,6 +25,8 @@ function view_info(user_id){
 }
 
 
+
+
 function bank_manage(user_id){
 	window.location.href=ROOT+'?m=User&a=bank_manage&id='+user_id;
 }

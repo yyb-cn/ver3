@@ -519,28 +519,16 @@ class dealModule extends SiteBaseModule
 		
 		$id = intval($_REQUEST["id"]);		
 		$bid_money = floatval($_REQUEST["bid_money"]);
+		$unjh_pfcfb=$_REQUEST['unjh_pfcfb'];
 		$bid_paypassword = strim(FW_DESPWD($_REQUEST['bid_paypassword']));
-		$pfcf_money=floatval($_REQUEST["pfcf_money"]);
-	   if($pfcf_money+$bid_money<1000){ 
-	      showSuccess("余额不足，请先去充值",$ajax,url("index","uc_money#incharge"));
-		 }
 	   if(!$bid_money){ 
 	      showSuccess("金额错误",$ajax,url("index","uc_money#incharge"));
 		 }		
-      // if(!$pfcf_money){ 
-	      // showSuccess("金额错误",$ajax,url("index","uc_money#incharge"));
-		 // }
-		   $user_deal= $GLOBALS['db']->getRow("select * from ".DB_PREFIX."deal where id= ".$id);       
-		//判断所投的钱是否超过了剩余投标额度
-		// $one_money=$user_deal['borrow_amount']-$user_deal['load_money'];
-      // if($pfcf_money+$bid_money>$one_money){
-		   // showSuccess("投资金额错误",$ajax,url("index","uc_money#incharge"));
-		// }
-	   
-
-
-		 
-	   $status = dobid2($id,$bid_money,$bid_paypassword,1);
+		   // $user_deal= $GLOBALS['db']->getRow("select * from ".DB_PREFIX."deal where id= ".$id); 
+		if($unjh_pfcfb>$GLOBALS['user_info']['unjh_pfcfb']){
+		  showErr("虚拟币操作错误",$ajax);
+		}  //判断投资虚拟币是否大于本身拥有
+	   $status = dobid2($id,$bid_money,$bid_paypassword,1,$unjh_pfcfb);
 		
 		if($status['status'] == 0){
 			showErr($status['show_err'],$ajax);
@@ -549,20 +537,6 @@ class dealModule extends SiteBaseModule
 		}elseif($status['status'] == 3){
 			showSuccess("余额不足，请先去充值",$ajax,url("index","uc_money#incharge"));
 		}else{	  
-		//虚拟币操作
-		  if($pfcf_money>0){
-		      $deal=get_deal($id); 
-			  $now_pfcf_money=$deal['pfcf_money']+$_REQUEST["pfcf_money"];
-			  $GLOBALS['db']->query("update ".DB_PREFIX."deal set `pfcf_money`=".$now_pfcf_money." where id = ".$id);	
-		          $pfcf_virtual_currency['user_name']=$GLOBALS['user_info']['user_name'];	
-			      $pfcf_virtual_currency['user_id']=$GLOBALS['user_info']['id'];	
-		          $pfcf_virtual_currency['virtual_currency']=$pfcf_money;
-				  $pfcf_virtual_currency['create_time']=get_gmtime();
-		          $pfcf_virtual_currency['deal_id']=$id;       
-                  $pfcf_virtual_currency['memo']="用户".$GLOBALS['user_info']['user_name']."使用了".$pfcf_money."浦发币投资标为：".$deal['name'];     				  
-		 $GLOBALS['db']->autoExecute(DB_PREFIX."pfcf_virtual_currency",$pfcf_virtual_currency,"INSERT");    //虚拟币记录表
-		     }
-		
 			//showSuccess($GLOBALS['lang']['DEAL_BID_SUCCESS'],$ajax,url("index","deal",array("id"=>$id)));
 			showSuccess($GLOBALS['lang']['DEAL_BID_SUCCESS'],$ajax,url("index","uc_invest"));
 		}		
