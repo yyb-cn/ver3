@@ -237,7 +237,7 @@ class Llpay_payment implements payment {
                 $llpayNotify = new LLpayNotify($llpay_config);
                 $verify_result = $llpayNotify->verifyReturn();
                 if($verify_result) {//验证成功
-
+                    file_put_contents("log.txt","同步通知:成功\n", FILE_APPEND);
                     if($result_pay == 'SUCCESS') {
                         
                         $payment_notice_sn = $_POST['no_order'];//订单ID
@@ -254,8 +254,7 @@ class Llpay_payment implements payment {
                     }else {
                        showErr($GLOBALS['payment_lang']["PAY_FAILED"]."  ".$result_pay);
                     }
-                    file_put_contents("log.txt","同步通知:成功\n", FILE_APPEND);
-
+                    
                 }
                 else {
                     file_put_contents("log.txt","同步通知 验证失败\n", FILE_APPEND);
