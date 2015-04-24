@@ -15,8 +15,8 @@ a:hover { color:#F00;}
 		.header_main .logo { float:left; margin:15px 0 0 30px;}
 		
 		.header_main .nav_bar_ul { float:left; margin-left:35px; margin-top:30px; font-size:14px; font-weight:bold;}
-			.header_main .nav_bar_ul .nav_bar { float:left; width:100px; position:relative; text-align:center;}
-				.header_main .nav_bar_ul .nav_bar .nav_bar_chird { position:absolute; width:120px; background:#FFF; top:20px; left:-10px; border:1px #CCCCCC solid; border-radius:4px; display:none;}
+			.header_main .nav_bar_ul .nav_bar { float:left; margin-left:35px; position:relative; text-align:center;}
+				.header_main .nav_bar_ul .nav_bar .nav_bar_chird { position:absolute; width:120px; background:#FFF; top:18px; left:-34px; border:1px #CCCCCC solid; border-radius:4px; display:none;}
 					.header_main .nav_bar_ul .nav_bar .nav_bar_chird li { height:30px; width:120px; line-height:30px; text-align:center;}
 					
 			.header_main .nav_bar_ul .weixin { float:left; margin-left:35px; width:20px; height:20px; background:url(../images/weixin.png) no-repeat; position:relative; margin-top:-2px;}

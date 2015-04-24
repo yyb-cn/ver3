@@ -10,7 +10,7 @@ window.onscroll = function () {
 		$('.logo img').css('height','30px');
 		$('.header ul').css('margin-top','10px');
 		
-		$('.nav_bar_chird').css('top','10px');
+		$('.nav_bar_chird').css('top','8px');
 	}
 	else{
 		$('.header').css('height','85px');
@@ -18,7 +18,7 @@ window.onscroll = function () {
 		$('.logo img').css('height','100%');
 		$('.header ul').css('margin-top','30px');
 		
-		$('.nav_bar_chird').css('top','-10px');
+		$('.nav_bar_chird').css('top','-12px');
 	}
 };
 
