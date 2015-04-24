@@ -9,7 +9,7 @@
 
 class DealAction extends CommonAction{
 	public function index()
-	{     
+	{ 
 		// 开始加载搜索条件
 		$map['is_delete'] = 0;
 		$map['publish_wait'] = 0;
@@ -1194,9 +1194,9 @@ class DealAction extends CommonAction{
 		$data['create_time'] = TIME_UTC;
 		$data['update_time'] = TIME_UTC;
 		$data['start_time'] = trim($data['start_time'])==''?0:to_timespan($data['start_time']);
+		$time_type_name=$data['repay_time_type']?'个月':'天';
 		if($data['start_time'] > 0)
 			$data['start_date'] = to_date($data['start_time'],"Y-m-d");
-		
 		$list=M(MODULE_NAME)->add($data);
 		if (false !== $list) {
 			foreach($_REQUEST['city_id'] as $k=>$v){
@@ -1207,7 +1207,18 @@ class DealAction extends CommonAction{
 				}
 			
 			}
-			
+			//发公告
+		$data_a['cate_id']= 5;
+		$data_a['title']=$data['name'].'开标了，欢迎各位朋友投资';
+		$data_a['content']='"'.$data['name'].'"投资金额为'.$data['borrow_amount'].'元,年利率为'.$data['rate'].'%,投资期限为'.$data['repay_time'].$time_type_name.','.$data['min_loan_money'].'元起投,<a style="text-decoration:none;color:#F00" href="index.php?ctl=deal&id='.$list.'">投标请点击这里。</a>';
+		$article=M('article')->order('sort desc')->find();
+		$sort=$article['sort'];
+		$data_a['sort']=$sort+1;
+		$data_a['is_effect']=1;
+		$data_a['create_time'] = get_gmtime();
+		$data_a['update_time'] = get_gmtime();
+		clear_auto_cache("get_help_cache");
+		$list=M('article')->add($data_a);
 			require_once(APP_ROOT_PATH."app/Lib/common.php");
 			//成功提示
 			syn_deal_status($list);
@@ -2282,38 +2293,6 @@ class DealAction extends CommonAction{
 			ajax_return($result);
 		}
 		elseif($result['status'] == 1){
-		
-		
-		  $deal=get_deal($id);     
-		  if($deal['pfcf_money']!=0){
-		  $pfcf_virtual_currency=M("PfcfVirtualCurrency");
-		  $user_pfcf=M("User");
-		  $pfcf_virtual_currencyss= $pfcf_virtual_currency->where("deal_id=".$id)->select();
-		      foreach ($pfcf_virtual_currencyss as $k => $v){
-			    if($v['status']==0){
-				$user_pfcf->id=$v['user_id'];
-				$user_pfcf->pfcf_money=$GLOBALS['user_info']['pfcf_money']-$v['virtual_currency'];  //满标之后扣除虚拟币
-				$user_pfcf->save();
-			      }
-				$pfcf['user_name']=$v['user_name'];	
-			    $pfcf['user_id']=$v['user_id'];	
-		        $pfcf['virtual_currency']=$v['virtual_currency'];
-				if($deal['repay_time_type']==1){
-				$pfcf['interest_money']=intval($pfcf['virtual_currency'])*$deal['rate']*30*$deal['repay_time']/36500;
-				}
-				if($deal['repay_time_type']==0){
-				$pfcf['interest_money']=intval($pfcf['virtual_currency'])*$deal['rate']*$deal['repay_time']/36500;
-				}
-				$pfcf['create_time']=get_gmtime();
-				$pfcf['repay_time']=$deal['next_repay_time'];
-		        $pfcf['deal_id']=  $v['deal_id'];      
-                $pfcf['memo']="用户".$GLOBALS['user_info']['user_name']."使用了".$pfcf_money."浦发币投资标为：".$deal['name']."投资成功";  
-                $pfcf['status']=1;				
-				$pfcf_virtual_currency->add($pfcf);
-				}
-
-				
-		    }
 			$this->success($result['info']);
 		}
 		else
@@ -2366,6 +2345,20 @@ class DealAction extends CommonAction{
 			ajax_return($result);
 		}
 		elseif($result['status']==1){
+		
+		  $user_received=M('User');
+		  $deal=get_deal($id);   
+         $deal_load=M('DealLoad');
+	      $nob=$deal_load->where("deal_id=".$deal['id'])->select();
+         if($nob){
+          foreach($nob as $k => $v){
+		   if($v['unjh_pfcfb']!=0){
+			  $unjh_pfcfb= $user_received->find($v['user_id']);
+		       $user_received->unjh_pfcfb=$unjh_pfcfb['unjh_pfcfb']+$v['unjh_pfcfb'];
+			   $user_received->save();
+		     }
+		   }
+		}		
 			$this->success($result['info']);
 		}
 		else{

@@ -10,12 +10,20 @@
 
 <div class="header">
 	<div class="header_main">
-    	<a class="logo" href="{url x="index"}"><img src="{$TMPL}/	images/logo.png" /></a>
-      
-         <ul>
+    	 <a class="logo" href="{url x="index"}"><img src="{$TMPL}/images/logo.png" /></a>
+         <ul class="nav_bar_ul">
          	{insert name="load_user_top"}
             {foreach from=$nav_list item=nav_item key=key}
-        	<li><a href="{$nav_item.url}">{$nav_item.name}</a></li>
+        	<li class="nav_bar">
+            	<a href="{$nav_item.url}">{$nav_item.name}</a>
+                {if $nav_item.sub_nav}
+            	<ul class="nav_bar_chird">
+                	{foreach from=$nav_item.sub_nav item=sub_item}
+                	<li><a  href="{$sub_item.url}"  title="" target="{if $sub_item.blank eq 1}_blank{/if}">{$sub_item.name}</a></li>
+                    {/foreach}
+                </ul>
+                {/if}
+            </li>
             {/foreach}
             <li class="weixin">
             	<div class="weixin_QR"></div>

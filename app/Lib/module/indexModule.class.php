@@ -11,16 +11,7 @@ define(MODULE_NAME,"index");
 require APP_ROOT_PATH.'app/Lib/deal.php';
 class indexModule extends SiteBaseModule
 {
-	
-	
-
-	
-	
-	
-	
-	
 	public function index()
-
 	{	
 			//print_r($user_statics["clear_total_money"]);exit;
 		$user_statics["clear_total_money"] = number_format((round($GLOBALS['user_info']['user_statics']["load_wait_self_money"],2) + round($GLOBALS['user_info']["money"],2) + round($GLOBALS['user_info']["lock_money"],2) - round($GLOBALS['user_info']['user_statics']["need_repay_amount"],2)),2); 
