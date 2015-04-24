@@ -135,9 +135,7 @@ class LLpaySubmit {
 //		//$sHtml .= "<input type='hidden' name='card_no' value='" . $para['card_no'] . "'/>";
 //		//$sHtml .= "<input type='hidden' name='back_url' value='" . $para['back_url'] . "'/>";
 //		//submit按钮控件请不要含有name属性
-                
-		$sHtml = $sHtml . "<input type='submit' class='paybutton' value='" . $button_name . "'></form>";
-		$sHtml = $sHtml."<br /><div style='text-align:center' class='red'>".$GLOBALS['lang']['PAY_TOTAL_PRICE'].":".format_price($para['money_order'])."</div>";
+		$sHtml = $sHtml . "<input type='submit' value='" . $button_name . "'></form>";
 //		$sHtml = $sHtml."<script>document.forms['llpaysubmit'].submit();</script>";
 		return $sHtml;
 	}

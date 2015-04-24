@@ -199,7 +199,6 @@ class Llpay_payment implements payment {
                         //"card_no" => $card_no,//卡号
                         //"back_url" => $back_url//返回修改信息地址
                 );
-                //建立请求
 
                 $llpaySubmit = new LLpaySubmit($llpay_config);
                 $html_text = $llpaySubmit->buildRequestForm($parameter, "post", "确认");
@@ -245,7 +244,7 @@ class Llpay_payment implements payment {
                         $outer_notice_sn = $_POST['oid_paybill'];//交易流水号
                         $payment_notice = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."payment_notice where notice_sn = '".$payment_notice_sn."'");
                         require_once APP_ROOT_PATH."system/libs/cart.php";
-                        $rs = payment_paid($payment_notice['id'],$outer_notice_sn);	//$rs 为0时：更新 ".DB_PREFIX."payment_notice 表的is_paid = 1失败。
+                        $rs = payment_paid($payment_notice['id'],$outer_notice_sn);
                         $is_paid = intval($GLOBALS['db']->getOne("select is_paid from ".DB_PREFIX."payment_notice where id = '".intval($payment_notice['id'])."'"));
                         if ($is_paid == 1){
                                 app_redirect(url("index","payment#incharge_done",array("id"=>$payment_notice['id']))); //支付成功
@@ -259,8 +258,6 @@ class Llpay_payment implements payment {
 
                 }
                 else {
-                    //验证失败
-                    //如要调试，请看llpay_notify.php页面的verifyReturn函数
                     file_put_contents("log.txt","同步通知 验证失败\n", FILE_APPEND);
                 }
    
