@@ -601,7 +601,7 @@ function get_deal_user_load_list($deal_info, $user_id = 0 ,$lkey = -1 , $ukey = 
 			$count = $GLOBALS['db']->getOne($sql);
 			$result['count'] = $count;
 		}
-		$sql = "SELECT dlr.*,dl.pMerBillNo,dl.money,u.ips_acct_no,u.mobile,u.email,u.user_name,tu.ips_acct_no as t_ips_acct_no,tu.id as t_user_id,tu.user_name as t_user_name,tu.mobile as t_mobile,tu.email as t_email  FROM ".DB_PREFIX."deal_load_repay dlr ".
+		$sql = "SELECT dlr.*,dl.pMerBillNo,dl.money,dl.unjh_pfcfb,u.ips_acct_no,u.mobile,u.email,u.user_name,tu.ips_acct_no as t_ips_acct_no,tu.id as t_user_id,tu.user_name as t_user_name,tu.mobile as t_mobile,tu.email as t_email  FROM ".DB_PREFIX."deal_load_repay dlr ".
 				" LEFT JOIN ".DB_PREFIX."deal_load dl ON dl.id =dlr.load_id  ".
 				" LEFT OUTER JOIN ".DB_PREFIX."user u ON u.id = dlr.user_id ".
 				" LEFT OUTER JOIN ".DB_PREFIX."deal_load_transfer dlt ON dlt.load_id = dl.id and dlt.near_repay_time <=dlr.repay_time ".
@@ -738,7 +738,7 @@ function get_deal_user_load_list($deal_info, $user_id = 0 ,$lkey = -1 , $ukey = 
 					$item['status'] = 2;
 				}
 				$item['month_has_repay_money'] = 0;
-				$item['month_has_repay_money_all'] = 0;
+				$item['month_has_repay_money_all'] = 0;					
 			}
 			elseif($v['has_repay'] == 2){
 				//月还本息
@@ -751,8 +751,27 @@ function get_deal_user_load_list($deal_info, $user_id = 0 ,$lkey = -1 , $ukey = 
 				$item['repay_manage_impose_money'] = $v['repay_manage_impose_money'];
 				$item['month_has_repay_money'] = 0;
 				$item['month_has_repay_money_all'] = 0;
+		if($v['unjh_pfcfb']>0){
+			  if($deal_info['repay_time_type']>0){	
+				$item['month_repay_pfcfb'] = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']*30/86400;
+			}
+			  if($deal_info['repay_time_type']=0){	
+				$item['month_repay_pfcfb'] = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']/86400;
+			}
+		}	
+				
 			}
 			else{
+		if($v['unjh_pfcfb']>0){
+			  if($deal_info['repay_time_type']>0){	
+				$nob = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']*30/86400;
+				$item['month_repay_pfcfb']=$nob/$v['repay_time'];
+			}
+			  if($deal_info['repay_time_type']=0){	
+				$item['month_repay_pfcfb'] = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']/86400;
+			}
+		}
+			
 				$item['month_has_repay_money'] = $item['month_repay_money'];
 				$item['month_has_repay_money_all'] = $item['month_repay_money'] + $item['month_manage_money']+$item['impose_money'];
 			}
@@ -789,8 +808,7 @@ function get_deal_user_load_list($deal_info, $user_id = 0 ,$lkey = -1 , $ukey = 
 				elseif($v['is_site_repay'] == 2){
 					$item['site_repay_format'] = "机构";
 				}
-			}
-			
+			}	
 			
 			if ($r_type == 0){
 				if($lkey >= 0){
@@ -1055,7 +1073,7 @@ function dobid2_ok($deal_id,$user_id){
 	}	
 }
 
-function dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc=0){
+function dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc=0,$unjh_pfcfb){
 	$root = check_dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc);
 	if ($root["status"] == 0){
 		return $root;
@@ -1073,7 +1091,58 @@ function dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc=0){
 		$root["show_err"] = $GLOBALS['lang']['MONEY_NOT_ENOUGHT'];
 		return $root;
 	}
-
+	require_once APP_ROOT_PATH."system/libs/user.php";
+/*浦发币操作*/
+$deal = get_deal($deal_id);
+		if($unjh_pfcfb>0){
+			if($deal['repay_time']>=1 && $deal['repay_time_type']==1){
+			$data['unjh_pfcfb']=$unjh_pfcfb;
+		modify_account(array('unjh_pfcfb'=>-$unjh_pfcfb,'lock_money'=>0),$GLOBALS['user_info']['id'],"投标成功",2);
+			}
+		}
+			if($deal['repay_time']>=1&&$deal['repay_time_type']==1){	
+	           $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id=".$GLOBALS['user_info']['id']);
+                if(!$nodeal){ //客户首次投资给推荐他的人送20可提现的现金红包
+				/*
+		        if($_REQUEST["bid_money"]>=10000){ 
+		          $more_unjh_pfcfb=$GLOBALS['user_info']['unjh_pfcfb']+108;
+                  $GLOBALS['db']->query("update ".DB_PREFIX."user set `unjh_pfcfb`=".$more_unjh_pfcfb." where id = ".$GLOBALS['user_info']['id']);    //投资一万送108	
+                  $user_log_a['log_info']="_415活动_首次投资一个月资金10000以上就送108浦发币";
+                  $user_log_a['log_time']=get_gmtime();                
+                  $user_log_a['log_admin_id']=1;
+                  $user_log_a['user_id']=$GLOBALS['user_info']['id'];
+                  $user_log_a['unjh_pfcfb']=108;
+                $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_log_a,"INSERT");//插入一条投资目录
+		          }
+	             if($_REQUEST["bid_money"]<10000){
+		          $more_unjh_pfcfb=$GLOBALS['user_info']['unjh_pfcfb']+20;
+                  $GLOBALS['db']->query("update ".DB_PREFIX."user set `unjh_pfcfb`=".$more_unjh_pfcfb." where id = ".$GLOBALS['user_info']['id']);    //投资一万送20
+                  $user_log_a['log_info']="_415活动_首次投资一个月资金10000以下就送20浦发币";
+                  $user_log_a['log_time']=get_gmtime();                
+                  $user_log_a['log_admin_id']=1;
+                  $user_log_a['user_id']=$GLOBALS['user_info']['id'];
+                  $user_log_a['unjh_pfcfb']=20;
+                $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_log_a,"INSERT");//插入一条投资目录				  
+		          }
+				  */
+	            $pid_id=$GLOBALS['db']->getOne("select `pid` from ".DB_PREFIX."user where id=".$GLOBALS['user_info']['id']);
+				 $pid_user_id=$GLOBALS['db']->getOne("select `pid` from ".DB_PREFIX."user where id=".$pid_id);
+		 if($pid_id!=$pid_user_id){//本公司员工除外
+		if($pid_id!=0){
+		         $pid_pfcfb=$GLOBALS['db']->getOne("select `pfcfb` from ".DB_PREFIX."user where id=".$pid_id);	
+		         $pid_pfcfbs=$pid_pfcfb+20;
+		         $GLOBALS['db']->query("update ".DB_PREFIX."user set `pfcfb`=".$pid_pfcfbs." where id = ".$pid_id);   //推荐人得20浦发富币
+                  $user_log_b['log_info']="_415活动_你推荐了用户".$GLOBALS['user_info']['user_name']."获得20可提现的浦发币";
+                  $user_log_b['log_time']=get_gmtime();                
+                  $user_log_b['log_admin_id']=1;
+                  $user_log_b['user_id']=$pid_id;
+                  $user_log_b['pfcfb']=20;
+                $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_log_b,"INSERT");//插入一条投资目录							 
+                                }
+	               }	
+            }				   
+		}	
+	/*浦发币操作结束*/	
 	$data['user_id'] = $GLOBALS['user_info']['id'];
 	$data['user_name'] = $GLOBALS['user_info']['user_name'];
 	$data['deal_id'] = $deal_id;
@@ -1087,8 +1156,10 @@ function dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc=0){
 	if($load_id > 0){
 		//更改资金记录
 		$msg = '[<a href="'.$root['deal']['url'].'" target="_blank">'.$root['deal']['name'].'</a>]的投标,付款单号'.$load_id;
-		require_once APP_ROOT_PATH."system/libs/user.php";
+		// require_once APP_ROOT_PATH."system/libs/user.php";
 		modify_account(array('money'=>-$bid_money,'lock_money'=>$bid_money),$GLOBALS['user_info']['id'],$msg,2);
+		
+		
 		
 		dobid2_ok($deal_id,$GLOBALS['user_info']['id']);
 		
@@ -1328,7 +1399,7 @@ function getUcRepayBorrowMoney($id,$ids){
 		
 		//用户回款 get_deal_user_load_list($deal_info, $user_id = 0 ,$lkey = -1 , $ukey = -1,$true_time=0,$get_type = 0, $r_type = 0, $limit = "")
 		$user_loan_list = get_deal_user_load_list($deal, 0 , $lkey , -1 , 0 , 1);
-		
+
 		//===============还款================
 		foreach($user_loan_list as $lllk=>$lllv){
 			foreach($lllv as $kk=>$vv){
@@ -1360,7 +1431,12 @@ function getUcRepayBorrowMoney($id,$ids){
 						$repay_manage_money += $user_load_data['true_repay_manage_money'];
 						$repay_manage_impose_money += $user_load_data['repay_manage_impose_money'];
 						$user_total_money = $user_total_money - $need_repay_money;
-						
+						/*pfcfb*/
+					if($vv['month_repay_pfcfb']){	
+						$user_load_data['pfcfb']=$vv['month_repay_pfcfb'];
+                       		}				
+					/*pfcfb*/
+
 						if($vv['status']>0)
 							$user_load_data['status'] = $vv['status'] - 1;
 							
@@ -1399,11 +1475,14 @@ function getUcRepayBorrowMoney($id,$ids){
 								//更新用户账户资金记录
 								modify_account(array("money"=>$user_load_data['true_repay_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,回报本息",5);
 								
-								modify_account(array("money"=>-$user_load_data['true_manage_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,投标管理费",20);
-								
+								modify_account(array("money"=>-$user_load_data['true_manage_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,投标管理费",20);	
 								if($user_load_data['impose_money'] != 0)
 									modify_account(array("money"=>$user_load_data['impose_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,逾期罚息",21);
-								
+			         /*pfcfb*/	
+					  if($user_load_data['pfcfb']>0){
+			             	modify_account(array("pfcfb"=>$user_load_data['pfcfb']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,浦发币+利息1,",24);
+							}
+			        /*pfcfb*/
 								
 								$msg_conf = get_user_msg_conf($in_user_id);
 			
@@ -1510,6 +1589,8 @@ function getUcRepayBorrowMoney($id,$ids){
 			modify_account(array("money"=>-$repay_manage_money),$GLOBALS['user_info']['id'],"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,借款管理费$ext_str",10);
 			if($repay_manage_impose_money!=0)
 				modify_account(array("money"=>-$repay_manage_impose_money),$GLOBALS['user_info']['id'],"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,逾期管理费$ext_str",12);
+				
+				
 		}
 		
 		$r_msg = "会员还款$ext_str";
@@ -1640,7 +1721,6 @@ function getUcRepayBorrowMoney($id,$ids){
 	syn_transfer_status(0,$id);
 	$root["status"] = 1;//0:出错;1:正确;
 	$root["show_err"] = "还款完毕，本次还款人数:$repay_user_count";
-	
 	return $root;
 }
 

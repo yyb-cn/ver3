@@ -51,12 +51,16 @@ $this->_var['cujs'][] = $this->_var['TMPL_REAL']."/js/u.js";
 		                &nbsp;
 						<span id="Jcarry_balance" class="f_red lh28"></span>
 		            </div>
+				{if $user_info.pfcfb}	
 					<div class="field">
-		                <label><span class="f_red b">*</span> 虚拟币金额：</label>
-		                <span class="f_l"><input type="text" autocomplete="off" name="virtual_currency" class="f-input" id="Jcarry_pfcf_amount" value="0"> 可提现虚拟币 {$interest_money}元</span>
+		                <label><span class="f_red b">*</span> 提取现金红包：</label>
+		                <span class="f_l"><input type="text" autocomplete="off" name="pfcfb" class="f-input"  value="{$user_info.pfcfb}"> 提取现金红包：{function name="number_format" v=$user_info.pfcfb}元</span>
 		                &nbsp;
 						<span id="Jcarry_balance" class="f_red lh28"></span>
 		            </div>
+                {else}
+                	<span><input name="pfcfb" id="PfcfB_amount" value="0" type="hidden"></span>
+				{/if}
 					<div class="blank5"></div>
 		            <div class="field">
 		                <label>提现费用：</label>
