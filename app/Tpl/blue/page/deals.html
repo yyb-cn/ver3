@@ -57,7 +57,9 @@ $(document).ready(function() {
                 <div class="goods_list_goto {if $deal.deal_status eq 1}jump{/if}">
                     <p>投资期限：{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}</p>
                     <a href="{$deal.url}">
-                    {if $deal.deal_status eq 1}
+                    {if $deal.deal_status eq 0}
+                        等&nbsp;材&nbsp;料
+                    {elseif $deal.deal_status eq 1}
                         立即投资
                     {elseif $deal.deal_status eq 2}
                         满&nbsp;&nbsp;标
