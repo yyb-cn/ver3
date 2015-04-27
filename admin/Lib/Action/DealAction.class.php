@@ -1147,6 +1147,7 @@ class DealAction extends CommonAction{
 		$this->assign("deal_type_tree",$deal_type_tree);
 		
 		$loantype_list = load_auto_cache("loantype_list");
+		// var_dump($loantype_list);exit;
     	$this->assign("loantype_list",$loantype_list);
 
 		$this->display();

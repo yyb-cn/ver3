@@ -751,8 +751,27 @@ function get_deal_user_load_list($deal_info, $user_id = 0 ,$lkey = -1 , $ukey = 
 				$item['repay_manage_impose_money'] = $v['repay_manage_impose_money'];
 				$item['month_has_repay_money'] = 0;
 				$item['month_has_repay_money_all'] = 0;
+		if($v['unjh_pfcfb']>0){
+			  if($deal_info['repay_time_type']>0){	
+				$item['month_repay_pfcfb'] = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']*30/86400;
+			}
+			  if($deal_info['repay_time_type']=0){	
+				$item['month_repay_pfcfb'] = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']/86400;
+			}
+		}	
+				
 			}
 			else{
+		if($v['unjh_pfcfb']>0){
+			  if($deal_info['repay_time_type']>0){	
+				$nob = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']*30/86400;
+				$item['month_repay_pfcfb']=$nob/$v['repay_time'];
+			}
+			  if($deal_info['repay_time_type']=0){	
+				$item['month_repay_pfcfb'] = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']/86400;
+			}
+		}
+			
 				$item['month_has_repay_money'] = $item['month_repay_money'];
 				$item['month_has_repay_money_all'] = $item['month_repay_money'] + $item['month_manage_money']+$item['impose_money'];
 			}
@@ -790,15 +809,6 @@ function get_deal_user_load_list($deal_info, $user_id = 0 ,$lkey = -1 , $ukey = 
 					$item['site_repay_format'] = "机构";
 				}
 			}	
-		if($v['unjh_pfcfb']>0){
-			  if($deal_info['repay_time_type']>0){	
-				$nob = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']*30/86400;
-				$item['month_repay_pfcfb']=$nob/$deal_info['repay_time'];
-			}
-			  if($deal_info['repay_time_type']=0){	
-				$item['month_repay_pfcfb'] = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']/86400;
-			}
-		}	
 			
 			if ($r_type == 0){
 				if($lkey >= 0){
