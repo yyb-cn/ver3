@@ -1100,6 +1100,9 @@ $deal = get_deal($deal_id);
 		modify_account(array('unjh_pfcfb'=>-$unjh_pfcfb,'lock_money'=>0),$GLOBALS['user_info']['id'],"投标成功",2);
 			}
 		}
+	$pfcfbss= $GLOBALS['db']->getRow("select * from ".DB_PREFIX."pfcfb_huodong where id=2");
+	$pd_time=get_gmtime();
+	if($pd_time<$pfcfbss['end_time'] && $pfcfbss['open_off']==1 && $pd_time>$pfcfbss['start_time']){
 			if($deal['repay_time']>=1&&$deal['repay_time_type']==1){	
 	           $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id=".$GLOBALS['user_info']['id']);
                 if(!$nodeal){ //客户首次投资给推荐他的人送20可提现的现金红包
@@ -1130,18 +1133,19 @@ $deal = get_deal($deal_id);
 		 if($pid_id!=$pid_user_id){//本公司员工除外
 		if($pid_id!=0){
 		         $pid_pfcfb=$GLOBALS['db']->getOne("select `pfcfb` from ".DB_PREFIX."user where id=".$pid_id);	
-		         $pid_pfcfbs=$pid_pfcfb+20;
+		         $pid_pfcfbs=$pid_pfcfb+$pfcfbss['song_pfcfb'];
 		         $GLOBALS['db']->query("update ".DB_PREFIX."user set `pfcfb`=".$pid_pfcfbs." where id = ".$pid_id);   //推荐人得20浦发富币
                   $user_log_b['log_info']="_415活动_你推荐了用户".$GLOBALS['user_info']['user_name']."获得20可提现的浦发币";
                   $user_log_b['log_time']=get_gmtime();                
                   $user_log_b['log_admin_id']=1;
                   $user_log_b['user_id']=$pid_id;
-                  $user_log_b['pfcfb']=20;
+                  $user_log_b['pfcfb']=$pfcfbss['song_pfcfb'];
                 $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_log_b,"INSERT");//插入一条投资目录							 
                                 }
 	               }	
             }				   
 		}	
+}		
 	/*浦发币操作结束*/	
 	$data['user_id'] = $GLOBALS['user_info']['id'];
 	$data['user_name'] = $GLOBALS['user_info']['user_name'];
