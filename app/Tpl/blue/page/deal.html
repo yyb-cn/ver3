@@ -11,14 +11,7 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 			<div class="tl">
 				<div class="lf">
 					<span><a href="{$deal.url}">{$deal.color_name}</a></span>
-					<img src="{$deal.cate_info.icon}" width="24" height="24" />
 					{$deal.cate_info.name}
-					&nbsp;&nbsp;
-					借款人：<a href="{$u_info.url}" class="f_red" style="padding:0">{$u_info.user_name}</a>
-				</div>
-				<div class="rt detail_number">
-					<a href="javascript:void(0);" class="f_blue" onclick="openWeeboxFrame('{url x="index" r="tool#contact" p="win=1&id=$deal.id"}','借款协议（范本）',1024,400);" >借款协议（范本）&nbsp;&nbsp;&nbsp;&nbsp;</a>
-			
 				</div>
 			</div>
 			<div class="bd">
@@ -251,38 +244,124 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 		<div class="desc_inf wrap clearfix">
 	        <div class="list_title clearfix" id="J_deal_tab_select">
 	            <ul>
-	                <li class="list1 right_tab_select" style="cursor:pointer;" rel="1">借入者信用信息</li>
-					{if $deal.deal_status gte 4}
-					<li class="list1" style="cursor:pointer;" rel="2">还款详情</li>
-					<li class="list1" style="cursor:pointer;" rel="3">债权人信息</li>
-					{/if}
+	                <li class="list1 right_tab_select" style="cursor:pointer;" rel="1">项目简介</li>
 					<li class="list1" style="cursor:pointer;" rel="4">投标记录</li>
 	            </ul>
 	        </div>
 			<div class="cont clearfix" id="J_deal_tab_box">
 				<div class="box_view box_view_1">
-					{include file="inc/deal/user_credit_info.html"}
-					{include file="inc/deal/user_credit_passed_info.html"}
-					{if $deal.agency_id gt 0}
-					{include file="inc/deal/user_guarantee_info.html"}
-					{/if}
-					<p class="b" style="margin:30px 0 10px 0;">借款描述</p>
-					<div class="clearfix" style="border-bottom:1px solid #e3e3e3; padding:0 0 20px 70px;">
-						<span>{$deal.description}</span>
-					</div>
-					{if $ACTION_NAME neq 'preview'}
-					{include file="inc/message_form.html"}
-					{/if}
+                
+                    <div class="new_shop_introduce">
+                      <p class="new_shop_introduce_main_tit"><img src="{$TMPL}/images/tou_z_11.png" /> 项目要素</p>
+                      <p class="new_shop_introduce_main_msg">由嘉良基金针对具有品牌实力的小额贷款公司存量优质信贷资产的收益权发起设立专项资产管理投资计划。作为一款类信托的信贷资产收益权投资计划，适合追求较低风险和固定收益类回报的合格投资者（包括机构和自然人）。</p>
+                        
+                      <table class="tab1" width="890" border="1" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="120" height="36">基金名称</td>
+                            <td>嘉良-信贷赢专项资产管理投资计划</td>
+                          </tr>
+                          <tr>
+                            <td width="120" height="36" bgcolor="#f6f6f6">基金管理人</td>
+                            <td bgcolor="#f6f6f6">深圳嘉良基金管理有限公司</td>
+                          </tr>
+                          <tr>
+                            <td width="120" height="36">投资范围</td>
+                            <td>具有品牌实力的小额贷款公司存量优质信贷资产的收益权</td>
+                          </tr>
+                          <tr>
+                            <td width="120" height="36" bgcolor="#f6f6f6">安全保障</td>
+                            <td height="180" bgcolor="#f6f6f6">
+                                <p>1、小贷公司承诺在投资者认购期限到期后履行承诺回购行为；</p>
+                                <p>2、由广西国穗贸易有限公司为信贷资产收益权的回购行为承担回购连带责任；</p>
+                                <p>3、由南宁华夏资产管理有限公司为此计划提供筛选债权资产包及跟踪管理服务工作，对因不良资产包产生的违约行为承担回购连带责任；</p>
+                                <p>4、由广西金发行融资性担保有限公司为信贷资产收益权的回购行为承担回购连带责任；</p>
+                                <p>5、深圳嘉良基金管理有限公司对上述主体的不能行使回购的行为承担连带责任；</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td width="120" height="36">最低认购额</td>
+                            <td>1000元为认购起点。</td>
+                          </tr>
+                          <tr>
+                            <td width="120" height="36" bgcolor="#f6f6f6">收益分配方式</td>
+                            <td bgcolor="#f6f6f6">按月分配支付收益</td>
+                          </tr>
+                          <tr>
+                            <td width="120" height="36">托管银行</td>
+                            <td>中国农业银行</td>
+                          </tr>
+                        </table>
+            
+                        <p class="new_shop_introduce_main_tit"><img src="{$TMPL}/images/tou_z_11.png" /> 项目优势及特点</p>
+                        <table class="tab1" width="890" border="1" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="890" height="36" bgcolor="#f6f6f6">
+                              <p style=" color:#00BEF0; font-size:18px; font-weight:bold;">1、收益优势</p>
+                              <p style=" text-indent:3em; font-size:16px;">本计划与同期限的各类投资理财品种比较，收益优势明显。</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td width="890" height="36">
+                              <p style=" color:#00BEF0; font-size:18px; font-weight:bold;">2、周期优势</p>
+                              <p style=" text-indent:3em; font-size:16px;">资金续存周期短，周转灵活。</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td width="890" height="36" bgcolor="#f6f6f6">
+                              <p style=" color:#00BEF0; font-size:18px; font-weight:bold;">3、安全性高</p>
+                              <p style=" text-indent:3em; font-size:16px;">6大安全措施，保障资金的回购，提高安全性。</p>
+                            </td>
+                          </tr>
+                        </table>
+                        
+                        <p class="new_shop_introduce_main_tit"><img src="{$TMPL}/images/tou_z_11.png" /> 项目背景概况</p>
+                        <p class="new_shop_introduce_main_tit2">具有品牌实力的小贷公司</p>
+                        <p class="new_shop_introduce_main_msg">项目主要来自经营办理各项小额贷款、银行业机构委托贷款及其他经其他金融管理部门批准业务的广西具有品牌实力的小额贷款公司。小额贷款公司主要面向“三农”、中小微企业和个体工商户以及企业主发放各项小额贷款，贯彻“小额、分散”原则从而实现经济效益最大化，均为整体业绩健康向上，平稳快速发展的优质品牌实力企业。</p>
+                        
+                        <p class="new_shop_introduce_main_tit2">业务流程</p>
+                        <p class="new_shop_introduce_main_msg"><img class="liucheng" src="{$TMPL}/images/liucheng.png" /></p>
+                        
+                        <p class="new_shop_introduce_main_tit2">风险控制体系</p>
+                        <table class="tab1" width="890" border="1" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="890" height="36" bgcolor="#f6f6f6">
+                              <p style=" color:#00BEF0; font-size:18px; font-weight:bold; text-align:center;">贷款“三查”制度</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td width="890" height="36">
+                              <p style=" font-size:14px; font-weight:bold;">贷前调查：信贷员受理借款人申请后，应当对借款人的资格和条件进行审查；形成的可行性调查报告。</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td width="890" height="36" bgcolor="#f6f6f6">
+                              <p style=" font-size:14px; font-weight:bold;">贷时审查：按照审贷分离、分级审批的贷款管理制度，贷款公司在贷款调查基础上，审查人员应对调查人员提供的材料进行核实、评定，复测贷款风险度，提出意见，按规定权限报批并予以纪录。</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td width="890" height="36">
+                              <p style="  font-size:14px; font-weight:bold;">贷后检查：及时对借款人执行借款合同情况、借款人的经营情况、保证人和抵（质）押物的情况进行持续的监控和分析，及时发现早期预警信号，并积极采取应补救措施和授信管理过程。 </p>
+                            </td>
+                          </tr>
+                        </table>
+                        
+                        <p class="new_shop_introduce_main_tit"><img src="{$TMPL}/images/tou_z_11.png" /> 项目安全</p>
+                        
+                        <p class="new_shop_introduce_main_tit2">无条件承诺回购</p>
+                        <p class="new_shop_introduce_main_msg">具有品牌实力的小贷公司作为出让信贷资产收益权的主体，其承诺在投资者的投资到期后，无条件回购信贷资产收益权的行为，并为此承担连带责任。</p>
+                        
+                        <p class="new_shop_introduce_main_tit2">股东连带担保</p>
+                        <p class="new_shop_introduce_main_msg">广西国穗贸易有限公司成立于于2005年，注册资本为5140万元。目前该公司总资产20275.88万元，净资产15141.71万元，固定资产2083.36万元，2013年实现销售收入83590万元。公司目前主营为建材、食糖、矿产品、物业管理租赁，兼营其他商品贸易。建材主要销往广西区内的各个市县地区，已在南宁、钦州、钦州港、来宾、防城、北海等地设有公司产品经销处，食糖主要销往广东小型食品加工厂和北方地区加工厂以及区内的各地经销商，拥有遍布全区的销售网络，公司贸易交易贯穿全国。国穗贸易为到期的信贷资产收益权的回购承担连带担保责任。</p>
+                        
+                        <p class="new_shop_introduce_main_tit2">资产包管理、筛选及违约责任</p>
+                        <p class="new_shop_introduce_main_msg">本计划委托南宁华夏资产管理有限公司（成立于2009年，注册资本为1亿元）为此提供优质债权资产包的筛选及跟踪管理服务工作，对于筛选的不良资产包产生的违约承担连带责任。</p>
+                        
+                        <p class="new_shop_introduce_main_tit2">外部担保及补充支付</p>
+                        <p class="new_shop_introduce_main_msg">广西金发行融资性担保有限公司为自治区金融办严格审核通过的融资性担保公司，注册成立于2010年，注册资本为1.08亿元。作为本投资计划的担保及补充支付承诺人，在计划期限内信贷资产不良率超过10%（不含）的情况下触发清偿事件，在补充支付额度内为优先级的本金及收益进行担保及补充支付，进一步提高优先级的安全性。</p>
+                    </div>
+                    
 				</div>
-				{if $deal.deal_status gte 4}
-				<div class="box_view box_view_2 hide">
-					{include file="inc/deal/loan_repay_list.html"}
-				</div>
-				<div class="box_view box_view_3 hide">
-				{include file="inc/deal/load_repay_list.html"}
-				</div>
-				{/if}
-				 <div class="box_view box_view_4 hide">
+				<div class="box_view box_view_4 hide">
 	               {include file="inc/deal/load_list.html"}
 		        </div>
 			</div>

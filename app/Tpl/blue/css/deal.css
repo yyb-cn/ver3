@@ -155,3 +155,14 @@ cursor: pointer;}
 
 .c_number_ipt{ float:left; width:40px; text-align:center;border-left:none;border-right:none}
 .c_number{ float:left; display:block; font-weight:bolder; border:1px solid #ccc; background:#ccc; padding:0 8px; background:#fff; line-height:28px;}
+	
+.new_shop_introduce { width:950px; clear:both; padding:20px 0;}
+	.new_shop_introduce_main_tit { text-align:center; font-size:22px; font-weight:bold; padding:10px 0;}
+	.new_shop_introduce_main_tit2 { font-size:18px; color:#00BEF0; padding:20px 0; font-weight:bold; text-indent:1em;}
+	.new_shop_introduce_main_msg { padding:0 20px; text-indent:2em;}
+	
+	.new_shop_introduce .tab1 { margin:20px 30px; font-size:14px; line-height:16px; text-indent:2em;}
+		.new_shop_introduce .tab1 p { line-height:30px;}
+
+.new_shop2 .new_shop_list { width:950px; clear:both;}
+	.new_shop2 .new_shop_list .jshop2 p { width:280px; float:left; text-align:center; padding-top:10px;}
