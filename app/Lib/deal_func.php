@@ -1176,12 +1176,15 @@ $deal = get_deal($deal_id);
 			$host='rdsf6fn32zmbb7j.mysql.rds.aliyuncs.com';
 			$user='rengou';
 			$password='dontGuess777';
-			$con=mysql_connect("$host","$user","$password") or die("无法连接MySQL数据库服务器！");
+			if($_SERVER['SERVER_NAME']!='localhost'){
+			$con=mysql_connect("$host","$user","$password");
+			
 			mysql_select_db("rengou", $con);
 			mysql_query("set names utf8"); 
 			$sql="INSERT INTO `deal` (`".implode('`,`', array_keys($data_rg))."`) VALUES ('".implode("','", $data_rg)."')";
 			$result=mysql_query($sql);//插入语句
 			mysql_close($con);
+			}
 	//-------购买成功，新增购物确认函------------author :@313616432
 		//更改资金记录
 		$msg = '[<a href="'.$root['deal']['url'].'" target="_blank">'.$root['deal']['name'].'</a>]的投标,付款单号'.$load_id;
