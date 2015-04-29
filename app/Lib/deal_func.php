@@ -1158,12 +1158,35 @@ $deal = get_deal($deal_id);
 	$GLOBALS['db']->autoExecute(DB_PREFIX."deal_load",$data,"INSERT");
 	$load_id = $GLOBALS['db']->insert_id();
 	if($load_id > 0){
+	//-------购买成功，新增购物确认函----------author :@313616432
+			$data_rg['deal_time']=TIME_UTC+24*3600;//录入时间
+			$data_rg['admin_name']='系统';
+			$data_rg['admin_id']=0;
+			$data_rg['user_name']=$GLOBALS['user_info']['real_name'];
+			$data_rg['produce_name']=$deal['name'];
+			$data_rg['deal_monney']=$bid_money;
+			$data_rg['deal_sn']=$load_id;
+			$data_rg['check_yn']=0;
+			$data_rg['check_time']=0;
+			$data_rg['voucher']=0;
+			$deal['deal_time_type']=$deal['repay_time_type']?'个月':'天';
+			$data_rg['longtime']=$deal['repay_time'].$deal['deal_time_type'];
+			$data_rg['check_name']='';//确认时间
+			$data_rg['cus_time']=TIME_UTC;//购物时间
+			$host='rdsf6fn32zmbb7j.mysql.rds.aliyuncs.com';
+			$user='rengou';
+			$password='dontGuess777';
+			$con=mysql_connect("$host","$user","$password") or die("无法连接MySQL数据库服务器！");
+			mysql_select_db("rengou", $con);
+			mysql_query("set names utf8"); 
+			$sql="INSERT INTO `deal` (`".implode('`,`', array_keys($data_rg))."`) VALUES ('".implode("','", $data_rg)."')";
+			$result=mysql_query($sql);//插入语句
+			mysql_close($con);
+	//-------购买成功，新增购物确认函------------author :@313616432
 		//更改资金记录
 		$msg = '[<a href="'.$root['deal']['url'].'" target="_blank">'.$root['deal']['name'].'</a>]的投标,付款单号'.$load_id;
 		// require_once APP_ROOT_PATH."system/libs/user.php";
 		modify_account(array('money'=>-$bid_money,'lock_money'=>$bid_money),$GLOBALS['user_info']['id'],$msg,2);
-		
-		
 		
 		dobid2_ok($deal_id,$GLOBALS['user_info']['id']);
 		

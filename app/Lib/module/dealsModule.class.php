@@ -11,7 +11,7 @@ require APP_ROOT_PATH.'app/Lib/deal.php';
 class dealsModule extends SiteBaseModule
 {
 	public function index(){
-
+	
 		$GLOBALS['tmpl']->caching = true;
 		$GLOBALS['tmpl']->cache_lifetime = 60;  //首页缓存10分钟
 		$field = es_cookie::get("shop_sort_field"); 
