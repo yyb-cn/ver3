@@ -196,9 +196,11 @@ $(document).ready(function(){
 			type:"Post",
 			dataType:"json",
 			success:function(data){
-				alert("等待管理员审核");
-					window.location.href = '{url a="index" r="transfer"}';
-				
+				alert(data);
+					//window.location.href = '{url a="index" r="transfer"}';
+				if(data.pay_code ==='llwappay'){
+                                    window.location.href = data.url;
+                                }
 				
 			}
 		});

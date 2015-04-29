@@ -43,7 +43,7 @@ function payment_paid($payment_notice_id, $outer_notice_sn = '')
 	$payment_notice_id = intval($payment_notice_id);
 	$now = TIME_UTC;
 
-	$GLOBALS['db']->query("update ".DB_PREFIX."payment_notice set pay_time = ".$now.", pay_date = ".to_date($now,'Y-m-d').",outer_notice_sn = '".$outer_notice_sn."',is_paid = 1 where id = ".$payment_notice_id." and is_paid = 0");	
+	$GLOBALS['db']->query("update ".DB_PREFIX."payment_notice set pay_time = ".$now.", pay_date = ".date('Y-m-d').",outer_notice_sn = '".$outer_notice_sn."',is_paid = 1 where id = ".$payment_notice_id." and is_paid = 0");	
 	
 	$rs = $GLOBALS['db']->affected_rows();
 	if($rs)

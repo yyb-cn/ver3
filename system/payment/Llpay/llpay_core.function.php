@@ -188,5 +188,12 @@ function local_date($format, $time = NULL)
 }
 
 
+function getJsonVal($json, $k){
+	if(isset($json->{$k})){
+		return trim($json->{$k});
+	}
+	return "";	
+}
+
 
 ?>

@@ -960,7 +960,7 @@
 		$order['payment_id'] = $payment_id;
 		$order['bank_id'] = $bank_id;
 		$order['memo'] = $memo;
-				
+		$order['create_date'] = date('Y-m-d');		
 		//开始生成订单
 		$now = TIME_UTC;	
 		
