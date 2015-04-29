@@ -1,0 +1,93 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+
+<load href='__TMPL__Common/js/conf.js' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/deal.js' />
+<load href='__TMPL__Common/js/colorpicker.js' />
+<load href='__TMPL__Common/style/colorpicker.css' />
+<script type="text/javascript">
+	window.onload = function()
+	{
+		init_dealform();
+	}
+</script>
+
+<div class="main">
+<div class="main_title">浦发币活动控制器</div>
+<div class="blank5"></div>
+<div class="blank5"></div>
+<div class="search_row">
+&nbsp;&nbsp;&nbsp;<span>id</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>name</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>开始时间</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>结束时间</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>开/关(1为开/2为关)</span>&nbsp;&nbsp;&nbsp;<span>所送浦发币</span>
+<br><br>
+<foreach name="pfcfb_list"  item="v">
+&nbsp;&nbsp;&nbsp;<span>{$v.id}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{$v.name}</span>&nbsp;&nbsp;<span>{$v.start_time}</span>&nbsp;&nbsp;&nbsp;<span>{$v.end_time}</span>&nbsp;&nbsp;&nbsp;<span>{$v.open_off}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{$v.song_pfcfb}</span><br><br>
+</foreach>
+<div class="blank5"></div>
+<form name="search" action="__APP__" method="post">	
+   注册成为理财人就送:
+   <br>
+      <br>
+		<td class="item_input">
+			<input type="text" class="textbox" name="cz_start_time" value="" id="start_time"  onfocus="this.blur(); return showCalendar('start_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_start_time');" />
+			<input type="button" class="button" id="btn_start_time" value="{%SELECT_TIME}" onclick="return showCalendar('start_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_start_time');" />   :开始时间
+		</td>
+	<br>
+	<br>
+		<td class="item_input">
+			<input type="text" class="textbox" name="zc_end_time" id="bad_time" value="" onfocus="this.blur(); return showCalendar('bad_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_bad_time');" />
+			<input type="button" class="button" id="btn_bad_time" value="{%SELECT_TIME}" onclick="return showCalendar('bad_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_bad_time');" />	:结束时间
+		</td>
+	<br>
+	<br>
+	<input type="radio" name="Financial_planner_one" value="1" /> 开
+	<input type="radio" name="Financial_planner_one" value="2" /> 关
+	<br>
+	<br>
+	<input type="text" class="textbox" name="zc_song_pfcfb" value="0" />	    所送虚拟币(浦发币)
+	<br>
+	<br>
+	<br>	
+   投标就送:
+   <br>
+   <br>
+   <br>
+		<td class="item_input">
+			<input type="text" class="textbox" name="tz_start_time" value="" id="tz_start_time"  onfocus="this.blur(); return showCalendar('tz_start_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_start_time');" />
+			<input type="button" class="button" id="btn_start_time" value="{%SELECT_TIME}" onclick="return showCalendar('tz_start_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_start_time');" />   :开始时间
+		</td>
+	<br>
+	<br>
+		<td class="item_input">
+			<input type="text" class="textbox" name="tz_end_time" id="tz_end_time" value="" onfocus="this.blur(); return showCalendar('tz_end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_bad_time');" />
+			<input type="button" class="button" id="btn_bad_time" value="{%SELECT_TIME}" onclick="return showCalendar('tz_end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_bad_time');" />	:结束时间
+		</td>
+	<br>
+	<br>
+	<input type="radio" name="Financial_planner_twe" value="1" /> 开
+	<input type="radio" name="Financial_planner_twe" value="2" /> 关
+	<br>
+	<br>
+	<input type="text" class="textbox" name="tz_song_pfcfb" value="0" />	    所送虚拟币(浦发币)	
+		<input type="hidden" value="pfcfb" name="m" />
+		<input type="hidden" value="update_pfcfb" name="a" />
+	<br>
+	<br>
+		&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp; <input type="submit" class="button" value="添加" />
+</form>
+	
+</div>
+<div class="blank5"></div>
+
+
+<div class="blank5"></div>
+</div>
+<include file="Public:footer" />
