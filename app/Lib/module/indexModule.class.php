@@ -131,6 +131,10 @@ class indexModule extends SiteBaseModule
 			
 			$GLOBALS['tmpl']->assign("user_info",$user_info);
 			$GLOBALS['tmpl']->assign("show_site_titile",1);
+			//首页图片幻灯片
+			$nav_img=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."img_list_nav order by name asc");
+			$GLOBALS['tmpl']->assign("nav_img",$nav_img);
+			
 		}
 						
 		

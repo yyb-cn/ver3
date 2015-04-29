@@ -36,6 +36,7 @@ class dealModule extends SiteBaseModule
 		
 		//借款列表
 		$load_list = $GLOBALS['db']->getAll("SELECT deal_id,user_id,user_name,money,is_auto,create_time FROM ".DB_PREFIX."deal_load WHERE deal_id = ".$id." order by id ASC ");
+		// var_dump($load_list);exit;
 		
 		$u_info = get_user("*",$deal['user_id']);
 		
@@ -91,8 +92,8 @@ class dealModule extends SiteBaseModule
 				$GLOBALS['tmpl']->assign("has_bid_portion",intval($has_bid_money)/($deal['borrow_amount']/$deal['portion']));
 			}
 		}
-		
-		$GLOBALS['tmpl']->assign("load_list",$load_list);	
+		// var_dump($load_list);exit;
+		$GLOBALS['tmpl']->assign("load_list",$load_list);	 // 投资列表
 		$GLOBALS['tmpl']->assign("credit_file",$credit_file);
 		$GLOBALS['tmpl']->assign("u_info",$u_info);
 				
@@ -507,7 +508,22 @@ class dealModule extends SiteBaseModule
 			$data['mobile'] = strim($_REQUEST['phone']);
 			$data['mobilepassed'] = 1;
 		}
-		
+	if($GLOBALS['user_info']['mobilepassed'] == 0||$GLOBALS['user_info']['idcardpassed']==0){	
+	$pfcfbss= $GLOBALS['db']->getRow("select * from ".DB_PREFIX."pfcfb_huodong where id=1");
+	$time=get_gmtime();
+	if($time<$pfcfbss['end_time'] && $pfcfbss['open_off']==1 && $time>$pfcfbss['start_time']){
+			$unjh_pfcfb=$GLOBALS['user_info']['unjh_pfcfb']+$pfcfbss['song_pfcfb'];
+			$GLOBALS['db']->query("update ".DB_PREFIX."user set unjh_pfcfb =".$unjh_pfcfb." where id = ".$GLOBALS['user_info']['id']);
+            $user_log_b['log_info']="_415活动_注册就送".$pfcfbss['song_pfcfb']."浦发币";
+                  $user_log_b['log_time']=get_gmtime();                
+                  $user_log_b['log_admin_id']=1;
+                  $user_log_b['user_id']=$GLOBALS['user_info']['id'];
+                  $user_log_b['unjh_pfcfb']=$pfcfbss['song_pfcfb'];
+                $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_log_b,"INSERT");//插入一条投资目录		
+			}
+	}		
+			if($data)
+			$GLOBALS['db']->autoExecute(DB_PREFIX."user",$data,"UPDATE","id=".$GLOBALS['user_info']['id']);		
 		$GLOBALS['db']->autoExecute(DB_PREFIX."user",$data,"UPDATE","id=".$GLOBALS['user_info']['id']);
 		
 		showSuccess($GLOBALS['lang']['SUCCESS_TITLE'],1);

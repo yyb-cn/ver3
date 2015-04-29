@@ -210,14 +210,20 @@ var to_send_msg = false;
 
 
 <script type="text/javascript">
-
-
-jQuery(function(){
+ jQuery(function(){
 	
 	$("form#re_name_and_id").submit(function(){
 		if($.trim($(".username #real_name").val()).length == 0)
 		{			
 			formError($(".username #real_name"),"真实姓名不为空");
+			return false;
+		}
+		
+		var chName = $.trim($(".username #real_name").val());
+		var chNameZ = '^[\u4E00-\u9FFF]+$';
+		if(chName.match(chNameZ) == null)
+		{			
+			formError($(".username #real_name"),"用户名必须为中文");
 			return false;
 		}	
 		
@@ -227,17 +233,29 @@ jQuery(function(){
 			return false;
 		}
 		
-		if(!idcheck($(".idno #idno")))
+		var idnoName = $.trim($(".idno #idno").val());
+		if($.trim($(".idno #idno").val()).length > 0)
 		{			
-			formError($(".idno #idno"),"身份证格式错误");
-			return false;
-		}	
+			$.ajax({
+            	url:'index.php?ctl=idcheck',
+            	data:{idno:idnoName},
+            	type:'post',
+            	dataType:'json',
+            	success:function(data){
+					if(data == 1){
+						formSuccess($(".idno #idno"),"验证正确");
+					}
+					else{
+						formError($(".idno #idno"),"经检验您的身份证错误，会影响您和提现");return false;
+					}
+            	}
+			})
+		}
+		
 		else
 		{	
 			formSuccess($(".idno #idno"),"验证正确");
 		}
-		
-		
 		return true;
 	});
 	
@@ -259,16 +277,23 @@ jQuery(function(){
 		var obj = $(this);
 		if($.trim(obj.val()).length == 0)
 		{			
-			formError(obj,"身份证号不为空");
+			formError(obj,"请输入您的身份证号码");
 		}
-		
-		if(!idcheck(obj))
-		{			
-			formError(obj,"身份证格式错误");
-		}	
-		else
-		{	
-			formSuccess(obj,"验证正确");
+		else{	
+			$.ajax({
+            	url:'index.php?ctl=idcheck',
+            	data:{idno:obj.val()},
+            	type:'post',
+            	dataType:'json',
+            	success:function(data){
+					if(data == 1){
+						formSuccess(obj,"验证正确");
+					}
+					else{
+						formError(obj,"经检验您的身份证错误，会影响您的充值和提现");
+					}
+            	}
+			})
 		}
 	}); //身份证验证
 	
@@ -278,12 +303,22 @@ jQuery(function(){
 		{			
 			formError(obj,"用户名不为空");
 			return false;
-		}	
-		formSuccess(obj,"验证正确");
-		return true;
+		}
+		else{	
+			var chName = obj.val();
+			var chNameZ = '^[\u4E00-\u9FFF]+$';
+			if(chName.match(chNameZ) == null){
+				formError(obj,"用户名必须为中文");
+			}
+			else{
+				formSuccess(obj,"验证正确");
+			}
+			return true;
+		}
 	}); //用户名验证
 	
 });
+
 </script>
 
 </div>

@@ -413,6 +413,7 @@ return array(
 								array("name"=>"导航菜单列表","module"=>"Nav","action"=>"index"),
 								array("name"=>"投票调查列表","module"=>"Vote","action"=>"index"),
 								array("name"=>"前端广告列表","module"=>"Adv","action"=>"index"),
+								array("name"=>"浦发币活动列表","module"=>"pfcfb","action"=>"index"),
 						),
 				),
 				

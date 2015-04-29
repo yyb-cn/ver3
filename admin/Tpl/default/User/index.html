@@ -15,7 +15,7 @@ function login_site(user_id){
 	
 }
 function user_moneyss(user_id){
-	$.weeboxs.open(ROOT+'?m=User&a=user_moneyss&id='+user_id, {contentType:'ajax',showButton:false,title:"证件预览",width:1000,height:500});
+	$.weeboxs.open(ROOT+'?m=User&a=user_moneyss&id='+user_id, {contentType:'ajax',showButton:false,title:"账户修改",width:500,height:300});
 }
 </script>
 <php>
@@ -130,8 +130,12 @@ function user_moneyss(user_id){
 	action="true" 
 	datasource="list" 
 	show="id:{%ID}|50px,user_name:{%USER_NAME}:edit,email:{%USER_EMAIL},mobile:{%USER_MOBILE},money|format_price:{%USER_MONEY},lock_money:{%USER_LOCK_MONEY},point:信用,level_id|get_user_level:会员等级,pid|get_referrals_name:{%REFERRALS_USER},login_ip:{%LOGIN_IP},login_time|f_to_date:{%LOGIN_TIME},create_time|f_to_date:注册时间,is_effect|get_is_effect=$user['id']:{%IS_EFFECT},ips_acct_no|ips_status:第三方" 
-	actionlist="edit:{%EDIT}, del:{%DEL},id|user_company=$user,user_work:{%USER_WORK_SHORT}, user_passed:{%USER_PASSED_SHORT},account_detail:{%USER_ACCOUNT_DETAIL_SHORT},info_down:资料,view_info:资料展示,user_moneyss:账户,bank_manage:银行卡管理,load_manage:投标记录,login_site:登录"/> 
+	actionlist="edit:{%EDIT}, del:{%DEL},id|user_company=$user, account_detail:{%USER_ACCOUNT_DETAIL_SHORT},user_moneyss:账户,bank_manage:银行卡管理,load_manage:投标记录,login_site:登录"/> 
 
+	<!--
+	
+	actionlist="edit:{%EDIT}, del:{%DEL},id|user_company=$user,user_work:{%USER_WORK_SHORT}, user_passed:{%USER_PASSED_SHORT},account_detail:{%USER_ACCOUNT_DETAIL_SHORT},info_down:资料,view_info:资料展示,user_moneyss:账户,bank_manage:银行卡管理,load_manage:投标记录,login_site:登录"
+	-->
 <div class="blank5"></div>
 <div class="page">{$page}</div>
 </div>
