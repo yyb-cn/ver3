@@ -21,7 +21,7 @@ class uc_incharge
 		$user_id  = intval($user['id']);
 		if ($user_id >0){
 			require APP_ROOT_PATH.'app/Lib/uc_func.php';
-			
+			$root['user_id'] = $user_id;
 			$root['user_login_status'] = 1;
 			$root['response_code'] = 1;
 					
