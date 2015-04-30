@@ -3,8 +3,13 @@
 	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_incharge.css";		
 ?>
 
-{$data.show_err}
-
+<div style="margin-left: 45%;margin-top: 12%">
+   <form id="llpaysubmit" name="llpaysubmit" action="{$data.pay_wap}" method="{$data.method}">
+		<input type="hidden" name="req_data" value="{$data.req_data}"/>
+                <input  style="display: none" type="submit" value="确认"></form>
+		<script>document.forms['llpaysubmit'].submit();</script>
+      <image src="/public/loading.gif" />          
+</div>
 
 {include file="./inc/footer.html"}
 

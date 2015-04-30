@@ -41,7 +41,7 @@ if (isset($read_modules) && $read_modules == true)
 
 // 连连支付模型
 require_once(APP_ROOT_PATH.'system/libs/payment.php');
-class Llpay_payment implements payment {
+class Llwappay_payment implements payment {
     const VERSION = '1.2';//请求应用标识 为wap版本
     const TRANSPORT = 'HTTP';//访问模式,根据自己的服务器是否支持ssl访问，若支持请选择https；若不支持请选择http
     const USERREQ_IP='';//防钓鱼ip 可不传或者传下滑线格式 
@@ -158,9 +158,10 @@ class Llpay_payment implements payment {
                 
                 $llpaySubmit = new LLpaySubmit($llpay_config);
                 $result['req_data'] = $llpaySubmit->buildRequestPara($parameter);
-                $result['url'] = $llpaySubmit->llpay_gateway_new.'?req_data='.$result['req_data'];
+                $result['notify_url'] = $llpaySubmit->llpay_gateway_new;
                 $result['pay_code'] = 'llwappay';
-                //$result['is_wap'] = 1;
+                $result['is_wap'] = 1;
+                $result['method'] = 'post';
                 return $result;
 
 	}
