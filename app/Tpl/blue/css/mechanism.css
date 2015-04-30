@@ -114,5 +114,23 @@
 		.about_us_hzhb_pic { width:960px; margin:0 auto; height:350px; padding-top:20px; border-top:1px solid #cccccc; margin-top:20px;}
 			.about_us_hzhb_pic img { margin-left:5px;}
 			
-/* 加入我们 */
-.about_us_hzhb_ppp {}
+/* 新手入门 */
+.about_us_tdjs1 { width:100%; height:609px; background:#0d96c3;}
+	.about_us_tdjs1_bg { width:986px; height:609px; margin:0 auto;}
+	
+.about_us_tdjs2 { width:100%; height:554px; background:#0d8cc3;}
+	.about_us_tdjs2_bg { width:986px; height:554px; margin:0 auto;}
+	
+.about_us_tdjs3 { width:100%; height:1000px; background:#0373a3;}
+	.about_us_tdjs3_main { width:986px; height:927px; padding-top:73px; margin:0 auto;}
+		.about_us_tdjs3_tit { width:249px; height:38px; background:url(../images/tdjs_bg3_tit.png) no-repeat; margin:0 auto;}
+		
+		.tdjs_bg3_num { width:936px; height:80px; margin:0 auto; margin-top:58px;}
+			.tdjs_bg3_num li { float:left; width:234px; height:80px; background:url(../images/tdjs_bg3_num.png) no-repeat; color:#024382; font-size:18px; font-weight:bold; text-align:center; line-height:80px; cursor:pointer;}
+			.tdjs_bg3_num #tdjs_bg3_num_1 { background:url(../images/tdjs_bg3_numc.png) no-repeat;}
+			
+		.tdjs_bg3_m { width:842px; height:511px; margin:0 auto; margin-top:70px;}
+		
+		.tdjs_bg3_register { display:block; width:250px; height:48px; margin:0 auto; margin-top:50px; color:#FFF; background:#ff5c00; font-size:18px; line-height:48px; text-align:center;}
+			.tdjs_bg3_register:hover { color:#FFF;}
+	
