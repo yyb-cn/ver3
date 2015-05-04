@@ -42,7 +42,7 @@ if (isset($read_modules) && $read_modules == true)
 // 连连支付模型
 require_once(APP_ROOT_PATH.'system/libs/payment.php');
 class Llwappay_payment implements payment {
-    const VERSION = '1.2';//请求应用标识 为wap版本
+    const VERSION = '1.1';//请求应用标识 为wap版本
     const TRANSPORT = 'HTTP';//访问模式,根据自己的服务器是否支持ssl访问，若支持请选择https；若不支持请选择http
     const USERREQ_IP='';//防钓鱼ip 可不传或者传下滑线格式 
     const VALID_ORDER = '10080';//订单有效时间  分钟为单位，默认为10080分钟（7天） 
@@ -99,25 +99,25 @@ class Llwappay_payment implements payment {
                               "user_info_mercht_userlogin" =>$user_info['user_name'],//商户用户登陆名 用户在商户系统中的登陆名（手机号、邮箱等标识）
                               "user_info_bind_phone" => $user_info['mobile'],//绑定手机号 如有，需要传送
                               "user_info_dt_register" => $user_info_dt_register, //注册时间 YYYYMMDDH24MISS
-                              "user_info_full_name" =>$user_info['real_name'],//用户真实姓名
-                              "user_info_id_type" => "0",//用户注册证件类型 0：身份证或企业经营证件 1：户口簿，2：护照 3：军官证, 4：士兵证 5： 港澳居民来往内地通行证
-                              "user_info_id_no" =>$id_no,//*用户注册证件号码
-                              "user_info_identify_state" =>"1",//是否实名认证 1：:是 0：无认证 商户自身是否对用户信息 进行实名认证。
-                              "user_info_identify_type" => "3",//实名认证方式 是实名认证时，必填1：银行卡认证2：现场认证3：身份证远程认证4：其它认证
+                              //"user_info_full_name" =>$user_info['real_name'],//用户真实姓名
+                              //"user_info_id_type" => "0",//用户注册证件类型 0：身份证或企业经营证件 1：户口簿，2：护照 3：军官证, 4：士兵证 5： 港澳居民来往内地通行证
+                              //"user_info_id_no" =>$id_no,//*用户注册证件号码
+                              //"user_info_identify_state" =>"1",//是否实名认证 1：:是 0：无认证 商户自身是否对用户信息 进行实名认证。
+                              //"user_info_identify_type" => "3",//实名认证方式 是实名认证时，必填1：银行卡认证2：现场认证3：身份证远程认证4：其它认证
                         );        
                 //风险控制参数
                 $risk_item = json_encode($data);
-                $risk_item = stripslashes($risk_item);
-
+                $risk_item = addslashes(stripslashes($risk_item));
+                
                 //订单有效期
                 $valid_order = $this::VALID_ORDER;
 
                 //服务器异步通知页面路径
-                $notify_url = SITE_DOMAIN.APP_ROOT.'/llwappay_notify.php';
+                $notify_url = SITE_DOMAIN.'/llwappay_notify.php';
                 //需http://格式的完整路径，不能加?id=123这类自定义参数
 
                 //页面跳转同步通知页面路径
-                $return_url = SITE_DOMAIN.APP_ROOT.'/llwappay_return.php';
+                $return_url = SITE_DOMAIN.'/llwappay_return.php';
                 //需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
 
                 $llpay_config = array(
@@ -135,14 +135,13 @@ class Llwappay_payment implements payment {
 /************************************************************/
                 
                 $parameter = array (
-                        "version" => $this::VERSION,//版本号:1.1
+                        "version" => $this::VERSION,
                         "oid_partner" => trim($payment_info['config']['llpay_account']),//商户编号
                         "app_request" => '3',
                         "sign_type" => 'MD5',
                         "id_type" => '0',//证件类型 0 为身份证
                         "valid_order" => $valid_order,//订单有效期 *
                         "user_id" => $user_id,//商户用户唯一编号 *
-                        "timestamp" => local_date('YmdHis', time()),
                         "busi_partner" => $busi_partner,//支付类型 *
                         "no_order" => $no_order,//商户订单号 *
                         "dt_order" => local_date('YmdHis', time()),
