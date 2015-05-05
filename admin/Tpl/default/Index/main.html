@@ -28,13 +28,25 @@
 				<PHP>echo sprintf(L("TOTAL_USER_COUNT_FORMAT"),$total_user,$total_verify_user);</PHP>
 			</td>
 		</tr>
+        <tr>
+			<td class="item_title" style="width:200px;">
+				今天过生日的会员
+			</td>
+			<td class="item_input">	
+        	
+           	有{$remind}人
+           	<a href="{:u("Index/remind")}">发送给今天生日的会员邮件</a>
+           
+            
+			</td>
+		</tr>
 		<tr>
 			<td class="item_title" style="width:200px;">
 				注册待验证
 			</td>
 			<td class="item_input">				
 				<a href="{:u("User/register")}" <if condition="$register_count gt 0">style="color:#f60;"</if>>{$register_count}待审核的普通会员</a>
-				&nbsp;
+				&nbsp;	
 				<a href="{:u("User/company_register")}" <if condition="$company_register_count gt 0">style="color:#f60;"</if>>{$company_register_count}待审核的企业会员</a>
 			</td>
 		</tr>

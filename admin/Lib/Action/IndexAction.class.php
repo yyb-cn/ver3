@@ -10,13 +10,14 @@
 class IndexAction extends AuthAction{
 	//首页
     public function index(){
+	
 		$this->display();
     }
     
 
     //框架头
 	public function top()
-	{
+	{	
 		$adm_session = es_session::get(md5(conf("AUTH_KEY")));
 		$this->assign("adm_session",$adm_session);
 		
@@ -26,7 +27,7 @@ class IndexAction extends AuthAction{
 	}
 	//框架左侧
 	public function left()
-	{
+	{	
 		$navs = require_once APP_ROOT_PATH."system/admnav_cfg.php";
 		$adm_session = es_session::get(md5(conf("AUTH_KEY")));
 		$adm_id = intval($adm_session['adm_id']);
@@ -39,13 +40,18 @@ class IndexAction extends AuthAction{
 	}
 	//默认框架主区域
 	public function main()
-	{
-		//会员数
+	{		
+			//会员数
 		$total_user = M("User")->count();
 		$total_verify_user = M("User")->where("is_effect=1")->count();
 		$this->assign("total_user",$total_user);
 		$this->assign("total_verify_user",$total_verify_user);
+		//生日提醒 
+		$month = date('m',time());
+		$day = date('d',time());
+		$remind = M("User")->where('bmonth ='.$month.' and bday ='.$day)->count();
 		
+		$this->assign("remind",$remind);		
 		//满标的借款
 		$suc_deal_count = M("Deal")->where("is_effect=1 AND publish_wait = 0 AND is_delete = 0 AND deal_status = 2")->count();
 		//待审核的借款
@@ -136,7 +142,7 @@ class IndexAction extends AuthAction{
 	}	
 	//底部
 	public function footer()
-	{
+	{	
 		$this->display();
 	}
 	
@@ -361,7 +367,54 @@ class IndexAction extends AuthAction{
 		
 		$this->display();
 	}
+	function remind(){
+		$month =date('m',time());
+		$day = date('d',time());
+		
+		//$email_arr = M("User")->where("bmonth = ".$month,"bday = ".$day)->gatAll('email');
+		//$msg_item = M("User")->select();
 	
+		$email_arr = $GLOBALS['db']->getAll("SELECT email FROM ".DB_PREFIX."user where bmonth=".$month." and bday=".$day );
+			
+		
+		if($email_arr){
+			
+				foreach($email_arr as $k=>$v){
+				//邮件
+				require_once APP_ROOT_PATH."system/utils/es_mail.php";
+				$mail = new mail_sender();
+				
+				$email=$v['email'];
+				$mail->AddAddress($email);
+				$mail->IsHTML($msg_item['is_html']); 	// 设置邮件格式为 HTML
+				$title = "尊敬的用户今天是您的生日";
+				$mail->Subject = $title;   // 标题
+				$content = "祝您生日快乐";
+				$mail->Body = $content;  // 内容	
+				$result = $mail->Send();
+					}
+				if($result)
+				{					
+					header("Content-Type:text/html; charset=utf-8");
+					echo l("SEND_NOW").l("SUCCESS");
+				}
+				else
+				{	
+					header("Content-Type:text/html; charset=utf-8");
+					echo l("SEND_NOW").l("FAILED").$mail->ErrorInfo;
+				}
+				
+			
+		}
+		else
+		{
+			header("Content-Type:text/html; charset=utf-8");
+			echo l("SEND_NOW").l("FAILED");
+		}
+
+	
+	
+	}
 	
 }
 ?>
