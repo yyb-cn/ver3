@@ -629,14 +629,14 @@ class UserAction extends CommonAction{
 			}else {
 				$map['create_time'] = array('between',array($log_begin_time,$log_end_time));
 			}
-		}
-		
+		}	
 		if (method_exists ( $this, '_filter' )) {
 			$this->_filter ( $map );
 		}
 		
 		if($t=="money")
 		{	//资金日志
+		// echo 1 ;exit;
 			$model = M ("UserMoneyLog");
 		}elseif($t=="point"){
 			$model = M ("UserPointLog");
@@ -647,12 +647,10 @@ class UserAction extends CommonAction{
 			$map['quota'] = array('gt',0);
 			$model = M ("UserLog");
 		}
-		
 		if (! empty ( $model )) {
 			$this->_list ( $model, $map );
+
 		}
-		
-		
 		$this->assign("t",$t);
 		$this->assign("user_id",$user_id);
 		$this->assign("user_info",$user_info);

@@ -78,6 +78,7 @@ class uc_msgModule extends SiteBaseModule
 	
 	public function deal()
 	{
+	// 0_302_1_2016
 		$group_key = strim($_REQUEST['id']);
 		$user_id = intval($GLOBALS['user_info']['id']);
 		$sql = "select count(*) as count,max(system_msg_id) as system_msg_id,max(id) as id,max(is_notice) as is_notice from ".DB_PREFIX."msg_box  
@@ -118,6 +119,7 @@ class uc_msgModule extends SiteBaseModule
 		}//end count==0
 		elseif($row['system_msg_id']>0||$row['is_notice']>=1)
 		{
+		// echo 3 ;exit;
 			//系统消息，仅查看
 			$GLOBALS['tmpl']->assign("page_title",$GLOBALS['lang']['SYSTEM_PM']);
 			
@@ -142,7 +144,8 @@ class uc_msgModule extends SiteBaseModule
 				$list = $GLOBALS['db']->getAll($sql);
 			}
 			$GLOBALS['tmpl']->assign("list",$list);	
-			
+				// var_dump($list);exit;
+				// echo $sql ;exit;
 			$page = new Page($total,app_conf("PAGE_SIZE"));   //初始化分页对象 		
 			$p  =  $page->show();
 			$GLOBALS['tmpl']->assign('pages',$p);
@@ -198,7 +201,7 @@ class uc_msgModule extends SiteBaseModule
 			$page = new Page($count,app_conf("PAGE_SIZE"));   //初始化分页对象 		
 			$p  =  $page->show();
 			$GLOBALS['tmpl']->assign('pages',$p);
-			
+			var_dump($list);exit;
 			$GLOBALS['tmpl']->assign("msg_list",$list);
 			$GLOBALS['tmpl']->assign("count",$count);	
 			$GLOBALS['tmpl']->assign("dest_user_name",$dest_user_name);	

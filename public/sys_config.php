@@ -2,12 +2,12 @@
 return array(
 'DEFAULT_ADMIN'=>'admin',
 'URL_MODEL'=>'0',
-'AUTH_KEY'=>'daikuan',
+'AUTH_KEY'=>'fanwe',
 'TIME_ZONE'=>'8',
 'ADMIN_LOG'=>'1',
-'DB_VERSION'=>'2.6',
+'DB_VERSION'=>'3.2',
 'DB_VOL_MAXSIZE'=>'8000000',
-'WATER_MARK'=>'./public/attachment/201011/4cdd501dc023b.png',
+'WATER_MARK'=>'./public/attachment/201302/05/13/51109c2f2966f.png',
 'CURRENCY_UNIT'=>'￥',
 'BIG_WIDTH'=>'500',
 'BIG_HEIGHT'=>'500',
@@ -23,16 +23,14 @@ return array(
 'IS_WATER_MARK'=>'1',
 'TEMPLATE'=>'blue',
 'SCORE_UNIT'=>'积分',
-'USER_VERIFY'=>'0',
+'USER_VERIFY'=>'1',
 'SHOP_LOGO'=>'./public/attachment/201011/4cdd501dc023b.png',
 'SHOP_LANG'=>'zh-cn',
 'SHOP_TITLE'=>'p2p信贷',
 'SHOP_KEYWORD'=>'p2p信贷—最大、最安全的网络借贷平台',
 'SHOP_DESCRIPTION'=>'p2p信贷—最大、最安全的网络借贷平台',
-'SHOP_TEL'=>'0591-83119192',
+'SHOP_TEL'=>'0591-87119192',
 'INVITE_REFERRALS'=>'0',
-'INVITE_REFERRALS_TYPE'=>'1',
-'ONLINE_MSN'=>'',
 'ONLINE_QQ'=>'',
 'ONLINE_TIME'=>'周一至周六 9:00-18:00',
 'DEAL_PAGE_SIZE'=>'10',
@@ -51,22 +49,21 @@ return array(
 'MAIL_SEND_PAYMENT'=>'1',
 'SMS_SEND_PAYMENT'=>'0',
 'REPLY_ADDRESS'=>'info@fanwe.com',
-'MAIL_ON'=>'1',
+'MAIL_ON'=>'0',
 'SMS_ON'=>'1',
 'BATCH_PAGE_SIZE'=>'500',
 'PUBLIC_DOMAIN_ROOT'=>'',
 'REFERRALS_DELAY'=>'1',
 'SUBMIT_DELAY'=>'5',
 'APP_MSG_SENDER_OPEN'=>'1',
-'ADMIN_MSG_SENDER_OPEN'=>'0',
+'ADMIN_MSG_SENDER_OPEN'=>'1',
 'SHOP_OPEN'=>'1',
 'SHOP_CLOSE_HTML'=>'',
-'FOOTER_LOGO'=>'/daikuan/public/attachment/201011/4cdde85a27105.gif',
+'FOOTER_LOGO'=>'./public/attachment/201302/28/10/512eba9616a56.png',
 'GZIP_ON'=>'0',
-'INTEGRATE_CODE'=>'Cn273',
-'INTEGRATE_CFG'=>'a:2:{s:8:\"_api_key\";s:32:\"6a2caee9d65fd664134c62f7c5a8cea2\";s:11:\"_api_secret\";s:32:\"f48ad820107dfa0aa452e9a073bfbea7\";}',
+'INTEGRATE_CODE'=>'',
+'INTEGRATE_CFG'=>'',
 'SHOP_SEO_TITLE'=>'p2p信贷—最大、最安全的网络借贷平台',
-'REFERRAL_IP_LIMIT'=>'0',
 'CACHE_ON'=>'1',
 'EXPIRED_TIME'=>'0',
 'FILTER_WORD'=>'',
@@ -75,154 +72,24 @@ return array(
 'TMPL_DOMAIN_ROOT'=>'',
 'CACHE_TYPE'=>'File',
 'MEMCACHE_HOST'=>'127.0.0.1:11211',
-'IMAGE_USERNAME'=>'chigao',
-'IMAGE_PASSWORD'=>'123456',
-'REGISTER_TYPE'=>'0',
+'IMAGE_USERNAME'=>'',
+'IMAGE_PASSWORD'=>'',
+'REGISTER_TYPE'=>'1',
 'ATTR_SELECT'=>'0',
 'ICP_LICENSE'=>'',
 'COUNT_CODE'=>'',
 'DEAL_MSG_LOCK'=>'0',
 'PROMOTE_MSG_LOCK'=>'0',
 'SEND_SPAN'=>'2',
-'TCONTRACT'=>'<div style=\"width: 98%;text-align: right;\">
-编号：<span>Z-{$transfer.load_id}</span>
-</div>
- <h2 align=\"center\">债权转让及受让协议</h2>
-
-<br/>
-<div> 
-
-　　　本债权转让及受让协议（下称“本协议”）由以下双方于签署：
-</p>
-</div>
-<br/>
-<div> 
-<p style=\"text-align: left;font-weight: 600;\">甲方（转让人）：{$transfer.user.real_name}</p>
-<p>身份证号：{$transfer.user.idno}</p>
-<p>{function name=\"app_conf\" v=\"SHOP_TITLE\"}用户名：{$transfer.user.user_name}</p>
-</div>
- <br/>
-<div> 
-<p style=\"text-align: left;font-weight: 600;\">乙方（受让人）：{$transfer.tuser.real_name}</p>
-<p>身份证号：{$transfer.tuser.idno}</p>
-<p>{function name=\"app_conf\" v=\"SHOP_TITLE\"}用户名：{$transfer.tuser.user_name}</p>
-</div>
- <br/>
- <p>就甲方通过{function name=\"app_conf\" v=\"SHOP_TITLE\"}商务顾问（北京）有限公司（以下“{function name=\"app_conf\" v=\"SHOP_TITLE\"}”系指{function name=\"app_conf\" v=\"SHOP_TITLE\"}商务顾问（北京）有限公司和下述{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站的统称）运营管理的<?php echo str_replace(\"http://\",\"\",get_domain()); ?> 网站（下称“{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站”）向乙方转让债权事宜，双方经协商一致，达成如下协议：</p>       
-<br/>
-<p style=\"text-align: left;font-weight: 600;\">1.  债权转让</p>
-<p>1.1  标的债权信息及转让</p>     <p>甲方同意将其通过{function name=\"app_conf\" v=\"SHOP_TITLE\"}的居间协助而形成的有关债权（下称“标的债权”）转让给乙方，乙方同意受让该等债权。标的债权具体信息如下：<p>
-<p style=\"text-align: left;font-weight: 600;\">标的债权信息：</p>
-<br/>
-<table border=\"1\" style=\"margin: 0px auto; border-collapse: collapse; border: 1px solid rgb(0, 0, 0); width: 70%; \">
-<tr>
-  <td width=\"20%\" style=\"padding-left:10px\">借款ID</td>
- <td style=\"padding-left:10px\">{$transfer.load_id}</td>
-</tr>
-<tr>
-  <td style=\"padding-left:10px\">借款人姓名</td>
-  <td style=\"padding-left:10px\">{$transfer.user.real_name}</td>
-</tr>
-<tr>
-  <td style=\"padding-left:10px\">借款本金数额</td>
- <td style=\"padding-left:10px\">
-    {$transfer.load_money_format}                                                                      
- </td>
-</tr>
-<tr>
-  <td style=\"padding-left:10px\">借款年利率</td>
-  <td style=\"padding-left:10px\">{$transfer.rate}%</td>
-</tr>
-<tr>
-  <td style=\"padding-left:10px\">原借款期限</td>
-  <td style=\"padding-left:10px\">
-	{$transfer.repay_time} 个月，{$transfer.repay_start_time_format} 起，至 {$transfer.final_repay_time_format}止</td>
-</tr>
-<tr>
-  <td style=\"padding-left:10px\">月偿还本息数额</td>
-  <td style=\"padding-left:10px\">
-  {$transfer.month_repay_money_format}
-  </td>
-</tr>
-<tr>
-  <td style=\"padding-left:10px\">还款日</td>
-  <td style=\"padding-left:10px\">
-    {$transfer.repay_start_time_format} 自起，每月 {function name=\"to_date\" v=$transfer.repay_start_time f=\"d\"} 日（24:00前，节假日不顺延）
- </td>
-</tr>
-</table>
-<p style=\"text-align: left;font-weight: 600;\">标的债权转让信息</p>
-<br/>
-<table border=\"1\" style=\"margin: 0px auto; border-collapse: collapse; border: 1px solid rgb(0, 0, 0); width: 70%; \">
-<tr>
-  <td width=\"20%\" style=\"padding-left:10px\">标的债权价值</td>
- <td style=\"padding-left:10px\">
-	{$transfer.all_must_repay_money_format}                                             
-   </td>
-</tr>
-<tr>
-  <td style=\"padding-left:10px\">转让价款</td>
- <td style=\"padding-left:10px\">
-	{$transfer.transfer_amount_format}                                                        
-  </td>
-</tr>
-<tr>
-  <td style=\"padding-left:10px\">转让管理费</td>
-  <td style=\"padding-left:10px\">
-		{$transfer.transfer_fee_format}
-  </td>
-</tr>
-<tr>
-  <td style=\"padding-left:10px\">转让日期</td>
- <td style=\"padding-left:10px\">{$transfer.transfer_time_format}</td>
-</tr>
-<tr>
-  <td style=\"padding-left:10px\">剩余还款分期月数</td>
- <td style=\"padding-left:10px\">
-    {$transfer.how_much_month} 个月，{$transfer.near_repay_time_format} 起，至  {$transfer.final_repay_time_format} 止 
- </td>
-</tr>
-</table>
-<br/>
-<p>1.2  债权转让流程</p>
-<p>1.2.1  双方同意并确认，双方通过自行或授权有关方根据{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站有关规则和说明，在{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站进行债权转让和受让购买操作等方式确认签署本协议。</p>
-<p>1.2.2  双方接受本协议且{function name=\"app_conf\" v=\"SHOP_TITLE\"}审核通过时，本协议立即成立,并待转让价款支付完成时生效。协议成立的同时甲方不可撤销地授权{function name=\"app_conf\" v=\"SHOP_TITLE\"}自行或委托第三方支付机构或合作的金融机构，将转让价款在扣除甲方应支付给{function name=\"app_conf\" v=\"SHOP_TITLE\"}的转让管理费之后划转、支付给乙方，上述转让价款划转完成即视为本协议生效且标的债权转让成功；同时甲方不可撤销地授权{function name=\"app_conf\" v=\"SHOP_TITLE\"}将其代为保管的甲方与标的债权借款人签署的电子文本形式的《借款协议》（下称“借款协议”）及借款人相关信息在{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站有关系统板块向乙方进行展示。</p>
-<p>1.2.3  本协议生效且标的债权转让成功后，双方特此委托{function name=\"app_conf\" v=\"SHOP_TITLE\"}将标的债权的转让事项及有关信息通过站内信等形式通知与标的债权对应的借款人。</p>
-<p>1.3  自标的债权转让成功之日起，乙方成为标的债权的债权人，承继借款协议项下出借人的权利并承担出借人的义务。</p>
-<br/>
-<p style=\"text-align: left;font-weight: 600;\">2.  保证与承诺</p>
-<p>2.1  甲方保证其转让的债权系其合法、有效的债权，不存在转让的限制。甲方同意并承诺按有关协议及{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站的相关规则和说明向{function name=\"app_conf\" v=\"SHOP_TITLE\"}支付债权转让管理费。</p>
-<p>2.2  乙方保证其所用于受让标的债权的资金来源合法，乙方是该资金的合法所有人。如果第三方对资金归属、合法性问题发生争议，乙方应自行负责解决并承担相关责任。</p><br/>
-<p style=\"text-align: left;font-weight: 600;\">3.  违约</p>
-<p>3.1  双方同意，如果一方违反其在本协议中所作的保证、承诺或任何其他义务，致使其他方遭受或发生损害、损失等责任，违约方须向守约方赔偿守约方因此遭受的一切经济损失。</p>
-<p>3.2  双方均有过错的，应根据双方实际过错程度，分别承担各自的违约责任。</p><br/>
-<p style=\"text-align: left;font-weight: 600;\">4.  适用法律和争议解决</p>
-<p>4.1  本协议的订立、效力、解释、履行、修改和终止以及争议的解决适用中国的法律。</p>
-<p>4.2  本协议在履行过程中，如发生任何争执或纠纷，双方应友好协商解决；若协商不成，任何一方均有权向有管辖权的人民法院提起诉讼。</p><br/>
-<p style=\"text-align: left;font-weight: 600;\">5.  其他</p>
-<p>5.1  双方可以书面协议方式对本协议作出修改和补充。经过双方签署的有关本协议的修改协议和补充协议是本协议组成部分，具有与本协议同等的法律效力。</p>
-<p>5.2  本协议及其修改或补充均通过{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站以电子文本形式制成，可以有一份或者多份并且每一份具有同等法律效力；同时双方委托{function name=\"app_conf\" v=\"SHOP_TITLE\"}代为保管并永久保存在{function name=\"app_conf\" v=\"SHOP_TITLE\"}为此设立的专用服务器上备查。双方均认可该形式的协议效力。</p>
-<p>5.3  甲乙双方均确认，本协议的签订、生效和履行以不违反中国的法律法规为前提。如果本协议中的任何一条或多条违反适用的法律法规，则该条将被视为无效，但该无效条款并不影响本协议其他条款的效力。</p>
-<p>5.4  除本协议上下文另有定义外，本协议项下的用语和定义应具有{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站服务协议及其有关规则中定义的含义。若有冲突，则以本协议为准。</p>
-</div>
-  <br>
-<div style=\"width: 98%;text-align: right;\">
-	<p>
-		{$transfer.transfer_time_format}
-	</p>
-</div>',
 'SHOP_SEARCH_KEYWORD'=>'贷款,借贷，网贷',
 'INDEX_NOTICE_COUNT'=>'5',
 'TMPL_CACHE_ON'=>'1',
 'DOMAIN_ROOT'=>'',
 'MAIN_APP'=>'shop',
-'VERIFY_IMAGE'=>'1',
+'VERIFY_IMAGE'=>'0',
 'APNS_MSG_LOCK'=>'1',
 'PROMOTE_MSG_PAGE'=>'0',
 'APNS_MSG_PAGE'=>'0',
-'APPLE_DOWLOAD_URL'=>'34',
-'ANDROID_DOWLOAD_URL'=>'123',
-'BORROW_AGREEMENT'=>'11',
 'COOKIE_PATH'=>'/',
 'COMPANY'=>'福建p2p信贷金融信息服务有限公司',
 'COMPANY_ADDRESS'=>'福州台江区',
@@ -292,8 +159,6 @@ return array(
 <br/>
 <div>
 	<p style=\"text-align: left;font-weight: 600;\">乙方（借款人）：</p>
-        <p style=\"text-align: left;font-weight: 600;\">姓名：<span>{$user_info.real_name}</span></p>
-        <p style=\"text-align: left;font-weight: 600;\">身份证：<span><?php echo preg_replace(\'#(d{3})d{10}(w+)#\', \'${1}*****${2}\', \"430622197908146636\"); ?></span></p>
 	<p style=\"text-align: left;font-weight: 600;\">{function name=\"app_conf\" v=\"SITE_TITLE\"}用户名：<span>{$user_info.user_name}</span></p>
 	<br/>
 	<p style=\"text-align: left;font-weight: 600;\"> 丙方（见证人）：{function name=\"app_conf\" v=\"COMPANY\"} </p>
@@ -342,14 +207,14 @@ return array(
 			还款日
 		</td>
 		<td style=\"padding-left:10px\">
-			 自{function name=\"to_date\" v=\"$deal.repay_start_time\" f=\"Y年m月d日\"}起，{if $deal.repay_time_type eq 0}{function name=\"to_date\" v=$deal.type_next_repay_time f=\"Y-m-d\"}{else}每月    {function name=\"to_date\" v=\"$deal.repay_start_time\" f=\"d\"}{/if}日（24:00前，节假日不顺延）
+			 自{function name=\"to_date\" v=\"$deal.repay_start_time\" f=\"Y年m月d日\"}起，{if $deal.repay_time_type neq 0}每月    {/if}{function name=\"to_date\" v=\"$deal.end_repay_time\" f=\"Y年m月d日\"}日（24:00前，节假日不顺延）
 		</td>
 	</tr>
 	<tr>
 		<td style=\"padding-left:10px\"> 借款期限
 		</td>
 		<td style=\"padding-left:10px\">
-			{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}，{function name=\"to_date\" v=\"$deal.repay_start_time\" f=\"Y年m月d日\"}起，至  {if $deal.repay_time_type eq 0}{function name=\"to_date\" v=$deal.type_next_repay_time f=\"Y-m-d\"}{else}{function name=\"to_date\" v=\"$deal.end_repay_time\" f=\"Y年m月d日\"}{/if}日止
+			{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}，{function name=\"to_date\" v=\"$deal.repay_start_time\" f=\"Y年m月d日\"}起，至  {function name=\"to_date\" v=\"$deal.end_repay_time\" f=\"Y年m月d日\"}日止
 		</td>
 	</tr>
 </table>
@@ -566,11 +431,6 @@ return array(
 	</p>
 </div>
 <br/>
-{if $user_info.sealpassed eq 1}
-<div style=\"height:20px\">
-<img src=\"{$user_seal_url}\" width=\"100\" height=\"100\" style=\"float:right;margin-top:-70px\" />
-</div>
-{/if}
 <div style=\"width: 98%;text-align: right;\">
 	<p>
 		{function name=\"to_date\" v=\"$deal.repay_start_time\" f=\"Y年m月d日\"}
@@ -621,8 +481,6 @@ return array(
 <br/>
 <div>
 	<p style=\"text-align: left;font-weight: 600;\">乙方（借款人）：</p>
-        <p style=\"text-align: left;font-weight: 600;\">姓名：<span>{$user_info.real_name}</span></p>
-        <p style=\"text-align: left;font-weight: 600;\">身份证：<span><?php echo substr($this->_var[\'user_info\'][\'idno\'],0,3); ?>**<?php echo substr($this->_var[\'user_info\'][\'idno\'],-4); ?></span></p>
 	<p style=\"text-align: left;font-weight: 600;\">{function name=\"app_conf\" v=\"SITE_TITLE\"}用户名：<span>{$user_info.user_name}</span></p>
 	<br/>
 	<p style=\"text-align: left;font-weight: 600;\"> 丙方（见证人）：{function name=\"app_conf\" v=\"COMPANY\"} </p>
@@ -675,14 +533,14 @@ return array(
 			还款日
 		</td>
 		<td style=\"padding-left:10px\">
-			 自{function name=\"to_date\" v=\"$deal.repay_start_time\" f=\"Y年m月d日\"}起，{if $deal.repay_time_type eq 0}{function name=\"to_date\" v=$deal.type_next_repay_time f=\"Y-m-d\"}{else}每月    {function name=\"to_date\" v=\"$deal.repay_start_time\" f=\"d\"}{/if}日（24:00前，节假日不顺延）
+			 自{function name=\"to_date\" v=\"$deal.repay_start_time\" f=\"Y年m月d日\"}起，{if $deal.repay_time_type neq 0}每月    {/if}{function name=\"to_date\" v=\"$deal.end_repay_time\" f=\"Y年m月d日\"}日（24:00前，节假日不顺延）
 		</td>
 	</tr>
 	<tr>
 		<td style=\"padding-left:10px\"> 借款期限
 		</td>
 		<td style=\"padding-left:10px\">
-			{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}，{function name=\"to_date\" v=\"$deal.repay_start_time\" f=\"Y年m月d日\"}起，至  {if $deal.repay_time_type eq 0}{function name=\"to_date\" v=$deal.type_next_repay_time f=\"Y-m-d\"}{else}{function name=\"to_date\" v=\"$deal.end_repay_time\" f=\"Y年m月d日\"}{/if}日止
+			{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}，{function name=\"to_date\" v=\"$deal.repay_start_time\" f=\"Y年m月d日\"}起，至  {function name=\"to_date\" v=\"$deal.end_repay_time\" f=\"Y年m月d日\"}日止
 		</td>
 	</tr>
 </table>
@@ -908,12 +766,6 @@ return array(
 	</p>
 </div>
 <br/>
-
-{if $user_info.sealpassed eq 1}
-<div style=\"height:20px\">
-<img src=\"{$user_seal_url}\" width=\"100\" height=\"100\" style=\"float:right;margin-top:-70px\" />
-</div>
-{/if}
 <div style=\"width: 98%;text-align: right;\">
 	<p>
 		{function name=\"to_date\" v=\"$deal.repay_start_time\" f=\"Y年m月d日\"}
@@ -921,17 +773,154 @@ return array(
 </div>',
 'MAIL_SEND_CONTRACT_ON'=>'1',
 'DEAL_BID_MULTIPLE'=>'0',
-'USER_LOCK_MONEY'=>'100',
-'USER_BID_REBATE'=>'1',
-'AGREEMENT'=>'1',
-'PRIVACY'=>'2',
-'USER_LOAD_TRANSFER_FEE'=>'0.015',
+'USER_LOCK_MONEY'=>'0',
+'USER_BID_REBATE'=>'0',
+'AGREEMENT'=>'',
+'PRIVACY'=>'',
+'USER_LOAD_TRANSFER_FEE'=>'0',
+'TCONTRACT'=>'<div style=\"width: 98%;text-align: right;\">
+编号：<span>Z-{$transfer.load_id}</span>
+</div>
+ <h2 align=\"center\">债权转让及受让协议</h2>
+
+<br/>
+<div> 
+
+　　　本债权转让及受让协议（下称“本协议”）由以下双方于签署：
+</p>
+</div>
+<br/>
+<div> 
+<p style=\"text-align: left;font-weight: 600;\">甲方（转让人）：{$transfer.user.real_name}</p>
+<p>身份证号：{$transfer.user.idno}</p>
+<p>{function name=\"app_conf\" v=\"SHOP_TITLE\"}用户名：{$transfer.user.user_name}</p>
+</div>
+ <br/>
+<div> 
+<p style=\"text-align: left;font-weight: 600;\">乙方（受让人）：{$transfer.tuser.real_name}</p>
+<p>身份证号：{$transfer.tuser.idno}</p>
+<p>{function name=\"app_conf\" v=\"SHOP_TITLE\"}用户名：{$transfer.tuser.user_name}</p>
+</div>
+ <br/>
+ <p>就甲方通过{function name=\"app_conf\" v=\"SHOP_TITLE\"}商务顾问（北京）有限公司（以下“{function name=\"app_conf\" v=\"SHOP_TITLE\"}”系指{function name=\"app_conf\" v=\"SHOP_TITLE\"}商务顾问（北京）有限公司和下述{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站的统称）运营管理的<?php echo str_replace(\"http://\",\"\",get_domain()); ?> 网站（下称“{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站”）向乙方转让债权事宜，双方经协商一致，达成如下协议：</p>       
+<br/>
+<p style=\"text-align: left;font-weight: 600;\">1.  债权转让</p>
+<p>1.1  标的债权信息及转让</p>     <p>甲方同意将其通过{function name=\"app_conf\" v=\"SHOP_TITLE\"}的居间协助而形成的有关债权（下称“标的债权”）转让给乙方，乙方同意受让该等债权。标的债权具体信息如下：<p>
+<p style=\"text-align: left;font-weight: 600;\">标的债权信息：</p>
+<br/>
+<table border=\"1\" style=\"margin: 0px auto; border-collapse: collapse; border: 1px solid rgb(0, 0, 0); width: 70%; \">
+<tr>
+  <td width=\"20%\" style=\"padding-left:10px\">借款ID</td>
+ <td style=\"padding-left:10px\">{$transfer.load_id}</td>
+</tr>
+<tr>
+  <td style=\"padding-left:10px\">借款人姓名</td>
+  <td style=\"padding-left:10px\">{$transfer.user.real_name}</td>
+</tr>
+<tr>
+  <td style=\"padding-left:10px\">借款本金数额</td>
+ <td style=\"padding-left:10px\">
+    {$transfer.load_money_format}                                                                      
+ </td>
+</tr>
+<tr>
+  <td style=\"padding-left:10px\">借款年利率</td>
+  <td style=\"padding-left:10px\">{$transfer.rate}%</td>
+</tr>
+<tr>
+  <td style=\"padding-left:10px\">原借款期限</td>
+  <td style=\"padding-left:10px\">
+	{$transfer.repay_time} 个月，{$transfer.repay_start_time_format} 起，至 {$transfer.final_repay_time_format}止</td>
+</tr>
+<tr>
+  <td style=\"padding-left:10px\">月偿还本息数额</td>
+  <td style=\"padding-left:10px\">
+  {$transfer.month_repay_money_format}
+  </td>
+</tr>
+<tr>
+  <td style=\"padding-left:10px\">还款日</td>
+  <td style=\"padding-left:10px\">
+    {$transfer.repay_start_time_format} 自起，每月 {function name=\"to_date\" v=$transfer.repay_start_time f=\"d\"} 日（24:00前，节假日不顺延）
+ </td>
+</tr>
+</table>
+<p style=\"text-align: left;font-weight: 600;\">标的债权转让信息</p>
+<br/>
+<table border=\"1\" style=\"margin: 0px auto; border-collapse: collapse; border: 1px solid rgb(0, 0, 0); width: 70%; \">
+<tr>
+  <td width=\"20%\" style=\"padding-left:10px\">标的债权价值</td>
+ <td style=\"padding-left:10px\">
+	{$transfer.all_must_repay_money_format}                                             
+   </td>
+</tr>
+<tr>
+  <td style=\"padding-left:10px\">转让价款</td>
+ <td style=\"padding-left:10px\">
+	{$transfer.transfer_amount_format}                                                        
+  </td>
+</tr>
+<tr>
+  <td style=\"padding-left:10px\">转让管理费</td>
+  <td style=\"padding-left:10px\">
+		{$transfer.transfer_fee_format}
+  </td>
+</tr>
+<tr>
+  <td style=\"padding-left:10px\">转让日期</td>
+ <td style=\"padding-left:10px\">{$transfer.transfer_time_format}</td>
+</tr>
+<tr>
+  <td style=\"padding-left:10px\">剩余还款分期月数</td>
+ <td style=\"padding-left:10px\">
+    {$transfer.how_much_month} 个月，{$transfer.near_repay_time_format} 起，至  {$transfer.final_repay_time_format} 止 
+ </td>
+</tr>
+</table>
+<br/>
+<p>1.2  债权转让流程</p>
+<p>1.2.1  双方同意并确认，双方通过自行或授权有关方根据{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站有关规则和说明，在{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站进行债权转让和受让购买操作等方式确认签署本协议。</p>
+<p>1.2.2  双方接受本协议且{function name=\"app_conf\" v=\"SHOP_TITLE\"}审核通过时，本协议立即成立,并待转让价款支付完成时生效。协议成立的同时甲方不可撤销地授权{function name=\"app_conf\" v=\"SHOP_TITLE\"}自行或委托第三方支付机构或合作的金融机构，将转让价款在扣除甲方应支付给{function name=\"app_conf\" v=\"SHOP_TITLE\"}的转让管理费之后划转、支付给乙方，上述转让价款划转完成即视为本协议生效且标的债权转让成功；同时甲方不可撤销地授权{function name=\"app_conf\" v=\"SHOP_TITLE\"}将其代为保管的甲方与标的债权借款人签署的电子文本形式的《借款协议》（下称“借款协议”）及借款人相关信息在{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站有关系统板块向乙方进行展示。</p>
+<p>1.2.3  本协议生效且标的债权转让成功后，双方特此委托{function name=\"app_conf\" v=\"SHOP_TITLE\"}将标的债权的转让事项及有关信息通过站内信等形式通知与标的债权对应的借款人。</p>
+<p>1.3  自标的债权转让成功之日起，乙方成为标的债权的债权人，承继借款协议项下出借人的权利并承担出借人的义务。</p>
+<br/>
+<p style=\"text-align: left;font-weight: 600;\">2.  保证与承诺</p>
+<p>2.1  甲方保证其转让的债权系其合法、有效的债权，不存在转让的限制。甲方同意并承诺按有关协议及{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站的相关规则和说明向{function name=\"app_conf\" v=\"SHOP_TITLE\"}支付债权转让管理费。</p>
+<p>2.2  乙方保证其所用于受让标的债权的资金来源合法，乙方是该资金的合法所有人。如果第三方对资金归属、合法性问题发生争议，乙方应自行负责解决并承担相关责任。</p><br/>
+<p style=\"text-align: left;font-weight: 600;\">3.  违约</p>
+<p>3.1  双方同意，如果一方违反其在本协议中所作的保证、承诺或任何其他义务，致使其他方遭受或发生损害、损失等责任，违约方须向守约方赔偿守约方因此遭受的一切经济损失。</p>
+<p>3.2  双方均有过错的，应根据双方实际过错程度，分别承担各自的违约责任。</p><br/>
+<p style=\"text-align: left;font-weight: 600;\">4.  适用法律和争议解决</p>
+<p>4.1  本协议的订立、效力、解释、履行、修改和终止以及争议的解决适用中国的法律。</p>
+<p>4.2  本协议在履行过程中，如发生任何争执或纠纷，双方应友好协商解决；若协商不成，任何一方均有权向有管辖权的人民法院提起诉讼。</p><br/>
+<p style=\"text-align: left;font-weight: 600;\">5.  其他</p>
+<p>5.1  双方可以书面协议方式对本协议作出修改和补充。经过双方签署的有关本协议的修改协议和补充协议是本协议组成部分，具有与本协议同等的法律效力。</p>
+<p>5.2  本协议及其修改或补充均通过{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站以电子文本形式制成，可以有一份或者多份并且每一份具有同等法律效力；同时双方委托{function name=\"app_conf\" v=\"SHOP_TITLE\"}代为保管并永久保存在{function name=\"app_conf\" v=\"SHOP_TITLE\"}为此设立的专用服务器上备查。双方均认可该形式的协议效力。</p>
+<p>5.3  甲乙双方均确认，本协议的签订、生效和履行以不违反中国的法律法规为前提。如果本协议中的任何一条或多条违反适用的法律法规，则该条将被视为无效，但该无效条款并不影响本协议其他条款的效力。</p>
+<p>5.4  除本协议上下文另有定义外，本协议项下的用语和定义应具有{function name=\"app_conf\" v=\"SHOP_TITLE\"}网站服务协议及其有关规则中定义的含义。若有冲突，则以本协议为准。</p>
+</div>
+  <br>
+<div style=\"width: 98%;text-align: right;\">
+	<p>
+		{$transfer.transfer_time_format}
+	</p>
+</div>',
 'VIRTUAL_MONEY_1'=>'11102.88',
 'VIRTUAL_MONEY_2'=>'66788.32',
 'VIRTUAL_MONEY_3'=>'56788.23',
 'OPEN_AUTOBID'=>'1',
 'OPEN_IPS'=>'0',
-'IPS_MERCODE'=>'808801',
-'IPS_KEY'=>'GPhKt7sh4dxQQZZkINGFtefRKNPyAj8S00cgAwtRyy0ufD7alNC28xCBKpa6IU7u54zzWSAv4PqUDKMgpOnM7fucO1wuwMi4RgPAnietmqYIhHXZ3TqTGKNzkxA55qYH',
+'IPS_MERCODE'=>'',
+'IPS_KEY'=>'',
+'BORROW_AGREEMENT'=>'',
+'APPLE_DOWLOAD_URL'=>'',
+'ANDROID_DOWLOAD_URL'=>'',
+'REFERRAL_IP_LIMIT'=>'0',
+'IPS_3DES_IV'=>'',
+'IPS_3DES_KEY'=>'',
+'IPS_FEE_TYPE'=>'',
+'INVITE_REFERRALS_MIN'=>'10',
+'INVITE_REFERRALS_MAX'=>'20',
+'INVITE_REFERRALS_RATE'=>'1',
 );
  ?>

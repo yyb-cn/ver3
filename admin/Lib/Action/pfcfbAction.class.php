@@ -17,18 +17,11 @@ class pfcfbAction extends CommonAction{
 	$pfcfbs = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."pfcfb_huodong");
 	$pfcfbss= $GLOBALS['db']->getRow("select * from ".DB_PREFIX."pfcfb_huodong where id=1");
 	$time=get_gmtime();
-	if($time<$pfcfbss['end_time'] && $pfcfbss['open_off']==1 && $time>$pfcfbss['start_time']){
-
-	
-	}
+	// if($time<$pfcfbss['end_time'] && $pfcfbss['open_off']==1 && $time>$pfcfbss['start_time']){
+	// }
 	
 	
 	
-	
-	
-	
-	
-	 // var_dump($pfcfbss);exit;
 	 $data=array();
 	foreach($pfcfbs as $k=>$v){
 	  $data['start_time']=date("Y-m-d,H:i:s",$v['start_time']);
