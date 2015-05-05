@@ -224,7 +224,7 @@ class Llwappay_payment implements payment {
                 $verify_result = $llpayNotify->verifyReturn();
                 
                 if($verify_result) {//验证成功
-                    file_put_contents("log.txt","手机wap同步通知:成功\n", FILE_APPEND);
+                    
                     if($result_pay == 'SUCCESS') {
                         
                         $payment_notice_sn = $no_order;//订单ID
@@ -235,25 +235,29 @@ class Llwappay_payment implements payment {
                         $is_paid = intval($GLOBALS['db']->getOne("select is_paid from ".DB_PREFIX."payment_notice where id = '".intval($payment_notice['id'])."'"));
                         if ($is_paid == 1){
                             
-                            $data['show_err'] = "支付成功";
+                            echo "支付成功<br />请点左上角<b>返回</b>按钮";
+                            $log=":成功（is_paid == 1）——".$res_data;
                                 //app_redirect(url("index","payment#incharge_done",array("id"=>$payment_notice['id']))); //支付成功
                         }else{
-                            $data['show_err'] = "系统内部错误";
+                            echo "系统内部错误,请联系客服<br />请点左上角<b>返回</b>按钮";
+                            $log="：失败 (is_paid != 1)——".$res_data;
                                 //app_redirect(url("index","payment#pay",array("id"=>$payment_notice['id'])));
                         }
                     }else {
                         
-                        $data['show_err'] = $GLOBALS['payment_lang']["PAY_FAILED"]." ".$result_pay;
+                        echo "支付失败<br />请点左上角<b>返回</b>按钮";
+                        $log="：失败（result_pay!=SUCCESS）——".$res_data;
                        
                     }
                     
-                    
                 }
                 else {
-                    $data['show_err'] = '支付失败';
-                    file_put_contents("log.txt","手机wap同步通知 验证失败\n", FILE_APPEND);
+                    echo "支付失败<br />请点左上角<b>返回</b>按钮";
+                    $log="：失败（verify_result!=true）——".$res_data;
                 }
-                return ($data);
+                
+                file_put_contents("log.txt","手机wap同步通知".$log." \n", FILE_APPEND);
+        
 	}
 	
         public function notify($request)
