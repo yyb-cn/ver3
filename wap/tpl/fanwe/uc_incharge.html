@@ -21,7 +21,7 @@
 <div id="con_one_1" class="uc_incharge"><!--线上支付-->
 		<div class="figure">
 			<span>输入金额</span>
-			<input id="money1" class="" type="text" placeholder="输入金额">
+			<input id="money1" type="text" placeholder="输入金额">
 		</div>
 		{if $data.payment_list}
 		<div class="bank_list in_line">
@@ -33,7 +33,7 @@
 							<!--测试代码
 							  <img src="./images/public/2h8rzBSOLd.png"  height="35px">
 							-->  
-						      <img src="{$item.img}"  height="35px">
+						      <img src="{$item.logo}"  height="35px">
 						</div>
 						<div class="inline_pay_name">
 							{$item.class_name}
@@ -189,19 +189,19 @@ $(document).ready(function(){
 		var query = new Object();
 		query.payment_id = $.trim($("input[name='paypath1']:checked").val());
 		query.money = $.trim($("#money1").val());
+                
+                window.location.href = ajaxurl+'&payment_id='+query.payment_id+'&money='+query.money;
+                /*
 		query.post_type = "json";
 		$.ajax({
 			url:ajaxurl,
 			data:query,
-			type:"Post",
-			dataType:"json",
-			success:function(data){
-				alert("等待管理员审核");
-					window.location.href = '{url a="index" r="transfer"}';
-				
-				
-			}
+                        async:false,
+			type:"POST",
+                        dataType:"json",
+			
 		});
+                */
 		
 		}
 	});

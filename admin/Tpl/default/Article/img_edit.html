@@ -1,0 +1,69 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/article.js' />
+<div class="main">
+<div class="main_title">{%ADD} <a href="{:u("Article/img_list")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="img_add" action="?m=Article&a=img_edit" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+    <tr>
+		<td class="item_title"></td>
+		<td class="item_input"></td>
+	</tr>
+	<if condition="$img" > 
+	<tr>
+		<td class="item_title">原图</td>
+		<td class="item_input"><img src="{$img.url}" width="300px;"></td>
+	</tr>
+	</if>
+	<tr>
+		<td class="item_title">插入图片:</td>
+		<td class="item_input">
+		<input type="file"  name="file" /> 
+			</td>
+	</tr>
+	<tr>
+		<td class="item_title">图片名称:</td>
+		<td class="item_input">
+		<input type="text"  name="name"  value="{$img.name}"/> 
+			</td>
+	</tr>
+	<tr>
+		<td class="item_title">新窗口打开:</td>
+		<td class="item_input">
+		<input name="target" value="1" type="radio"   	<if condition="$img.target eq 1" > checked="checked"</if>>是
+		<input name="target" value="0" type="radio" <if condition="$img.target eq 0" >checked="checked" </if>>否
+			</td>
+	</tr>
+	<tr>
+		<td class="item_title">链接:</td>
+		<td class="item_input">
+		
+		<input name="nav_url" value="{$img.nav_url}" type="text" size="80">
+			</td>
+	</tr>
+    
+	<tr>
+		<td class="item_title"></td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$img.id}" />
+			<input type="submit" class="button" value="{%ADD}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>
+<script>
+  $(document).ready(function(){
+     $('#more').live('click',function(){
+	 $('#boss').append('<input  type="file"  name="file[]" /><br>'); 
+	 });
+  });
+</script>
+<include file="Public:footer" />

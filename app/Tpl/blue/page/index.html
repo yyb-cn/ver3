@@ -11,27 +11,22 @@
         	<div class="pre"></div>
             <div class="next"></div>
             <div class="smalltitle">
-                <ul>
-                	<!--有多	少个张banner图片就有多少个li-->
-                    <li class="thistitle"></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-            	</ul>
+              <ul>
+			  	{foreach from=$nav_img item=nav_img key=key}
+				<li  {if $key eq 0}class="thistitle"{/if}></li>
+				{/foreach}		
+              </ul>
             </div>
             <ul class="oUlplay">
-                <li><a href="" target="_blank"><img src="{$TMPL}/images/1.jpg" /></a></li>
-                <li><a href="" target="_blank"><img src="{$TMPL}/images/2.jpg" /></a></li>
-                <li><a href="" target="_blank"><img src="{$TMPL}/images/3.jpg" /></a></li>
-                <li><a href="" target="_blank"><img src="{$TMPL}/images/4.jpg" /></a></li>
-                <li><a href="" target="_blank"><img src="{$TMPL}/images/5.jpg" /></a></li>
+				{foreach from=$nav_img item=nav_img}
+            	<li><a href="{$nav_img.nav_url}" target="{if $nav_img.target eq 1}_blank{/if}"><img src="{$nav_img.url}"  width="1100" height="400"/></a></li>
+			   	{/foreach}
             </ul>
         </div>
     </div>
     {insert name="index_login_box"}
    
-        <div class="hot_adv">
+    <div class="hot_adv">
     	<a target="_blank" href="#"><img src="{$TMPL}/images/hot_adv.png" /></a>
     </div>
     

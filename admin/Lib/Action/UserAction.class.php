@@ -601,7 +601,7 @@ class UserAction extends CommonAction{
 		$log_begin_time  = trim($_REQUEST['log_begin_time'])==''?0:to_timespan($_REQUEST['log_begin_time']);
 		$log_end_time  = trim($_REQUEST['log_end_time'])==''?0:to_timespan($_REQUEST['log_end_time']);
 		$t= strim($_REQUEST['t']) =="" ? "money": strim($_REQUEST['t']);
-		
+		// var_dump($_REQUEST);exit;
 		$map['user_id'] = $user_id;
 		if(trim($_REQUEST['log_info'])!='')
 		{

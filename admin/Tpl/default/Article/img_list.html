@@ -1,0 +1,57 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<meta http-equiv="pragma" content="no-cache"/>
+<meta http-equiv="cache-control" content="no-cache"/>
+<meta http-equiv="expires" content="0"/>
+<include file="Public:header" />
+<load href='__TMPL__Common/js/article.js' />
+<div class="main">
+<div class="main_title">
+图片列表
+</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="新增" onclick="location.href='?m=Article&a=img_add&'" />
+</div>
+<div class="blank5"></div>
+<table class="form" cellpadding=0 cellspacing=0>
+<tr><td >id</td><td>name</td><td>地址</td><td>链接</td><td>新窗口打开</td><td>操作</td></tr>
+<foreach name="img_data" item="vo">
+    <tr>
+		<td >{$vo.id}</td>
+		<td>
+		{$vo.name}
+		</td>
+	    <td>
+		<a href="{$vo.url} " target="_blank">{$vo.url}</a>
+		
+		<img id="photo_img" src="{$vo.url}" height=60 >
+		</td>
+		 <td>
+		<a href="{$vo.nav_url}">{$vo.nav_url}</a>
+		</td>
+		 <td>
+		<if condition="$vo.target eq 1" >是<else />否</if>
+		
+		</td>
+		 <td>
+		<a href="?m=Article&a=img_edit&id={$vo.id}">修改</a>&nbsp;<a href="?m=Article&a=img_del&id={$vo.id}">删除</a>
+		</td>
+	</tr>
+</foreach>	
+	
+
+</table>
+
+
+ 
+</div>
+
+<script>
+  $(document).ready(function(){
+     $('#more').live('click',function(){
+	 $('#boss').append('<input  type="file"  name="file[]" /><br>'); 
+	 });
+  });
+</script>
+<include file="Public:footer" />

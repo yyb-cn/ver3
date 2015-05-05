@@ -10,7 +10,7 @@
 class uc_save_incharge
 {
 	public function index(){
-		
+
 		$root = array();
 		
 		$email = strim($GLOBALS['request']['email']);//用户名或邮箱
@@ -54,12 +54,14 @@ class uc_save_incharge
 					$root['pay_code'] == 'otherpay';
 					$root['pay_type'] = 2;
 					$root['show_err'] ="信息已经提交,请等待管理员审核";
-				}else{
+				}else{  
 					require_once APP_ROOT_PATH."system/payment/".$payment_info['class_name']."_payment.php";
 					$payment_class = $payment_info['class_name']."_payment";
 					$payment_object = new $payment_class();
 					$pay = $payment_object->get_payment_code($payment_notice_id);
-					
+                                        
+					$root['req_data'] = $pay['req_data'];
+                                        $root['method'] = $pay['method'];
 					$root['pay_code'] = $pay['pay_code'];
 					if ($pay['pay_code'] == 'walipay' || $pay['pay_code'] == 'yjwap' || $pay['is_wap'] == 1){		
 						$root['pay_type'] = 1;

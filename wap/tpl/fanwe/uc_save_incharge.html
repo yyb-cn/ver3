@@ -1,0 +1,19 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_incharge.css";		
+?>
+
+<div style="margin-left: 45%;margin-top: 12%">
+   <form id="llpaysubmit" name="llpaysubmit" action="{$data.pay_wap}" method="{$data.method}">
+		<input type="hidden" name="req_data" value='{$data.req_data}'/><!--变量带转义符或则是双引号，模板外则用单引号不能用双引号，如"{$data.req_data}"则会编译错误，'{$data.req_data}'为正确编译-->
+                <input  style="display: none" type="submit" value="确认"></form>
+		<script>document.forms['llpaysubmit'].submit();</script>
+      <image src="/public/loading.gif" />          
+</div>
+
+{include file="./inc/footer.html"}
+
+
+
+
+

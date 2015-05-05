@@ -21,16 +21,16 @@ class uc_incharge
 		$user_id  = intval($user['id']);
 		if ($user_id >0){
 			require APP_ROOT_PATH.'app/Lib/uc_func.php';
-			
+			$root['user_id'] = $user_id;
 			$root['user_login_status'] = 1;
 			$root['response_code'] = 1;
 					
 			//$root['show_err'] = get_domain();
 			//输出支付方式
 			$payment_list = $GLOBALS['db']->getAll("select id, name as class_name,name,fee_amount,description,logo,fee_type from ".DB_PREFIX."payment where is_effect = 1 and online_pay = 2 order by sort desc");
-			foreach($payment_list as $k=>$v){
-				$payment_list[$k]['logo'] = SITE_DOMAIN.APP_ROOT.'/../'.$v['logo'];
-			}
+			foreach ($payment_list as $k=> $value) {
+                            $payment_list[$k]['logo'] =  str_replace('./', '/', $value['logo']);
+                        }
 			
 			$root['payment_list'] = $payment_list;
 			

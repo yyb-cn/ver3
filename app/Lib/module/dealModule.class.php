@@ -36,6 +36,7 @@ class dealModule extends SiteBaseModule
 		
 		//借款列表
 		$load_list = $GLOBALS['db']->getAll("SELECT deal_id,user_id,user_name,money,is_auto,create_time FROM ".DB_PREFIX."deal_load WHERE deal_id = ".$id." order by id ASC ");
+		// var_dump($load_list);exit;
 		
 		$u_info = get_user("*",$deal['user_id']);
 		
@@ -91,8 +92,8 @@ class dealModule extends SiteBaseModule
 				$GLOBALS['tmpl']->assign("has_bid_portion",intval($has_bid_money)/($deal['borrow_amount']/$deal['portion']));
 			}
 		}
-		
-		$GLOBALS['tmpl']->assign("load_list",$load_list);	
+		// var_dump($load_list);exit;
+		$GLOBALS['tmpl']->assign("load_list",$load_list);	 // 投资列表
 		$GLOBALS['tmpl']->assign("credit_file",$credit_file);
 		$GLOBALS['tmpl']->assign("u_info",$u_info);
 				
