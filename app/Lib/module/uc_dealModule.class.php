@@ -279,7 +279,7 @@ class uc_dealModule extends SiteBaseModule
 
 		//还款列表
 		$loan_list = get_deal_load_list($deal);
-	//print_r($loan_list);exit;
+	// var_dump($loan_list);exit;
         		
 		$GLOBALS['tmpl']->assign("loan_list",$loan_list);
 		$GLOBALS['tmpl']->assign("deal_id",$id);
@@ -291,6 +291,7 @@ class uc_dealModule extends SiteBaseModule
 	
 	//正常还款执行界面
 	public function repay_borrow_money(){
+	
 		$id = intval($_REQUEST['id']);
 		$ids = strim($_REQUEST['ids']);
 		$paypassword = strim(FW_DESPWD($_REQUEST['paypassword']));
@@ -298,9 +299,9 @@ class uc_dealModule extends SiteBaseModule
 			showErr($GLOBALS['lang']['PAYPASSWORD_EMPTY'],1);
 		}
 	
-		if(md5($paypassword)!=$GLOBALS['user_info']['paypassword']){
-			showErr($GLOBALS['lang']['PAYPASSWORD_ERROR'],1);
-		}
+		// if(md5($paypassword)!=$GLOBALS['user_info']['paypassword']){
+			// showErr($GLOBALS['lang']['PAYPASSWORD_ERROR'],1);
+		// }
 		
 		$status = getUcRepayBorrowMoney($id,$ids);
 		if ($status['status'] == 2){

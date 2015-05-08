@@ -11,18 +11,36 @@ define(MODULE_NAME,"index");
 require APP_ROOT_PATH.'app/Lib/deal.php';
 class indexModule extends SiteBaseModule
 {
-	
-	
-
-	
-	
-	
-	
-	
 	public function index()
-
-	{	
-			//print_r($user_statics["clear_total_money"]);exit;
+	{
+	// echo 1;exit;
+	// set_time_limit(0);
+	// require_once(APP_ROOT_PATH."system/libs/user.php");
+	// $op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log");
+   // foreach($op as $k=>$v){
+     // $money_log_info['create_time']=$v['log_time'];
+	 // $money_log_info['create_time_ymd']=date("Y-m-d",$v['log_time']);
+   // if($v['money']!=0){
+   // $money_log_info['money']=$v['money'];
+   // $money_log_info['memo'] = $v['log_info'];
+   // $money_log_info['user_id'] = $v['log_user_id'];
+   // $money_log_info['type'] = 0;
+   // $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info);
+     // } 
+  // if($v['point']!=0){
+   // $money_log_info['point']=$v['point'];
+   // $money_log_info['memo'] = $v['log_info'];
+   // $money_log_info['user_id'] = $v['log_user_id'];
+   // $money_log_info['type'] = 0;
+   // $GLOBALS['db']->autoExecute(DB_PREFIX."user_point_log",$money_log_info);
+     // }  
+	 
+	 
+	 
+	 
+   // }
+ // echo $a;exit;   //22196条
+// exit;
 		$user_statics["clear_total_money"] = number_format((round($GLOBALS['user_info']['user_statics']["load_wait_self_money"],2) + round($GLOBALS['user_info']["money"],2) + round($GLOBALS['user_info']["lock_money"],2) - round($GLOBALS['user_info']['user_statics']["need_repay_amount"],2)),2); 
 	
 		$user_clear=$user_statics["clear_total_money"];

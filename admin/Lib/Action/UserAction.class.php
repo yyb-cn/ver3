@@ -601,7 +601,7 @@ class UserAction extends CommonAction{
 		$log_begin_time  = trim($_REQUEST['log_begin_time'])==''?0:to_timespan($_REQUEST['log_begin_time']);
 		$log_end_time  = trim($_REQUEST['log_end_time'])==''?0:to_timespan($_REQUEST['log_end_time']);
 		$t= strim($_REQUEST['t']) =="" ? "money": strim($_REQUEST['t']);
-		
+		// var_dump($_REQUEST);exit;
 		$map['user_id'] = $user_id;
 		if(trim($_REQUEST['log_info'])!='')
 		{
@@ -629,14 +629,14 @@ class UserAction extends CommonAction{
 			}else {
 				$map['create_time'] = array('between',array($log_begin_time,$log_end_time));
 			}
-		}
-		
+		}	
 		if (method_exists ( $this, '_filter' )) {
 			$this->_filter ( $map );
 		}
 		
 		if($t=="money")
 		{	//资金日志
+		// echo 1 ;exit;
 			$model = M ("UserMoneyLog");
 		}elseif($t=="point"){
 			$model = M ("UserPointLog");
@@ -647,12 +647,10 @@ class UserAction extends CommonAction{
 			$map['quota'] = array('gt',0);
 			$model = M ("UserLog");
 		}
-		
 		if (! empty ( $model )) {
 			$this->_list ( $model, $map );
+
 		}
-		
-		
 		$this->assign("t",$t);
 		$this->assign("user_id",$user_id);
 		$this->assign("user_info",$user_info);
@@ -931,6 +929,67 @@ class UserAction extends CommonAction{
 		$this->assign("old_imgdata_str",$old_imgdata_str);
 		$this->display();
 	}
+	function user_moneyss(){
+	// echo 1 ;exit;
+		$user_id = intval($_REQUEST['id']);
+		$user_info = M("User")->getById($user_id);
+		$old_imgdata_str = unserialize($user_info['view_info']);
+		$this->assign("user_info",$user_info);
+		$this->assign("old_imgdata_str",$old_imgdata_str);
+		$this->display();
+	}
+	function modify_user_moneyss(){
+		if(intval($_REQUEST['id'])==0){
+			$this->error("会员不存在！");
+			exit();
+		}
+		$id=$_REQUEST['id'];
+		// $user_logs->create();
+		$user=M("User");
+		$nomon=$user->find($id);
+		$user->id=$id;
+		$user_logs=M("UserLog");
+	    if($_REQUEST['money']!=''){
+		$user->money=$nomon['money']+$_REQUEST['money'];
+		$user_logs->money=$_REQUEST['money'];
+		}
+	    if($_REQUEST['pfcfb']!=''){
+		$user->pfcfb=$nomon['pfcfb']+$_REQUEST['pfcfb'];
+		$user_logs->pfcfb=$_REQUEST['pfcfb'];
+		}
+	    if($_REQUEST['unjh_pfcfb']!=''){
+		$user->unjh_pfcfb=$nomon['unjh_pfcfb']+$_REQUEST['unjh_pfcfb'];
+		$user_logs->unjh_pfcfb=$_REQUEST['unjh_pfcfb'];
+		}
+        $op=$user->save(); 
+	    $user_logs->log_info="手动操作资金";
+		$user_logs->log_time=get_gmtime();
+        $user_logs->log_admin_id=1;
+		$user_logs->user_id=$id;
+		$user_logs->add();
+	// echo 	$user_logs->getLastSql();exit;
+		
+		if($op){
+	
+			$this->success("修改成功");
+		}
+		else{
+			$this->error("修改失败");
+		}
+
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	function modify_view_info(){
 		
@@ -1634,7 +1693,28 @@ class UserAction extends CommonAction{
 			$this->error(L("用户不存在，或用户名输入错误"));
 	}
 	
-	
+	function login_site(){
+		$user_id = intval($_REQUEST['id']);
+		$user_info = M("User")->getById($user_id);
+		require_once APP_ROOT_PATH."system/utils/es_session.php";
+			clear_dir_file(get_real_path()."public/runtime/app/data_caches/");				
+			clear_dir_file(get_real_path()."public/runtime/app/db_caches/");
+			$GLOBALS['cache']->clear();
+			clear_dir_file(get_real_path()."public/runtime/app/tpl_caches/");		
+			clear_dir_file(get_real_path()."public/runtime/app/tpl_compiled/");
+			@unlink(get_real_path()."public/runtime/app/lang.js");				
+			
+			//删除相关未自动清空的数据缓存
+			clear_auto_cache("page_image");
+			clear_auto_cache("recommend_hot_sale_list");
+			clear_auto_cache("recommend_uc_topic");
+			clear_auto_cache("youhui_page_recommend_youhui_list");
+	    es_session::set("user_info",$user_info);
+		$GLOBALS['user_info']=$user_info;
+		app_redirect(url("index"));	
+		
+       
+	}	
 	
 	
 	

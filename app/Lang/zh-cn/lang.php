@@ -176,7 +176,7 @@ return array(
 	'FORM_EVENT'	=>	'活动',
 	'UC_CENTER'	=>	'我的主页',
 	'UC_TOPIC'	=>	'主题分享',
-	'UC_CENTER_F'	=>	'我的%s',
+	'UC_CENTER_F'	=>	'%s',
 	'UC_ORDER'	=>	'我的订单',
 	'UC_MONEY'	=>	'充值提现',
 	'UC_ACCOUNT'	=>	'个人资料',

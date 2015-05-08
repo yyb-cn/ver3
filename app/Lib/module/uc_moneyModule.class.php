@@ -621,19 +621,6 @@ class uc_moneyModule extends SiteBaseModule
 		
 		
 		$carry_total_money = $GLOBALS['db']->getOne("SELECT sum(money) FROM ".DB_PREFIX."user_carry WHERE user_id=".intval($GLOBALS['user_info']['id'])." AND status=1");
-        
-      		$pfcf_virtual_currency = $GLOBALS['db']->getAll("select `interest_money`,`virtual_currency` from ".DB_PREFIX."pfcf_virtual_currency where repay_time<".get_gmtime()." and status=1 and user_id = ".$GLOBALS['user_info']['id']);
-		              $interest_money=0;   //已经到达还款时间
-		             foreach($pfcf_virtual_currency as $k =>$v){
-		                  $interest_money+=intval($v['virtual_currency']);
-		                   $interest_money+=intval($v['interest_money']);
-		    }  
-		    $virtual_currency = floatval($_REQUEST['virtual_currency']);
-	        $pf_money= $GLOBALS['db']->getOne("select `interest_money` from ".DB_PREFIX."user where id= ".$GLOBALS['user_info']['id']);
-		    $interest_money=$interest_money-$pf_money;
-      
-
-         $GLOBALS['tmpl']->assign("interest_money",$interest_money);
 		// var_dump($interest_money);exit;
 		$GLOBALS['tmpl']->assign("carry_total_money",$carry_total_money);
 		$GLOBALS['tmpl']->assign("bid",$bid);
@@ -663,62 +650,22 @@ class uc_moneyModule extends SiteBaseModule
 
 	function savecarry(){
 		if($GLOBALS['user_info']['id'] > 0){
-           $virtual_currency = floatval($_REQUEST['virtual_currency']);
 		   $user_id=$GLOBALS['user_info']['id'];	
-			if($virtual_currency<0){
-			   $status['show_err']="虚拟币错误";
-			         showErr($status['show_err']); 
-			 }
-			
 			require_once APP_ROOT_PATH.'app/Lib/uc_func.php';
-			
 			$paypassword = strim(FW_DESPWD($_REQUEST['paypassword']));
+		
 			$amount = floatval($_REQUEST['amount']);
+			$pfcfb = $_REQUEST['pfcfb'];
 			$bid = floatval($_REQUEST['bid']);
-			$status = getUcSaveCarry($amount,$paypassword,$bid);
+			//@pfcfb 浦发币 新添		
+			$status = getUcSaveCarry($amount,$paypassword,$bid,$pfcfb);
 			
-			///*
-		      
-		   $pfcf_virtual_currency = $GLOBALS['db']->getAll("select `interest_money`,`virtual_currency` from ".DB_PREFIX."pfcf_virtual_currency where repay_time<".get_gmtime()." and status=1 and user_id = ".$GLOBALS['user_info']['id']);
-		              $interest_money=0;   //已经到达还款时间
-		             foreach($pfcf_virtual_currency as $k =>$v){
-		                  $interest_money+=intval($v['virtual_currency']);
-		                   $interest_money+=intval($v['interest_money']);
-		              }  
-		    
-	        $pf_money= $GLOBALS['db']->getOne("select `interest_money` from ".DB_PREFIX."user where id= ".$GLOBALS['user_info']['id']);
-		    $interest_money=$interest_money-$pf_money;
-			if($virtual_currency>$interest_money){
-			   $status['show_err']="可体现虚拟币不足";
-			         showErr($status['show_err']); 
+		 if($status['status'] == 0){
+			  showErr($status['show_err']);
 			 }
-			 if($interest_money>0){
-		       if($virtual_currency>0){
-			         $user_id=$GLOBALS['user_info']['id'];     
-					$status = getUcSaveCarry_pfcfmoney($virtual_currency,$paypassword,$bid,$status['status'],$interest_money); 
-                                if($status['status'] == 0){
-				                 showErr($status['show_err']);
-			                    }
-			                     else{
-				                showSuccess($status['show_err']);
-			                     }
-		              }else{
-					  
-                               if($status['status'] == 0){
-				                 showErr($status['show_err']);
-			                    }
-			                     else{
-				                showSuccess($status['show_err']);
-			                     }	
-  		                } 
-			}	
-						//*/
-			      if($status['status'] == 0){
-				                 showErr($status['show_err']);
-			                    }
-			                     else{
-				                showSuccess($status['show_err']);
-			                     }		
+			 else{
+			showSuccess($status['show_err']);
+			 }		
 					
 		}else{
 			app_redirect(url("index","user#login"));
@@ -784,129 +731,7 @@ class uc_moneyModule extends SiteBaseModule
 			showErr("继续申请提现失败",1);
 		}
 	}
-	
-	public function pfcf_money()
-	{
-		$user_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where id = ".intval($GLOBALS['user_info']['id']));		
-		$GLOBALS['tmpl']->assign("user_data",$user_info);
-		$pfcf_virtual_currency = $GLOBALS['db']->getAll("select `interest_money`,`virtual_currency` from ".DB_PREFIX."pfcf_virtual_currency where repay_time<".get_gmtime()." and status=1 and user_id = ".$user_info['id']);
-		
-		$money=0;
-		foreach($pfcf_virtual_currency as $k =>$v){
-		   $money+=intval($v['virtual_currency']);
-		   $money+=intval($v['interest_money']);
-		}
-       
-		$interest_money = $GLOBALS['db']->getOne("select `interest_money` from ".DB_PREFIX."user where id= ".$user_info['id']);
-		$GLOBALS['tmpl']->assign("interest_money",$interest_money);
-		$money=$money-$interest_money;
-		$GLOBALS['tmpl']->assign("money",$money);
-		
-		$type_title = isset($_REQUEST['type_title']) ? intval($_REQUEST['type_title']) : 100;
-		$time_status = intval($_REQUEST['time_status']);
-		
-		$t = strim($_REQUEST['t']); //point 积分  为空为资金
-		$GLOBALS['tmpl']->assign("t",$t);
-		
-		$page = intval($_REQUEST['p']);
-		if($page==0)
-			$page = 1;
-		$limit = (($page-1)*app_conf("PAGE_SIZE")).",".app_conf("PAGE_SIZE");
-			$title_arrays = array(
-				"0" => "结存",
-				"1" => "投标中",
-				"2" => "投标成功",
-			);		
-		$GLOBALS['tmpl']->assign('title_array',$title_arrays);
-	
-		$times_array = array(
-				"0" => "全部",
-				"1" => "三天以内",
-				"2" => "一周以内",
-				"3" => "一月以内",
-				"4" => "三月以内",
-				"5" => "一年以内",
-		);
-		$GLOBALS['tmpl']->assign('times_array',$times_array);
-		$user_id = intval($GLOBALS['user_info']['id']);
-		$times = intval($_REQUEST['times']);
-		$condition = "";
-		
-		if ($times== 1){
-			$condition.=" and create_time_ymd >= '".to_date(TIME_UTC-3600*24*3,"Y-m-d")."' "; //三天以内
-		}elseif ($times==2){
-			$condition.="and create_time_ymd >= '".to_date(TIME_UTC - to_date(TIME_UTC,"w") * 24*3600 ,"Y-m-d")."'"; //一周以内
-		}elseif ($times==3){
-			$condition.=" and create_time_ym  = '".to_date(TIME_UTC,"Ym")."'";//一月以内
-		}elseif ($times==4){
-			$condition.=" and create_time_ym  >= '".to_date(next_replay_month(TIME_UTC , -2 ),"Ym" )."'";//三月以内
-		}elseif ($times==5){
-			$condition.=" and create_time_y  = '".to_date(TIME_UTC,"Y")."'";//一年以内
-		}
-		
-		if ($type_title==100)
-		{
-			$type= -1;
-		}
-		else{
-			$type = $type_title;
-		}
-		
-		if($time_status==1){
-			$time = isset($_REQUEST['time']) ? strim($_REQUEST['time']) : "";
-			$time_f = to_date(to_timespan($time,"Ymd"),"Y-m-d");
-			$condition.=" and create_time_ymd = '".$time_f."'";
-			$GLOBALS['tmpl']->assign('time_normal',$time_f);
-			$GLOBALS['tmpl']->assign('time',$time);
-		}
-		
-		//$result['list'] 使用浦发币记录
-	    $result['list']= $GLOBALS['db']->getAll("select * from ".DB_PREFIX."pfcf_virtual_currency where  user_id = ".$user_info['id']);
-		$data=array();
-		foreach($result['list'] as $ke => $op){
-		    $data=$op;
-		    $data['create_time']=date("Y-m-d",$op['create_time']);
-		   $result['list'][$ke]=$data;
-		}
-		
-		
-		// var_dump($result);
-		// exit;
-		$GLOBALS['tmpl']->assign("type_title",$type_title);
-		$GLOBALS['tmpl']->assign("times",$times);
-		
-		
-		$GLOBALS['tmpl']->assign('time_status',$time_status);
-		$GLOBALS['tmpl']->assign("list",$result['list']);
-		$page = new Page($result['count'],app_conf("PAGE_SIZE"));   //初始化分页对象 		
-		$p  =  $page->show();
-		$GLOBALS['tmpl']->assign('pages',$p);
-		
-		$GLOBALS['tmpl']->assign("page_title",$GLOBALS['lang']['UC_MONEY']);
-		$GLOBALS['tmpl']->assign("inc_file","inc/uc/uc_money_pfcf_money.html");
-		$GLOBALS['tmpl']->display("page/uc.html");
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 }
 ?>

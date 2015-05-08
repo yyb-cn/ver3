@@ -11,59 +11,52 @@
         	<div class="pre"></div>
             <div class="next"></div>
             <div class="smalltitle">
-                <ul>
-                	<!--有多	少个张banner图片就有多少个li-->
-                    <li class="thistitle"></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-            	</ul>
+              <ul>
+			  	{foreach from=$nav_img item=nav_img key=key}
+				<li  {if $key eq 0}class="thistitle"{/if}></li>
+				{/foreach}		
+              </ul>
             </div>
             <ul class="oUlplay">
-                <li><a href="" target="_blank"><img src="{$TMPL}/images/1.png" /></a></li>
-                <li><a href="" target="_blank"><img src="{$TMPL}/images/1.png" /></a></li>
-                <li><a href="" target="_blank"><img src="{$TMPL}/images/1.png" /></a></li>
-                <li><a href="" target="_blank"><img src="{$TMPL}/images/1.png" /></a></li>
-                <li><a href="" target="_blank"><img src="{$TMPL}/images/1.png" /></a></li>
+				{foreach from=$nav_img item=nav_img}
+            	<li><a href="{$nav_img.nav_url}" target="{if $nav_img.target eq 1}_blank{/if}"><img src="{$nav_img.url}"  width="1100" height="400"/></a></li>
+			   	{/foreach}
             </ul>
         </div>
     </div>
     {insert name="index_login_box"}
    
-        <div class="hot_adv">
+    <div class="hot_adv">
     	<a target="_blank" href="#"><img src="{$TMPL}/images/hot_adv.png" /></a>
     </div>
     
     <ul class="left_four">
     	<li class="left_four_1">
         	<div class="left_four_bg"></div>
-            <p>最靠"浦"专业的理财机构</p>
-            <p>最稳定的理财收益利率</p>
-            <p class="organ">靠浦才会发！</p>
-            <a class="left_goto" href="{url x="index" r="deals"}" title="{$LANG.MORE}" class="goto write" > <span class="go">＞</span>购买理财产品</a>
+            <p style="line-height:50px;">最靠"浦"专业的理财机构</p>
+            <p class="organ">更高收益！安全性高！</p>
+            <a class="left_goto" href="{url x="index" r="aboutfee" p="act=good"}">了解九重保障</a>
         </li>
     	<li class="left_four_2">
-        
         	<div class="left_four_bg"></div>
-        	<p class="organ">赚钱神奇</p>
+        	<p class="organ">赚钱神器</p>
             <p>收益优势明显！</p>
             <p>同期限收益高出银行<span style="color:#e85100; font-size:20px;">3倍</span></p>
-            <a class="left_goto" href="#"><span class="go">＞</span>查看理财产品项目</a>
+            <a class="left_goto" href="{url x="index" r="deals"}">购买理财产品</a>
         </li>
     	<li class="left_four_3">
         	<div class="left_four_bg"></div>
         	<p class="organ">浦发财富</p>
-            <p>&nbsp;&nbsp;更高收益！安全性高！</p>
-            <p>网络投平台全新上线</p>
-        	<a class="left_goto" href="index.php?ctl=help&id=1"><span class="go">＞</span>了解浦发财富</a>
+            <p>年化收益率达12%</p>
+            <p style="color:#e85100">网络投平台全新上线</p>
+        	<a class="left_goto" href="{url x="index" r="aboutfee" p="act=about_us_pfcf"}">了解浦发财富</a>
         </li>
     	<li class="left_four_4">
         	<div class="left_four_bg"></div>
         	<p class="organ">新手入门</p>
             <p>三分钟学会赚钱</p>
-            <p><a href="#">安全保障</a> | <a href="#">抢购攻略</a></p>
-        	<a class="left_goto" href="{url x="index" r="usagetip"}" class="goto write" > <span class="go">＞</span>查看新手入门</a>
+            <p><a href="{url x="index" r="aboutfee" p="act=good"}">安全保障</a> | <a href="http://v.youku.com/v_show/id_XODEzMDQ2OTQ0.html">抢购攻略</a></p>
+        	<a class="left_goto" href="{url x="index" r="aboutfee" p="act=about_us_tdjs"}">查看新手入门</a>
         </li>
     </ul>
     
