@@ -7,4 +7,5 @@ $pay_req['ctl'] = "payment";
 $pay_req['act'] = "response";
 $pay_req['class_name'] = "Llwappay";
 include ROOT_PATH."index.php";
+//header('Location:'.SITE_DOMAIN);
 ?>
