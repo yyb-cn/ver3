@@ -192,6 +192,7 @@ return array(
 	'UC_IPS_TRANSFER' => '提现',
 	'UC_COLLECT'	=>	'我关注的标',
 	'UC_INVEST'  =>  '我的投资',
+	'UC_ACTIVITY'  =>  '个人推广活动信息',
 	'UC_EARNINGS'	=>	'理财统计',
 	'UC_AUTO_BID' =>'自动投标',
 	'UC_MSG'	=>	'个人消息',

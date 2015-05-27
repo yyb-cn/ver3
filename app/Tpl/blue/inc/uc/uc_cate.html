@@ -5,6 +5,7 @@
 			<li class="{if $MODULE_NAME eq 'uc_center' &&$ACTION_NAME neq 'setweibo'}act{/if}" ><a class="uc_cate" href="{url x="index" r="uc_center"}" title="{$LANG.UC_CENTER}">{$LANG.UC_CENTER}</a></li>
 			<li class="{if $MODULE_NAME eq 'uc_money'}act{/if}" ><a class="uc_cate" href="{url x="index" r="uc_money"}" title="{$LANG.UC_MONEY}">{$LANG.UC_MONEY}</a></li>
 			<li class="{if $MODULE_NAME eq 'uc_msg' &&$ACTION_NAME neq 'setting'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_msg"}" title="{$LANG.UC_MSG}">{$LANG.UC_MSG}</a></li>	
+			<li class="{if $MODULE_NAME eq 'uc_activity'}act{/if}" ><a class="uc_cate" href="{url x="index" r="uc_activity"}" title="{$LANG.UC_ACTIVITY}">{$LANG.UC_ACTIVITY}</a></li>
 		</ul>
 	</div>
 	{if (int)app_conf("OPEN_IPS") gt 0}
