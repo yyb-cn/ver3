@@ -98,12 +98,98 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 				</tr>
 				{/if}
 				
+				 <!--注册直接送的券，在后台中心领取-->
+		 {foreach from="$user_ecv" item="v" key="k"}
+		  {if  ($v.last_time>$get_gmtime) }   
+			{if  ( ($v.ecv_type_id eq 27)) }	
+			<tr>
+					<td class="tit tr w100">{$v.name}:</td>
+					<td>{$v.money}元<input type="checkbox" name="total_money_1" id="total_money_1" value="{$v.money}" /></td>
+					<input type="hidden" name="last_time_1" id="last_time_1" value="{$v.last_time }" />
+				</tr>
+				{/if}
+				{/if}
+		{/foreach}
+
+	<!--新用户的券	  -->
+		{foreach from="$user_ecv" item="v" key="k"}
+		          {if  ($v.last_time>$get_gmtime) }    
+		           {if  ( (!$nodeal)) }	
+                 		 {if  ( ($v.ecv_type_id!=27)) }
+			<tr>
+				<td class="tit tr w100">{$v.name}:</td>
+				<td>{$v.money}元<input type="checkbox" name="total_money_2" id="total_money_2" value="{$v.money}" /></td>
+				<input type="hidden" name="ee_id" id="ee_id" value="{$v.ecv_type_id}" />
+				<input type="hidden" name="last_time_2" id="last_time_2" value="{$v.last_time }" />
+			</tr>         
+			            {/if}
+						{/if}
+                        {/if}
+					 {/foreach}	
+    <!--新用户变老用户的券-->	
+{if  ( (!$laoyonghuyongdequan)) }		
+		{foreach from="$user_ecv" item="v" key="k"}
+		          {if  ($v.last_time>$get_gmtime) }    
+		           {if  ( ($nodeal)) }	
+                 		 {if  ( ($v.ecv_type_id!=27)) }
+			<tr>
+				<td class="tit tr w100">{$v.name}:</td>
+				<td>{$v.money}元<input type="checkbox" name="total_money_2" id="total_money_2" value="{$v.money}" /></td>
+				<input type="hidden" name="ee_id" id="ee_id" value="{$v.ecv_type_id}" />
+				<input type="hidden" name="last_time_2" id="last_time_2" value="{$v.last_time }" />
+			</tr>         
+			            {/if}
+						{/if}
+                        {/if}
+					 {/foreach}	
+    {/if}					 
+	<!--老用户的券-->
+	{if  ( ($laoyonghuyongdequan)) }	
+		{if  ( ($nodeal)) }	
+		 {if  ( (!$total_money_4)) }	
+				<tr>
+					<td class="tit tr w100">老用户投资券:</td>
+					<td>
+					<select class="f-select" id="total_money_4"  style="font-size:12px" name="total_money_4">
+						<option>选择投资券</option>
+					 {foreach from="$laoyonghuyongdequan" item="v" }
+						
+					        <option value="{$v.money}">{$v.money}元</option>
+							{/foreach}
+                            
+                        </select>
+						<span class="f_dgray">
+						<br />投资1k≤5k用20投资券，投资5k≤1w用30投资券<br />投资1w≤5w可使用50投资券，投资5w以上可使用100投资券
+						</span>
+						
+					</td>
+				</tr>
+			{/if}	  
+		{/if}
+	     {/if}
+
+
+
+					 {if  ( ($total_money_3 neq 0)) }	
+					 	
+				<tr>
+					<td class="tit tr w100">推荐活动劵:</td>
+					<td><input class="f-input f-input90" name="total_money_3" id="total_money_3" value="0" />元（可用推荐奖励劵金额：{function name="format_price" value=$total_money_3}元）</td>
+				</tr>
+					{/if}
+					
+				
+				
 				<tr>
 					<td class="tit tr w100">投资收益：</td>
 					<td class="f_red ">
 						<span class="J_u_money_sy">0.00</span>
 					</td>
 				</tr>
+				
+
+				
+				
 				
 				<tr>
 					<td class="tit tr w100 btm">支付密码：</td>
@@ -115,6 +201,7 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 				</tr>
 				
 			</table>
+			
 		</div>
 		<div class="blank20"></div>
 		<div class="blank20"></div>
@@ -152,7 +239,7 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 		});
 		{/if}
 		$("#J_bid_submit").click(function(){
-			if(is_submit_lock)
+		if(is_submit_lock)
 			{
 				return false;
 			}
@@ -175,7 +262,7 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 					});
 				
 					return false;
-				}
+		}
 				
 				{if $deal.max_portion gt 0}
 					if(parseInt($.trim($("#J_BIDMONEY").val())) > <?php echo $this->_var['deal']['max_portion'] - $this->_var['has_bid_portion'];  ?>){
@@ -209,8 +296,15 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 			query.bid_money=$("#J_BIDMONEY").val();
 			query.id=$(".bid-table input[name='id']").val();
 			query.bid_paypassword = FW_Password($("#J_PAYPASSWORD").val());
-			
-			
+			//活动新加的需要获取的值
+			query.total_money_1 =$("#total_money_1").val();
+			query.last_time_1 =$("#last_time_1").val();
+			query.total_money_2 =$("#total_money_2").val();
+			query.ee_id =$("#ee_id").val();
+			query.last_time_2 =$("#last_time_2").val();
+			query.total_money_4 =document.getElementById("total_money_4").value;
+			//alert(document.getElementById("total_money_4").value);
+			query.total_money_3 =$("#total_money_3").val();						
 			$.ajax({
 				url:APP_ROOT + "/index.php?ctl=deal&act=dobid&ajax=1",
 				data:query,
