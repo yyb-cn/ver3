@@ -1,0 +1,163 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+<script type="text/javascript">
+jQuery(function(){
+	$("#time_normal").datepicker({showAnim:'fadeIn'});
+	
+	$("#qiehuan").click(function(){
+		if ($(".sub_nav .cc").hasClass('hide')) {
+			$(".sub_nav .cc").removeClass("hide")
+			$(".sub_nav .bb").addClass("hide");
+     	 }else{
+     		$(".sub_nav .cc").addClass("hide");
+     		
+     		$(".sub_nav .bb").removeClass("hide")
+     	 };
+     	 
+     	 if($.trim($(this).html()) == "切换简单查询" )
+   		 {
+		 	$("#time_status").val(0);
+   			$(this).html("切换高级查询");
+   		 }
+     	 else
+  		 {
+		 	$("#time_status").val(1);
+  			$(this).html("切换简单查询");
+  		 }
+     	
+	});
+	
+	$("#search-form").submit(function(){
+		var val= $("#time_normal").val();
+		$("#time_format").val(val.replace(/-/g,""));
+	});
+	
+	
+});
+</script>
+<style>
+.select_btn {
+    font-size: 12px;
+    font-weight: bold;
+    height: 28px;
+    line-height: 28px;
+}
+.uc-table table{
+	font-size:14px;
+}
+
+</style>
+<div class="uc_r_bl">
+	<div class="inc_main">
+		<div class="list_title clearfix">
+			<div {if $ACTION_NAME eq 'index'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_activity#index"}">我的推广链接</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_activity#incharge"}">我的推荐用户</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge_log'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_activity#incharge_log"}">我的总额详情</a>
+			</div>
+			<div {if $ACTION_NAME eq 'carry'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_activity#carry"}">我的活动劵</a>
+			</div>
+		</div>
+		<div class="uc_r_bl_box clearfix">
+			
+			
+		<div class="clearfix">
+<style>
+	.field{ width:520px}
+</style>
+<div class="blank"></div>
+
+<style>
+.statistics {}
+	.statistics { width:730px; height:210px; margin-top:10px; }
+	/*.statistics_fl { float:left; width:170px; height:70px; margin-left:11px; border-right:1px solid #cacbcc; margin-top:20px;}
+    .statistics_fl p { text-align:center; font-size:20px; line-height:35px;}*/
+			
+	.top_left { width:200px; height:70px;  border:1px solid #cacbcc;float:left; margin-left:150px;}
+	 .top_left span { font-size:18px; width:200px; height:20px; text-align:center; float:left; margin-top:20px;}
+	 .top_left a { width:200px; height:30px; text-align:center; float:left; font-size:18px; line-height:10px;}
+	.top_right { width:200px; height:70px;  border:1px solid #cacbcc;float:left;}
+	 .top_right span { font-size:18px; width:200px; height:20px; text-align:center; float:left; margin-top:20px;}
+	 .top_right a {  width:200px; height:30px; text-align:center; float:left; font-size:18px;}
+	.bug { width:200px; height:70px;  border:1px solid #cacbcc;float:left;margin-left:50px;}
+	 .bug span { font-size:18px; width:200px; height:20px; text-align:center; float:left; margin-top:20px;}
+	 .bug a { width:200px; height:30px; text-align:center; float:left; font-size:18px; }
+	.nice { width:200px; height:70px;  border:1px solid #cacbcc;float:left;}
+	 .nice span { font-size:18px; width:200px; height:20px; text-align:center; float:left; margin-top:20px; }
+	 .nice a {  width:200px; height:30px; text-align:center; float:left; font-size:18px; }
+</style>
+
+<div class="statistics">
+  <br>
+  <div class="top_left">
+     <span>本金</span>
+	 <br>
+	 <br>
+    <a>{if $money} {$money}{else} 0.00{/if}元</a>
+  </div>
+  <div class="top_right">
+     <span>收益</span>
+	 <br>
+    <a>{if $get_money} {$get_money}{else} 0.00{/if}元</a>
+  </div>
+ <br> 
+   <div class="bug">
+     <span>邀请奖励卷</span>
+	 <br>
+    <a>{$referee_money}元</a>
+  </div>
+  <div class="nice">
+     <span>代金卷</span>
+	 <br>
+    <a>{if $tuijiang_money} {$tuijiang_money}{else} 0.00{/if}元</a>
+  </div>
+  <div class="nice">
+     <span>投资卷</span>
+	 <br>
+    <a>{if $zhuce_ecv} {$zhuce_ecv}{else} 0.00{/if}元</a>
+  </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+</div>
+
+		
+		
+			
+			
+		
+		
+			</div>				
+		</div>		
+	</div>
+	<div class="inc_foot"></div>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		{if $user_info.ips_acct_no neq ''}
+		checkIpsBalance(0,{$user_info.id},function(result){
+			if(result.pErrCode=="0000"){
+				$(".J_u_money_0").html($(".J_u_money_0").html() + "+<span class='f_red '>" + result.pBalance +"</span>[绑]");
+				$(".J_u_money_1").html($(".J_u_money_1").html() + "+<span class='f_red '>" + (parseFloat(result.pBalance) + parseFloat(result.pLock) + parseFloat(result.pNeedstl)) +"</span>[绑]");
+				$(".J_u_money_2").html($(".J_u_money_2").html() + "+" + result.pLock +"[绑]");
+			}
+		});
+		{/if}
+	});
+</script>

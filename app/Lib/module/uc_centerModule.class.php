@@ -228,6 +228,7 @@ class uc_centerModule extends SiteBaseModule
 			$GLOBALS['tmpl']->assign("post_title",$GLOBALS['lang']['UC_CENTER_INDEX']);			
 			$GLOBALS['tmpl']->assign("inc_file","inc/uc/uc_center_index.html");
 			$GLOBALS['tmpl']->display("page/uc.html");	
+			
 		}
 		else
 		{

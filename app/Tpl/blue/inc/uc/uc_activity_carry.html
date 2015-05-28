@@ -1,0 +1,150 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+<script type="text/javascript">
+jQuery(function(){
+	$("#time_normal").datepicker({showAnim:'fadeIn'});
+	
+	$("#qiehuan").click(function(){
+		if ($(".sub_nav .cc").hasClass('hide')) {
+			$(".sub_nav .cc").removeClass("hide")
+			$(".sub_nav .bb").addClass("hide");
+     	 }else{
+     		$(".sub_nav .cc").addClass("hide");
+     		
+     		$(".sub_nav .bb").removeClass("hide")
+     	 };
+     	 
+     	 if($.trim($(this).html()) == "切换简单查询" )
+   		 {
+		 	$("#time_status").val(0);
+   			$(this).html("切换高级查询");
+   		 }
+     	 else
+  		 {
+		 	$("#time_status").val(1);
+  			$(this).html("切换简单查询");
+  		 }
+     	
+	});
+	
+	$("#search-form").submit(function(){
+		var val= $("#time_normal").val();
+		$("#time_format").val(val.replace(/-/g,""));
+	});
+	
+	
+});
+</script>
+<style>
+.select_btn {
+    font-size: 12px;
+    font-weight: bold;
+    height: 28px;
+    line-height: 28px;
+}
+.uc-table table{
+	font-size:14px;
+}
+
+</style>
+<div class="uc_r_bl">
+	<div class="inc_main">
+		<div class="list_title clearfix">
+			<div {if $ACTION_NAME eq 'index'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_activity#index"}">我的推广链接</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_activity#incharge"}">我的推荐用户</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge_log'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_activity#incharge_log"}">我的总额详情</a>
+			</div>
+			<div {if $ACTION_NAME eq 'carry'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_activity#carry"}">我的活动劵</a>
+			</div>
+		</div>
+		<div class="uc_r_bl_box clearfix">
+			
+			
+		
+<div class="clearfix">
+<style>
+	.field{ width:520px}
+</style>
+<div class="blank"></div>
+
+<style>
+.statistics {}
+	.my_statistics { width:730px; height:110px; background:#f0f4f7; margin-top:10px;}
+		.my_statistics_fl { float:left; width:170px; height:70px; margin-left:11px; border-right:1px solid #cacbcc; margin-top:20px;}
+			.my_statistics_fl p { text-align:center; font-size:20px; line-height:35px;}
+			
+	.my_statistics_list li { width:730px; height:30px; line-height:30px;}
+		.my_statistics_list li:hover { background:#e9ecee;}
+		.my_statistics_list li .my_statistics_list_1 { float:left; width:250px; height:30px; text-align:center;}
+		.my_statistics_list li .my_statistics_list_2 { float:left; width:250px; height:30px; text-align:center;}
+		.my_statistics_list li .my_statistics_list_3 { float:left; width:230px; height:30px; text-align:center;}
+		.my_statistics_list .my_statistics_list_tit { background:#e3e6e8; font-size:16px; height:40px; line-height:40px;} 
+</style>
+
+<div class="statistics">
+	<div class="blank"></div>
+		<div class="uc-table">
+			<table cellspacing="0" cellpadding="0" border="0" class="coupons-table" >
+								<tr>
+									<th>活动劵名称</th>
+									
+									<th>面额</th>
+									<th>有效天数</th>
+			                        <th>到期时间</th>					
+									<th>使用状态</th>
+									<th>领取状态</th>
+								</tr>
+								{foreach from=$list item=voucher key=key}
+								{if $voucher[used_yn] neq  2}
+								<tr {if $key mod 2 eq  0}class="alt"{/if}>
+									<td style="text-align:left;">{$voucher.name}<br /></td>									
+								      <td>{function name="format_price" value=$voucher.money}</td>
+									  <td>{if $voucher.time_limitd eq ''}活动期间{else}{$voucher.time_limitd}天{/if}</td>
+									<td>{function name="to_date" value=$voucher.last_time}</td>
+									<td>{if $voucher.used_yn eq 1}已使用{else}可使用{/if}</td>
+									<td>{if $voucher.receive eq 1}已领取{else}<a href="index.php?ctl=uc_voucher&act=get_voucher&eid={$voucher.eid}&user_id={$voucher.user_id}&time_limitd={$voucher.time_limitd}">去领取</a>{/if}</td>
+								</tr>
+								{/if}
+								{/foreach}
+						</table>
+						
+						<div class="blank"></div>
+						<div class="pages">{$pages}</div>
+		</div><!--end uc-table-->
+</div>
+		
+		
+			
+			
+		
+		
+			</div>				
+		</div>		
+	</div>
+	<div class="inc_foot"></div>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		{if $user_info.ips_acct_no neq ''}
+		checkIpsBalance(0,{$user_info.id},function(result){
+			if(result.pErrCode=="0000"){
+				$(".J_u_money_0").html($(".J_u_money_0").html() + "+<span class='f_red '>" + result.pBalance +"</span>[绑]");
+				$(".J_u_money_1").html($(".J_u_money_1").html() + "+<span class='f_red '>" + (parseFloat(result.pBalance) + parseFloat(result.pLock) + parseFloat(result.pNeedstl)) +"</span>[绑]");
+				$(".J_u_money_2").html($(".J_u_money_2").html() + "+" + result.pLock +"[绑]");
+			}
+		});
+		{/if}
+	});
+</script>

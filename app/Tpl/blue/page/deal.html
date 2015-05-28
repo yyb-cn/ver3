@@ -146,7 +146,7 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 						{if $user_info}
 						{if $deal.deal_status eq 1 && $deal.remain_time gt 0}
 						<div class="touzbox {if $deal.uloadtype eq 1}c_number-box{/if}">
-							{if $deal.uloadtype eq 1}
+						<!--	{if $deal.uloadtype eq 1}
 							<a href="javascript:void(0);" class="c_number mt3" rel="-">-</a><input class="f-input mt3 c_number_ipt"  autocomplete="off" name="bid_money" id="J_BIDMONEY" value="1" /><a href="javascript:void(0);" class="c_number mt3"  rel="+">+</a>&nbsp;份,
 							收益：<span class="J_u_money_sy f_red">0.00</span>
 							<div class="blank1"></div>
@@ -156,9 +156,9 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 							<input class="f-input"  autocomplete="off" name="bid_money" id="J_BIDMONEY"  />
 							<input type="hidden" name="id" value="{$deal.id}" />
 							<span class="unit">元</span>
-							<div class="blank5"></div>
-			             {if $deal.repay_time_type eq 1 }  <!--1个月-->
-				            	{if $user_info.unjh_pfcfb}
+							<div class="blank5"></div>     -->
+			           <!--  {if $deal.repay_time_type eq 1 }-->  <!--1个月-->
+				        <!--    	{if $user_info.unjh_pfcfb}
 					    <tr>
 							<td class="tit tr w100 btm">
 							浦发币：
@@ -170,9 +170,9 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 						</tr>
 				        	{/if}
 							<br>
-				         {/if}
+				         {/if}-->
 						 
-							收益：<span class="J_u_money_sy f_red">0.00</span>
+						<!--	收益：<span class="J_u_money_sy f_red">0.00</span>-->
                               {if $ease_val eq 1}
                            
                             	  <form name="edit" action="index.php?ctl=increase&act=in_add" method="post" enctype="multipart/form-data">
@@ -181,7 +181,8 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
                                                       </form> 
                             {/if}
 							{/if}
-							<a href="javascript:void(0);" class="tz_link" id="tz_link">立即投资</a>
+						<!--	<a href="javascript:void(0);" class="tz_link" id="tz_link">立即投资</a>-->
+						<a href="index.php?ctl=deal&act=bid&id={$b_id}" class="tz_link" id="tz_link">立即投资</a>
 						</div>
 						{/if}
 						{else}
@@ -458,7 +459,7 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 //return false;
 //}
 				
-				{if $deal.max_portion gt 0}
+			/*	{if $deal.max_portion gt 0}
 					if(parseInt($.trim($("#J_BIDMONEY").val())) > <?php echo $this->_var['deal']['max_portion'] - $this->_var['has_bid_portion'];  ?>){
 						is_submit_lock = false;
 						$.showErr("您已经购买了{$has_bid_portion}份，还能购买<?php echo $this->_var['deal']['max_portion'] - $this->_var['has_bid_portion'];  ?>份",function(){
@@ -582,7 +583,7 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 			{
 			}
 		});
-	}
+	}*/
 </script>
 {include file="inc/footer.html"}
 

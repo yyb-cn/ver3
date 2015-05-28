@@ -1,0 +1,210 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+<script type="text/javascript">
+jQuery(function(){
+	$("#time_normal").datepicker({showAnim:'fadeIn'});
+	
+	$("#qiehuan").click(function(){
+		if ($(".sub_nav .cc").hasClass('hide')) {
+			$(".sub_nav .cc").removeClass("hide")
+			$(".sub_nav .bb").addClass("hide");
+     	 }else{
+     		$(".sub_nav .cc").addClass("hide");
+     		
+     		$(".sub_nav .bb").removeClass("hide")
+     	 };
+     	 
+     	 if($.trim($(this).html()) == "切换简单查询" )
+   		 {
+		 	$("#time_status").val(0);
+   			$(this).html("切换高级查询");
+   		 }
+     	 else
+  		 {
+		 	$("#time_status").val(1);
+  			$(this).html("切换简单查询");
+  		 }
+     	
+	});
+	
+	$("#search-form").submit(function(){
+		var val= $("#time_normal").val();
+		$("#time_format").val(val.replace(/-/g,""));
+	});
+	
+	
+});
+</script>
+<style>
+.select_btn {
+    font-size: 12px;
+    font-weight: bold;
+    height: 28px;
+    line-height: 28px;
+}
+.uc-table table{
+	font-size:14px;
+}
+
+</style>
+
+	<div class="inc_main">
+		<div class="list_title clearfix">
+			<div {if $ACTION_NAME eq 'index'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_activity#index"}">我的推广链接</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_activity#incharge"}">我的推荐用户</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge_log'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_activity#incharge_log"}">我的总额详情</a>
+			</div>
+			<div {if $ACTION_NAME eq 'carry'}class="cur"{/if}>
+				<a href="{url x="index" r="uc_activity#carry"}">我的活动劵</a>
+			</div>
+		</div>
+		<div class="uc_r_bl_box clearfix">
+			
+			
+<div class="clearfix">
+<style>
+	.field{ width:520px}
+</style>
+<div class="blank"></div>
+
+<style>
+.my_links { width:730px;}
+	.my_links .links_l { clear:both; float:left; width:200px;}
+		.links_yuan { width:42px; height:42px; border-radius:50%; background:#00bef0; text-align:center; font-size:32px; color:#FFF; line-height:42px; margin-top:15px;}
+		.links_tit { text-align:center; font-size:16px; color:#666; line-height:42px;}
+	.my_links .links_r { float:left; width:530px;}
+		.links_r p { line-height:30px; color:#000; font-size:14px;}
+		.links_r textarea { width:400px; height:80px;}
+		.links_r .copyMyLink { width:90px; height:30px; display:block; border-radius:6px; background:#ea4e45; color:#FFF; text-align:center; line-height:30px; margin-top:10px;}
+</style>
+<script type="text/javascript" src="{$TMPL}/js/jquery.zclip.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#copy_input').zclip({
+		path: '{$TMPL}/js/ZeroClipboard.swf',
+		copy: function(){
+			return $('#mytext').val();
+		},
+		afterCopy: function(){
+			alert('复制成功')
+		}
+	});
+});
+</script>
+
+<div class="my_links">
+	<div class="links_l" style="height:100px;">
+    	<div class="links_yuan">1</div>
+        <div class="links_tit">推广码邀请</div>
+    </div>
+    <div class="links_r" style="height:80px; margin-top:20px;">
+    	<p>这是您的专属推广码，请您邀请的好友在注册时输入：</p>
+        <p style="color:#ea4e45; font-size:18px;">{$user_info.user_name}</p>
+    </div>
+    
+    <div class="blank"></div>
+    <div class="blank"></div>
+    <div class="links_l">
+    	<div class="links_yuan">2</div>
+        <div class="links_tit">链接邀请</div>
+    </div>
+    <div class="links_r">
+    	<p>这是您的专用邀请链接，请通过QQ或邮箱等途径发送给您的好友：</p>
+        <textarea id="mytext">http://www.pfcf88.com/index.php?ctl=user&act=register&p={$lpl}</textarea>
+        <p><a id="copy_input" href="#" class="copyMyLink">复制链接</a></p>
+        <p></p>
+    </div>
+    
+    <div class="blank"></div>
+    <div class="blank"></div>
+    <div class="links_l">
+    	<div class="links_yuan">3</div>
+        <div class="links_tit">推荐有礼</div>
+    </div>
+    <div class="links_r" style="margin-top:10px; padding-right:100px; width:430px;">
+    	<p style="line-height:24px;">推荐1个好友注册，且被推荐好友首次充值并投资1000元以上（含1000元），推荐人可获得邀请券；可以累加。</p>
+		<p style="line-height:24px;"></p>
+    </div>
+    
+    <div class="blank"></div>
+    <div class="blank"></div>
+    <div class="links_l">
+    	<div class="links_yuan">4</div>
+        <div class="links_tit">分享到社区</div>
+    </div>
+  
+		<div class="bdsharebuttonbox" data-tag="share_1">
+            <a class="bds_mshare" data-cmd="mshare"></a>
+            <a class="bds_qzone" data-cmd="qzone" href="#"></a>
+            <a class="bds_tsina" data-cmd="tsina"></a>
+            <a class="bds_baidu" data-cmd="baidu"></a>
+            <a class="bds_renren" data-cmd="renren"></a>
+            <a class="bds_tqq" data-cmd="tqq"></a>
+            <a class="bds_more" data-cmd="more">更多</a>
+            <a class="bds_count" data-cmd="count"></a>
+        </div>
+        <script>
+            window._bd_share_config = {
+                common : {
+                    bdText : '我刚注册史上最靠“浦”的<浦发财富线上平台>获得了百元大红包！点击下面链接我们一起赚红包！',	
+                    bdDesc : '自定义分享摘要',	
+                    bdUrl : ' http://www.pfcf88.com/index.php?ctl=user&act=register&p={$lpl}', 	
+                    bdPic : '自定义分享图片'
+                },
+                share : [{
+                    "bdSize" : 32
+                }],
+                slide : [{	   
+                    bdImg : 0,
+                    bdPos : "right",
+                    bdTop : 100
+                }],
+                image : [{
+                    viewType : 'list',
+                    viewPos : 'top',
+                    viewColor : 'black',
+                    viewSize : '16',
+                    viewList : ['qzone','tsina','huaban','tqq','renren']
+                }],
+                selectShare : [{
+                    "bdselectMiniList" : ['qzone','tqq','kaixin001','bdxc','tqf']
+                }]
+            }
+            with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+		
+		
+		
+			
+			
+		
+		
+			</div>				
+		</div>		
+	</div>
+	<div class="inc_foot"></div>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		{if $user_info.ips_acct_no neq ''}
+		checkIpsBalance(0,{$user_info.id},function(result){
+			if(result.pErrCode=="0000"){
+				$(".J_u_money_0").html($(".J_u_money_0").html() + "+<span class='f_red '>" + result.pBalance +"</span>[绑]");
+				$(".J_u_money_1").html($(".J_u_money_1").html() + "+<span class='f_red '>" + (parseFloat(result.pBalance) + parseFloat(result.pLock) + parseFloat(result.pNeedstl)) +"</span>[绑]");
+				$(".J_u_money_2").html($(".J_u_money_2").html() + "+" + result.pLock +"[绑]");
+			}
+		});
+		{/if}
+	});
+</script>
