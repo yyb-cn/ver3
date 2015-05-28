@@ -13,9 +13,58 @@ class indexModule extends SiteBaseModule
 {
 	public function index()
 	{
+	
 	// echo 1;exit;
-	// set_time_limit(0);
+	set_time_limit(0);
+	$a=0;
 	// require_once(APP_ROOT_PATH."system/libs/user.php");
+	// $mvp= $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_money_log");
+	// foreach($mvp as $k=>$v){
+    // $ax=substr($v['memo'],0,6);
+		 // $xv=substr($v['memo'],); 
+// echo $ax;exit;	
+	// if($ax=='编号'){
+		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>2),"UPDATE","id=".$v['id']); 
+	  // }
+	// if($ax=='充值'){
+		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>1),"UPDATE","id=".$v['id']); 
+	  // }
+	// if($ax=='流标'){
+		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>19),"UPDATE","id=".$v['id']); 
+	  // }
+	// if($ax=='提现'){
+	// $a++;
+		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>8),"UPDATE","id=".$v['id']); 
+	  // }
+	// if($ax=='管理'){
+		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>13),"UPDATE","id=".$v['id']); 
+	  // }
+	  // echo $xv;
+	 // if($xv=='招标成功'){
+		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>3),"UPDATE","id=".$v['id']); 
+	  // }
+	 // if($xv=='偿还本息'){
+		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>4),"UPDATE","id=".$v['id']); 
+	  // }
+	 // if($xv=='回报本息'){
+		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>5),"UPDATE","id=".$v['id']); 
+	  // }
+	// }
+	// exit;
+	
+	// echo $a;exit;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// $op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log");
    // foreach($op as $k=>$v){
      // $money_log_info['create_time']=$v['log_time'];
@@ -37,7 +86,7 @@ class indexModule extends SiteBaseModule
 	 
 	 
 	 
-	 
+	 // $a++;
    // }
  // echo $a;exit;   //22196条
 // exit;

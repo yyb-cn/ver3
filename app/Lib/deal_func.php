@@ -751,27 +751,9 @@ function get_deal_user_load_list($deal_info, $user_id = 0 ,$lkey = -1 , $ukey = 
 				$item['repay_manage_impose_money'] = $v['repay_manage_impose_money'];
 				$item['month_has_repay_money'] = 0;
 				$item['month_has_repay_money_all'] = 0;
-		if($v['unjh_pfcfb']>0){
-			  if($deal_info['repay_time_type']>0){	
-				$item['month_repay_pfcfb'] = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']*30/86400;
-			}
-			  if($deal_info['repay_time_type']=0){	
-				$item['month_repay_pfcfb'] = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']/86400;
-			}
-		}	
 				
 			}
 			else{
-		if($v['unjh_pfcfb']>0){
-			  if($deal_info['repay_time_type']>0){	
-				$nob = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']*30/86400;
-				$item['month_repay_pfcfb']=$nob/$v['repay_time'];
-			}
-			  if($deal_info['repay_time_type']=0){	
-				$item['month_repay_pfcfb'] = $v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_info['rate']*$deal_info['repay_time']/86400;
-			}
-		}
-			
 				$item['month_has_repay_money'] = $item['month_repay_money'];
 				$item['month_has_repay_money_all'] = $item['month_repay_money'] + $item['month_manage_money']+$item['impose_money'];
 			}
@@ -1461,11 +1443,6 @@ function getUcRepayBorrowMoney($id,$ids){
 						$repay_manage_money += $user_load_data['true_repay_manage_money'];
 						$repay_manage_impose_money += $user_load_data['repay_manage_impose_money'];
 						$user_total_money = $user_total_money - $need_repay_money;
-						/*pfcfb*/
-					if($vv['month_repay_pfcfb']){	
-						$user_load_data['pfcfb']=$vv['month_repay_pfcfb'];
-                       		}				
-					/*pfcfb*/
 
 						if($vv['status']>0)
 							$user_load_data['status'] = $vv['status'] - 1;
@@ -1508,11 +1485,6 @@ function getUcRepayBorrowMoney($id,$ids){
 								modify_account(array("money"=>-$user_load_data['true_manage_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,投标管理费",20);	
 								if($user_load_data['impose_money'] != 0)
 									modify_account(array("money"=>$user_load_data['impose_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,逾期罚息",21);
-			         /*pfcfb*/	
-					  if($user_load_data['pfcfb']>0){
-			             	modify_account(array("pfcfb"=>$user_load_data['pfcfb']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,浦发币+利息1,",24);
-							}
-			        /*pfcfb*/
 								
 								$msg_conf = get_user_msg_conf($in_user_id);
 			

@@ -507,7 +507,7 @@ class uc_moneyModule extends SiteBaseModule
 			$GLOBALS['tmpl']->assign("fee_config",$fee_config);
 			$GLOBALS['tmpl']->assign("json_fee",json_encode($json_fee));
 		}
-		
+		// var_dump($bank_list);exit;
 		$GLOBALS['tmpl']->assign("page_title",$GLOBALS['lang']['UC_CARRY']);
 		$GLOBALS['tmpl']->assign("inc_file","inc/uc/uc_money_carry_bank.html");
 		$GLOBALS['tmpl']->display("page/uc.html");
@@ -639,7 +639,6 @@ class uc_moneyModule extends SiteBaseModule
 		$GLOBALS['tmpl']->assign("json_fee",json_encode($json_fee));
 		unset($fee_config);
 		unset($json_fee);
-		
 		$GLOBALS['tmpl']->assign("page_title",$GLOBALS['lang']['UC_CARRY']);
 		$GLOBALS['tmpl']->assign("inc_file","inc/uc/uc_money_carry.html");
 		
