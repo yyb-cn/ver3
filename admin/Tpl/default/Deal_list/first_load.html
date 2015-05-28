@@ -1,0 +1,81 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<php>
+	function get_user_group($group_id)
+	{
+		$group_name = M("UserGroup")->where("id=".$group_id)->getField("name");
+		if($group_name)
+		{
+			return $group_name;
+		}
+		else
+		{
+			return l("NO_GROUP");
+		}
+	}
+	function get_user_level($id)
+	{
+		$level_name = M("UserLevel")->where("id=".$id)->getField("name");
+		if($level_name)
+		{
+			return $level_name;
+		}
+		else
+		{
+			return "没有等级";
+		}
+	}
+	function get_referrals_name($user_id)
+	{
+		$user_name = M("User")->where("id=".$user_id)->getField("user_name");
+		if($user_name)
+		return $user_name;
+		else
+		return l("NO_REFERRALS");
+	}
+	function f_to_date($date){
+		return to_date($date,"Y-m-d H:i");
+	}
+	function lock_money_func($money,$id){
+		return "<a href='javascript:eidt_lock_money(".$id.");'>".format_price($money)."</a>";
+	}
+</php>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	
+</div>
+
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+	
+		<input type="hidden" value="Deal_list" name="m" />
+		<input type="hidden" value="first_load" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="user" 
+	checkbox="true" 
+	datasource="list" 
+	
+	show="id:{%ID}|50px,user_name:{%USER_NAME},log_info:操作备注,money|format_price:操作金额,adm_name:操作人,log_time|to_date:操作时间
+	
+	" /> 
+	
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

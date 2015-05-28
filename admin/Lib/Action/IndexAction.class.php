@@ -36,6 +36,7 @@ class IndexAction extends AuthAction{
 		$nav_group = $navs[$nav_key]['groups'];
 		// var_dump(APP_ROOT_PATH);exit;
 		$this->assign("menus",$nav_group);
+		
 		$this->display();
 	}
 	//默认框架主区域
