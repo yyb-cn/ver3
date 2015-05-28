@@ -432,7 +432,6 @@ class dealModule extends SiteBaseModule
 		}
 		
 		 $noshenfenzheng=$GLOBALS['db']->getOne("SELECT * FROM ".DB_PREFIX."user_bank where status=0 and user_id=".$GLOBALS['user_info']['id']);
-  
 	 if(!$noshenfenzheng){
 		 showErr("请绑定银行卡",0,url("shop","uc_money#bank"));
 	    }
@@ -585,10 +584,15 @@ class dealModule extends SiteBaseModule
 	function dobid(){
 		 
 		$ajax = intval($_REQUEST["ajax"]);
-		
+		$bid_paypassword = strim(FW_DESPWD($_REQUEST['bid_paypassword']));
 		$id = intval($_REQUEST["id"]);
-	//用户ID；
+	// if(md5($bid_paypassword)!=$GLOBALS['user_info']['paypassword']){
+		// $root["show_err"] = $GLOBALS['lang']['PAYPASSWORD_ERROR'];
+		// return $root;
+	// }
+		//用户ID；
 		$ecv_user_id=$GLOBALS['user_info']['id'];
+		
 		/*这里开始*/
 			if(floatval($_REQUEST["bid_money"]) > $GLOBALS['user_info']['money']){
 			showErr($GLOBALS['lang']['MONEY_NOT_ENOUGHT'],$ajax);
@@ -604,7 +608,7 @@ class dealModule extends SiteBaseModule
 		$last_time_2=intval($_REQUEST["last_time_2"]);      //老用户注册劵的使用期限
 		$get_gmtime=get_gmtime();
 		$ee_id=$_REQUEST["ee_id"];   
-		$data['virtual_money']=$total_money_1+$total_money_2+$total_money_3+$total_money_4;
+		$virtual_money=$total_money_1+$total_money_2+$total_money_3+$total_money_4;
 		
 		//判断过期劵不能使用
 		if($last_time_1>0){
@@ -688,7 +692,6 @@ class dealModule extends SiteBaseModule
 		showErr($GLOBALS['lang']['PLEASE_LOGIN_FIRST'],$ajax);
 		$deal = get_deal($id);
 		$unjh_pfcfb=$_REQUEST["unjh_pfcfb"];
-
 		if(trim($_REQUEST["bid_money"])=="" || !is_numeric($_REQUEST["bid_money"]) || floatval($_REQUEST["bid_money"])<=0){
 
 			showErr($GLOBALS['lang']['BID_MONEY_NOT_TRUE'],$ajax);
@@ -936,10 +939,7 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 			// }
 		// }
 		
-		$GLOBALS['db']->autoExecute(DB_PREFIX."deal_load",$data,"INSERT");//插入一条投资目录
-		$load_id = $GLOBALS['db']->insert_id();//获取插入的ID
 	   
-	   	if($load_id > 0){
 		//插入一条认购确认函 author @313616432
 		//顶标用户除外$GLOBALS['user_info']['group_id']==1
 		if(1){
@@ -969,13 +969,11 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 			mysql_close($con);
 			}
 		}
-		}
+		
 		
 		
 		/*这里结束*/
 		$bid_money = floatval($_REQUEST["bid_money"]);
-		$unjh_pfcfb=$_REQUEST['unjh_pfcfb'];
-		$bid_paypassword = strim(FW_DESPWD($_REQUEST['bid_paypassword']));
 	   if(!$bid_money){ 
 	      showSuccess("金额错误",$ajax,url("index","uc_money#incharge"));
 		 }		
@@ -983,7 +981,7 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 		if($unjh_pfcfb>$GLOBALS['user_info']['unjh_pfcfb']){
 		  showErr("虚拟币操作错误",$ajax);
 		}  //判断投资虚拟币是否大于本身拥有
-	    $status = dobid2($id,$bid_money,$bid_paypassword,1,$unjh_pfcfb);
+	    $status = dobid2($id,$bid_money,$bid_paypassword,1,$unjh_pfcfb,$virtual_money);
 		
 		if($status['status'] == 0){
 			showErr($status['show_err'],$ajax);

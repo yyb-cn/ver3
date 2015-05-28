@@ -298,30 +298,39 @@ class uc_dealModule extends SiteBaseModule
 		$paypassword = strim(FW_DESPWD($_REQUEST['paypassword']));
 		if($paypassword==""){
 			showErr($GLOBALS['lang']['PAYPASSWORD_EMPTY'],1);
-		}
-	
+		}		
 		// if(md5($paypassword)!=$GLOBALS['user_info']['paypassword']){
 			// showErr($GLOBALS['lang']['PAYPASSWORD_ERROR'],1);
 		// }
+		$deal_loadxx=$GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."deal_load where deal_id=".$id);
+		$deal_s=$GLOBALS['db']->getRow("SELECT * FROM ".DB_PREFIX."deal where id=".$id);
+		$deal_key=$deal_s['repay_time']-1;
 		$status = getUcRepayBorrowMoney($id,$ids);
+	
+	// $status['status']=1;
+	// $status['show_err']="yes";
+		if ($status['status'] == 2){
+			ajax_return($status);
+			die();
+		}
+		elseif ($status['status'] == 0){
+			showErr($status['show_err'],1);
+		}else{
 /*
 - 	//除本金外的虚拟币还款都在这 在这啊在这啊在这啊‘ pfcfb\refree_money	
-- // reapy_time 投资时间  repay_time_type 天或者月  rate 年利息
+- // reapy_time 投资时间  repay_time_type 天或者月  rate 年利息  
 -  modify_account  加减资金
 */
-	if(1) 
-		{
-		require APP_ROOT_PATH.'system/libs/user.php';  //加载 modify_account 函数
-	    $deal_load=$GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."deal_load where deal_id=".$id);
-		$deal_s=$GLOBALS['db']->getRow("SELECT * FROM ".DB_PREFIX."deal where id=".$id);
-  if($deal_load)
+
+  if($deal_loadxx)
 	{	
-	   foreach($deal_load as $k=>$v)
+	   foreach($deal_loadxx as $k=>$v)
 	   {
 	if($deal_s['repay_time_type']==0) //标的日期为天
-     {		  
+     {
 		if($v['unjh_pfcfb']!=0)
-		{  	 		
+		{  
+       		
       $user_pfcfb=$v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_s['repay_time']*$deal_s['rate']/36500; 
     modify_account(array("pfcfb"=>$user_pfcfb),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],现金红包回报本息",5);
 		}
@@ -334,14 +343,15 @@ class uc_dealModule extends SiteBaseModule
 	 
 	 
 	if($deal_s['repay_time_type']==1) //标的日期为月
-     {	
+     {	 
       if($deal_s['loantype']!=2)    
 	   {
- if($ids==$deal_s['repay_time'])  //判断是否是最后一次执行还款
-   {	   
+ if($ids==$deal_key)  //判断是否是最后一次执行还款
+   {	  
+   		// showSuccess("1",1);	 
 		if($v['unjh_pfcfb']!=0)
 		{  	 		
-      $user_pfcfb=$v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_s['repay_time']*$deal_s['rate']/36500; 
+      $user_pfcfb=$v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_s['repay_time']*$deal_s['rate']*30/36500; 
     modify_account(array("pfcfb"=>$user_pfcfb),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],现金红包回报本息",5);
 		}
 		if($v['virtual_money']!=0)
@@ -355,7 +365,7 @@ class uc_dealModule extends SiteBaseModule
 	   {	   
 		if($v['unjh_pfcfb']!=0)
 		{  	 		
-      $user_pfcfb=$v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_s['repay_time']*$deal_s['rate']/36500; 
+      $user_pfcfb=$v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_s['repay_time']*$deal_s['rate']*30/36500; 
     modify_account(array("pfcfb"=>$user_pfcfb),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],现金红包回报本息",5);
 		}
 		if($v['virtual_money']!=0)
@@ -366,17 +376,7 @@ class uc_dealModule extends SiteBaseModule
 	 }
 	  }
     }	
-		    }
-	//虚拟币还款结束 xiaohuya	
-		
-		
-		if ($status['status'] == 2){
-			ajax_return($status);
-			die();
-		}
-		elseif ($status['status'] == 0){
-			showErr($status['show_err'],1);
-		}else{
+	// 虚拟币还款结束 xiaohuya	
 			showSuccess($status['show_err'],1);
 		}
 				

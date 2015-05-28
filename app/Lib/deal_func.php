@@ -1055,7 +1055,7 @@ function dobid2_ok($deal_id,$user_id){
 	}	
 }
 
-function dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc=0,$unjh_pfcfb){
+function dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc=0,$unjh_pfcfb,$virtual_money){
 	$root = check_dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc);
 	if ($root["status"] == 0){
 		return $root;
@@ -1074,6 +1074,11 @@ function dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc=0,$unjh_pfcfb){
 		return $root;
 	}
 	require_once APP_ROOT_PATH."system/libs/user.php";
+/*virtual_money*/
+ if($virtual_money){
+   		$data['virtual_money']=$virtual_money;
+    }
+	
 /*浦发币操作*/
 $deal = get_deal($deal_id);
 		if($unjh_pfcfb>0){
