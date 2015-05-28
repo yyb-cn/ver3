@@ -195,6 +195,15 @@ return array(
 							),
 					),
 					
+					"deal_list"	=>	array(
+							"name"	=>	"认购确认表",
+							"key"	=>	"deal_list",
+							"nodes"	=>	array(
+									array("name"=>"交易列表","module"=>"Deal_list","action"=>"index"),
+									
+							),
+					),
+					
 					"moneylog"=>array(
 							"name"	=>	"资金日志",
 							"key"	=>	"moneylog",

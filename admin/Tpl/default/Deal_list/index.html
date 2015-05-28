@@ -1,0 +1,249 @@
+{// 引入标签库 }
+
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+
+<script type="text/javascript">
+	function send(id)
+	{
+		$.ajax({ 
+				url: ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=send&id="+id, 
+				data: "ajax=1",
+				success: function(msg){
+					alert(msg);
+				}
+		});
+	}
+	function show_detail(id)
+	{
+		$.weeboxs.open(ROOT+'?m=Deal&a=show_detail&id='+id, {contentType:'ajax',showButton:false,title:LANG['COUNT_TOTAL_DEAL'],width:600,height:330});
+	}
+	function preview(id)
+	{
+		window.open("__ROOT__/index.php?ctl=deal&id="+id+"&preview=1");
+	}
+</script>
+<php>
+	
+	function a_get_buy_status($buy_status,$deal_id)
+	{
+		if($buy_status==2){
+			return "<span style='color:red'>".l("DEAL_STATUS_".$buy_status)."</span>";
+		}
+		else{
+			return l("DEAL_STATUS_".$buy_status);
+		}
+	}
+	function date_int($time)
+	{
+		
+		return date("Y-m-d H:i:s",$time);
+	}
+	function reg_send($reg)
+	{
+		if($reg){return '是';}else{ return '否';}
+	}
+	function day_type($a)
+	{
+		if($a){return '月';}else{return '日';}
+	
+	}
+</php>
+<div class="main" onload="opener.location.reload()">
+
+<div class="main_title">交易列表</div>
+<div class="blank5"></div>
+
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		编号：<input type="text" class="textbox" name="deal_load_id" value="{:trim($_REQUEST['deal_load_id'])}" size="5" />
+		{%DEAL_NAME}：<input type="text" class="textbox" name="name" value="{:trim($_REQUEST['name'])}" />
+		
+		投资人：
+		<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" size="10" />
+		推荐人：
+		<input type="text" class="textbox" name="pid_name" value="{:trim($_REQUEST['pid_name'])}" size="10" />
+		会员组别:
+		<select name="group_id">
+				
+				<foreach name="group_list" item="group_item">
+					<option value="{$group_item.id}" <if condition="intval($_REQUEST['group_id']) eq $group_item['id']">selected="selected"</if>>
+					{$group_item.name}
+					</option>
+				</foreach>
+				<option value="0" <if condition="intval($_REQUEST['group_id']) eq 0">selected="selected"</if>>{%ALL}</option>
+		</select>
+		时间:
+		<select name="gmtime_id">
+		        <option value="0">所有</option>
+				<option value="7">一周内</option>
+				<option value="15">15天内</option>
+				<option value="30">本月</option>
+		</select>	
+		<br />
+		<br />
+		开始时间:
+			<input type="text" class="textbox" name="start_time" value="{$_GET['start_time']}" id="start_time"  onfocus="this.blur(); return showCalendar('start_time', '%Y-%m-%d %H:%M:%S', false, false, 'start_time');" size="15" />
+			
+		结束时间:
+			<input type="text" class="textbox" name="end_time" value="{$_GET['end_time']}" id="end_time"  onfocus="this.blur(); return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'end_time');" size="15"/>
+			<input type="button" class="button" value="清空时间" onclick="$('#start_time').val('');$('#end_time').val('');" />		
+		每页显示
+		<input type="text" class="textbox" name="per_page" value="{:($_REQUEST['per_page'])}" size="3" />
+		录入
+		<select name="deal_load_check_yn">
+			<option value=''  <if condition="intval($_REQUEST['deal_load_check_yn']) eq ''">selected="selected"</if>>所有</option>
+			<option value="1"   <if condition="intval($_REQUEST['deal_load_check_yn']) eq 1">selected="selected"</if>>已录入</option>
+			<option value="2"   <if condition="intval($_REQUEST['deal_load_check_yn']) eq 2">selected="selected"</if>>未录入</option>
+		</select>
+		<input type="hidden" value="Deal_list" name="m" />
+		<input type="hidden" value="index" name="a" />
+		<input type="submit" class="button" value="确定" />
+	</form>
+</div>
+<div class="button_row">
+	<input type="button" class="button" value="导出" onclick="daochu();" />
+</div>
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+
+	<table id="dataTable" class="dataTable" cellpadding="0" cellspacing="0">
+<tr>
+	<td colspan="9" class="topTd">
+		&nbsp;
+	</td>
+</tr>
+<tr class="row">
+	<th width="8">
+		<input type="checkbox" id="check" onclick="CheckAll('dataTable')">
+	</th>
+	<th width="10 ">
+		<a  class="cai"  href="javascript:sortBy('deal_load_id','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照编号(重要)">编号</a>
+	</th>
+	<th>
+		<a href="javascript:sortBy('user_name','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照投资人 ">投资人   </a>
+	</th>
+	<th>
+		<a href="javascript:sortBy('real_name','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照投资人 ">真实姓名   </a>
+	</th>
+	<th>
+		<a href="javascript:sortBy('mobile','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照投资人 ">电话号码   </a>
+	</th>
+	<th>
+		<a href="javascript:sortBy('group_name','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照投资人 ">组别   </a>
+	</th>
+	<th>
+		<a href="javascript:sortBy('group_name','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照投资人 ">推荐人   </a>
+	</th>
+	<th>
+		<a href="javascript:sortBy('name','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照项目名称 ">项目名称   </a>
+	</th>
+	<th>
+		<a href="javascript:sortBy('u_load_money','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照交易金额 ">交易金额   </a>
+		<br /><span style="background:#999999;color:#FFF">当前页总计:&nbsp;</span><span style="background:#CCCCCC;" >{$total_limit}</span>
+				<span style="background:#999999;color:#FFF">总计:&nbsp;</span><span style="background:#CCCCCC;" >{$total_no_limit}</span>
+	</th>
+	<th>
+		<a href="javascript:sortBy('name','<?php echo $_GET[_sort]?0:1?>','rate','index')" title="按照项目名称 ">利率  </a>(%)
+	</th>
+	<th>
+		收益
+		<br /><span style="background:#999999;color:#FFF">当前页总计:&nbsp;</span><span style="background:#CCCCCC;" >{$total_rate_money}</span>
+				<span style="background:#999999;color:#FFF">总计:&nbsp;</span><span style="background:#CCCCCC;" >{$total_rate_money_nolimit}</span>
+	</th>
+	<th>
+		<a href="javascript:sortBy('repay_time','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照期限 ">期限   </a>
+	</th>
+	<th>
+		<a href="javascript:sortBy('deal_time','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照交易时间 ">交易时间      </a>
+	</th>
+	
+	
+	
+	
+	<th>
+			<a href="javascript:sortBy('deal_load_check_yn','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="认购证明 ">认购证明      </a>
+	</th>
+</tr>
+
+<?php foreach($list as $k=>$v) :?>
+<tr class="row">
+	<td>
+		<input type="checkbox" name="key" class="key" value="{$v.deal_load_id}">
+	</td>
+	<td>
+		&nbsp;{$v.deal_load_id}
+	</td>
+	
+	<td>
+		&nbsp;<a href="__APP__?m=User&a=index&user_name={$v.user_name}">{$v.user_name}<a/>
+	</td>
+	<td>
+		&nbsp;{$v.real_name}
+	</td>
+	<td>
+		&nbsp;{$v.mobile}
+	</td>
+	<td>
+		&nbsp;{$v.group_name}
+	</td>
+	<td>
+		&nbsp;{$v.pid|get_user_name}
+	</td>
+	<td>
+		&nbsp;<a href="javascript:;" onclick="preview({$v.deal_id})">{$v.name}<a/>
+	</td>
+	<td>
+		&nbsp;{$v.u_load_money|number_format=2}
+		<?php if($v['virtual_money']!=0) :?>代金券:{$v.virtual_money|number_format=2}<?php endif;?>
+	</td>
+	<td>
+		&nbsp;{$v.rate}
+	</td>
+	<td>
+		&nbsp;{$v.get_money}
+	</td>
+	<td>
+		&nbsp;{$v.repay_time}&nbsp;<?php echo  $v['repay_time_type']?'个月':'天'?>
+	</td>
+	<td>
+		&nbsp;<?php echo to_date($v['deal_time'],"Y-m-d H:i:s")?>
+	</td>
+	
+	
+	<td width=200>
+	<a  style="text-decoration:none;color:#FFFFFF;font-weight:bold;background:#CC6633;padding:2px;"  href="http://rg.jlpefund.com/m.php?c=index&a=outside_add&yn={$v.deal_load_id}&real_name={$v.real_name}&produce_name=
+	{$v.urlencode_name}&deal_monney=<?php echo  number_format($v['u_load_money'], 2, '.', '');?>&longtime={$v.repay_time}<?php echo  $v['repay_time_type']?'个月':'天'?>&cus_time=<?php echo to_date($v['deal_time'],'Y-m-d H:i:s')?>" target="_blank" >录入</a>
+	
+		<?php if(!$v['deal_load_check_yn']) :?>
+		
+		<a style="text-decoration:none;color:#FFFFFF;font-weight:bold;background:#3366CC;padding:2px;"  href="?m=Deal_list&a=check&id={$v.deal_load_id}"  onclick="confirm('确认录入');">确认录入</a>
+		<?php  else :?>
+				<a style="text-decoration:none;color:#FFFFFF;font-weight:bold;background:#009966;padding:2px;">已录入</a>
+				<a href="http://rg.jlpefund.com?code=<?php echo base64_encode((md5('jlpe').$v['deal_load_id']))?>">查看</a>
+		<?php  endif;?>
+		<!--<a href="javascript:send({$v.user_id})">发送邮件</a>-->
+	</td>
+</tr>
+<?php endforeach;?>
+<tr>
+	<td colspan="9" class="bottomTd">
+		 &nbsp;
+	</td>
+</tr>
+</table>
+
+
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />
