@@ -431,18 +431,13 @@ class dealModule extends SiteBaseModule
 			app_redirect(url("index","user#login")); 
 		}
 		
-<<<<<<< HEAD
-		 $noshenfenzheng=$GLOBALS['db']->getOne("SELECT * FROM ".DB_PREFIX."user_bank where status=0 and user_id=".$GLOBALS['user_info']['id']);
-	 if(!$noshenfenzheng){
-		 showErr("请绑定银行卡",0,url("shop","uc_money#bank"));
-	    }
-=======
+
 		// $noshenfenzheng=$GLOBALS['db']->getOne("SELECT * FROM ".DB_PREFIX."user_bank where status=0 and user_id=".$GLOBALS['user_info']['id']);
   
-	 //if(!$noshenfenzheng){
-	//	 showErr("请绑定银行卡",0,url("shop","uc_money#bank"));
-	 //   }
->>>>>>> e1733570d0e1b5eb79a1aa45c49eb454a6d249b5
+	 // if(!$noshenfenzheng){
+		 // showErr("请绑定银行卡",0,url("shop","uc_money#bank"));
+	   // }
+
 		//注册送的
 		$ecv_user_id=$GLOBALS['user_info']['id'];
 		//修改活动的类型：
@@ -979,7 +974,7 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 			}
 		}
 		
-		
+		}
 		
 		/*这里结束*/
 		$bid_money = floatval($_REQUEST["bid_money"]);
