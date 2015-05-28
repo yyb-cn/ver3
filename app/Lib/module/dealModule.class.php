@@ -431,10 +431,18 @@ class dealModule extends SiteBaseModule
 			app_redirect(url("index","user#login")); 
 		}
 		
+<<<<<<< HEAD
 		 $noshenfenzheng=$GLOBALS['db']->getOne("SELECT * FROM ".DB_PREFIX."user_bank where status=0 and user_id=".$GLOBALS['user_info']['id']);
 	 if(!$noshenfenzheng){
 		 showErr("请绑定银行卡",0,url("shop","uc_money#bank"));
 	    }
+=======
+		// $noshenfenzheng=$GLOBALS['db']->getOne("SELECT * FROM ".DB_PREFIX."user_bank where status=0 and user_id=".$GLOBALS['user_info']['id']);
+  
+	 //if(!$noshenfenzheng){
+	//	 showErr("请绑定银行卡",0,url("shop","uc_money#bank"));
+	 //   }
+>>>>>>> e1733570d0e1b5eb79a1aa45c49eb454a6d249b5
 		//注册送的
 		$ecv_user_id=$GLOBALS['user_info']['id'];
 		//修改活动的类型：
@@ -940,6 +948,7 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 		// }
 		
 	   
+	   	if(1 > 0){
 		//插入一条认购确认函 author @313616432
 		//顶标用户除外$GLOBALS['user_info']['group_id']==1
 		if(1){
