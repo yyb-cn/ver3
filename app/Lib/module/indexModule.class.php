@@ -12,84 +12,8 @@ require APP_ROOT_PATH.'app/Lib/deal.php';
 class indexModule extends SiteBaseModule
 {
 	public function index()
-	{
-	
-	// echo 1;exit;
-	set_time_limit(0);
-	$a=0;
-	// require_once(APP_ROOT_PATH."system/libs/user.php");
-	// $mvp= $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_money_log");
-	// foreach($mvp as $k=>$v){
-    // $ax=substr($v['memo'],0,6);
-		 // $xv=substr($v['memo'],); 
-// echo $ax;exit;	
-	// if($ax=='编号'){
-		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>2),"UPDATE","id=".$v['id']); 
-	  // }
-	// if($ax=='充值'){
-		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>1),"UPDATE","id=".$v['id']); 
-	  // }
-	// if($ax=='流标'){
-		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>19),"UPDATE","id=".$v['id']); 
-	  // }
-	// if($ax=='提现'){
-	// $a++;
-		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>8),"UPDATE","id=".$v['id']); 
-	  // }
-	// if($ax=='管理'){
-		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>13),"UPDATE","id=".$v['id']); 
-	  // }
-	  // echo $xv;
-	 // if($xv=='招标成功'){
-		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>3),"UPDATE","id=".$v['id']); 
-	  // }
-	 // if($xv=='偿还本息'){
-		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>4),"UPDATE","id=".$v['id']); 
-	  // }
-	 // if($xv=='回报本息'){
-		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",array("type"=>5),"UPDATE","id=".$v['id']); 
-	  // }
-	// }
-	// exit;
-	
-	// echo $a;exit;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// $op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log");
-   // foreach($op as $k=>$v){
-     // $money_log_info['create_time']=$v['log_time'];
-	 // $money_log_info['create_time_ymd']=date("Y-m-d",$v['log_time']);
-   // if($v['money']!=0){
-   // $money_log_info['money']=$v['money'];
-   // $money_log_info['memo'] = $v['log_info'];
-   // $money_log_info['user_id'] = $v['log_user_id'];
-   // $money_log_info['type'] = 0;
-   // $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info);
-     // } 
-  // if($v['point']!=0){
-   // $money_log_info['point']=$v['point'];
-   // $money_log_info['memo'] = $v['log_info'];
-   // $money_log_info['user_id'] = $v['log_user_id'];
-   // $money_log_info['type'] = 0;
-   // $GLOBALS['db']->autoExecute(DB_PREFIX."user_point_log",$money_log_info);
-     // }  
-	 
-	 
-	 
-	 // $a++;
-   // }
- // echo $a;exit;   //22196条
-// exit;
+	{	
+			//print_r($user_statics["clear_total_money"]);exit;
 		$user_statics["clear_total_money"] = number_format((round($GLOBALS['user_info']['user_statics']["load_wait_self_money"],2) + round($GLOBALS['user_info']["money"],2) + round($GLOBALS['user_info']["lock_money"],2) - round($GLOBALS['user_info']['user_statics']["need_repay_amount"],2)),2); 
 	
 		$user_clear=$user_statics["clear_total_money"];
