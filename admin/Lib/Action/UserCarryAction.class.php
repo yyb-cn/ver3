@@ -95,6 +95,31 @@ class UserCarryAction extends CommonAction{
 			$p = new Page ( $count, $listRows );
 			//分页查询数据
 
+				$more_money=0;	
+		$all_list=$model->where ( $map )->	findAll ( );
+	foreach($all_list as $k=>$v){
+				$more_money+=$v['money']+$v['pfcfb'];
+			}
+				$this->assign ( 'more_money', $more_money );
+			
+			//分页查询数据
+        $all_money=0;
+			$voList = $model->where ( $map )->order( "`" . $order . "` " . $sort)->limit($p->firstRow . ',' . $p->listRows)->findAll ( );
+			foreach($voList as $k=>$v){
+				$voList[$k]['totle_money']=$v['money']+$v['pfcfb'];
+				$all_money+=$v['money']+$v['pfcfb'];
+			}
+			
+			$ssall_money=0;
+		$slist=$model->	findAll ( );
+			foreach($slist as $k=>$v){
+				$ssall_money+=$v['money']+$v['pfcfb'];
+			}
+		
+			
+			
+			
+			
 			$voList = $model->where($map)->order( "`" . $order . "` " . $sort)->limit($p->firstRow . ',' . $p->listRows)->findAll ( );
    foreach($voList as $k=>$v){
 				$voList[$k]['totle_money']=$v['money']+$v['pfcfb']+$v['fee'];
@@ -113,6 +138,8 @@ class UserCarryAction extends CommonAction{
 			$sortAlt = $sort == 'desc' ? l("ASC_SORT") : l("DESC_SORT"); //排序提示
 			$sort = $sort == 'desc' ? 1 : 0; //排序方式
 			//模板赋值显示
+		    $this->assign ( 'ssall_money', $ssall_money );//当页总额
+			$this->assign ( 'all_money', $all_money );//当页总额
 			$this->assign ( 'list', $voList );
 			$this->assign ( 'sort', $sort );
 			$this->assign ( 'order', $order );
