@@ -1,0 +1,369 @@
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/peizi/everwin.css";
+?> 
+
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<script type="text/javascript">
+var peizi_conf_prefix = {$peizi_conf_json};
+var conf_id = {$conf_id};
+var max_money_prefix=peizi_conf_prefix.max_money/10000;
+var min_money_prefix=peizi_conf_prefix.min_money/10000;
+</script>
+
+<style>
+ .box .content .ddw_r .table_weekwin tr td{ line-height:50px;}  
+ .box .content .ddw_r .table_weekwin tr .rate_money_format{ line-height:20px;} 
+ .box .content .ddw_r .table_weekwin tr .limit_info{ line-height:20px; padding:7px 15px;} 
+ .box .content .ddw_r .table_weekwin tr .rate_money_format { padding:13px 15px;}
+</style>
+<script type="text/javascript" src="{$TMPL}/js/peizi.js"></script>
+
+<div class="clearfix box box_prefix">
+	<div class="h clearfix">
+		<a>{$peizi_conf.name}</a>
+	</div>
+	<div class="content clearfix">
+        <form action="{url x="index" r="peizi#weekwin_confirm"}" method="POST">
+		<div class="blank10"></div>
+		<div class="f_l ddw_l">	
+			<h5>
+				申请实盘资金 
+				<a  class="Switching Switching_prefix y">其他实盘资金»</a>
+			</h5>
+			<ul class="ddw_sel ddw_sel_prefix clearfix">
+				{foreach from="$peizi_conf.money_array" item="item" key=key}
+				<li  {if $key eq 0}class="current"{/if} data = {$item.money}>
+					<label>
+						<p class="m"><em>{$item.money_format}</em>元</p>
+					    <p>实盘资金</p>
+					    <input type="radio"  name="borrow" value={$item.money} {if $key eq 0}checked{/if}/>
+					</label>
+				</li>
+				{/foreach}
+			</ul>
+			<div class="Manually_input Manually_input_prefix" style=" display:none;">
+				<p  style=" color:#999; line-height:30px;">请输入您需要的实盘资金 &nbsp;<em class="red">({$peizi_conf.money_limit_info})</em></p>
+				<p>
+					<input  class="other-money other-money_prefix" type="text"/><span style=" padding:0 10px;">万元</span>
+				</p>
+				<a  class="go-back_prefix go-back">返回</a>
+			</div>
+		</div>
+		<div class="f_r ddw_r">
+			<h5>
+				 确认操盘规则  
+				
+			</h5>
+			<table class="sure table_weekwin">
+				<tr>
+					<td class="title">操盘须知</td>
+					<td class="limit_info limit_info_prefix" id = "limit_info_prefix"></td>
+				</tr>
+				<tr>
+					<td class="title">
+					风险保证金
+					<div class="alert_title">
+					      <div class="child">这笔资金用于保证你的交易活动合法性，资金被第三方交易平台或者银行冻结。如果你有不合理交易，不诚信交易，这笔钱就用于赔偿受害方</div>
+					</div>
+					</td>
+					<td class="lever lever_prefix clearfix" id = "lever_div_prefix"></td>
+				</tr>
+				<tr>
+					<td class="title">总操盘资金</td>
+					<td id="total_money_prefix"></td>
+				</tr>
+				<tr>
+					<td class="title">
+					亏损警戒线
+					<div class="alert_title">
+					      <div class="child">当总操盘资金低于警戒金额以下时，只能平仓不能建仓，需要尽快补充风险保证金，以免低于亏损平仓金额被平仓</div>
+					</div>
+					</td>
+					<td id="warning_money_prefix"></td>
+				</tr>
+				<tr>
+					<td class="title">
+					亏损平仓线
+					<div class="alert_title">
+					      <div class="child">当总操盘资金低于平仓金额以下时，我们将有权把您的股票进行平仓，为避免平仓发生，请时刻关注风险保证金是否充足</div>
+					</div>
+					</td>
+					<td id="open_money_prefix"></td>
+				</tr>
+				<tr>
+					<td class="title">
+					资金使用期限
+					<div class="alert_title">
+					      <div class="child">使用周期5个交易日，到期后必须结算，无法续约延期</div>
+					</div>
+					</td>
+					<td class="life">
+						<i class="fs20">5</i>
+						
+						<i class="grey1" title="">个工作日</i>
+					</td>
+				</tr>
+				<tr>
+					<td class="title">账户管理费</td>
+					<td class="rate_money_format ">
+						<i id="fee_prefix" style="color:#39A1EA; font-size:20px;">免费</i>
+					</td>
+				</tr>
+				<tr>
+					<td class="title" style=" *border-bottom:0px;">
+					开始交易时间
+					<div class="alert_title">
+					      <div class="child">一般选择下个交易日，如看中行情急需交易，可直接选择今天交易</div>
+					</div>
+					</td>
+					<td class="time  clearfix" id = "time_prefix" style=" *border-bottom:0px;"></td>
+				</tr>
+			</table>	
+		</div>
+		<div class="blank20"></div>
+		<p style=" text-align:center;"> 如您不清楚规则，或有其他疑问，请联系客服：{$SHOP_TEL}  </p>
+		<div class="blank20"></div>
+		<div style=" text-align:center;">
+              <label class="cursor_pointer">
+                <input id="agree_prefix" type="checkbox" checked="checked"/>
+                我已阅读并同意
+              </label>
+				<a href="#" style=" color:#28A7E1;" onclick="openWeeboxFrame('{url x="index" r="peizi#contract" p="id=$peizi_conf.contract_id"}','电子协议',1024,668);" href="javascript:void(0);">《{$contract_title}》</a>
+        </div>
+		
+        <div class="blank20"></div>
+        <div style=" text-align:center;">
+			
+				<input type="hidden" id="borrow_money_prefix" name="borrow_money" value=""/>
+				<input type="hidden" name="rate_id" value="1"/>	
+				<input type="hidden" id="conf_id_prefix" name="conf_id" value="{$conf_id}"/>	
+				<input type="submit" id="submit_prefix"class="btn btn-l" value="我要操盘"/>
+			 
+        </div>
+        <div class="blank20"></div>
+        </form>
+	</div>	
+
+</div>
+
+
+
+
+<script type="text/javascript">
+$(".ddw_sel_prefix li").hover(function(){
+$(this).addClass("hover_");
+},
+function(){
+$(this).removeClass("hover_");
+});
+	$(".ddw_sel_prefix li").click(function(){
+		$(this).siblings().removeClass("current");
+		$(this).addClass("current");
+
+		pc_money_click_prefix();
+     
+	});
+
+function pc_money_click_prefix(){
+     money_change_prefix(0);
+}
+
+$(".other-money_prefix").keyup(function(){
+       input_money_prefix();
+	 });
+	 
+//输入函数		
+function input_money_prefix(){
+	var money = get_input_money_prefix();
+	//min,max $money
+   
+    money_change_prefix(1);
+}
+
+//值的改变函数
+function money_change_prefix(is_input){
+	if (is_input){
+		var money = get_input_money_prefix();
+		
+	}else{
+		var money = get_cur_pz_money_prefix();
+	}
+	var lever_list = getPeiziLeverList(money,peizi_conf_prefix);               
+    var lever_index = Math.floor(lever_list.length / 2);	
+	var lever = lever_list[lever_index].lever;
+	var html = '';
+    
+    for (i=0 ; i<lever_list.length ; i++) 
+    {
+			if(lever_list[i].lever == lever && lever_list.length ==1)
+			{
+			     html = html +'<label class="mr10 only_one"  title="操盘倍数"><i><input type="radio" onclick = "javascript:calc_pz_prefix(' + is_input + ');" name="lever"  value="'+ lever_list[i].lever+'" checked="true"><em>'+lever_list[i].money_format+'</em>元<i class="icon_prompt">'+ lever_list[i].lever+'倍</i></label>';
+			}
+			else
+			{
+				if (lever_list[i].lever == lever){
+				    html = html +'<label class="mr10"  title="操盘倍数"><i><input type="radio" onclick = "javascript:calc_pz_prefix(' + is_input + ');" name="lever"  value="'+ lever_list[i].lever+'" checked="true"><em>'+lever_list[i].money_format+'</em>元<i class="icon_prompt">'+ lever_list[i].lever+'倍</i></label>';
+				}else{
+					html = html + '<label class="mr10"  title="操盘倍数"><i><input type="radio" onclick = "javascript:calc_pz_prefix(' + is_input + ');" name="lever"  value="'+ lever_list[i].lever+'" ><em>'+lever_list[i].money_format+'</em>元<i class="icon_prompt">'+ lever_list[i].lever+'倍</i></label>';
+				}
+			}
+            
+    };
+    
+    $("#lever_div_prefix").html(html);
+
+    calc_pz_prefix(is_input);	
+}
+
+//进行最后计算注入
+function calc_pz_prefix(is_input){
+	if (is_input){
+		var money = get_input_money_prefix();
+	}else{
+		var money = get_cur_pz_money_prefix();
+		
+	}
+	
+	var lever = get_cur_pz_lever_prefix();
+
+		//通过,实盘资金,倍数 获得：总操盘资金，亏损警戒线，亏损平仓线，账户管理费，
+		var pc = getPeiziCacl(money,lever,0,0,peizi_conf_prefix);
+				
+		$("#total_money_prefix").html('<em>'+pc.total_money_format+'</em>元');
+        $("#warning_money_prefix").html('<em>'+pc.warning_line_format+'</em>元');	
+	    $("#open_money_prefix").html('<em>'+pc.open_line_format+'</em>元');  
+		$(".limit_info_prefix").html(pc.limit_info); 
+
+	
+	
+	
+		if ({$is_show_today} && pc.is_show_today == 1){
+		var is_today='<label class="mr10"><input type="radio"  name="is_today" value="1" checked="">今天</label><label class="mr10"><input type="radio"  name="is_today" value="1">下个交易日</label>';
+			$("#time_prefix").html(is_today);		
+		}else{
+		var is_today='<label class="mr10"><input type="radio"  name="is_today" value="0"  checked="">下个交易日</label>';
+			$("#time_prefix").html(is_today);
+		}	
+		
+	$("#borrow_money_prefix").val(pc.borrow_money);
+	$("#lever_prefix").val(pc.lever);		
+
+}
+
+//获取倍数
+function get_cur_pz_lever_prefix(){
+	var x= $('.lever_prefix input[name="lever"]:checked').val();
+	return x;
+}
+
+//获取点击值
+function get_cur_pz_money_prefix(){
+	var x=$(".box_prefix .content .ddw_sel_prefix .current").attr("data");
+	return x;
+}
+
+//获取输入值
+function get_input_money_prefix(){
+      var input_money=min_max_prefix();
+	  return input_money * 10000;
+     }
+	 
+//判断输入值的大小	 
+function min_max_prefix(){
+   var input_money=parseInt($(".other-money_prefix").val());
+  if(input_money)
+  {
+  		if(!(/^(\+|-) \d+$/.test( input_money )) || input_money < 0)
+  		{
+  		    if( input_money>parseInt(max_money_prefix))
+			   {
+			   	  $(".other-money_prefix").val(parseInt(max_money_prefix));
+			      input_money=parseInt(max_money_prefix);
+			      return input_money;
+			   }
+			   else
+			   {
+			      if (input_money < parseInt(min_money_prefix)) {
+			        $(".other-money_prefix").val(parseInt(input_money));
+			      	return 0;
+			      }
+			      else
+			      {
+			      	 $(".other-money_prefix").val(parseInt(input_money));
+			      	return input_money;
+			      }
+			   }	
+  		}
+	    
+  }
+  else
+	{
+        $(".other-money_prefix").val('');
+		return 0;
+	}
+  
+}	
+
+pc_money_click_prefix();
+	
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".Switching_prefix").click(function(){
+		if($(this).hasClass("y"))
+		{
+			$(this).removeClass("y");
+			$(this).html("选择实盘资金»");
+			$(".ddw_sel_prefix ").hide();
+			$(".Manually_input_prefix").show();
+			money_change_prefix(1);
+		}
+		else
+		{
+			goback_prefix();
+		}
+	});
+	$(".go-back_prefix").click(function(){
+           goback_prefix();
+
+	});
+
+	function goback_prefix(){
+           $(".Switching_prefix").addClass("y");
+		   $(".Switching_prefix").html("其他实盘资金»");
+		   $(".Manually_input_prefix").hide();
+		   $(".ddw_sel_prefix ").show();
+           money_change_prefix(0);
+	}
+
+	//是否使用协议条例，禁用
+function disabled_prefix(){
+	if (!$("#agree_prefix").attr("checked")){
+		$("#submit_prefix").attr("disabled", true); 
+		$("#submit_prefix").addClass("disabled");
+	}
+	else
+		{
+			$("#submit_prefix").removeAttr('disabled');  
+			$("#submit_prefix").removeClass("disabled");
+		};
+}
+  disabled_prefix();
+  $("#agree_prefix").click(function(){
+     disabled_prefix();
+  });
+});
+	$(".alert_title").hover(function(){
+  $(this).find(".child").show();
+},
+function(){
+  $(this).find(".child").hide();
+});
+	
+</script>
+<script type="text/javascript">
+function closeWeeboxs(){
+	$.weeboxs.close();
+}
+</script>

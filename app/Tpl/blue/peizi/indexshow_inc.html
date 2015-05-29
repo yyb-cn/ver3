@@ -1,0 +1,78 @@
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/peizi/indexshow.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<div class="info">
+  <div class="inner">
+    <div class="rankings clearfix">
+      <div class="rankings-title clearfix">
+        <p class="f-22 f_l">牛人排行榜</p>
+        <ul class="switch-tab-wrap">
+        	<li><a class="switch-tab {if $by_time == 0}curr{/if}" data-rank="0" href="javascript:;">总排行</a></li>
+        	
+        	{foreach from="$conf_list" item="item" key=key}
+			     <li {if $key eq 0}class="current"{/if} style=" display:none;"></li>			     
+			     <li><a class="switch-tab {if $by_time == item.id}curr{/if}" data-rank="{$item.id}" href="javascript:;">{$item.name}</a></li>
+			{/foreach}
+        </ul>
+      </div>
+      <div class="blank20"></div>
+      <div id="show_index_main">
+          <table class="ranklist mt-40 mb-40" width="100%" cellpadding="0" cellspacing="0">
+            <tbody>
+              <tr>
+                <th style=" color:#fafafa;">兼容</th>
+                <th> 用户 </th>
+                <th> <div class="sort a" data-rank="0"> <span class="cl-blue">使用发财金盈利</span> <span class="sort-icon {if $by_sort == 0}red{/if}"></span> </div>
+                </th>
+                <th> <div class="sort pre" data-rank="1"> <span class="cl-blue">收益率</span> <span class="sort-icon {if $by_sort == 1}red{/if}"></span> </div>
+                </th>
+                <th> 申请操盘 </th>
+                <th> 杠杆（倍数） </th>
+                <th> 操盘投入 </th>
+                <th> <span class="cl-153">他参加的是</span></th>
+                <th style=" color:#fafafa;">兼容</th>
+              </tr>
+            </tbody>
+            <tbody>
+            {if $indexshow_list}
+                {foreach from=$indexshow_list item=item name=indexshow}
+                  <tr>
+                    <td><span class="{if $smarty.foreach.indexshow.iteration<4}rank-icon ml-20{else}rank-gray{/if}">{$smarty.foreach.indexshow.iteration}</span></td>
+                    <td> {function name='utf_substr' value="$item.user_name"} </td>
+                    <td><span class="cl-blue">{$item.money}万元</span></td>
+                    <td><span class="cl-blue">{$item.rate}%</span></td>
+                    <td> {$item.stock_money}万元 </td>
+                    <td> {$item.lever}倍 </td>
+                    <td> {$item.cost_money}万元 </td>
+                    <td><span class="cl-153">{$item.conf_name}</span></td>
+                    <td><a href="{$item.url}">我也要加入 &gt;</a></td>
+                  </tr>
+                {/foreach}
+            {/if}
+            </tbody>
+          </table>
+      </div>
+    </div>
+    <div class="line-bg"></div>
+  </div>
+</div>
+<script>
+	var by_sort = 0;
+	var by_time = 0;
+	$(".switch-tab").click(function(){
+		by_time = $(this).attr("data-rank");
+		var obj = $(this);
+		$("#show_index_main").load('{url x="index" r="peizi#get_showindex_by_sort"} .ranklist',{by_time:by_time,by_sort:by_sort},function(data){
+			$(".switch-tab-wrap .curr").removeClass("curr");
+			$(obj).addClass("curr");
+		});
+	});
+	$("#show_index_main .sort").live('click',function(){
+		by_sort = $(this).attr("data-rank");
+		$("#show_index_main").load('{url x="index" r="peizi#get_showindex_by_sort"} .ranklist',{by_time:by_time,by_sort:by_sort},function(data){
+			//$("#show_index_main .sort .red").removeClass("red");
+			//$(obj).find(".sort-icon").addClass("red");
+		});	
+	});
+</script>

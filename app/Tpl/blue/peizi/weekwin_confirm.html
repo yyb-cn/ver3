@@ -1,0 +1,156 @@
+{include file="inc/header.html"} 
+<?php
+    $this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/peizi/everwin.css";
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/peizi/everwin_confirm.css";
+?>
+
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+
+<script type="text/javascript" src="{$TMPL}/js/peizi.js"></script>
+
+{include file="peizi/Process_pic_2.html"}
+
+<div class="everwin_confirm clearfix">
+	<h5 class="clearfix">
+		<span class="title">{$name}</span>
+		<span class="small_title">{$brief}</span>
+	</h5>
+	 <form>
+	<div class="con">
+		<table>
+			<tr class="l1">
+				<td class="r1">风险保证金</td>
+				<td class="r2"></td>
+				<td class="r3">预存管理费</td>
+			</tr>
+			<tr class="l2">
+				<td class="r1">
+					<strong class="orange">¥{$cost_money_format}</strong>元
+				</td>
+				<td class="r2"><img  src="{$TMPL}/images/peizi/plus.png"></td>
+				<td class="r3">
+			    <div class="sever_money_block">
+			    </div>
+				</td>
+			</tr>
+			<tr class="l3">
+				<td class="r1">仅用于承担操盘亏损赔付，无亏损全额解冻退还</td>
+				<td class="r2"></td>
+				<td class="r3">{$pre_deposit_info}</td>
+			</tr>
+		</table>
+	</div>
+		
+  <div class="but_block clearfix">
+  	<p class="in-all"></p>
+  	<div class="clearfix">
+        <div id="button_but" class="button" >确定操盘</div>
+  		<a  href="javascript:history.go(-1);" class="history_go">上一步</a>
+  	</div>
+  	
+  </div>
+</form>
+ </div>
+ 
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+    //服务费免费
+	$(".sever_money_block").html('5个交易日 <em style=" font-size:24px; color:#39A1EA; font-weight:bold;">完全免费</em>');
+	get_Prepaid_toatal();	
+	
+});
+
+
+//获取预交总数
+function get_Prepaid_toatal()
+{
+   var cost=parseFloat({$cost_money});
+   var manage=parseFloat({$manage_money});
+   var total_money='¥'+tofloat(cost+manage,2);
+   if(({$manage_money} > 0))
+   {
+   	var in_all='<span  class="orange">¥{$cost_money_format}</span>+<span  class="orange" style=" padding-right:0px;">¥{$manage_money}</span><em style=" font-size:15px;">(业务审核费)</em>=<span class="orange" id="total_money">'+total_money+'</span>';
+    $(".in-all").html(in_all);
+   }
+   else
+   {
+   	   var in_all='<span class="orange" id="total_money">'+total_money+'</span>';
+       $(".in-all").html(in_all);
+   }   
+}
+
+
+//格式化
+function tofloat(f,dec) 
+{ 
+if(dec<0) return "Error:dec<0!"; 
+result=parseInt(f)+(dec==0?"":"."); 
+f-=parseInt(f); 
+if(f==0) 
+for(i=0;i<dec;i++) result+='0'; 
+else { 
+for(i=0;i<dec;i++) f*=10; 
+result+=parseInt(Math.round(f)); 
+} 
+return result; 
+}
+
+</script> 
+
+ <script type="text/javascript">
+
+$("#button_but").click(function(){
+	$.showCfm('是否继续',function(){
+        var ajaxurl = '{url x="index" r="peizi#order_confirm"}';
+		var query = new Object();
+		query.borrow_money = {$borrow_money};
+		query.is_today = {$is_today};
+		query.lever = {$lever};
+		query.conf_id = {$conf_id};
+		query.rate_id = {$rate_id};
+		add();
+
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"Post",
+			dataType:"json",
+			success:function(data)
+			{
+				
+				remove();
+
+				if(data.status == 3){
+					ajax_login();
+				}else if (data.status == 0){
+					$.showErr(data.info);
+				}else if (data.status != 0){
+						$.showErr(data.info,function(){
+						    window.location.target="_blank";
+						    window.location.href=data.jump;
+					   });
+				}
+				
+			}
+			,error:function()
+			{
+				remove();
+			   	alert("errer");
+			}
+		});
+	 });
+	
+	});
+   function add(){
+   	            $("#button_but").attr("disabled", true); 
+		        $("#button_but").addClass("disabled");
+   }
+   function remove(){
+   	            $("#button_but").removeAttr('disabled'); 
+                $("#button_but").removeClass("disabled");
+   }
+
+ </script>
+{include file="inc/footer.html"}

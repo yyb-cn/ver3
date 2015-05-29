@@ -1,0 +1,521 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/conf.js' />
+<script type="text/javascript">
+</script>
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<load href='__TMPL__Common/js/jscharts_cr.js' />
+<div class="main">
+<div class="main_title">{$main_title}</div>
+
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button conf_btn" rel="1" value="基本信息" />&nbsp;
+	<input type="button" class="button conf_btn" rel="2" value="操盘列表" />&nbsp;		
+	<input type="button" class="button conf_btn" rel="3" value="资金列表" />&nbsp;	
+    <input type="button" class="button conf_btn" rel="4" value="历史金额" />&nbsp;	
+</div>
+<div class="blank5"></div>
+<form name="edit_".$k action="__APP__" method="post" enctype="multipart/form-data">
+	<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+		<tr>
+			<td colspan=4 class="topTd"></td>
+		</tr>
+		<tr>
+				<td class="item_title">配资编号:</td>
+				<td class="item_input">
+					{$vo.order_sn}
+					<span class="tip_span"></span>
+				</td>
+				<td class="item_title">会员:</td>
+				<td class="item_input">
+					{$vo.user_name}
+					<span class="tip_span"></span>
+				</td>
+		</tr>
+		<tr>
+				<td class="item_title">总操盘资金:</td>
+				<td class="item_input">
+					{$vo.total_money_format}
+					<span class="tip_span"></span>
+				</td>
+				<td class="item_title">保证金:</td>
+				<td class="item_input">
+					{$vo.cost_money_format}
+					<span class="tip_span"></span>
+				</td>
+		</tr>
+
+				
+		<tr>
+				<td class="item_title">亏损警戒线:</td>
+				<td class="item_input">
+					{$vo.warning_line_format}
+					<span class="tip_span"></span>
+				</td>
+				<td class="item_title">亏损平仓线:</td>
+				<td class="item_input">
+					{$vo.open_line_format}
+					<span class="tip_span"></span>
+				</td>
+		</tr>
+		
+		
+		<tr>
+				<td class="item_title">借款金额:</td>
+				<td class="item_input">
+					{$vo.borrow_money_format}
+					<span class="tip_span"></span>
+				</td>
+				
+				<td class="item_title">利率:</td>
+				<td class="item_input">
+					{$vo.rate_format}
+					<span class="tip_span"></span>
+				</td>				
+
+		</tr>
+			
+				
+		<tr>
+				<td class="item_title">期限:</td>
+				<td class="item_input">
+					{$vo.time_limit_num_format}
+					<span class="tip_span"></span>
+				</td>
+
+				<td class="item_title">日(月)管理费:</td>
+				<td class="item_input">
+					{$vo.rate_money_format}
+					<span class="tip_span"></span>
+				</td>
+		</tr>
+						
+		<tr>
+				<td class="item_title">管理费预存款:</td>
+				<td class="item_input">
+					{$vo.first_rate_money_format}
+					<span class="tip_span"></span>
+				</td>
+										
+				<td class="item_title">倍率:</td>
+				<td class="item_input">
+					{$vo.lever}
+					<span class="tip_span"></span>
+				</td>
+
+		</tr>
+		
+		<tr>
+
+						
+				<td class="item_title">申请时间 :</td>
+				<td class="item_input">
+					{$vo.create_time}
+					<span class="tip_span"></span>
+				</td>
+		
+				<td class="item_title">用户盈利比:</td>
+				<td class="item_input">
+					{$vo.payoff_rate_format}
+					<span class="tip_span"></span>
+				</td>
+						
+
+
+		</tr>
+				
+		<tr>
+				<td class="item_title">收取类型:</td>
+				<td class="item_input">
+					{$vo.rate_type_format}
+					<span class="tip_span"></span>
+				</td>
+						
+				<td class="item_title">周末节假日免费:</td>
+				<td class="item_input">
+					{$vo.is_holiday_fee_format}
+					<span class="tip_span"></span>
+				</td>
+
+		</tr>				
+				
+		<tr>
+				<td class="item_title">配资类型:</td>
+				<td class="item_input">
+					{$vo.conf_type_name}
+					<span class="tip_span"></span>
+				</td>
+						
+				<td class="item_title">业务审核费:</td>
+				<td class="item_input">
+					{$vo.manage_money_format}
+					<span class="tip_span"></span>
+				</td>
+
+		</tr>
+
+		<tr>
+
+					
+				<td class="item_title">状态 :</td>
+				<td class="item_input">
+					{$vo.status_format}
+					<span class="tip_span"></span>
+				</td>
+				<td class="item_title">开始交易时间:</td>
+				<td class="item_input">
+					{$vo.is_today_format}
+					<span class="tip_span"></span>
+				</td>
+		</tr>
+		
+				<tr>
+			<td class="item_title">备注:</td>
+					<td class="item_input" colspan = 3>
+						{$vo.memo}
+						<span class="tip_span"></span>
+					</td>
+		</tr>
+		<if condition="$status eq 3">
+			<tr>
+				<td class="item_title">失败原因 :</td>
+				<td class="item_input" colspan=3>
+					{$vo.op_memo}
+					<span class="tip_span"></span>
+				</td>
+			</tr>
+		</if>
+		<if condition="$status egt 2">
+			<tr>
+				<td class="item_title">交易开始时间 :</td>
+				<td class="item_input">
+					{$vo.begin_date}
+					<span class="tip_span"></span>
+				</td>
+				<td class="item_title">交易结束时间:</td>
+				<td class="item_input">
+					{$vo.end_date}
+					<span class="tip_span"></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">股票账户 :</td>
+				<td class="item_input">
+					{$vo.stock_sn}
+				</td>
+				<td class="item_title">股票账户密码 :</td>
+				<td class="item_input">
+					{$vo.stock_pwd}
+				</td>				
+			</tr>
+		</if>	
+		<if condition="$status eq 2">	
+			<tr>
+				<td class="item_title">审核操作 :</td>
+				<td class="item_input" id="shenhe" colspan=3>
+					<select name="status">
+						<option value="4" >审核通过</option>
+						<option value="5" >审核不通过</option>
+					</select>
+				</td>
+			</tr>
+			<tr class="bb" style="display:none;">
+				<td class="item_title">原因:</td>
+				<td class="item_input" colspan=3>
+					<textarea type="text" id="op_memo" disabled="disabled" class="textbox" name="op_memo" style="width:400px;height:100px" >{$vo.op_memo}</textarea>
+					<span class="tip_span"></span>
+				</td>
+			</tr>
+		</if>
+		<if condition="$status eq 1 || $status eq 5">
+
+			<tr >
+					<td class="item_title">交易开始时间:</td>
+					<td class="item_input">
+						<input type="text" class="textbox"  id="begin_date" name="begin_date" value="{$vo.begin_date}" onfocus="return showCalendar('begin_date', '%Y-%m-%d', false, false, 'begin_date');" style="width:130px" />
+						<span class="tip_span"></span>
+					</td>
+					<td class="item_title">交易结束时间 :</td>
+					<td class="item_input">
+						<input type="text" class="textbox"  id="end_date" name="end_date" value="{$vo.end_date}" onfocus="return showCalendar('end_date', '%Y-%m-%d', false, false, 'end_date');" style="width:130px" />
+						<span class="tip_span"></span>
+					</td>
+			</tr>
+			<tr >
+					<td class="item_title">股票帐户 :</td>
+					<td class="item_input">
+						<input type="text" id="stock_sn" name="stock_sn" value="{$vo.stock_sn}" />
+						<span class="tip_span"></span>
+					</td>
+					<td class="item_title">股票密码:</td>
+					<td class="item_input">
+						<input type="text" id="stock_pwd" name="stock_pwd" value="{$vo.stock_pwd}" />
+						<span class="tip_span"></span>
+					</td>
+			</tr>
+			<if condition="$status eq 5">
+                <tr>
+                    <td class="item_title">复审失败原因 :</td>
+                    <td class="item_input" colspan=3>
+                        {$vo.op_memo}
+                        <span class="tip_span"></span>
+                    </td>
+                </tr>
+            </if>
+			<tr>
+				<td class="item_title">审核操作 :</td>
+				<td class="item_input" id="shenhe" colspan=3>
+					<select name="status">
+							<option value="2" >审核通过</option>
+							<option value="3" >审核失败</option>
+					</select>
+					<span class="tip_span"></span>
+				</td>
+			</tr>
+			
+			<tr class="bb" style="display:none;">
+				<td class="item_title">原因:</td>
+				<td class="item_input" colspan=3>
+					<textarea type="text" id="op_memo" disabled="disabled" class="textbox" name="op_memo" style="width:400px;height:100px" >{$vo.op_memo}</textarea>
+				</td>
+			</tr>
+		</if>
+		<if condition="$status eq 4">
+			<tr>
+				<td class="item_title">最近一次扣费时间:</td>
+				<td class="item_input">
+					{$vo.last_fee_date}
+					<span class="tip_span"></span>
+				</td>
+				<td class="item_title">下次扣费时间:</td>
+				<td class="item_input">
+					{$vo.next_fee_date}
+					<span class="tip_span"></span>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">股票帐户余额:</td>
+					<td class="item_input">
+						<input type="text" id="stock_money" name="stock_money"  value="{$vo.stock_money}" />
+						<span class="tip_span"></span>
+					</td>
+					<td class="item_title">股票市值日期:</td>
+					<td class="item_input">
+						<input type="text" class="textbox"  id="stock_date" name="stock_date" value="{$stock_date}" onfocus="return showCalendar('stock_date', '%Y-%m-%d', false, false, 'stock_date');" style="width:130px" />
+						<span class="tip_span"></span>
+					</td> 
+			</tr>		
+			<tr>
+				<td class="item_title">收取其他费用:</td>
+					<td class="item_input">
+						<input type="text" id="other_fee" name="other_fee"  value="" />
+						<span class="tip_span"></span>
+					</td>
+					<td class="item_title">其他费用说明:</td>
+					<td class="item_input">
+						<input type="text" id="other_fee" name="other_memo"  value="" />
+						<span class="tip_span"></span>
+					</td> 
+			</tr>
+		</if>
+		<if condition="$status eq 6">	
+			<tr>
+					
+					<td class="item_title">返还保证金:</td>
+					<td class="item_input">
+						{$vo.re_cost_money_format}
+						<span class="tip_span"></span>
+					</td>
+					
+					<td class="item_title">用户获利:</td>
+					<td class="item_input">
+						{$vo.user_payoff_fee_format}
+						<span class="tip_span"></span>
+					</td>
+			</tr>
+		
+			<tr>
+					
+					<td class="item_title">平台获得:</td>
+					<td class="item_input">
+						{$vo.site_payoff_fee_format}
+						<span class="tip_span"></span>
+					</td>
+					
+					<td class="item_title">其他费用:</td>
+					<td class="item_input">
+						{$vo.other_fee_format}
+						<span class="tip_span"></span>
+					</td>
+			</tr>
+			<tr>
+					
+					<td class="item_title">其他费用说明:</td>
+					<td class="item_input" colspan = 3 >
+						{$vo.other_memo}
+						<span class="tip_span"></span>
+					</td>
+			</tr>
+			
+			
+		</if>
+		
+		<tr>
+			<td colspan=4 class="bottomTd"></td>
+		</tr>
+		
+	<if condition="$status eq 1 || $status eq 2 || $status eq 4 || $status eq 5">
+
+			<tr>
+				<td class="item_title"></td>
+				<td class="item_input"  colspan=3>
+				<!--隐藏元素-->
+				<input type="hidden" name="id" value="{$vo.id}" />
+				<input type="hidden" name="{:conf("VAR_MODULE")}" value="PeiziOrder" />
+				<input type="hidden" name="{:conf("VAR_ACTION")}" value="update" />
+				<!--隐藏元素-->
+				<if condition="$status eq 4">
+					<input type="hidden" name="status" value="6" />
+					<input type="submit" class="button" value="平仓" />
+				<else />
+					<input type="submit" class="button" value="提交" />
+				</if>
+				<input type="reset" class="button" value="{%RESET}" />
+				</td>
+			</tr>
+		<else/>
+		<tr>
+				<td class="item_title"></td>
+				<td class="item_input"  colspan=3>
+				<!--隐藏元素-->
+				<input type="hidden" name="id" value="{$vo.id}" />
+				<!--隐藏元素-->
+				<input type="button" class="button" onclick="javascript:window.history.back();" value="返回" />
+				</td>
+			</tr>
+			
+		</if>
+				
+
+	</table>
+   
+</form>
+	 <!----->
+      <table class="form conf_tab" cellpadding=0 cellspacing=0 rel="2">
+     <tbody>
+          <tr>
+                <td colspan=6 class="topTd"></td>
+            </tr>
+    
+                  <tr border="0">
+                      <th style="width:12%">申请时间</th>
+                      <th style="width:12%">申请类型</th>
+                      <th style="width:12%">申请描述</th>
+                      <th style="width:10%">审核状态</th>
+                      <th style="width:10%">变动描述</th>
+                      <th style="width:12%">审核时间</th>
+                  </tr>
+                  <foreach name="op_list" item="item">
+            <tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+                  <td>{$item.create_date}</td>
+                  <td >{$item.op_type_format}</td>
+                  <td>{$item.memo}</td>
+                  <td><if condition="$item.op_status == 2|| $item.op_status == 4">{$item.op_status_format}(原因:{$item.op_memo})<else/>{$item.op_status_format}</if></td>
+                  <td>{$item.change_memo} </td>
+                  <td>{$item.op_date}</td>
+              </tr>
+              </foreach>
+            
+		<tr>
+			<td colspan=6 class="bottomTd"></td>
+		</tr>
+          </tbody>
+      </table>
+      <table class="form conf_tab" cellpadding=0 cellspacing=0 rel="3">
+          <tbody>
+          	<tr>
+                <td colspan=3 class="topTd"></td>
+            </tr>
+              <tr border="0">
+                  <th style="width:12%">日期</th>
+                  <th style="width:12%">金额</th>
+                  <th style="width:12%">类型</th>
+              </tr>
+              <foreach name="fee_list" item="item">
+        <tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+                  <td >{$item.fee_date}</td>
+                  <td>{$item.fee}</td>
+                  <td>{$item.fee_type_format}</td>
+              </tr>
+              </foreach>
+              <tr>
+			<td colspan=6 class="bottomTd"></td>
+		</tr>
+          </tbody>
+      </table>
+      <table class="form conf_tab" cellpadding=0 cellspacing=0 rel="4">
+          <tbody>
+          	<tr>
+                <td  class="topTd"></td>
+            </tr>
+            <td>
+      <div class="clearfix tra_box p10 hide ml10" style="padding-left:50px;">
+          <div id="chartcontainer"></div>
+      </div>	
+      </td>
+       <tr>
+			<td  class="bottomTd"></td>
+		</tr>
+          </tbody>
+      </table>
+</div>
+<div class="blank20"></div>
+<script type="text/javascript">
+	jQuery(function(){
+		$("#shenhe select").change(function(){
+			if($(this).val()=="3" || $(this).val()=="5"){  
+				$(".bb").show();
+				
+				$("#op_memo").attr("disabled",false);
+			}else if($(this).val()=="2"){
+				$(".bb").hide();
+				
+				$("#op_memo").attr("disabled",true);
+			}else{
+				$(".bb").hide();
+				
+				$("#op_memo").attr("disabled",true);
+			}
+		});
+	});
+</script>
+<script type="text/javascript">
+	
+	$(function(){
+		var myData = new Array(
+			[0,0]
+			<foreach name="history_list" item="item">
+				,['{$item.stock_date}',{$item.stock_money}]
+			</foreach>
+		);
+		myData.splice(0,1);
+		if(myData.length>0)
+		{
+			var myChart = new JSChart('chartcontainer', 'bar');
+			myChart.setDataArray(myData);
+			myChart.setTitle('');
+			myChart.setSize(950, 350);
+			myChart.setBarColor('#39a1ea');
+			myChart.draw();
+		}
+	});
+
+</script>
+<div class="blank5"></div>
+</div>
+<include file="Public:footer" />

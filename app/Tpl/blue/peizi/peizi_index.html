@@ -1,0 +1,101 @@
+{include file="inc/header.html"}
+</div>
+<div>
+
+<?php
+	$this->_var['pzpagecss'][] = $this->_var['TMPL_REAL']."/css/index.css";
+	$this->_var['pzpagecss'][] = $this->_var['TMPL_REAL']."/css/peizi/index.css";
+	$this->_var['pzpagejs'][] = $this->_var['TMPL_REAL']."/js/utils/adv.js";
+	$this->_var['cpzpagejs'][] = $this->_var['TMPL_REAL']."/js/utils/adv.js";
+?>
+
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pzpagecss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$pzpagejs" c="$cpzpagejs"}"></script>
+<style>
+.box .h{ display:none;}
+</style>
+{insert name="load_user_tip_index"}
+<div id="main_adv_box" class="main_adv_box f_l">
+	<div id="main_adv_img" class="main_adv_img">
+		<span rel="1"><adv adv_id="广告位1" /></span>
+		<span rel="2"><adv adv_id="广告位2" /></span>
+		<span rel="3"><adv adv_id="广告位3" /></span>
+		<span rel="4"><adv adv_id="广告位4" /></span>
+		<span rel="5"><adv adv_id="广告位5" /></span>
+	</div>
+	<div id="main_adv_ctl" class="main_adv_ctl">
+		<ul>
+			<li rel="1">1</li>
+			<li rel="2">2</li>
+			<li rel="3">3</li>
+			<li rel="4">3</li>
+			<li rel="5">3</li>
+		</ul>
+	</div>
+</div>
+
+<div class="blank0"></div>
+
+<div class="fff_bg">
+<div class="slogan clearfix">
+     <ul>
+	    <li>
+		   <span class="one"></span>
+		   <div>灵活快捷</div>
+		   <p>闪电提现，十分钟到账保证金到账即可交易</p>
+		</li>
+		<li>
+		   <span class="two"></span>
+		   <div>超低费用</div>
+		   <p>最低3000起投，最高10倍杠杆</p>
+		</li>
+		<li>
+		   <span class="three"></span>
+		   <div>100%真实安全</div>
+		   <p>行情软件可见委托挂单、成交数据资金第三方，易宝支付监管</p>
+		</li>
+		<li>
+		   <span class="four"></span>
+		   <div>交易保障</div>
+		   <p>采用恒生电子（上市公司，阿里控股）专业股票交易软件</p>
+		</li>
+	 </ul>
+</div>
+</div>
+
+<div class="blank0"></div>
+
+<div class="process_img"></div>
+
+
+<div class="apply_box clearfix">
+<div style=" position:relative; width:1200px;">
+	<div class="h_box">
+		<ul>
+			{foreach from="$peizi_list" item="item" key=key}
+			     <li {if $key eq 0}class="current"{/if}>{$item.name}</li>
+			{/foreach}
+		</ul>
+	</div>
+</div>	
+	<div class="content_box">
+		<ul>
+			{foreach from="$peizi_list" item="item" key=key}
+			    <li class="li_box {if $key eq 0}current{/if}" >{$item.html_inc}</li>
+			{/foreach}
+		</ul>
+	</div>
+</div>
+
+<script type="text/javascript">
+    $(".apply_box .h_box ul li").click(function(){
+       var index=$(this).index();
+    	$(this).addClass("current").siblings().removeClass("current");
+    	$(".content_box ul .li_box:eq("+index+")").show().siblings().hide();
+   });
+</script>
+<div class="blank40"></div>
+
+{include file="peizi/indexshow_inc.html"}
+
+{include file="inc/footer.html"}
