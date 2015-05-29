@@ -205,6 +205,7 @@ return array(
 							),
 					),
 					
+					
 					"moneylog"=>array(
 							"name"	=>	"资金日志",
 							"key"	=>	"moneylog",
@@ -433,6 +434,14 @@ return array(
 						"nodes"	=>	array(
 								array("name"=>"友情链接分组","module"=>"LinkGroup","action"=>"index"),
 								array("name"=>"友情链接列表","module"=>"Link","action"=>"index"),
+						),
+				),
+				"link"	=>	array(
+						"name"	=>	"前端图片管理列表",
+						"key"	=>	"article",
+						"nodes"	=>	array(
+								array("name"=>"导航图片管理","module"=>"article","action"=>"img_list"),
+								array("name"=>"添加图片","module"=>"article","action"=>"img_add"),
 						),
 				),
 			),
