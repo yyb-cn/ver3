@@ -357,6 +357,7 @@ function del(id)
 			data: "ajax=1",
 			dataType: "json",
 			success: function(obj){
+				alert(obj);
 				$("#info").html(obj.info);
 				if(obj.status==1)
 				location.href=location.href;
