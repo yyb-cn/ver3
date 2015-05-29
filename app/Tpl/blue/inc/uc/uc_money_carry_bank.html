@@ -34,7 +34,7 @@ $this->_var['cujs'][] = $this->_var['TMPL_REAL']."/js/u.js";
 				{foreach from=$bank_list item="item" name="bk"}
 				<div class="item_bank" {if $smarty.foreach.bk.iteration mod 3 eq 0}style="margin-right:0"{/if}>
 					<div class="tip" onclick="window.location.href='{url x="index" r="uc_money#carry" p="bid=$item.id"}'">
-			         <img src="{$item.icon}" alt="{$item.bank_name}" style="*margin-bottom:-4px;_margin-bottom:-6px;">
+			       <!--  <img src="{$item.icon}" alt="{$item.bank_name}" style="*margin-bottom:-4px;_margin-bottom:-6px;">-->
 					 <p>{function name="utf_substr" v=$item.real_name}</p>
 					 <p>尾号：{function name="msubstr" v=$item.bankcode s="-4" l="4" charset="utf-8" su=false}</p>
 					</div>
