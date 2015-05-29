@@ -437,10 +437,10 @@ return array(
 				),
 				"link"	=>	array(
 						"name"	=>	"前端图片管理列表",
-						"key"	=>	"article",
+						"key"	=>	"Article",
 						"nodes"	=>	array(
-								array("name"=>"导航图片管理","module"=>"article","action"=>"img_list"),
-								array("name"=>"添加图片","module"=>"article","action"=>"img_add"),
+								array("name"=>"导航图片管理","module"=>"Article","action"=>"img_list"),
+								array("name"=>"添加图片","module"=>"Article","action"=>"img_add"),
 						),
 				),
 			),
