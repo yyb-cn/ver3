@@ -352,6 +352,9 @@ return array(
 	'CONF_INVITE_REFERRALS'	=>	'邀请返利',
 	'CONF_INVITE_REFERRALS_0'	=>	'关闭',
 	'CONF_INVITE_REFERRALS_1'	=>	'开启',
+        'CONF_INVITE_REFERRALS_TYPE'	=>	'返利计算方式',
+	'CONF_INVITE_REFERRALS_TYPE_0'	=>	'利息',
+	'CONF_INVITE_REFERRALS_TYPE_1'	=>	'本金',
 	'CONF_INVITE_REFERRALS_MIN'	=>	'起始返利(%)',
 	'CONF_INVITE_REFERRALS_MAX'	=>	'最高返利(%)',
 	'CONF_INVITE_REFERRALS_RATE'	=>	'每邀请一个增加(%)',
@@ -488,8 +491,10 @@ return array(
 	'DEAL_INDEX'	=>	'全部贷款',
 	'DEAL_WAIT'	=>	'等材料贷款',
 	'DEAL_ING'	=>	'进行中贷款',
+        'DEAL_ADVANCE'	=>	'预告中贷款',
 	'DEAL_FULL'	=>	'满标待放款',
 	'DEAL_INREPAY'	=>	'还款中贷款',
+        'DEAL_EXPIRE'	=>	'过期的贷款',
 	'DEAL_FLOW'	=>	'流标的贷款',
 	'DEAL_OVER'	=>	'完成的贷款',
 	'CITY_INDEX'	=>	'城市列表',
@@ -648,7 +653,9 @@ return array(
 	'USER_PWD_EMPTY_TIP'	=>	'会员密码不能为空',
 	'USER_PWD_CONFIRM_ERROR'	=>	'会员密码确认失败',
 	'USER_EMAIL_EMPTY_TIP'	=>	'会员邮件不能为空',
+        'USER_MOBILE_EMPTY_TIP'	=>	'会员手机不能为空',
 	'USER_EMPTY_ERROR'	=>	'会员%s不能为空',
+        'USER_NAME_FORMAT_TIP'	=>	'会员名格式错误',
 	'USER_EMAIL_FORMAT_TIP'	=>	'会员邮箱格式错误',
 	'USER_MOBILE_FORMAT_TIP'	=>	'会员手机格式错误',
 	'USER_IDNO_FORMAT_TIP'	=>	'会员身份证格式错误',
@@ -2061,6 +2068,7 @@ return array(
 	'HAS_REPAY_0' => '未还',
 	'HAS_REPAY_1' => '已还',
 	'HAS_REPAY_2' => '部分还款',
+        'HAS_REPAY_3' => '还款中',
 	'P_MESSAGE' => '转入结果说明',
 	'REPAY_MONEY' => '还款金额',
 	'MANAGE_MONEY' => '管理费',
@@ -2154,6 +2162,65 @@ return array(
 	'RELEVANCE_USER_NO'		=>	'用户不存在',
 	'PROMOTIONHUMAN_INDEX'		=>	'推广人列表',
 	
+    
+        /*授权服务机构*/
+	'AUTHORIZED' => '授权服务机构',
+	'AUTHORIZED_NAME' => '授权服务机构名称',
+	'PROMOTIONHUMAN_REBATE_INDEX' => '授权服务机构统计',
+	
+	//=============部门管理===========//
+	'CUSTOMERS_INDEX'	=>	'客服列表',
+	'CUSTOMERS_NAME'	=>	'客服名称',
+	'CUSTOMERS_TEL'	=>	'客服电话',
+	'CUSTOMERS_QQ'	=>	'客服QQ',
+	'DEPARTMENTS_INDEX'	=>	'部门列表',
+	'MYMANAGER_INDEX'	=>	'部门成员',
+	'MYMEMBERSHIP_INDEX'	=>	'我的会员',
+	'OVERDUEBILLMONTH_REPAYLOAN_SCALE'	=>	'还款中借款标',
+	'OVERDUEBILLMONTH_COMPLETEDLOAN_SCALE'	=>	'已完成借款标',
+	'OVERDUEBILLMONTH_BADLOAN_SCALE'	=>	'已坏账借款标',
+	'USER_BORROWING_MEMBER'	=>	'借款会员列表',
+	'USER_BAD_MEMBER'	=>	'坏账会员列表',
+	'OVERDUEBILLMONTH_UNALLOCATED_STANDARD'	=>	'待分配借款标',
+	
+	//=============积分商城===========//
+	'GOODS_INDEX'	=>	'商品列表',
+	'GOODSTYPE_INDEX'	=>	'商品类型列表',
+	'GOODSCATE_INDEX'	=>	'商品分类列表',
+	'GOODSTYPEATTR_INDEX'	=>	'属性列表',
+	'GOODSORDER_INDEX'	=>	'兑换商品',
+	
+	
+	
+	
+	
+	'CONF_INVESTORS_COMMISSION_RATIO' => '投资者佣金比例(%)',
+	'CONF_BORROWER_COMMISSION_RATIO' => '借款者佣金比例(%)',
+	'USER_AGENCIES_INDEX' => '授权服务机构列表',
+	'USER_AGENCIES_INFO' => '授权服务机构信息',
+	'USER_AGENCIES_TRASH' => '授权服务机构回收站',
+	
+	'CONTRACT_INDEX' => '合同范本',
+	
+	'DEALAGENCY_TRASH' => '担保机构回收站',
+	
+	'CROWDCATE_INDEX'=>'分类列表',
+	'IS_EFFECT_2'=>'不通过',
+	'IS_SUPPORT_PRINT_1'=>'是',
+	'IS_SUPPORT_PRINT_0'=>'否',
+
+	'BORROW_REBATE_LOG'	=>	'借款“<a href=\"%s\">%s</a>”，借款者%s，第%s期',
+	'INVEST_REBATE_LOG'	=>	'借款“<a href=\"%s\">%s</a>”，投资者%s，第%s期',
+	'CONF_INVITE_REFERRALS_AUTO'	=>	'是否自动发放',
+	'CONF_INVITE_REFERRALS_AUTO_0'	=>	'否',
+	'CONF_INVITE_REFERRALS_AUTO_1'	=>	'是',
+	'CONF_INVITE_REFERRALS_DATE'	=>	'有效期（月）',
+	'OVERDUEBILLMONTH_ALL_LOAN' => '所有借款标',
+	'PEIZIHOLIDAY_INDEX' => '假日设置',
+	'DEBIT_INDEX' => '白条设置',
+	'DEBIT_UPDATED'	=>	'更新白条设置',
+	'DEALSHOW_INDEX' => '首页展示订单',
+	'PEIZIINDEXSHOW_INDEX' => '排行榜列表'
 	
 	
 );
