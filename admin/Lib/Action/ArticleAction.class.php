@@ -384,6 +384,43 @@ class ArticleAction extends CommonAction{
 		return $File;
 	}
 	
+	public  function zhixing(){
+	set_time_limit(0);
+	require_once(APP_ROOT_PATH."system/libs/user.php");
+	$op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log");
+	$a=0;
+   foreach($op as $k=>$v){
+     $money_log_info['create_time']=$v['log_time'];
+	 $money_log_info['create_time_ymd']=date("Y-m-d",$v['log_time']);
+   if($v['money']!=0){
+      $a++;
+   $money_log_info['money']=$v['money'];
+   $money_log_info['memo'] = $v['log_info'];
+   $money_log_info['user_id'] = $v['log_user_id'];
+   $money_log_info['type'] = 0;
+   $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info);
+     } 
+  if($v['point']!=0){
+   $money_log_info['point']=$v['point'];
+   $money_log_info['memo'] = $v['log_info'];
+   $money_log_info['user_id'] = $v['log_user_id'];
+   $money_log_info['type'] = 0;
+   $GLOBALS['db']->autoExecute(DB_PREFIX."user_point_log",$money_log_info);
+     }  
+	 
+	 
+	 
+	 
+   }
+   echo "执行了".$a."行";exit;
+	// echo $a;
 	
+	
+	
+	
+	
+	
+	
+	}
 }
 ?>
