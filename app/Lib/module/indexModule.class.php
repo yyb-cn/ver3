@@ -133,7 +133,9 @@ class indexModule extends SiteBaseModule
 			$GLOBALS['tmpl']->assign("show_site_titile",1);
 		}
 						
-		
+		$nav_img=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."img_list_nav order by name asc");
+		// var_dump($nav_img);exit;
+		$GLOBALS['tmpl']->assign("nav_img",$nav_img);
 				
 		//var_dum($user_info);exit;
 		$GLOBALS['tmpl']->display("page/index.html",$cache_id);
