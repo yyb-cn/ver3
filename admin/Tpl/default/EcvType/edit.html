@@ -28,7 +28,7 @@
 	<tr>
 		<td class="item_title">{%VOUCHER_BEGIN_TIME}:</td>
 		<td class="item_input">
-			<input type="text" class="textbox" name="begin_time" id="begin_time" value="{$vo.begin_time|to_date}" onfocus="this.blur(); return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" />
+			<input type="text" class="textbox" name="begin_time" id="begin_time" value="{$vo.begin_time}" onfocus="this.blur(); return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" />
 			<input type="button" class="button" id="btn_begin_time" value="{%SELECT_TIME}" onclick="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" />	
 			<input type="button" class="button" value="{%CLEAR_TIME}" onclick="$('#begin_time').val('');" />				
 			<span class="tip_span">{%VOUCHER_BEGIN_TIME_TIP}</span>
@@ -37,10 +37,75 @@
 	<tr>
 		<td class="item_title">{%VOUCHER_END_TIME}:</td>
 		<td class="item_input">
-			<input type="text" class="textbox" name="end_time" id="end_time" value="{$vo.end_time|to_date}" onfocus="this.blur(); return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" />
+			<input type="text" class="textbox" name="end_time" id="end_time" value="{$vo.end_time}" onfocus="this.blur(); return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" />
 			<input type="button" class="button" id="btn_end_time" value="{%SELECT_TIME}" onclick="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" />	
 			<input type="button" class="button" value="{%CLEAR_TIME}" onclick="$('#end_time').val('');" />
 			<span class="tip_span">{%VOUCHER_END_TIME_TIP}</span>
+		</td>
+	</tr>
+        <!--5月代金券活动增加-->
+        <tr>
+		<td class="item_title">最低使用限额（含）</td>
+		<td class="item_input"><input type="text" class="textbox require" name="money_limit_min" value="{$vo.money_limit_min}"/> 元</td>
+	</tr>
+        
+        <tr>
+		<td class="item_title">最高使用限额（不含）</td>
+		<td class="item_input"><input type="text" class="textbox require" name="money_limit_max" value="{$vo.money_limit_max}"/> 元</td>
+	</tr>
+        
+        <tr>
+		<td class="item_title">使用期限</td>
+		<td class="item_input"><input type="text" class="textbox require" name="time_limitd" value="{$vo.time_limitd}"/> 天</td>
+	</tr>
+        
+        <tr>
+		<td class="item_title">代金券类别</td>
+		<td class="item_input">
+                    <label><input name="category" type="radio" value="1" />A类券</label>
+                     <label><input name="category" type="radio" value="2" />B类券</label>
+                      <label><input name="category" type="radio" value="3" />C类券</label>
+                       <label><input name="category" type="radio" value="4" />D类券</label>
+                </td>
+	</tr>
+        
+        <tr>
+		<td class="item_title">允许使用的用户类型</td>
+		<td class="item_input">
+                    <input name="user_type[]" type="checkbox" value="1" <eq name="vo.user_type.0" value="1"> checked="checked"</eq>/>新用户
+                    <input name="user_type[]" type="checkbox" value="2" <eq name="vo.user_type.1" value="2"> checked="checked"</eq>/>老用户
+                </td>
+	</tr>
+        
+	<tr>
+		<td class="item_title">是否可用于提现:</td>
+		<td class="item_input">
+			<lable><input type="radio" name="get_cash" value="1"  <if condition="$vo['get_cash'] eq 1">checked="checked"</if>/>可以</lable>
+			<lable><input type="radio" name="get_cash"  value="0" <if condition="$vo['get_cash'] eq 0">checked="checked"</if> />不可以</lable>
+		</td>
+	</tr>
+        
+        <tr>
+		<td class="item_title">是否可用于投资:</td>
+		<td class="item_input">
+			<lable><input type="radio" name="get_invest" value="1"  <if condition="$vo['get_invest'] eq 1">checked="checked"</if>/>可以</lable>
+			<lable><input type="radio" name="get_invest"  value="0" <if condition="$vo['get_invest'] eq 0">checked="checked"</if> />不可以</lable>
+		</td>
+	</tr>
+        
+        <tr>
+		<td class="item_title">是否属于推荐人奖励:</td>
+		<td class="item_input">
+			<lable><input type="radio" name="referee" value="1"  <if condition="$vo['referee'] eq 1">checked="checked"</if>/>是</lable>
+			<lable><input type="radio" name="referee"  value="0" <if condition="$vo['referee'] eq 0">checked="checked"</if> />否</lable>
+		</td>
+	</tr>
+        <!--5月代金券活动增加-->
+	<tr>
+		<td class="item_title">是否注册就送:</td>
+		<td class="item_input">
+			<lable><input type="radio" name="reg_send" value="1"  <if condition="$vo['reg_send'] eq 1">checked="checked"</if>/>是</lable>
+			<lable><input type="radio" name="reg_send"  value="0" <if condition="$vo['reg_send'] eq 0">checked="checked"</if> />否</lable>
 		</td>
 	</tr>
 	<tr>

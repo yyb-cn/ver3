@@ -20,6 +20,19 @@
                 return "<a href='".u("EcvType/send",array("id"=>$id))."'>".l("SEND_VOUCHER")."</a>&nbsp;&nbsp;";
 		}
 	}
+        function reg_send($reg)
+	{
+		if($reg){return '是';}else{ return '否';}
+	}
+        function user_types($user_type)
+        {
+              $user_type_arr = explode("|", $user_type); 
+              $re = '';
+              if(in_array("1",$user_type_arr)){ $re.= '新用户';}
+              
+              if(in_array("2",$user_type_arr)){ $re.= ' 老用户';}
+            return $re;
+        }
 </PHP>
 <script type="text/javascript">
 	function view(id)
@@ -46,6 +59,13 @@
 	,name:{%VOUCHER_NAME}
 	,money|format_price:{%VOUCHER_MONEY}
 	,use_limit:{%VOUCHER_LIMIT}
+        ,money_limit_min:最低使用限额(元)
+        ,money_limit_max:最高使用限额(元)
+        ,time_limitd:使用期限(天)
+        ,user_type|user_types:限制用户类型
+        ,get_invest|reg_send:是否用于投资
+        ,get_cash|reg_send:是否用于取现
+        ,reg_send|reg_send:注册发送:edit
 	,begin_time|to_date:{%VOUCHER_BEGIN_TIME}
 	,end_time|to_date:{%VOUCHER_END_TIME}
 	,gen_count:{%VOUCHER_GEN_COUNT}
