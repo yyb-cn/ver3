@@ -252,23 +252,26 @@ class ArticleAction extends CommonAction{
 	
 	
 	//图片上传
-	public function img_add()
+		public function img_add()
 	{
 	
 		 $img_list_nav=M("ImgListNav");
-		 $c=$img_list_nav->count();  //6个
+		 $c=$img_list_nav->select();  
+		 $date=date("Y-m-d",time());
+       // $key = array_search(max($c),$c); 
+	   // echo $date;exit;
 		//查询有多少图片
 		//图片上传
 		if($_FILES['file']['name']!=''){
 				$File = $this -> uploadfile($ARG=array(
 				'File'     => array('name'=>$_FILES['file']['name'],'tmp_name' => $_FILES['file']['tmp_name']),
-				'Dir'=>'app/Tpl/blue/images/',
-				'newname'=>($c+1)
+				'Dir'=>'app/Tpl/red/images/',
+				'newname'=> 'top_'.$date.($_FILES['file']['name'])
 				));
 				$img=$File['uploadfile'];//路径
 				$name=$File['newname'];//图片名
 			}
-			
+		
 			if($_POST){
 			
 			$data['name']=$name;
