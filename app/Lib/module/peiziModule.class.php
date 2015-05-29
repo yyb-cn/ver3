@@ -23,10 +23,11 @@ class peiziModule extends SiteBaseModule
 		$cache_id  = md5(MODULE_NAME.ACTION_NAME);
 		if (!$GLOBALS['tmpl']->is_cached('peizi/index.html', $cache_id)||true)
 		{
-			$sql = "select id,name,type from ".DB_PREFIX."peizi_conf where  is_effect = 1 order by sort";
+			$sql = "select id,name,type from ".DB_PREFIX."peizi_conf where is_effect = 1 order by sort";
 			
 			$peizi_list = array();
 			$conf_list = $GLOBALS['db']->getAll($sql);
+//                        var_dump($conf_list);exit;
 			foreach($conf_list as $k=>$v){
 				$peizi_conf = load_auto_cache("peizi_conf",array('id'=>$v['id']));
 				//$html = '1111'.$v['type'];
@@ -69,6 +70,7 @@ class peiziModule extends SiteBaseModule
 			$show_sql = "select a.*,b.type,b.name as conf_name from ".DB_PREFIX."peizi_indexshow a left join ".DB_PREFIX."peizi_conf b on b.id = a.peizi_conf_id order by money desc";
 			
 			$show_list = $GLOBALS['db']->getAll($show_sql);
+//                        var_dump($show_list);exit;
 			foreach($show_list as $k => $v)
 			{
 				if($v["type"] == 0)
@@ -98,7 +100,7 @@ class peiziModule extends SiteBaseModule
 			//$GLOBALS['tmpl']->assign("SHOP_TEL",app_conf('SHOP_TEL'));//客服电话
 			
 		}
-		
+                
 		$GLOBALS['tmpl']->display("peizi/peizi_index.html");
 		//$GLOBALS['tmpl']->display("peizi/index.html",$cache_id);
 	}
