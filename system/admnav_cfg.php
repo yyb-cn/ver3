@@ -139,13 +139,14 @@ return array(
 							),
 					),
 					
-					/*"ecvtype"	=>	array(
+					"ecvtype"	=>	array(
 							"name"	=>	"优惠券管理",
 							"key"	=>	"ecvtype",
 							"nodes"	=>	array(
 									array("name"=>"优惠券类型","module"=>"EcvType","action"=>"index"),
+                                                                        array("name"=>"会员优惠券管理","module"=>"EcvType","action"=>"send_list"),
 							),
-					),*/
+					),
 					"userconfig"	=>	array(
 							"name"	=>	"相关配置",
 							"key"	=>	"userconfig",

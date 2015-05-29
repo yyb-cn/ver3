@@ -17,7 +17,7 @@
 	{
 		if(M("EcvType")->where("id=".$id)->getField("send_type")==0)
 		{
-			return "<a href='".u("EcvType/send",array("id"=>$id))."'>".l("SEND_VOUCHER")."</a>";
+                return "<a href='".u("EcvType/send",array("id"=>$id))."'>".l("SEND_VOUCHER")."</a>&nbsp;&nbsp;";
 		}
 	}
 </PHP>
