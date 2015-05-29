@@ -26,9 +26,11 @@ class UserCarryAction extends CommonAction{
 	
 	
 	private function getlist($status=''){
+		
 		if(trim($_REQUEST['user_name'])!='')
 		{
 			$map['user_id'] = D("User")->where("user_name='".trim($_REQUEST['user_name'])."'")->getField('id');
+			
 		}
 		
 		if($status!='')
@@ -36,12 +38,37 @@ class UserCarryAction extends CommonAction{
 			$map['status'] = intval($status);
 		}
 		
+		//申请时间
+			$begin_time  = trim($_REQUEST['begin_time'])==''?0:to_timespan($_REQUEST['begin_time']);
+		    $end_time  = trim($_REQUEST['end_time'])==''?0:to_timespan($_REQUEST['end_time']);
+		
+		if($begin_time > 0 || $end_time > 0){
+			if($end_time==0)
+			{
+				$map[DB_PREFIX.'user_carry.create_time'] = array('egt',$begin_time);
+			}
+			else
+				$map[DB_PREFIX.'user_carry.create_time']= array("between",array($begin_time,$end_time));
+		}
+		 
+		// 处理时间
+		    $begin_time_1  = trim($_REQUEST['begin_time_1'])==''?0:to_timespan($_REQUEST['begin_time_1']);
+		    $end_time_1  = trim($_REQUEST['end_time_1'])==''?0:to_timespan($_REQUEST['end_time_1']);
+		if($begin_time_1 > 0 || $end_time_1 > 0){
+			if($end_time_1==0)
+			{
+				$map[DB_PREFIX.'user_carry.update_time'] = array('egt',$begin_time_1);
+			}
+			else
+				$map[DB_PREFIX.'user_carry.update_time']= array("between",array($begin_time_1,$end_time_1));
+		}
+		
 		if (method_exists ( $this, '_filter' )) {
 			$this->_filter ( $map );
 		}
 		$model = D ("UserCarry");
 		// if (! empty ( $model )) {
-			// $this->_list ( $model, $map );
+		//	 $this->_list ( $model, $map );
 		// }
 	if (isset ( $_REQUEST ['_order'] )) {
 			$order = $_REQUEST ['_order'];
@@ -57,6 +84,7 @@ class UserCarryAction extends CommonAction{
 		}
 		//取得满足条件的记录数
 		$count = $model->where ( $map )->count ( 'id' );
+	
 		if ($count > 0) {
 			//创建分页对象
 			if (! empty ( $_REQUEST ['listRows'] )) {

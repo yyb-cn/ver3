@@ -204,6 +204,7 @@ return array(
 							),
 					),
 					
+					
 					"moneylog"=>array(
 							"name"	=>	"资金日志",
 							"key"	=>	"moneylog",
