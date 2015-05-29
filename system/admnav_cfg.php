@@ -105,6 +105,57 @@ return array(
 			
 		),
 	),
+        "peizi" => array(
+		"name" =>"股票配置",
+		"key" =>"peizi",
+		"groups" =>array(
+			"peizi"	=>	array(
+					"name"	=>	"股票配资配置",
+					"key"	=>	"peizi",
+					"nodes"	=>	array(
+							array("name"=>"股票配资","module"=>"PeiziConf","action"=>"index"),
+							array("name"=>"假期配置","module"=>"PeiziHoliday","action"=>"index"),
+							array("name"=>"排行榜列表","module"=>"PeiziIndexshow","action"=>"index"),
+					),
+			),
+				
+			"peizi_order0"	=>	array(
+					"name"	=>	"股票配资审核",
+					"key"	=>	"peizi_order0",
+					"nodes"	=>	array(
+							array("name"=>"待初审","module"=>"PeiziOrder","action"=>"op0"),
+							array("name"=>"初审失败","module"=>"PeiziOrder","action"=>"op1"),
+							array("name"=>"待复审","module"=>"PeiziOrder","action"=>"op2"),
+					),
+			),
+			
+				"peizi_order1"	=>	array(
+						"name"	=>	"股票配资",
+						"key"	=>	"peizi_order1",
+						"nodes"	=>	array(
+								array("name"=>"崔单","module"=>"PeiziOrder","action"=>"next_fee_date"),
+								array("name"=>"今天扣费","module"=>"PeiziOrder","action"=>"fee_date"),
+								array("name"=>"快到期","module"=>"PeiziOrder","action"=>"next_end_date"),
+								array("name"=>"扣费失败","module"=>"PeiziOrder","action"=>"arrearage"),
+								array("name"=>"预警线","module"=>"PeiziOrder","action"=>"warning_line"),
+								array("name"=>"平仓线","module"=>"PeiziOrder","action"=>"open_line"),
+								array("name"=>"操盘中","module"=>"PeiziOrder","action"=>"op3"),
+								array("name"=>"历史实盘","module"=>"PeiziOrder","action"=>"op4"),
+						),
+				),
+								
+			"peizi_order_op"	=>	array(
+					"name"	=>	"股票配资操作",
+					"key"	=>	"peizi_order_op",
+					"nodes"	=>	array(
+							array("name"=>"待初审","module"=>"PeiziOrderOp","action"=>"op0"),
+							array("name"=>"初审失败","module"=>"PeiziOrderOp","action"=>"op1"),
+							array("name"=>"待复审","module"=>"PeiziOrderOp","action"=>"op2"),
+							array("name"=>"操作结束","module"=>"PeiziOrderOp","action"=>"op3"),
+					),
+			),
+		),
+	),
 	"user"	=>	array(
 			"name"	=>	"会员相关",
 			"key"	=>	"user",
@@ -500,6 +551,7 @@ return array(
 				"name"	=>	"系统管理员", 
 				"key"	=>	"admin", 
 				"nodes"	=>	array( 
+                                        array("name"=>"权项目录管理","module"=>"RoleGroup","action"=>"index"),
 					array("name"=>"角色管理","module"=>"Role","action"=>"index"),
 					array("name"=>"角色回收站","module"=>"Role","action"=>"trash"),
 					array("name"=>"管理员管理","module"=>"Admin","action"=>"index"),
