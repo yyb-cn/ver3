@@ -1088,14 +1088,24 @@
 				$fee = $data['money'] * $fee * 0.01;
 			}	
 				
-			if(($data['money'] + $fee) > floatval($GLOBALS['user_info']['money'])){
+			if(($data['money'] + $fee) > (floatval($GLOBALS['user_info']['money'])+$GLOBALS['user_info']['pfcfb'])){
 				$status['status'] = 0;
 				$status['show_err'] = $GLOBALS['lang']['CARRY_MONEY_NOT_ENOUGHT'];
 				return $status;
 			}
 			$data['fee'] = $fee;
 				
-			
+			//将$data['money']拆开扣除
+                        if($data['money'] > $pfcfb){//取现金额大于浦发币金额
+                            
+                            $data['money'] = $data['money'] - $pfcfb;
+                            
+                        }else{//取现金额小于或等于浦发币金额
+                            
+                            $pfcfb = $data['money'];//浦发币等于取现金额
+                            $data['money'] = 0;//取现本金为0
+                            
+                        }
 				
 			if($bid == 0)
 			{

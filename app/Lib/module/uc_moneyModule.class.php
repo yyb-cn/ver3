@@ -654,7 +654,7 @@ class uc_moneyModule extends SiteBaseModule
 			$paypassword = strim(FW_DESPWD($_REQUEST['paypassword']));
 		
 			$amount = floatval($_REQUEST['amount']);
-			$pfcfb = $_REQUEST['pfcfb'];
+			$pfcfb = floatval($GLOBALS['user_info']['pfcfb']);//获取用户拥有多少浦发币
 			$bid = floatval($_REQUEST['bid']);
 			//@pfcfb 浦发币 新添		
 			$status = getUcSaveCarry($amount,$paypassword,$bid,$pfcfb);
