@@ -209,7 +209,7 @@ class dealsModule extends SiteBaseModule
 			$GLOBALS['tmpl']->assign("use_tech_list",$use_tech_list);
 			
 			$result = get_deal_list($limit,$n_cate_id,$condition,$orderby);
-			
+		
 			$GLOBALS['tmpl']->assign("deal_list",$result['list']);
 			$GLOBALS['tmpl']->assign("total_money",$total_money);
 			
