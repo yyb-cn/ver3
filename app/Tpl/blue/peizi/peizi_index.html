@@ -54,7 +54,7 @@
 	<div class="h_box">
 		<ul>
 			{foreach from="$peizi_list" item="item" key=key}
-			     <li {if $key eq 0}class="current"{/if}>{$item.name}</li>
+			     <li id="{$key}" {if $key eq 0}class="current"{/if}>{$item.name}</li>
 			{/foreach}
 		</ul>
 	</div>
@@ -70,7 +70,7 @@
 
 <script type="text/javascript">
     $(".apply_box .h_box ul li").click(function(){
-       var index=$(this).index();
+       var index=$(this).attr("id");
     	$(this).addClass("current").siblings().removeClass("current");
     	$(".content_box ul .li_box:eq("+index+")").show().siblings().hide();
    });
