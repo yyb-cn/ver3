@@ -1,0 +1,139 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script>
+	
+	function doSend(id)
+{
+	$a=$("select option:selected")
+	
+	location.href = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=send&id="+id;
+}
+
+</script>
+<php>
+	function get_user_group($group_id)
+	{
+		$group_name = M("UserGroup")->where("id=".$group_id)->getField("name");
+		if($group_name)
+		{
+			return $group_name;
+		}
+		else
+		{
+			return l("NO_GROUP");
+		}
+	}
+	function get_user_level($id)
+	{
+		$level_name = M("UserLevel")->where("id=".$id)->getField("name");
+		if($level_name)
+		{
+			return $level_name;
+		}
+		else
+		{
+			return "没有等级";
+		}
+	}
+	function get_referrals_name($user_id)
+	{
+		$user_name = M("User")->where("id=".$user_id)->getField("user_name");
+		if($user_name)
+		return $user_name;
+		else
+		return l("NO_REFERRALS");
+	}
+	function f_to_date($date){
+		return to_date($date,"Y-m-d H:i");
+	}
+	function get_huodong_name($huodong_id){
+		$huodong_name = M("huodong")->where("id=".$huodong_id)->getField("name");
+		if($huodong_name)
+		return $huodong_name;
+		else
+		return $huodong_id;
+	
+	}
+	function lock_money_func($money,$id){
+		return "<a href='javascript:eidt_lock_money(".$id.");'>".format_price($money)."</a>";
+	}
+</php>
+<div class="main">
+
+<div class="blank5"></div>
+
+
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+	
+		{%USER_GROUP}: 
+		<select name="group_id">
+				<option value="0" <if condition="intval($_REQUEST['group_id']) eq 0">selected="selected"</if>>{%ALL}</option>
+				<foreach name="group_list" item="group_item">
+					<option value="{$group_item.id}" <if condition="intval($_REQUEST['group_id']) eq $group_item['id']">selected="selected"</if>>{$group_item.name}</option>
+				</foreach>
+		</select>
+		
+		<input type="hidden" value="Award" name="m" />
+		<input type="hidden" value="award_log" name="a" />
+		
+		<input type="submit" class="button" value="{%SEARCH}" />
+	<a href="?m=Award&a=award_log&huodong_id=2">每日抽奖</a>&nbsp;&nbsp;<a href="?m=Award&a=award_log&huodong_id=1">积分抽奖</a>
+	
+	<a href="?m=Award&a=award_log&huodong_id=">所有</a>
+	<a href="?m=Award&a=award_add">新增抽奖记录</a>
+	</form>
+</div>
+<div class="blank5"></div>
+<table id="dataTable" class="dataTable" cellpadding=0 cellspacing=0 >
+<tr><td colspan="11" class="topTd" >&nbsp; </td></tr>
+<tr class="row" >
+<th width="8"><input type="checkbox" id="check" onclick="CheckAll('dataTable')"></th>
+<th width="50px"><a href="javascript:sortBy('id','<?php echo $_GET[_sort]?0:1?>','award','award_log')" title=" ">编号<img src="/pfcf88/admin/Tpl/default/Common/images/desc.gif" width="12" height="17" border="0" align="absmiddle"></a></th>
+<th><a href="javascript:sortBy('user_name','<?php echo $_GET[_sort]?0:1?>','user_name','award_log')" title=" ">会员名称</a></th>
+<th><a href="javascript:sortBy('real_name','<?php echo $_GET[_sort]?0:1?>','real_name','award_log')" title=" ">真名</a></th>
+<th><a href="javascript:sortBy('group_id','<?php echo $_GET[_sort]?0:1?>','group_id','award_log')" title=" ">会员组</a></th>
+<th><a href="javascript:sortBy('prize_id','<?php echo $_GET[_sort]?0:1?>','prize_id','award_log')" title=" ">奖品</a>{$totle_money}</th>
+<th><a href="javascript:sortBy('log_time','<?php echo $_GET[_sort]?0:1?>','log_time','award_log')" title=" ">抽奖日期</a></th>
+<th><a href="javascript:sortBy('log_time','<?php echo $_GET[_sort]?0:1?>','log_time','award_log')" title=" ">活动ID</a></th>
+
+<th><a href="javascript:sortBy('log_time','<?php echo $_GET[_sort]?0:1?>','award','award_log')" title=" ">操作</a></th>
+
+</tr>
+<foreach name="list" item="v">
+	<tr class="row" >
+	<td><input type="checkbox" name="key" class="key" value="{$v.id}"></td>
+	<td>{$v.id}</td>
+	<td>
+		&nbsp;<a href="__APP__?m=User&a=index&user_name={$v.user_name}">{$v.user_name}<a/>
+	</td>
+	<td>
+		&nbsp;<a href="__APP__?m=User&a=index&user_name={$v.user_name}">{$v.real_name}<a/>
+	</td>
+	<td>
+		{$v.group_id|get_user_group}
+	</td>
+	<td>{$v.prize_id}:{$v.prize_name}</td>
+	<td>{$v.log_time|to_date}</td>
+	<td>{$v.huodong_id|get_huodong_name}</td>
+
+ <td><a href="__APP__?m=Award&a=virtual_del&id={$v.id}">删除</a></td>
+</foreach>
+
+
+<tr><td colspan="11" class="bottomTd"> &nbsp;</td></tr></table>
+<!-- Think 系统列表组件结束 -->
+
+
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

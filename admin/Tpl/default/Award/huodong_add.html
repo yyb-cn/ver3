@@ -1,0 +1,68 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<load href='__TMPL__Common/js/conf.js' />
+<load href='__ROOT__/system/region.js' />
+<div class="main">
+<div class="main_title">{%ADD} <a href="{:u("Award/huodong")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<php>
+	
+	function f_to_date($date){
+		return to_date($date,"Y-m-d H:i");
+	}
+	
+</php>
+<form name="edit" action="__APP__" method="post" >
+
+<div class="blank5"></div>
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">活动名称:</td>
+		<td class="item_input"><input type="text" class="textbox require" value="{$one.name}" name="name" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">结束时间:</td>
+		
+		<td class="item_input">
+		<input type="text" class="textbox" name="end_time" value="{$one.endtime|f_to_date}" id="end_time"  onfocus="this.blur(); return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'end_time');" size="15" />
+		
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">活动说明:</td>
+		<td class="item_input"><textarea name="content"  style="width:300px;height:200px;">{$one.content}</textarea></td>
+	</tr>
+	
+</table>
+
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<input type="hidden" name="id" value="{$one.id}">
+			<!--隐藏元素-->
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="Award" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="huodong_add" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="保存" />
+			
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 		 
+</form>
+</div>
+<include file="Public:footer" />

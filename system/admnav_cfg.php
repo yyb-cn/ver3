@@ -294,6 +294,17 @@ return array(
 									array("name"=>"担保收益","module"=>"IpsProfit","action"=>"index"),
 							),				
 					),
+					
+					"award"	=>	array(
+							"name"	=>	"抽奖模块",
+							"key"	=>	"award",
+							"nodes"	=>	array(
+									array("name"=>"抽奖记录","module"=>"Award","action"=>"award_log"),
+									array("name"=>"抽奖机会","module"=>"Award","action"=>"index"),
+									array("name"=>"奖品","module"=>"Award","action"=>"prize"),
+									array("name"=>"活动列表","module"=>"Award","action"=>"huodong"),
+							),				
+					),
 			),
 	),
 	

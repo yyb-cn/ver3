@@ -1,0 +1,60 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<div class="main">
+<div class="blank5"></div>
+<div class="search_row"><button><a href="?m=Award&a=prize_add">新增</a></button>
+		<br /></div>
+<div class="search_row">
+<button><a href="?m=Award&a=prize" style="text-decoration:none">全部</a></button>
+	<foreach name="huodong_list" item="v">
+	<button><a href="?m=Award&a=prize&hd_id={$v.id}" style="text-decoration:none">{$v.name}</a></button>
+	</foreach>
+</div>
+<div class="blank5"></div>
+<table id="dataTable" class="dataTable" cellpadding=0 cellspacing=0 >
+<tr><td colspan="11" class="topTd" >&nbsp; </td></tr>
+<tr class="row" >
+<th width="4"><input type="checkbox" id="check" onclick="CheckAll('dataTable')"></th>
+<th width="50px"><a href="javascript:sortBy('id','<?php echo $_GET[_sort]?0:1?>','award','award_log')" title=" ">ID<img src="/pfcf88/admin/Tpl/default/Common/images/desc.gif" width="12" height="17" border="0" align="absmiddle"></a></th>
+<th width="5px";><a href="javascript:sortBy('user_name','<?php echo $_GET[_sort]?0:1?>','award','award_log')" title=" ">奖品名称</a></th>
+<th width=5px;><a href="javascript:sortBy('probability','<?php echo $_GET[_sort]?0:1?>','award','award_log')" title=" ">概率(%)</a></th>
+<th width=5px;><a href="javascript:sortBy('max','<?php echo $_GET[_sort]?0:1?>','award','award_log')" title=" ">共有几个</a></th>
+<th width=5px;><a href="javascript:sortBy('user_name','<?php echo $_GET[_sort]?0:1?>','award','award_log')" title=" ">所属活动</a></th>
+<th width=5px;><a href="javascript:sortBy('user_name','<?php echo $_GET[_sort]?0:1?>','award','award_log')" title=" ">操作</a></th>
+</tr>
+
+<foreach name="list" item="v">
+	<tr class="row" >
+	<td><input type="checkbox" name="key" class="key" value="{$v.id}"></td>
+	<td>{$v.id}</td>
+	<td>
+		&nbsp;{$v.name}
+	</td>
+	<td>
+		&nbsp;{$v.probability}
+	</td>
+	<td>
+		&nbsp;{$v.max}
+	</td>
+	<td>
+		&nbsp;{$v.huodong_name}
+	</td>
+	<td>
+		&nbsp;<a href="?m=Award&a=prize_add&id={$v.id}">修改<a/>
+		&nbsp;<a href="?m=Award&a=prize_del&id={$v.id}">删除<a/>
+	</td>
+	
+</foreach>
+
+
+<tr><td colspan="11" class="bottomTd"> &nbsp;</td></tr></table>
+<!-- Think 系统列表组件结束 -->
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

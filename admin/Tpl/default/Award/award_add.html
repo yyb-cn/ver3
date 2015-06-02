@@ -1,0 +1,72 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<load href='__TMPL__Common/js/conf.js' />
+<load href='__ROOT__/system/region.js' />
+<div class="main">
+<div class="main_title">{%ADD} <a href="{:u("Award/award_log")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<php>
+	
+	function f_to_date($date){
+		return to_date($date,"Y-m-d H:i");
+	}
+	
+</php>
+<form name="edit" action="__APP__" method="post" >
+
+<div class="blank5"></div>
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+			
+	<tr>
+		<td class="item_title">会员名称:</td>
+		<td class="item_input"><input type="text" class="textbox " value="" name="user_id" /></td>
+	</tr>
+   <tr>
+		<td class="item_title">奖品名称:</td>
+		
+		<td class="item_input">
+		<input type="radio" class="textbox" value="7" name="prize_id" />1000代金券
+		<input type="radio" class="textbox" value="8" name="prize_id" />2000代金券
+		<input type="radio" class="textbox" value="9" name="prize_id" />5000代金券
+		<input type="radio" class="textbox" value="6" name="prize_id" />ipad mini
+		<input type="radio" class="textbox" value="5" name="prize_id" />iphone 6
+		
+		
+	</tr>
+	<tr>
+		<td class="item_title">活动:</td>
+		<td class="item_input"><input type="text" class="textbox " readonly="readonly" value="积分抽奖" name="huodong_name" /></td>
+		<input type="hidden" class="textbox " value="1" name="huodong_id" />
+	</tr>
+</table>
+
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="Award" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="award_add" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="保存" />
+			
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 		 
+</form>
+</div>
+<include file="Public:footer" />
