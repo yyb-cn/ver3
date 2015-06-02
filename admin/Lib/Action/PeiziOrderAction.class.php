@@ -55,11 +55,20 @@ class PeiziOrderAction extends CommonAction{
 			}
 		}
 		
-		$sql_str = "select pc.name as conf_type_name,a.*,AES_DECRYPT(a.stock_pwd_encrypt,'".AES_DECRYPT_KEY."') as stock_pwd, u.user_name, AES_DECRYPT(u.money_encrypt,'".AES_DECRYPT_KEY."') as user_money, m.adm_name, a.cost_money+a.borrow_money as total_money
+		// $sql_str = "select pc.name as conf_type_name,a.*,AES_DECRYPT(a.stock_pwd_encrypt,'".AES_DECRYPT_KEY."') as stock_pwd, u.user_name, AES_DECRYPT(u.money_encrypt,'".AES_DECRYPT_KEY."') as user_money, m.adm_name, a.cost_money+a.borrow_money as total_money
+					 // from ".DB_PREFIX."peizi_order a
+					// LEFT JOIN ".DB_PREFIX."user u on u.id = a.user_id
+					// LEFT JOIN ".DB_PREFIX."peizi_conf pc on pc.id = a.peizi_conf_id
+					// LEFT JOIN ".DB_PREFIX."admin m on m.id = a.admin_id  where 1 = 1 ";
+		
+		$sql_str = "select pc.name as conf_type_name,a.*,AES_DECRYPT(a.stock_pwd_encrypt,'".AES_DECRYPT_KEY."') as stock_pwd, u.user_name,u.money  as user_money, m.adm_name, a.cost_money+a.borrow_money as total_money
 					 from ".DB_PREFIX."peizi_order a
 					LEFT JOIN ".DB_PREFIX."user u on u.id = a.user_id
 					LEFT JOIN ".DB_PREFIX."peizi_conf pc on pc.id = a.peizi_conf_id
 					LEFT JOIN ".DB_PREFIX."admin m on m.id = a.admin_id  where 1 = 1 ";
+		
+		
+		
 		
 
 		//日期期间使用in形式，以确保能正常使用到索引
@@ -158,7 +167,7 @@ class PeiziOrderAction extends CommonAction{
 		$map =  $this->com_search();
 		$map['status'] = '1,5';
 		$this->op_base($map);
-		
+		 // var_dump($map);exit;
 		$type_list = M("PeiziConf")->where('is_effect = 1')->findAll();
 		$this->assign("type_list",$type_list);		
 				
@@ -294,8 +303,9 @@ class PeiziOrderAction extends CommonAction{
 		$this->assign("next_end_date",$map['next_end_date']);
 	
 		
-		$this->op_base($map," and a.rate_money > AES_DECRYPT(u.money_encrypt,'".AES_DECRYPT_KEY."') ");
-		
+		// $this->op_base($map," and a.rate_money > AES_DECRYPT(u.money_encrypt,'".AES_DECRYPT_KEY."') ");
+		 $this->op_base($map," and a.rate_money > u.money");
+		 // var_dump($map);exit;
 		$type_list = M("PeiziConf")->where('is_effect = 1')->findAll();
 		$this->assign("type_list",$type_list);	
 	
@@ -330,7 +340,7 @@ class PeiziOrderAction extends CommonAction{
 		
 		//$map['end_date'] = date_in($end_start_date, $end_end_date);
 		$this->op_base($map);
-		
+		// var_dump($volist);exit;
 		$type_list = M("PeiziConf")->where('is_effect = 1')->findAll();
 		$this->assign("type_list",$type_list);	
 	

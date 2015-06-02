@@ -534,14 +534,15 @@ class peiziModule extends SiteBaseModule
 		
 		$total_money = $manage_money + $cost_money + $first_rate_money;
 		//当前用户余额
-		$sql = "select AES_DECRYPT(money_encrypt,'".AES_DECRYPT_KEY."') AS money from ".DB_PREFIX."user where id = ".$user_id;		
+		//  1      $sql = "select AES_DECRYPT(money_encrypt,'".AES_DECRYPT_KEY."') AS money from ".DB_PREFIX."user where id = ".$user_id;	
+       $sql = "select `money` AS money from ".DB_PREFIX."user where id = ".$user_id;			
 		$user_total_money = floatval($GLOBALS['db']->getOne($sql));
 		
 		if($user_total_money< $total_money){
 			$root["money"] = $total_money;
 			$root["status"] = 2;
 			$root["info"] = "余额不足，请充值:".format_price($total_money);// ';manage_money:' .$manage_money.';cost_money:' .$cost_money . ';first_rate_money:' . $first_rate_money;
-			$root["jump"] = SITE_DOMAIN.url("member","uc_money#incharge",array('money'=>$total_money));//member.php?ctl=uc_money&act=incharge
+			$root["jump"] = SITE_DOMAIN.url("index","uc_money#incharge",array('money'=>$total_money));//member.php?ctl=uc_money&act=incharge
 			echo json_encode($root);
 			exit;
 		}
@@ -632,7 +633,7 @@ class peiziModule extends SiteBaseModule
 			
 			
 			$root["status"] = 1;
-			$root["jump"] = url("member","uc_trader#verify");
+			$root["jump"] = url("index","uc_trader#verify");
 			$root["info"] = "订单已提交,等待审核";
 			echo json_encode($root);
 						
