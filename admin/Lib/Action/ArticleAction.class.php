@@ -265,7 +265,7 @@ class ArticleAction extends CommonAction{
 		if($_FILES['file']['name']!=''){
 				$File = $this -> uploadfile($ARG=array(
 				'File'     => array('name'=>$_FILES['file']['name'],'tmp_name' => $_FILES['file']['tmp_name']),
-				'Dir'=>'app/Tpl/red/images/',
+				'Dir'=>'app/Tpl/blue/images/',
 				'newname'=> 'top_'.$date.($_FILES['file']['name'])
 				));
 				$img=$File['uploadfile'];//路径
