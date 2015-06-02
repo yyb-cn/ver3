@@ -1045,11 +1045,11 @@
 				return $status;
 			}
 			
-			// if($pfcfb<0){
-				// $status['status'] = 0;
-				// $status['show_err'] = $GLOBALS['lang']['PAYPASSWORD_EMPTY'];
-				// return $status;
-			// }
+			if($pfcfb<0){
+				$status['status'] = 0;
+				$status['show_err'] = $GLOBALS['lang']['PAYPASSWORD_EMPTY'];
+				return $status;
+			}
 				
 			// if(md5($paypassword)!=$GLOBALS['user_info']['paypassword']){
 				// $status['status'] = 0;
