@@ -1,0 +1,56 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+
+
+<div class="main">
+
+<?php if($type=='Role_nav') :?>	
+	<form    action="?m=Directory&a=doadd" method="post">
+		头顶目录<input type="text" name="name" >
+		排序<input type="text" name="sort" >
+		<input type="hidden" name="type" value="{$type}">
+		<input type="submit" value="提交">
+	</form>
+<?php endif;?>
+
+<?php if($type=='Role_group') :?>	
+	<form    action="?m=Directory&a=doadd" method="post">
+		名字<input type="text" name="name" >
+		nav_id<input type="text" name="nav_id" >
+		排序<input type="text" name="sort" >
+		<input type="hidden" name="type" value="{$type}">
+		<input type="submit" value="提交">
+	</form>
+<?php endif;?>
+
+<?php if($type=='Role_module') :?>	
+	<form    action="?m=Directory&a=doadd" method="post">
+		名字<input type="text" name="name" >
+		module<input type="text" name="module" >
+		<input type="hidden" name="type" value="{$type}">
+		<input type="submit" value="提交">
+	</form>
+<?php endif;?>
+
+<?php if($type=='Role_node') :?>	
+	<form    action="?m=Directory&a=doadd" method="post">
+		名字<input type="text" name="name" >
+		action<input type="text" name="action" >
+		group_id<input type="text" name="group_id" >
+		module_id<input type="text" name="module_id" >
+		<input type="hidden" name="type" value="{$type}">
+		<input type="submit" value="提交">
+	</form>
+<?php endif;?>
+<p><a href="?m=Directory&a=Directory_index">返回列表</a></p>
+
+
+
+
+
+<include file="Public:footer" />
