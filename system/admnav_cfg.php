@@ -584,6 +584,13 @@ return array(
 					array("name"=>"加息详细列表","module"=>"Increase","action"=>"details"),
 				),
 			),
+			"Directory"	=>	array(
+				"name"	=>	"后台目录", 
+				"key"	=>	"Directory", 
+				"nodes"	=>	array( 
+					array("name"=>"目录控制","module"=>"Directory","action"=>"Directory_index"),
+				),
+			),
 			
 			
 		),
