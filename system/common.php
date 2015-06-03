@@ -3694,7 +3694,7 @@ function hideEmail($email){
 
 function FW_DESPWD($pwd){
 	$pwd = unescape(base64_decode($pwd));
-	$pwd = substr($pwd,strlen(LOGIN_DES_KEY()."www.pfcf88.com"),strlen($pwd));
+	$pwd = substr($pwd,strlen(LOGIN_DES_KEY()."pfcf88.com"),strlen($pwd));
 	$pwd = substr($pwd,0,strlen($pwd) - strlen("pfcf88.com"));
 	return $pwd;
 }
