@@ -140,5 +140,6 @@ class indexModule extends SiteBaseModule
 		//var_dum($user_info);exit;
 		$GLOBALS['tmpl']->display("page/index.html",$cache_id);
 	}
+	
 }	
 ?>
