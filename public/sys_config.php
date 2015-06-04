@@ -21,7 +21,7 @@ return array(
 'ALLOW_FILE_EXT'=>'1',
 'BG_COLOR'=>'#ffffff',
 'IS_WATER_MARK'=>'1',
-'TEMPLATE'=>'blue_1',
+'TEMPLATE'=>'blue',
 'SCORE_UNIT'=>'积分',
 'USER_VERIFY'=>'0',
 'SHOP_LOGO'=>'',
