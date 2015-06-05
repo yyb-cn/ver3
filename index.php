@@ -7,7 +7,7 @@
 // | Author: 云淡风轻(88522820@qq.com)
 // +----------------------------------------------------------------------
 
-
+require_once 'waf.php';
 if(!defined('ROOT_PATH'))
 	define('ROOT_PATH', str_replace('index.php', '', str_replace('\\', '/', __FILE__)));
 

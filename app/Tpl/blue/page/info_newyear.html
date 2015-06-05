@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{if $page_title}{$page_title} - {/if}{$site_info.SHOP_TITLE}</title>
+<link rel="icon" href="favicon.ico" type="/image/x-icon" />
+<link rel="shortcut icon" href="favicon.ico" type="/image/x-icon" />
+<meta name="keywords" content="{if $page_keyword}{$page_keyword}{/if}{$site_info.SHOP_KEYWORD}" />
+<meta name="description" content="{if $page_description}{$page_description}{/if}{$site_info.SHOP_DESCRIPTION}" />
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/comm.css" />
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/flash-banner.css" />
+<link rel="shortcut icon" href="{$TMPL}/images/favicon.ico"/>
+<link rel="bookmark" href="{$TMPL}/images/favicon.ico"/>
+
+
+<script type="text/javascript" src="http://vip.hxlif.com/code/1/202538_291.js" charset="utf-8"></script><!--------------------抓取代码-------------->
+
+<script type="text/javascript" src="{$TMPL}/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/index_.js"></script>
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/style.css";
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/weebox.css";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/jquery.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/jquery.bgiframe.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/jquery.weebox.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/jquery.pngfix.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/lazyload.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/script.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/op.js";
+$this->_var['cpagejs'][] = $this->_var['TMPL_REAL']."/js/script.js";
+$this->_var['cpagejs'][] = $this->_var['TMPL_REAL']."/js/op.js";
+if(app_conf("APP_MSG_SENDER_OPEN")==1)
+{
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/msg_sender.js";
+$this->_var['cpagejs'][] = $this->_var['TMPL_REAL']."/js/msg_sender.js";
+}
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/main.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<script type="text/javascript">
+var APP_ROOT = '{$APP_ROOT}';;
+var LOADER_IMG = '{$TMPL}/images/lazy_loading.gif';
+var ERROR_IMG = '{$TMPL}/images/image_err.gif';
+{if app_conf("APP_MSG_SENDER_OPEN") eq 1}
+var send_span = {function name="app_conf" v="SEND_SPAN"}000;
+{/if}
+</script>
+<script type="text/javascript" src="{$APP_ROOT}/public/runtime/app/lang.js"></script>
+<script type="text/javascript" src="{function name="parse_script" v="$pagejs" c="$cpagejs"}"></script>
+</head>
+
+<body>
+{if $vote}
+<a id="vote" href="{url x="index" r="vote"}" target="_blank"></a>
+{/if}
+
+<div class="header" id="header" style="position:fixed; z-index:1000; top:0; left:0; right:0 ; margin:auto; overflow:inherit;"> 
+	<div class="wrap constr">
+		<div class="wrap clearfix">
+        	<span style="color:#FFF; line-height:40px;float:left; font-size:16px;">www.pfcf88.com</span>
+			<div class="logo f_l pt15">
+			<a class="link f_l" href="{$APP_ROOT}/">
+				<?php
+					$this->_var['logo_image'] = app_conf("SHOP_LOGO");
+				?>
+				{function name="load_page_png" v=$logo_image}
+			</a>
+			</div>
+			<div class="f_r">
+            	<div class="weixin"><div class="weixin_main"></div></div>
+                <div class="weibo">
+                	<div class="weibo_main">
+                        <p class="mar_top">点击关注浦发财富微博</p>
+                        <p><a href="http://weibo.com/5149196976">@浦发财富在线</a></p>
+                    </div>
+                </div>
+                
+				<span id="user_head_tip" class="pr">
+				{insert name="load_user_tip"}
+				<span class="li"><a href="{url x="index"}">首页</a></span><span class="li"><a href="{url x="index" r="helpcenter"}">帮助</a></span><span class="li">客服电话：<span style="color:#96E7FE; font-size:16px;">400-990-4388</span></span><span class="li">官方QQ群：</span><a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=0a45a253f49737ed65c06df186751fe8b658bc8fbfc2dbaab3f8484418463391"><img  style=" margin-top:10px"border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="浦发财富在线理财" title="浦发财富在线理财"></a>
+                </span>
+			</div>
+            <div class="hd-tel"></div>		
+		</div><!--end wrap-->
+	</div>
+</div>
+
+
+<script>
+    $(".weixin").mouseenter(function(){
+		$(this).css("background","url({$TMPL}/images/weixin.png) no-repeat 0 -30px");
+		$(".weixin_main").show();
+	})
+	$(".weixin").mouseleave(function(){
+		$(this).css("background","url({$TMPL}/images/weixin.png) no-repeat");
+		$(".weixin_main").hide();
+	})
+	
+	$(".weibo").mouseenter(function(){
+		$(this).css("background","url({$TMPL}/images/weibo.png) no-repeat 0 -32px");
+		$(".weibo_main").show();
+	})
+	$(".weibo").mouseleave(function(){
+		$(this).css("background","url({$TMPL}/images/weibo.png) no-repeat");
+		$(".weibo_main").hide();
+	})
+</script>
+<div style="width:100%; margin-top:40px;">
+    <a href="http://www.pfcf88.com/index.php?ctl=user&act=register">
+        <img src="{$TMPL}/images/newyear.jpg" width="100%" />
+    </a>
+</div>
+
+	<div id="ftw" style="height:auto;">
+        <div id="ft"> 
+<div class="ass" style="height:110px;"> 
+		<div class="wrap">
+				{if $f_link_data}
+				<div class="flink">
+               
+				{foreach from=$f_link_data item=link_group}			
+					<span style="color:#ccc; float:left; padding:5px 10px 5px 0px;">{$link_group.name}</span>
+					{foreach from=$link_group.links item=link}
+						<a href="http://{$link.url}" target="_blank" title="{if $link.description}{$link.description}{else}{$link.name}{/if}">{if $link.img neq ''}<img src='{$link.img}' alt="{if $link.description}{$link.description}{else}{$link.name}{/if}" />{else}{$link.name}{/if}</a>
+					{/foreach}
+					<div class="blank1"></div>
+				{/foreach}
+				</div>		
+				<div class="blank"></div>
+				{/if}	
+           	<div style="padding-top:25px; padding-left:10px; float:left;">  
+            <a href="http://www.jlpefund.com/" target="_blank"><img border="0" height="41" src="{$TMPL}/images/link_jl.gif"/></a>
+            </div>	
+            <div style="padding-top:25px; padding-left:10px; float:left;">  
+            <a href="http://webscan.360.cn/index/checkwebsite/url/pfcf88.com"><img border="0" height="41" src="http://img.webscan.360.cn/status/pai/hash/bf536e243596ba70172fbc1ababf1150"/></a>
+            </div>
+            <div style="padding-top:25px; padding-left:10px; float:left;">  
+            <a id='___szfw_logo___' href='https://search.szfw.org/cert/l/CX20141027005360005888' target='_blank'><img src='{$TMPL}/images/chengxin.png'></a>
+            </div>	
+            <div style="padding-top:25px; padding-left:10px; float:left;">  
+            <a class="aqlm"  key ="54535291efbfb01998949ee9"  logo_size="124x47"  logo_type="business"  href="http://www.anquan.org" ><script src="http://static.anquan.org/static/outer/js/aq_auth.js"></script></a>
+            </div>
+	        <div class="copyright" style="height:100px;"> 
+                  <div style="width:300px; float:left; text-align:right;">
+	            	{if app_conf("SHOP_TEL") neq ''}
+					{$LANG.TEL}：400-990-4388 {function name="app_conf" value="ONLINE_TIME"}  
+					
+					{/if}	
+                    <div style="width:300px; float:left;">			
+					{function name="app_conf" value="ICP_LICENSE"}
+					{function name="app_conf" value="COUNT_CODE"}
+                    </div>
+                    </div>
+					<div class="blank1"></div>	
+                    <div style="width:300px; float:left; text-align:right;">
+					{function name="app_conf" value="SHOP_FOOTER"} 
+                    </div>
+					<div class="blank"></div>	
+                    		
+					{if app_conf("ONLINE_QQ") neq '' or app_conf("ONLINE_MSN") neq ''}
+					{foreach from=$online_msn item=msn}
+					{if $msn neq ''}
+					<a id=service-msn-help href="msnim:chat?contact={$msn}" target=_blank>
+						<img src="{$TMPL}/images/button-custom-msn.gif">
+					</a> 
+					{/if}
+					{/foreach}
+					{foreach from=$online_qq item=qq}
+					{if $qq neq ''}
+					<a href="http://wpa.qq.com/msgrd?v=3&uin={$qq}&site=qq&menu=yes" target=_blank>
+						<img alt="" src="{$TMPL}/images/button-custom-qq.gif">
+					</a>
+					{/if}
+					{/foreach}				
+					<div class="blank1"></div>
+					{/if}
+
+	            </div>
+        </div>	
+        <script type="text/javascript"> var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F7f3832e8dd9e0579ce711772839866fa' type='text/javascript'%3E%3C/script%3E")) </script>  <!--百度商桥-->
+</div>
+    </div>
+
+	<div id="gotop"></div></div>
+
+
+<script type='text/javascript'>(function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();</script> <!--诚信认证-->
+</body>
+</html>

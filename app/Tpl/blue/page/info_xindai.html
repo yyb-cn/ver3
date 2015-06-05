@@ -1,0 +1,85 @@
+{include file="inc/header_new.html"} 
+
+<style>
+.xdy_banner { width:100%; min-width:1200px; height:420px; background-color:#FF6400;}
+	.xdy_banner_bg { width:1050px; height:420px; margin:0 auto; background:url({$TMPL}/images/xdy_banner.png) no-repeat;}
+
+.xdy_main { width:100%; min-width:1200px; height:380px; background-color:#FFF;}
+	.xdy_main_msg { width:960px; height:380px; margin:0 auto;}
+	
+		.xdy_main_msg li { float:left; width:300px; height:380px; text-align:center;}
+		
+		.xdy_main_msg .xdy_main_msg_2 { width:360px;}
+		
+			.xdy_main_msg li .xdy_main_msg_bg { width:160px; height:181px; overflow:hidden; margin:40px auto 20px auto;}
+			
+			.xdy_main_msg li .xdy_main_msg_bg1 { background:url({$TMPL}/images/xdy_bg.png) no-repeat;}
+			.xdy_main_msg li .xdy_main_msg_bg2 { background:url({$TMPL}/images/xdy_bg.png) -190px 0 no-repeat;}
+			.xdy_main_msg li .xdy_main_msg_bg3 { background:url({$TMPL}/images/xdy_bg.png) 0 -219px no-repeat;}
+			
+			.xdy_main_msg li h1 { line-height:40px;}
+			.xdy_main_msg li p { line-height:20px;}
+
+.xdy_msg { width:100%; min-width:1200px; height:450px; background-color:#ebf5fb;}
+	.xdy_msg_main { width:960px; height:450px; margin:0 auto;}
+		.xdy_msg_main h1 { padding-top:50px; text-align:center;}
+		
+		.xdy_msg_main_l { clear:both; float:left; width:270px; height:270px; text-align:center;}
+			.xdy_msg_main_l_bg { width:163px; height:163px; margin:40px auto 0 auto;; overflow:hidden; background:url({$TMPL}/images/xdy_bg.png) -187px -237px no-repeat;}
+			.xdy_msg_main_l h1 { padding-top:20px;}
+			
+		.xdy_msg_main_r { float:left; width:650px; height:220px; margin-top:60px; margin-left:30px;}
+			.xdy_msg_main_r li { font-size:16px; line-height:28px; list-style:disc;}
+			
+</style>
+
+<div class="xdy_banner">
+	<a href="{url x="index" r="deals"}"><div class="xdy_banner_bg"></div></a>
+</div>
+
+<div class="xdy_main">
+	<ul class="xdy_main_msg">
+    	<li>
+        	<div class="xdy_main_msg_bg xdy_main_msg_bg1"></div>
+            <h1>收益保障</h1>
+            <p>具有品牌实力的小额贷款</p>
+            <p>公司存量优质信贷资产的收益权</p>
+        </li>
+        <li class="xdy_main_msg_2">
+        	<div class="xdy_main_msg_bg xdy_main_msg_bg2"></div>
+            <h1>安全保障</h1>
+            <p>基金规模本基金发行规模不超过6000万元人民币；</p>
+            <p>本基金分为次级和优先级，次级和优先级资金比为4:6</p>
+            <p>（以实际募集金额为准）;</p>
+        </li>
+    	<li>
+        	<div class="xdy_main_msg_bg xdy_main_msg_bg3"></div>
+            <h1>技术保障</h1>
+            <p>浦发财富与第三方支付进行了深度的技术开发，</p>
+            <p>设计了严谨的内控流程，缜密的内控条规，</p>
+            <p>在流程上进一步杜绝风险。</p>
+        </li>
+    </ul>
+</div>
+
+<div class="xdy_msg">
+	<div class="xdy_msg_main">
+		<h1>信贷赢投资计划担保措施</h1>
+        
+        <div class="xdy_msg_main_l">
+        	<div class="xdy_msg_main_l_bg"></div>
+            <h1>多重保障 保驾护航</h1>
+        </div>
+        
+        <ul class="xdy_msg_main_r">
+        	<li>由小贷公司认购100万作为次级投资者，优先为基金持有人代为偿付；</li>
+            <li>小贷公司承诺在投资者认购期限到期后履行承诺回购行为；</li>
+            <li>由广西国穗贸易有限公司为信贷资产收益权的回购行为承担回购连带责任；</li>
+            <li>由南宁华夏资产管理有限公司为此计划提供筛选债权资产包及跟踪管理服务工作，对因不良资产包产生的违约行为承担回购连带责任；</li>
+            <li>由广西金发行融资性担保有限公司为信贷资产收益权的回购行为承担回购连带责任；</li>
+            <li>深圳嘉良基金管理有限公司对上述主体的不能行使回购的行为承担连带责任。</li>
+        </ul>
+    </div>
+</div>
+
+{include file="inc/footer_new.html"}

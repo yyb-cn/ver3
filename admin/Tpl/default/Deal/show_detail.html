@@ -306,7 +306,12 @@
 				<foreach name="loan_list" item="loan">
 				<tr>
 					<td>{:get_user_name($loan['user_id'])}</td>
-					<td align="center">{$loan.money|format_price}</td>
+					<td align="center">
+					 {$loan.money|format_price}
+					<?php if($loan['virtual_money']!=0){ ?> 
+					 ,{$loan.virtual_money|format_price}代金卷.
+					<?php };?>
+					</td>
 					<td align="center"><if condition="$loan['is_auto'] eq 1">自动<else />手动</if></td>
 					<td align="center">
 							<if condition="$loan['is_has_loans'] eq 1">

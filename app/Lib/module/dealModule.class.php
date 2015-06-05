@@ -37,7 +37,7 @@ class dealModule extends SiteBaseModule
 			app_redirect(url("index")); 
 		
 		//借款列表
-		$load_list = $GLOBALS['db']->getAll("SELECT deal_id,user_id,user_name,money,is_auto,create_time FROM ".DB_PREFIX."deal_load WHERE deal_id = ".$id." order by id ASC ");
+		$load_list = $GLOBALS['db']->getAll("SELECT deal_id,user_id,user_name,money,is_auto,create_time,virtual_money FROM ".DB_PREFIX."deal_load WHERE deal_id = ".$id." order by id ASC ");
 		// var_dump($load_list);exit;
 		
 		$u_info = get_user("*",$deal['user_id']);
