@@ -345,22 +345,23 @@ class uc_dealModule extends SiteBaseModule
      {	 
       if($deal_s['loantype']!=2)    
 	   {
- if($ids==$deal_key)  //判断是否是最后一次执行还款
-   {	  
-   		// showSuccess("1",1);	 
-		if($v['unjh_pfcfb']!=0)
-		{  	 		
-      $user_pfcfb=$v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_s['repay_time']*$deal_s['rate']*30/36500; 
-    modify_account(array("pfcfb"=>$user_pfcfb),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],现金红包回报本息",5);
-		}
 		if($v['virtual_money']!=0)
 		{ 
 	 if($deal_s['create_time']<1429027200)
         {	
         $virtual_money=	$v['virtual_money']*$deal_s['rate']/1200;
-       $virtual_moneys=$virtual_money*$deal_s['repay_time'];	
-    modify_account(array("money"=>$virtual_moneys),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],代金卷回报本息",5);
+    modify_account(array("money"=>$virtual_money),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],代金卷回报本息",5);
 		}
+     }		
+ if($ids==$deal_key)  //判断是否是最后一次执行还款
+   {	  
+		if($v['unjh_pfcfb']!=0)
+		{  	 		
+      $user_pfcfb=$v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_s['repay_time']*$deal_s['rate']/1200; 
+    modify_account(array("pfcfb"=>$user_pfcfb),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],现金红包回报本息",5);
+		}
+		if($v['virtual_money']!=0)
+		{ 
 	 if($deal_s['create_time']>1429027200)
         {			
     modify_account(array("money"=>$v['virtual_money']),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],代金卷回报本息",5);
@@ -373,7 +374,7 @@ class uc_dealModule extends SiteBaseModule
 	   {	   
 		if($v['unjh_pfcfb']!=0)
 		{  	 		
-      $user_pfcfb=$v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_s['repay_time']*$deal_s['rate']*30/36500; 
+      $user_pfcfb=$v['unjh_pfcfb']+$v['unjh_pfcfb']*$deal_s['rate']*$deal_s['repay_time']/1200; 
     modify_account(array("pfcfb"=>$user_pfcfb),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],现金红包回报本息",5);
 		}
 		if($v['virtual_money']!=0)
