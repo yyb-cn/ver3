@@ -28,8 +28,12 @@ class uc_dealModule extends SiteBaseModule
 		if($status == 1){
 			$deal_status = 5;
 		}
-		
+		$deal_name=trim($_REQUEST['deal_name']);
 		$result = get_deal_list($limit,0,"deal_status =$deal_status AND user_id=".$user_id,"id DESC");
+		if($deal_name!='')
+		{
+		$result = get_deal_list($limit,0,"deal_status =4 AND name='$deal_name' and user_id=".$user_id,"id DESC");
+		}
 		$deal_ids = array();
 		foreach($result['list'] as $k=>$v){
 			if($v['repay_progress_point'] >= $v['generation_position'])
