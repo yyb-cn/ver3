@@ -357,12 +357,34 @@ function del(id)
 			data: "ajax=1",
 			dataType: "json",
 			success: function(obj){
-				alert(obj);
+				
 				$("#info").html(obj.info);
 				if(obj.status==1)
 				location.href=location.href;
 			}
 	});
+}
+
+function daochu(id)
+{
+	if(!id)
+	{
+		idBox = $(".key:checked");
+		if(idBox.length == 0)
+		{
+			alert('请选择要导出的选项');
+			return;
+		}
+		idArray = new Array();
+		$.each( idBox, function(i, n){
+			idArray.push($(n).val());
+		});
+		id = idArray.join(",");
+	}
+	if(geshi=prompt('输入导出格式'+'('+'现支持的格式：'+'utf-8,gbk'+')','utf-8'))
+	
+	window.location = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_csv&id="+id+"&geshi="+geshi
+	
 }
 //完全删除
 function foreverdel(id)
