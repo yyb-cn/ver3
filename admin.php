@@ -11,6 +11,7 @@ if(!defined("ADMIN_ROOT"))
 {
 	die("Invalid access");
 }
+require_once 'waf.php';
 require './system/common.php';
 
 define('BASE_PATH','./');
