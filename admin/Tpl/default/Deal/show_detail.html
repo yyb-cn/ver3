@@ -297,6 +297,7 @@
 			<table id="dataTable" class="dataTable" cellpadding="0" cellspacing="0">
 				<tr class="row">
 					<th style="width:100px">投标人</th>
+					<th style="width:100px">会员类别</th>
 					<th>投标金额</th>
 					<th style="width:130px">状态</th>
 					<th style="width:130px">是否转账</th>
@@ -306,6 +307,7 @@
 				<foreach name="loan_list" item="loan">
 				<tr>
 					<td>{:get_user_name($loan['user_id'])}</td>
+					<td>{$loan['name']}</td>
 					<td align="center">
 					 {$loan.money|format_price}
 					<?php if($loan['virtual_money']!=0){ ?> 
