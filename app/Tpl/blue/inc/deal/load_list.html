@@ -19,7 +19,7 @@
 				<td class="wb tc f_red">
 					{function name="format_price" v="$load.money"}
 			{if $load.virtual_money!=0 }
-        ,+{$load.virtual_money}代金卷.
+        ,+{function name="format_price" v="$load.virtual_money"} 代金劵.
      {/if}		
 				</td>
 				<td class="wb tc">
