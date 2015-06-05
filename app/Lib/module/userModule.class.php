@@ -623,5 +623,6 @@ class userModule extends SiteBaseModule
 		}
 		
 	}
+	
 }
 ?>

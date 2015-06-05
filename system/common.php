@@ -3722,6 +3722,20 @@ function LOGIN_DES_KEY(){
 	}
 	return es_session::get("DES_KEY");
 }
+function HASH_KEY(){
+	if(!es_session::is_set("HASH_KEY")){
+		require_once APP_ROOT_PATH."system/utils/es_string.php";
+		es_session::set("HASH_KEY",es_string::rand_string(50));
+	}
+	return es_session::get("HASH_KEY");
+}
 
+function check_hash_key(){
+	if(strim($_REQUEST['fhash'])!="" && md5(HASH_KEY())==md5($_REQUEST['fhash'])){
+		return true;
+	}
+	else
+		return false;
+}
 
 ?>

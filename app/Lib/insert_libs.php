@@ -908,4 +908,16 @@ function insert_artile_list($param){
 function insert_get_login_key(){
 	return LOGIN_DES_KEY();
 }
+
+function insert_get_hash_key(){
+	return HASH_KEY();
+}
+function insert_is_mobile(){
+	if(isMobile()){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
 ?>

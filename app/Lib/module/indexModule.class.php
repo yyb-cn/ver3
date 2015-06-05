@@ -128,8 +128,10 @@ class indexModule extends SiteBaseModule
 			$GLOBALS['tmpl']->assign("VIRTUAL_MONEY_1_FORMAT",$VIRTUAL_MONEY_1_FORMAT);
 			$GLOBALS['tmpl']->assign("VIRTUAL_MONEY_2_FORMAT",$VIRTUAL_MONEY_2_FORMAT);
 			$GLOBALS['tmpl']->assign("VIRTUAL_MONEY_3_FORMAT",$VIRTUAL_MONEY_3_FORMAT);
+				if($GLOBALS['user_info']){
+				$user_info=$GLOBALS['user_info'];
 			
-			$GLOBALS['tmpl']->assign("user_info",$user_info);
+		}   $GLOBALS['tmpl']->assign("user_info",$user_info);
 			$GLOBALS['tmpl']->assign("show_site_titile",1);
 		}
 						
@@ -140,5 +142,6 @@ class indexModule extends SiteBaseModule
 		//var_dum($user_info);exit;
 		$GLOBALS['tmpl']->display("page/index.html",$cache_id);
 	}
+	
 }	
 ?>
