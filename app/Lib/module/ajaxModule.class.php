@@ -1875,7 +1875,7 @@ class ajaxModule extends SiteBaseModule
 	}
 	
 	function bid_calculate(){
-		$uloantype =  intval($_POST['uloantype']);
+		$uloantype =  intval($_POST['uloantype']);//用户投标类型 0按金额，1 按份数
 		
 		if($uloantype==1){
 			$_POST['money'] = intval($_POST['money']) * floatval($_POST['minmoney']);

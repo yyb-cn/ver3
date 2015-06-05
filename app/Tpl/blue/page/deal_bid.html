@@ -336,14 +336,14 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 		$("#J_BIDMONEY").keyup(function(){
 			
 			var query = new Object();
-			query.uloantype = '{$deal.uloadtype}';
-			query.minmoney = '{$deal.min_loan_money}';
-			query.loantype = '{$deal.loantype}';
-			query.rate = '{$deal.rate}';
-			query.repay_time = '{$deal.repay_time}';
-			query.repay_time_type = '{$deal.repay_time_type}';
+			query.uloantype = '{$deal.uloadtype}';//用户投标类型 0按金额，1 按份数
+			query.minmoney = '{$deal.min_loan_money}';//最底投标额度
+			query.loantype = '{$deal.loantype}';//还款方式  0:等额本息 1:付息还本 2:到期本息
+			query.rate = '{$deal.rate}';//年利率
+			query.repay_time = '{$deal.repay_time}';//还了多少
+			query.repay_time_type = '{$deal.repay_time_type}';//借款期限类型 0:按天还款  1:按月还款
 			query.money = $.trim($(this).val());
-			query.user_loan_manage_fee = '{$deal.user_loan_manage_fee}';
+			query.user_loan_manage_fee = '{$deal.user_loan_manage_fee}';//投资者管理费
 			if(bid_calculate) bid_calculate.abort(); //终止之前所有的未结束的ajax请求，然后重新开始新的请求  
 			bid_calculate = $.ajax({
 				url:'{url x="index" r="ajax#bid_calculate"}',
