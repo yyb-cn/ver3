@@ -321,7 +321,6 @@ class uc_dealModule extends SiteBaseModule
 - // reapy_time 投资时间  repay_time_type 天或者月  rate 年利息  
 -  modify_account  加减资金
 */
-
   if($deal_loadxx)
 	{	
 	   foreach($deal_loadxx as $k=>$v)
@@ -355,10 +354,19 @@ class uc_dealModule extends SiteBaseModule
     modify_account(array("pfcfb"=>$user_pfcfb),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],现金红包回报本息",5);
 		}
 		if($v['virtual_money']!=0)
-		{  	 		
-    modify_account(array("money"=>$v['virtual_money']),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],代金卷回报本息",5);
+		{ 
+	 if($deal_s['create_time']<1429027200)
+        {	
+        $virtual_money=	$v['virtual_money']*$deal_s['rate']/1200;
+       $virtual_moneys=$virtual_money*$deal_s['repay_time'];	
+    modify_account(array("money"=>$virtual_moneys),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],代金卷回报本息",5);
 		}
-	}	
+	 if($deal_s['create_time']>1429027200)
+        {			
+    modify_account(array("money"=>$v['virtual_money']),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],代金卷回报本息",5);
+		}		
+	}
+     }	
 	  }
 	  
       if($deal_s['loantype']==2)  // 到期还本息款
@@ -370,12 +378,22 @@ class uc_dealModule extends SiteBaseModule
 		}
 		if($v['virtual_money']!=0)
 		{  	 		
+	 if($deal_s['create_time']<1429027200)
+        {	
+        $virtual_money=	$v['virtual_money']*$deal_s['rate']/1200;
+       $virtual_moneys=$virtual_money*$deal_s['repay_time'];	
+    modify_account(array("money"=>$virtual_moneys),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],代金卷回报本息",5);
+		}
+	 if($deal_s['create_time']>1429027200)
+        {			
     modify_account(array("money"=>$v['virtual_money']),$v['user_id'],"[<a href='".$deal_s['url']."' target='_blank'>".$deal_s['name']."</a>],代金卷回报本息",5);
+		}
 		}
 	  } 
 	 }
 	  }
     }	
+	
 	// 虚拟币还款结束 xiaohuya	
 			showSuccess($status['show_err'],1);
 		}

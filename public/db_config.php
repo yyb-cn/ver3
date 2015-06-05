@@ -1,7 +1,7 @@
 <?php
 return array(
 'DB_HOST'=>'localhost',
-'DB_NAME'=>'v3',
+'DB_NAME'=>'zandao',
 'DB_USER'=>'root',
 'DB_PWD'=>'',
 'DB_PORT'=>'3306',
