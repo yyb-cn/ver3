@@ -14,6 +14,13 @@ function closeWeeboxs(){
 	<div {if $status eq 0}class="cur"{/if}><a href="{url x="index"r="uc_deal#refund" p="status=0"}">还款列表</a></div>
 	<div {if $status eq 1}class="cur"{/if}><a href="{url x="index"r="uc_deal#refund" p="status=1"}">已还清借款</a></div>
 </div>
+<div >
+<form action="{url x="index" r="uc_deal#refund"}" method="post">
+ <input type="text"  style="background-color:#336666; color:#fff; height:25px;"  name="deal_name" />
+ <-输入框 ；
+  <input type="submit"   value="标搜索" style="background-color:#00bef0; color:#fff; height:25px;" />
+</form>
+</div>
 <div class="i_deal_list clearfix pl10 pr10 pt5 pb5">
 	{if $deal_list}
 	{if $status eq 1}
