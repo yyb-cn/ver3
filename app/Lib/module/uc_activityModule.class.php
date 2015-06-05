@@ -215,7 +215,8 @@ $sql_no_limit = "select d.name,d.rate,d.repay_time,d.repay_time_type, dl.money a
 		
 	 	
 	 
-      
+      	$time_dq=get_gmtime();
+		$GLOBALS['tmpl']->assign("time_dq",$time_dq);
       
 	   
 	
