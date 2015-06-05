@@ -111,12 +111,29 @@ jQuery(function(){
 								<tr {if $key mod 2 eq  0}class="alt"{/if}>
 									<td style="text-align:left;">{$voucher.name}<br /></td>									
 								      <td>{function name="format_price" value=$voucher.money}</td>
-									  <td>{if $voucher.time_limitd eq ''}活动期间{else}{$voucher.time_limitd}天{/if}</td>
+									 {if $time_dq > $voucher.end_time}
+									  {if $time_dq > $voucher.last_time}
+									 <td>已过期</td>
+									  {else} 
+									     <td>{if $voucher.time_limitd eq ''}活动期间{else}{$voucher.time_limitd}天{/if}</td>
+										{/if}
+										{else}
+								 <td>{if $voucher.time_limitd eq ''}活动期间{else}{$voucher.time_limitd}天{/if}</td>
+								 	{/if}
 									<td>{function name="to_date" value=$voucher.last_time}</td>
-									<td>{if $voucher.used_yn eq 1}已使用{else}可使用{/if}</td>
+									 {if $time_dq > $voucher.end_time}
+									  {if $voucher.last_time neq  ''}
+									  <td>已失效</td>
+									   {else} 
+									    <td>没领取</td>
+									{/if}
+									 {else} 
+									 <td>{if $voucher.used_yn eq 1}已使用{else}可使用{/if}</td>
+									{/if}
 									<td>{if $voucher.receive eq 1}已领取{else}<a href="index.php?ctl=uc_voucher&act=get_voucher&eid={$voucher.eid}&user_id={$voucher.user_id}&time_limitd={$voucher.time_limitd}">去领取</a>{/if}</td>
 								</tr>
 								{/if}
+								
 								{/foreach}
 						</table>
 						
