@@ -381,7 +381,7 @@ function daochu(id)
 		});
 		id = idArray.join(",");
 	}
-	if(geshi=prompt('输入导出格式'+'('+'现支持的格式：'+'utf-8,gbk'+')','utf-8'))
+	if(geshi='utf-8')
 	
 	window.location = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_csv&id="+id+"&geshi="+geshi
 	
