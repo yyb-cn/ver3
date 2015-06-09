@@ -12,6 +12,11 @@ require APP_ROOT_PATH."app/Lib/deal.php";
 class uc_dealModule extends SiteBaseModule
 {
 	public function refund(){
+	
+	
+	
+	
+
 		$user_id = $GLOBALS['user_info']['id'];
 		
 		$status = intval($_REQUEST['status']);
@@ -284,7 +289,8 @@ class uc_dealModule extends SiteBaseModule
 		//还款列表
 		$loan_list = get_deal_load_list($deal);
 	// var_dump($loan_list);exit;
-        		
+        		// $deal_repay_list = $GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."deal_repay where deal_id=".$deal['id']." order by l_key ASC ");
+			 // var_dump($deal_repay_list);exit;	
 		$GLOBALS['tmpl']->assign("loan_list",$loan_list);
 		$GLOBALS['tmpl']->assign("deal_id",$id);
 		

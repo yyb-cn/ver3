@@ -578,7 +578,6 @@ class dealModule extends SiteBaseModule
 	}		
 			if($data)
 			$GLOBALS['db']->autoExecute(DB_PREFIX."user",$data,"UPDATE","id=".$GLOBALS['user_info']['id']);		
-		$GLOBALS['db']->autoExecute(DB_PREFIX."user",$data,"UPDATE","id=".$GLOBALS['user_info']['id']);
 		
 		showSuccess($GLOBALS['lang']['SUCCESS_TITLE'],1);
 	}
@@ -943,11 +942,31 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 		// }
 		
 	   
-	   	if(1 > 0){
+
+
+
+		
+		/*这里结束*/
+		$bid_money = floatval($_REQUEST["bid_money"]);
+	   if(!$bid_money){ 
+	      showSuccess("金额错误",$ajax,url("index","uc_money#incharge"));
+		 }		
+		   // $user_deal= $GLOBALS['db']->getRow("select * from ".DB_PREFIX."deal where id= ".$id); 
+		if($unjh_pfcfb>$GLOBALS['user_info']['unjh_pfcfb']){
+		  showErr("虚拟币操作错误",$ajax);
+		}  //判断投资虚拟币是否大于本身拥有
+	    $status = dobid2($id,$bid_money,$bid_paypassword,1,$unjh_pfcfb,$virtual_money);
+		
+		if($status['status'] == 0){
+			showErr($status['show_err'],$ajax);
+		}elseif($status['status'] == 2){
+			ajax_return($status);
+		}elseif($status['status'] == 3){
+			showSuccess("余额不足，请先去充值",$ajax,url("index","uc_money#incharge"));
+		}else{	 
 		//插入一条认购确认函 author @313616432
 		//顶标用户除外$GLOBALS['user_info']['group_id']==1
-		if(1){
-			$data_rg['deal_time']= get_gmtime()+24*3600;//录入时间
+  			$data_rg['deal_time']= get_gmtime()+24*3600;//录入时间
 			$data_rg['admin_name']='系统';
 			$data_rg['admin_id']=0;
 			$data_rg['user_name']=$GLOBALS['user_info']['real_name'];
@@ -971,29 +990,7 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 			$sql="INSERT INTO `deal` (`".implode('`,`', array_keys($data_rg))."`) VALUES ('".implode("','", $data_rg)."')";
 			$result=mysql_query($sql);//插入语句
 			mysql_close($con);
-			}
-		}
-		
-		}
-		
-		/*这里结束*/
-		$bid_money = floatval($_REQUEST["bid_money"]);
-	   if(!$bid_money){ 
-	      showSuccess("金额错误",$ajax,url("index","uc_money#incharge"));
-		 }		
-		   // $user_deal= $GLOBALS['db']->getRow("select * from ".DB_PREFIX."deal where id= ".$id); 
-		if($unjh_pfcfb>$GLOBALS['user_info']['unjh_pfcfb']){
-		  showErr("虚拟币操作错误",$ajax);
-		}  //判断投资虚拟币是否大于本身拥有
-	    $status = dobid2($id,$bid_money,$bid_paypassword,1,$unjh_pfcfb,$virtual_money);
-		
-		if($status['status'] == 0){
-			showErr($status['show_err'],$ajax);
-		}elseif($status['status'] == 2){
-			ajax_return($status);
-		}elseif($status['status'] == 3){
-			showSuccess("余额不足，请先去充值",$ajax,url("index","uc_money#incharge"));
-		}else{	  
+			}		
 			//showSuccess($GLOBALS['lang']['DEAL_BID_SUCCESS'],$ajax,url("index","deal",array("id"=>$id)));
 			showSuccess($GLOBALS['lang']['DEAL_BID_SUCCESS'],$ajax,url("index","uc_invest"));
 		}	
