@@ -125,10 +125,9 @@ class RoleAction extends CommonAction{
 						$access_item['role_id'] = $role_id;
 						$access_item['node'] = empty($item[1])?"":$item[1];
 						$access_item['module'] = $item[0];
-                                                
-                                                $access_item['module_id'] = $GLOBALS['db']->getOne("select id from ".DB_PREFIX."role_module where module  = ".$access_item['module']." and is_delete=0 and is_effect=1");
+                                                $access_item['module_id'] = $GLOBALS['db']->getOne("select id from ".DB_PREFIX."role_module where module = '".$access_item['module']."'");
                                                 if(!empty($access_item['node'])){
-                                                $access_item['node_id'] = $GLOBALS['db']->getOne("select id from ".DB_PREFIX."role_node where action  = ".$access_item['node']." and is_delete=0 and is_effect=1");
+                                                $access_item['node_id'] = $GLOBALS['db']->getOne("select id from ".DB_PREFIX."role_node where action = '".$access_item['node']."' and module_id = ".$access_item['module_id']);
                                                 }
 						$GLOBALS['db']->autoExecute(DB_PREFIX."role_access",$access_item,"INSERT","","SILENT");
 					}
@@ -184,9 +183,9 @@ class RoleAction extends CommonAction{
 					$access_item['role_id'] = $role_id;
 					$access_item['node'] = empty($item[1])?"":$item[1];
 					$access_item['module'] = $item[0];
-                                        $access_item['module_id'] = $GLOBALS['db']->getOne("select id from ".DB_PREFIX."role_module where module  = ".$access_item['module']." and is_delete=0 and is_effect=1");
+                                        $access_item['module_id'] = $GLOBALS['db']->getOne("select id from ".DB_PREFIX."role_module where module = '".$access_item['module']."'");
                                         if(!empty($access_item['node'])){
-                                        $access_item['node_id'] = $GLOBALS['db']->getOne("select id from ".DB_PREFIX."role_node where action  = ".$access_item['node']." and is_delete=0 and is_effect=1");
+                                        $access_item['node_id'] = $GLOBALS['db']->getOne("select id from ".DB_PREFIX."role_node where action = '".$access_item['node']."' and module_id = ".$access_item['module_id']);
                                         }
 					$GLOBALS['db']->autoExecute(DB_PREFIX."role_access",$access_item,"INSERT","","SILENT");
 				}
