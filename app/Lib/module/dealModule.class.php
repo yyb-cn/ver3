@@ -588,10 +588,9 @@ class dealModule extends SiteBaseModule
 		$ajax = intval($_REQUEST["ajax"]);
 		$bid_paypassword = strim(FW_DESPWD($_REQUEST['bid_paypassword']));
 		$id = intval($_REQUEST["id"]);
-	// if(md5($bid_paypassword)!=$GLOBALS['user_info']['paypassword']){
-		// $root["show_err"] = $GLOBALS['lang']['PAYPASSWORD_ERROR'];
-		// return $root;
-	// }
+	if(md5($bid_paypassword)!=$GLOBALS['user_info']['paypassword']){
+	  showErr("支付密码错误",$ajax);
+	}
 		//用户ID；
 		$ecv_user_id=$GLOBALS['user_info']['id'];
 		

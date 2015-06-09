@@ -1051,11 +1051,11 @@
 				return $status;
 			}
 				
-			// if(md5($paypassword)!=$GLOBALS['user_info']['paypassword']){
-				// $status['status'] = 0;
-				// $status['show_err'] = $GLOBALS['lang']['PAYPASSWORD_ERROR'];
-				// return $status;
-			// }
+			if(md5($paypassword)!=$GLOBALS['user_info']['paypassword']){
+				$status['status'] = 0;
+				$status['show_err'] = $GLOBALS['lang']['PAYPASSWORD_ERROR'];
+				return $status;
+			}
 				
 			$data['user_id'] = intval($GLOBALS['user_info']['id']);
 			$data['money'] = $amount;

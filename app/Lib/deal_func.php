@@ -869,10 +869,10 @@ function check_dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc = 0){
 		return $root;
 	}
 	
-	// if(md5($bid_paypassword)!=$GLOBALS['user_info']['paypassword']){
-		// $root["show_err"] = $GLOBALS['lang']['PAYPASSWORD_ERROR'];
-		// return $root;
-	// }
+	if(md5($bid_paypassword)!=$GLOBALS['user_info']['paypassword']){
+		$root["show_err"] = $GLOBALS['lang']['PAYPASSWORD_ERROR'];
+		return $root;
+	}
 	
 	$deal = get_deal($deal_id);
 	if(!$deal){
