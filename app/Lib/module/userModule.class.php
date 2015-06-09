@@ -63,7 +63,11 @@ class userModule extends SiteBaseModule
 		{
 			showErr($GLOBALS['lang']['USER_PWD_ERROR']);
 		}
-		
+                if($user_data['agreement']!=1){
+                    
+                    showErr("请先同意  注册协议 和 隐私条款");
+                    
+                }
 		
 		if(isset($user_data['referer']) && $user_data['referer']!=""){
 			$user_data['pid'] = $GLOBALS['db']->getOne("SELECT id FROM ".DB_PREFIX."user WHERE mobile ='".$user_data['referer']."' OR user_name='".$user_data['referer']."'");

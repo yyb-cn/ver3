@@ -244,7 +244,7 @@ var to_send_msg = false;
 						<div class="field agreement pr f14">
 							<label>&nbsp;</label>
 							<span class="ui-select ui-selected" >
-								<input type="checkbox" id="J_agreement" value="1" checked="checked" />
+								<input name="agreement" type="checkbox" id="J_agreement" value="1" checked="checked"  />
 							</span>
 							同意 <a href="{url x="index" r="help" p="id=$agreement"}" class="f_blue">注册协议</a> 和 <a href="{url x="index" r="help" p="id=$privacy"}" class="f_blue">隐私条款</a>
 						</div>
@@ -790,10 +790,6 @@ function checkRegsiter(obj){
 </script>
 </div>
 <div class="blank"></div>
-	<div class="wrap clearfix">
-	 	<div class="copyright clearfix tc" style="padding:8px ;background:#f7f7f7; color:#757575">
-			{function name="app_conf" value="SHOP_FOOTER"} 
-        </div>
-	</div>
+	{include file="inc/footer.html"}
 </body>
 </html>
