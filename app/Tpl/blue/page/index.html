@@ -63,6 +63,7 @@
     <div class="goods">
     	<ul>
             {foreach from=$deal_list item=deal key=k}
+                {if $k <= 2}
         	<li class="goods_{$k}">
             	<p class="goods_tit">{$deal.sub_name}</p>
                 <p>(最低投资额度：{$deal.min_loan_money})</p>
@@ -99,6 +100,7 @@
                     <a href="#">立即投资</a>
                 </div>
             </li> -->
+               {/if}
         {/foreach}
         </ul>
     </div>
