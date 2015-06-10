@@ -1,0 +1,485 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{if $page_title}{$page_title} - {/if}{$site_info.SHOP_TITLE}</title>
+<link rel="icon" href="favicon.ico" type="/image/x-icon" />
+<link rel="shortcut icon" href="favicon.ico" type="/image/x-icon" />
+<meta name="keywords" content="{if $page_keyword}{$page_keyword}{/if}{$site_info.SHOP_KEYWORD}" />
+<meta name="description" content="{if $page_description}{$page_description}{/if}{$site_info.SHOP_DESCRIPTION}" />
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/comm.css" />
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/flash-banner.css" />
+<link rel="shortcut icon" href="{$TMPL}/images/favicon.ico"/>
+<link rel="bookmark" href="{$TMPL}/images/favicon.ico"/>
+<!--抽奖js-->
+<script type="text/javascript" src="{$TMPL}/lottery/lottery.js"></script>
+<script type="text/javascript" src="{$TMPL}/lottery/every_lottery.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/index_.js"></script>
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/style.css";
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/weebox.css";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/jquery.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/jquery.bgiframe.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/jquery.weebox.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/jquery.pngfix.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/lazyload.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/script.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/op.js";
+$this->_var['cpagejs'][] = $this->_var['TMPL_REAL']."/js/script.js";
+$this->_var['cpagejs'][] = $this->_var['TMPL_REAL']."/js/op.js";
+if(app_conf("APP_MSG_SENDER_OPEN")==1)
+{
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/msg_sender.js";
+$this->_var['cpagejs'][] = $this->_var['TMPL_REAL']."/js/msg_sender.js";
+}
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/main.css";
+
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<script type="text/javascript">
+var APP_ROOT = '{$APP_ROOT}';;
+var LOADER_IMG = '{$TMPL}/images/lazy_loading.gif';
+var ERROR_IMG = '{$TMPL}/images/image_err.gif';
+{if app_conf("APP_MSG_SENDER_OPEN") eq 1}
+var send_span = {function name="app_conf" v="SEND_SPAN"}000;
+{/if}
+</script>
+<script type="text/javascript" src="{$APP_ROOT}/public/runtime/app/lang.js"></script>
+<script type="text/javascript" src="{function name="parse_script" v="$pagejs" c="$cpagejs"}"></script>
+</head>
+
+<body>
+{if $vote}
+<a id="vote" href="{url x="index" r="vote"}" target="_blank"></a>
+{/if}
+
+<div class="header" id="header" style="position:fixed; z-index:1000; top:0; left:0; right:0 ; margin:auto; overflow:inherit;"> 
+	<div class="wrap constr">
+		<div class="wrap clearfix">
+        	<span style="color:#FFF; line-height:40px;float:left; font-size:16px;">www.pfcf88.com</span>
+			<div class="logo f_l pt15">
+			<a class="link f_l" href="{$APP_ROOT}/">
+				<?php
+					$this->_var['logo_image'] = app_conf("SHOP_LOGO");
+				?>
+				{function name="load_page_png" v=$logo_image}
+			</a>
+			</div>
+			<div class="f_r">
+            	<div class="weixin"><div class="weixin_main"></div></div>
+                <div class="weibo">
+                	<div class="weibo_main">
+                        <p class="mar_top">点击关注浦发财富微博</p>
+                        <p><a href="http://weibo.com/5149196976">@浦发财富在线</a></p>
+                    </div>
+                </div>
+                
+				<span id="user_head_tip" class="pr">
+				{insert name="load_user_tip"}
+				<span class="li"><a href="{url x="index"}">首页</a></span><span class="li"><a href="{url x="index" r="helpcenter"}">帮助</a></span><span class="li">客服电话：<span style="color:#96E7FE; font-size:16px;">400-990-4388</span></span><span class="li">官方QQ群：</span><a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=0a45a253f49737ed65c06df186751fe8b658bc8fbfc2dbaab3f8484418463391"><img  style=" margin-top:10px"border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="浦发财富在线理财" title="浦发财富在线理财"></a>
+                </span>
+			</div>
+            <div class="hd-tel"></div>		
+		</div><!--end wrap-->
+	</div>
+</div>
+
+
+<script>
+    $(".weixin").mouseenter(function(){
+		$(this).css("background","url({$TMPL}/images/weixin.png) no-repeat 0 -30px");
+		$(".weixin_main").show();
+	})
+	$(".weixin").mouseleave(function(){
+		$(this).css("background","url({$TMPL}/images/weixin.png) no-repeat");
+		$(".weixin_main").hide();
+	})
+	
+	$(".weibo").mouseenter(function(){
+		$(this).css("background","url({$TMPL}/images/weibo.png) no-repeat 0 -32px");
+		$(".weibo_main").show();
+	})
+	$(".weibo").mouseleave(function(){
+		$(this).css("background","url({$TMPL}/images/weibo.png) no-repeat");
+		$(".weibo_main").hide();
+	})
+</script>
+
+<style>
+.cj { width:100%; height:2440px; margin-top:40px; background:#770d00;}
+	.cj_wraper { width:960px; height:2440px; margin:0 auto; background:url({$TMPL}/images/bg_bg.png) repeat-y;}
+		
+	.bg_h { width:960px; height:562px; background:url({$TMPL}/images/bg_h.png) no-repeat;}
+	
+	.goto_index { width:960px; height:79px;}
+		.goto_index a { display:block; width:282px; height:79px; margin:0 auto;}
+	
+	.hongbao { width:960px; height:300px; background:url({$TMPL}/images/bg_hongbao.png) no-repeat;}
+		.hongbao ul { float:left; margin-left:100px; margin-top:150px;}
+			.hongbao ul li { float:left; width:96px; height:102px; padding-left:13px; margin-top:7px;}
+			
+	.jifen { width:960px; height:295px; background:url({$TMPL}/images/bg_jifen.png) no-repeat;}
+		.jifen .my_jifen { float:left; margin-top:154px; margin-left:163px; width:634px; height:118px; color:#000; font-size:95px; font-weight:bold; text-align:center; line-height:115px; letter-spacing:12px;}
+		
+	.zhuanpan { width:733px; height:309px; margin-top:20px; background:url({$TMPL}/images/bg_xuanzhuan.png) no-repeat;}
+		#lottery{width:670px; height:249px; margin:0 auto; padding-top:25px;}
+		#lottery li{ float:left; width:180px; height:81px; border:2px solid #c41f1b;}
+			#lottery .w193 { width:295px;}
+			#lottery .fa4440 { background:#fa4440;}
+			#lottery .f9316d { background:#f9316d;}
+			#lottery .fd7414 { background:#fd7414;}
+			#lottery .ffdf00 { background:#ffdf00;}
+
+	
+	.mingdan { width:733px; height:194px; margin:0 auto; margin-top:20px; position:relative; background:url({$TMPL}/images/bg_mingdan.png) no-repeat;}
+		.mingdan .userlist { width:540px; height:120px; position:absolute; top:60px; left:30px; overflow:hidden;}
+			.userlist .scrollNews .jiangpin { border-bottom:1px solid #b62222; width:540px; height:20px;}
+				.userlist .scrollNews .jiangpin div { float:left; text-align:center; font-size:12px; line-height:20px;}
+		.mingdan .mylist { width:160px; height:120px; position:absolute; top:60px; left:570px; overflow:hidden;}
+			.mylist .scrollNews1 .my_jiangpin { border-bottom:1px solid #b62222; width:135px; height:20px;}
+				.mylist .scrollNews1 .my_jiangpin div { float:left; text-align:center; font-size:12px; line-height:20px;}
+			
+			
+	
+	.shuoming { width:735px; height:605px; margin:0 auto; margin-top:30px; background:url({$TMPL}/images/bg_shuoming.png) no-repeat;}
+	
+	.black_bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100000; overflow:hidden; background:rgb( 0, 0, 0); background:rgba( 0, 0, 0, 0.9); filter:alpha(opacity=90); opacity:0.9rt; display:none;}
+		.prize { width:777px; height:866px; margin:0 auto; background:url({$TMPL}/images/dakai.png) no-repeat; opacity:1;}
+			.prize .gei_out { float:left; margin-left:540px; margin-top:108px;}
+			.prize .award { clear:both; float:left; width:330px; height:150px; color:#F00; font-weight:bold; margin-top:130px; margin-left:220px; text-align:center; line-height:150px; font-size:36px; font-style:italic;}
+</style>
+
+
+ <input type="hidden" id="score" value="{$score}">
+   <input type="hidden" id="score_id" value="{$score_id}">
+<div class="cj">
+	<div class="cj_wraper">
+    	<div class="bg_h"></div>
+        <div class="goto_index"><a href="http://www.pfcf88.com"><img src="{$TMPL}/images/qiekenao.png" /></a></div>
+        <div class="hongbao">
+		{if $idcardpassed eq 0 ||  $mobilepassed eq 0}
+        	<ul>
+			  <li><a href="{url x="index" r="deal#bid" }"  onclick="passed();"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+			  <li><a href="{url x="index" r="deal#bid" }"  onclick="passed();"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+			  <li><a href="{url x="index" r="deal#bid" }"  onclick="passed();"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+			  <li><a href="{url x="index" r="deal#bid" }"  onclick="passed();"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+			  <li><a href="{url x="index" r="deal#bid" }"  onclick="passed();"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+			  <li><a href="{url x="index" r="deal#bid" }"  onclick="passed();"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+			  <li><a href="{url x="index" r="deal#bid" }"  onclick="passed();"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+            </ul>
+			{else}
+			   	<ul>
+       
+               <li><a id="hb2" href="javascript:void(0);" onclick="start_lottery2()"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+                <li><a id="hb3" href="javascript:void(0);" onclick="start_lottery2()"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+                <li><a id="hb4" href="javascript:void(0);" onclick="start_lottery2()"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+                <li><a id="hb5" href="javascript:void(0);" onclick="start_lottery2()"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+                <li><a id="hb6" href="javascript:void(0);" onclick="start_lottery2()"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+                <li><a id="hb7" href="javascript:void(0);" onclick="start_lottery2()"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+				 <li><a id="hb7" href="javascript:void(0);" onclick="start_lottery2()"><img src="{$TMPL}/images/hongbao.png" /></a></li>
+            </ul>
+			{/if}
+			
+			
+        </div>
+        
+        <!--剩余积分-->
+        <div class="jifen">
+        	<div class="my_jifen">
+				{$score}
+			</div>
+        </div>
+        
+        <!--转盘-->
+        <div class="zhuanpan">
+		  <ul id="lottery">
+			<li id="lottery_1" class="f9316d"><img src="{$TMPL}/images/zhuan11.png" /></li>
+			<li id="lottery_2" class="w193 fd7414"><img src="{$TMPL}/images/zhuan12.png" /></li>
+			<li id="lottery_3" class="ffdf00"><img src="{$TMPL}/images/zhuan13.png" /></li>
+			<li id="lottery_8" class="ffdf00"><img src="{$TMPL}/images/zhuan21.png" /></li>
+			<li class="w193"><a href="javascript:void(0);" onclick="start_lottery();"><img src="{$TMPL}/images/zhuan22.png" /></a></li>
+			<li id="lottery_4" class="fa4440"><img src="{$TMPL}/images/zhuan23.png" /></li>
+			<li id="lottery_7" class="f9316d"><img src="{$TMPL}/images/zhuan31.png" /></li>
+			<li id="lottery_6" class="w193 fa4440"><img src="{$TMPL}/images/zhuan32.png" /></li>
+			<li id="lottery_5" class="fd7414"><img src="{$TMPL}/images/zhuan33.png" /></li>
+		  </ul>
+        </div>
+        
+        <!--获奖名单-->
+        <div class="mingdan">
+        	<div class="userlist">
+			
+                <ul class="scrollNews">
+                	{foreach from=$zhongjiang_list item=v}
+                    <li class="jiangpin">
+                        <div style="width:90px; color:#000000;">{$v.user_name}</div>
+                        <div style="width:200px; color:#ffdf00;">{$v.prize_name}</div>
+                        <div style="width:250px; color:#000000;">{function name="to_date" v="$v.log_time" f="Y-m-d "} {function name="to_date" v="$v.log_time" f="H:i"}</div>
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+            
+            <div class="mylist">
+				<ul class="scrollNews1">
+				{foreach from=$my_list item=v}
+                    <li class="my_jiangpin">
+                        <div style="width:135px; color:#ffdf00;">{$v.prize_name}</div>
+                    </li> 
+                   {/foreach}  
+				</ul>
+            </div>
+        </div>
+        
+        <div class="shuoming"></div>
+    </div>
+</div>
+
+
+<div class="black_bg">
+    <div class="prize">
+        <div class="gei_out"><a href="javascript:void(0);"><img src="{$TMPL}/images/get-out.png"/></a></div>
+        <div class="award"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(e) {
+	$(".prize a").click(function(){
+		$(".black_bg").hide();
+	})
+})
+</script>
+
+
+<script>
+	//滚屏获奖名单
+	$(function(){
+
+	  var $this=$(".scrollNews");
+	
+	  $this.hover(function(){
+	
+		   clearInterval(scrollTimer);
+	
+	   },function(){
+	
+		  scrollTimer=setInterval(function(){
+	
+			   scrollNews($this);
+	
+		  },3000);
+	
+	   });
+	
+	  var scrollTimer=setInterval(function(){
+	
+		   scrollNews($this);
+	
+	  },3000);
+	
+	})
+	
+	function scrollNews(obj){
+	
+	  var $self=obj;
+	
+	  var height=$self.find("li").height();
+	
+	  $self.animate({"marginTop":-height+"px"},600,function(){
+	
+		  $self.css("marginTop",0).find("li:first").appendTo($self);
+	
+	})}
+	
+	//滚屏获奖名单
+	$(function(){
+
+	  var $this1=$(".scrollNews1");
+	
+	  $this1.hover(function(){
+	
+		   clearInterval(scrollTimer1);
+	
+	   },function(){
+	
+		  scrollTimer1=setInterval(function(){
+	
+			   scrollNews1($this1);
+	
+		  },5000);
+	
+	   });
+	
+	  var scrollTimer1=setInterval(function(){
+	
+		   scrollNews1($this1);
+	
+	  },5000);
+	
+	})
+	
+	function scrollNews1(obj){
+	
+	  var $self1=obj;
+	
+	  var height1=$self1.find("li").height();
+	
+	  $self1.animate({"marginTop":-height1+"px"},600,function(){
+	
+		  $self1.css("marginTop",0).find("li:first").appendTo($self1);
+	
+	})}
+
+</script>
+
+
+<script>
+function show_lottery(){
+    if(index>num){
+        index = 1;
+        cycle--;
+    }
+    $('#lottery li').css('opacity',0.3);
+    $('#lottery_'+index).css('opacity',1);
+    if(index>fast) speed=100;//开始加速
+    if(cycle==0 && lucky-index<rand(2,5)) speed=speed+200;//开始减速
+    if(cycle<=0 && index==lucky){//结束抽奖，选中号码
+        clearTimeout(lottery);
+        setTimeout(function(){
+            $('#lottery li').css('opacity',1);
+			$('.award').html(award);
+			$('.black_bg').show();
+        },1200);
+        flag = false;
+		
+		$(".my_jifen").html(Number($(".my_jifen").html())-Number(20000));
+		
+    }else{
+        lottery = setTimeout(show_lottery,speed);
+    }
+    index++;
+}
+function rand(Min,Max){
+    var Range = Max - Min;
+    var Rand = Math.random();
+    return(Min + Math.round(Rand * Range));
+}
+//定义参数
+var index = 1,              //当前选中对象的位置
+    fast,                   //在哪个位置开始加速
+    num   = 8,              //共有多少个抽奖对象
+    cycle,                  //转动多少圈
+    speed = 300,            //开始时速度
+    flag  = false,          //正在抽奖标志
+    lucky,                  //中奖号码，实际应用由后台产生
+    award,                  //奖品名称
+    lottery;                //抽奖对象
+
+//开始抽奖
+function start_lottery(){
+    var score=$("#score").val();  
+      parseInt(score);
+    var score_id=$("#score_id").val();
+     if(score_id==''){
+	  alert('请登录用户，大奖欢迎你！');
+	    return false;
+	 }
+    if(flag){
+        //alert('正在抽奖，请等待抽奖结果！');
+        //return false;
+        return void(0);
+    }
+    flag=true;
+    index = 1;              //当前选中对象的位置
+    fast  = rand(3,6);      //在哪个位置开始加速
+    cycle = rand(3,5);      //转动多少圈
+    speed = 300;            //开始时速度
+    $.ajax({
+        url: 'index.php?ctl=lottery&act=lottery',
+        type: "post",
+        data:null,
+        dataType: "json",
+        timeout: 20000,
+        cache: false,
+        beforeSend: function(){// 提交之前
+        },
+        error: function(){//出错
+            flag=false;
+        },
+        success: function(res){//成功
+		if(res==1){
+			alert('积分不足,请充值')
+			flag=false;
+			return false;
+		}
+		if(res==2){
+			alert('先购买足够的1个月以上的产品')
+			flag=false;
+			return false;
+		}
+            if(typeof(res.award_id)!='undefined'){
+                lucky = res.award_id;    //中奖号码
+                award = res.award_name;  //奖品名称
+                show_lottery();
+            }
+			else{
+                flag=false;
+                alert(res.err);
+            }
+        }
+    });
+}
+
+
+
+            //开始时速度
+var     flag2  = false,          //正在抽奖标志
+      lucky2,                  //中奖号码，实际应用由后台产生
+      award2                 //奖品名称
+ 
+
+//开始抽奖
+function start_lottery2(){
+    var score_id=$("#score_id").val();
+     if(score_id==''){
+	  alert('请登录用户，大奖欢迎你！');
+	    return false;
+	 }
+    $.ajax({
+        url: 'index.php?ctl=lottery&act=every_lottery',
+        type: "post",
+        data:null,
+        dataType: "json",
+        timeout: 20000,
+        cache: false,
+        beforeSend: function(){// 提交之前
+        },
+        error: function(){//出错
+            flag2=false;
+        },
+        success: function(res){//成功
+            if(typeof(res.award_id)!='undefined'){
+                lucky2 = res.award_id;    //中奖号码
+                award2 = res.award_name;  //奖品名称
+				// show_lottery();
+				$('.award').html(award2+'元开运红包');
+				$('.black_bg').show();
+            }else{
+                flag2=false;
+                alert('今天已经抽奖！明天更多丰富礼品等着你来拿');
+            }
+        }
+    });
+}
+function passed(){
+  alert('你还没成为理财人');
+}
+</script>
+
+
+</body>
+</html>

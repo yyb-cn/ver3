@@ -1,0 +1,130 @@
+{include file="inc/header.html"}
+<div class="blank"></div>
+<form action="index.php?ctl=deal&act=dobid_more" method="post" name="BidForm_more" id="BidForm_more"> 
+	<select name="lefttime" style="width: 120px;" id="lefttime">
+		                            <option selected="selected"  value="0">选择投资产品</option>
+                                    {foreach from=$deal_arr item="item" key=key}
+		                            <option selected="" value="{$item.borrow_amount}" id="{$item.id}" fabiao_time="{$item.create_time}" >{$item.name}</option>
+                                    
+                                    {/foreach}
+		                        </select>
+                     <input  type="hidden" id="deal_id"  name="deal_id" value="" />  
+                     <input  type="hidden" id="fabiao_time"  name="fabiao_time" value="" />        
+               <span style="padding-left:117px; color:#f00; font-size:18px;">投资金额:<input class="f-input w70" name="borrow_amount" id="borrow_amount" value="" style="width:120px;" readonly="readonly"/> 元</span>  
+                &nbsp;&nbsp;<a id="rand_u" href="javascript:;">设置投资金额</a><br /> 
+                
+                         
+			<table width="100%" cellpadding="0" cellspacing="0" class="bid-table">
+            	
+				{foreach from=$user_arr item="u_name" key=key}
+				<tr>
+					<td class="tit tr w100 btm" id="man{$key}" >投资人{$key}:&nbsp;&nbsp;</td>
+                    <td style="width:100px; color:#900">{$u_name.user_name}</td>
+                    <td class="tit tr w100 btm"  >投标金额：</td>
+					<td class="f_red bg btm" id="input_text">
+						<input type="text" style="width:120px;" class="f-input w70" name="bid_money{$key}" value="" id="J_BIDMONEY{$key}" /> 元
+                        <input  type="hidden"  name="user_id{$key}" value="{$u_name.id}" />
+                        <input  type="hidden"  name="user_name{$key}" value="{$u_name.user_name}" />
+					</td>
+				</tr>
+                {/foreach}
+                
+			</table>
+            <input  type="submit" class="bid_more" id="bid_more" value="确认批量投标" />
+            </form>
+           
+          
+		</div>
+        <script type='text/javascript'>
+$(document).ready(function() {
+	$("#lefttime option").each(function(){
+		$(this).attr("selected","");
+		$("#borrow_amount").val(0);
+		});
+
+// 选择投资产品
+$("#lefttime").change(function(){
+	// 先清除用户投资金额
+	$("#input_text input[type='text']").val(0);
+	var val=$("#lefttime").find("option:selected").attr('value');
+	var id=$("#lefttime").find("option:selected").attr('id');// fabiao_time
+	
+	//var id=$("#lefttime option[value="+val+"]").attr('id');alert(val);
+	var fabiao_time=$("#lefttime option[value="+val+"]").attr('fabiao_time');
+	$("#borrow_amount").val(val);
+	$("#deal_id").val(id);
+	$("#fabiao_time").val(fabiao_time);
+	
+	})
+	// 批量设置投资金额
+	$("#rand_u").click(function(){
+	var allmoney=$("#lefttime").val();
+	if(allmoney>0){
+		$("#input_text input[type='text']").val(0);
+		var v=allmoney/1000;
+				var num=0;
+				var ni=Math.floor(Math.random()*10)+3;// 3-12
+				
+				if(ni<=10){
+					for(i=0;i<=ni-2;i++){
+					var n=Math.floor(Math.random()*10)+1;//(1-10)
+					$("#J_BIDMONEY"+i).val(n*1000);
+					var m=Number($("#J_BIDMONEY"+i).attr("value"));
+					num=num+m;
+					}
+				}
+				else{
+					ni=10;
+					for(i=0;i<=8;i++){
+					var n=Math.floor(Math.random()*10)+1;
+					$("#J_BIDMONEY"+i).val(n*1000);
+					var m=Number($("#J_BIDMONEY"+i).attr("value"));
+					num=num+m;
+					}
+				}
+				
+				if(allmoney-num>1000){
+					if(ni>=10){
+						ni=9;
+						}
+						else{
+							ni=ni-1;
+							}
+					var m_last=allmoney-num;
+				$("#J_BIDMONEY"+ni).val(m_last);	
+					}
+					else{
+						alert('最后一个投标资金不足1000');
+						$("#input_text input[type='text']").val(0);
+						return false;
+						}
+				
+		}
+		else{
+			
+			alert('请选择投资产品');
+					}
+	})
+	//确认批量投标 判断投标资金是否大于0   
+	$("#bid_more").click(function(){	
+	var v=$("#borrow_amount").val();
+	if(v<=0){
+		alert('投资金额不能为0');return false;
+		}
+	
+	var val_arr=new Array();
+		for(i=0;i<=9;i++){
+		val_arr[i]=$("#J_BIDMONEY"+i).val();
+		if(val_arr[i]!=0){
+			return true;
+			}
+			else{
+				alert('未填写用户投标金额');
+				return false;
+				}
+			} 
+		
+		})
+})
+</script>
+{include file="inc/footer.html"}
