@@ -1,0 +1,37 @@
+{include file="inc/header.html"} 
+	<!--'seo_title' => string '文章内容页SEO自定义标题:' (length=34)
+  'seo_keyword' => string '文章内容页SEO自定义关键词:' (length=37)
+  'seo_description' => string '文章内容页SEO自定义描述' (length=33)
+  -->
+
+<div class="blank"></div>
+<div class="long f_l">
+	<div class="clearfix bddf">
+		<div class="gray_title clearfix">
+	        <div class="tc">行业新闻</div>
+	    </div>
+		<div class="inc">
+			<div class="inc_main" style="padding:0 50px">
+				<div class="article_title f16 b tc pt20">
+		             {$article.title}
+				</div>
+				<div class="publish_time bbd">
+		            {function name="to_date" v=$article.create_time f="Y-m-d"}
+		            <div class="f_r"><a href="javascript:window.history.back();">[返回]</a>&nbsp;&nbsp;<a href="{url x="index" r="news"}">[全部文章]</a></div>
+		        </div>
+				<div class="article_info" style="padding-top: 30px;padding-bottom: 50px;">
+					{$article.content}
+				</div>
+				<div class="tc" style="padding: 5px 0;"><a href="javascript:window.history.back();">[返回]</a>&nbsp;&nbsp;<a href="{url x="index" r="news"}">[全部文章]</a></div>
+			</div>
+			<div class="inc_foot"></div>
+		</div>
+		<div class="blank"></div>
+	</div>
+</div>
+<div class="short f_r">
+	{include file="inc/news/news_right.html"}
+</div>
+<div class="blank"></div>
+
+{include file="inc/footer.html"}

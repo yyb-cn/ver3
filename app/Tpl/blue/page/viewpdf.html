@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>城建三期投资理财计划</title>
+<link rel="stylesheet" type="text/css" href="app/Tpl/red/viewpdf/css/main.css"/>
+<script type='text/javascript' src="app/Tpl/red/viewpdf/js/jquery.js"></script>
+<script language="JavaScript">
+    //定时器
+	var timer ;
+var BodyHeight,BodyWidth;
+	var yon = 0;                    
+	var xon = 0;
+	var step = 1;
+	var Hoffset = 0;                    
+	var Woffset = 0; 
+	var html = '';
+	var _img = 1;	//图片页码
+	var bfPage = 1;	//上一张图片页码
+	
+	$(function(){
+		BodyHeight=parseInt(document.body.clientHeight);
+		BodyWidth=parseInt(document.body.clientWidth);
+	   //alert(BodyWidth);
+	});
+	// begin:首页视觉区效果
+	
+	//左右按钮特效
+	function rotateBanner(step){
+		_img = _img + step;
+		if (_img>31) {
+			_img=1;
+		} else if (_img<=0) {
+			_img=31;
+		}
+		
+		if( bfPage==3 || bfPage ==7 || bfPage==15){
+			$("#page"+bfPage+"").attr({src:"app/Tpl/red/viewpdf/images/yuan_01.png", onMouseMove:"this.src=\'app/Tpl/red/viewpdf/images/yuan_05.png\'", onMouseOut:"this.src='app/Tpl/red/viewpdf/images/yuan_01.png\'"});
+		}
+		else{
+			$("#page"+bfPage+"").attr({src:"app/Tpl/red/viewpdf/images/yuan_03.png", onMouseMove:"this.src=\'app/Tpl/red/viewpdf/images/yuan_05.png\'", onMouseOut:"this.src='app/Tpl/red/viewpdf/images/yuan_03.png\'"});
+		}
+		
+		$("#page"+_img+"").attr("src","app/Tpl/red/viewpdf/images/yuan_05.png");
+		$("#page"+_img+"").removeAttr("onmousemove");
+		$("#page"+_img+"").removeAttr("onMouseOut");
+
+		$("#IndexBanner").stop().animate({opacity: 0},300, function(){
+			$(this).css("background-image", "url(app/Tpl/red/viewpdf/images/Page"+_img+".jpg)").animate({opacity: 1},300);
+		});
+		
+		bfPage = _img;
+	}
+	
+	//圆点按钮特效
+	function jumpeBanner(jump){
+		//alert(bfPage);
+		if( bfPage==3 || bfPage ==7 || bfPage==15){
+			$("#page"+bfPage+"").attr({src:"app/Tpl/red/viewpdf/images/yuan_01.png", onMouseMove:"this.src=\'app/Tpl/red/viewpdf/images/yuan_05.png\'", onMouseOut:"this.src='app/Tpl/red/viewpdf/images/yuan_01.png\'"});
+		}
+		else{
+			$("#page"+bfPage+"").attr({src:"app/Tpl/red/viewpdf/images/yuan_03.png", onMouseMove:"this.src=\'app/Tpl/red/viewpdf/images/yuan_05.png\'", onMouseOut:"this.src='app/Tpl/red/viewpdf/images/yuan_03.png\'"});
+		}
+		
+		$("#page"+jump+"").attr("src","app/Tpl/red/viewpdf/images/yuan_05.png");
+		$("#page"+jump+"").removeAttr("onmousemove");
+		$("#page"+jump+"").removeAttr("onMouseOut");
+			
+		$("#IndexBanner").stop().animate({opacity: 0},300, function(){
+			$(this).css("background-image", "url(app/Tpl/red/viewpdf/images/Page"+jump+".jpg)").animate({opacity: 1},300);
+		});
+		
+		_img = jump;
+		bfPage = jump;
+	}
+	// end
+</script>
+</head>
+
+<body >
+<!-- 代码 开始 -->
+<div id="IndexBanner" class="top main_banner1"  style="opacity: 1; background-image: url("app/Tpl/red/viewpdf/images/Page1.jpg");">
+	<div class="slider" style="background-image: url("app/Tpl/red/viewpdf/images/bar_01.png");">
+    	<a class="slider_menu slider_menuleft" onfocus="this.blur()" href="javascript:rotateBanner(-1)"></a>
+        <a class="slider_menu slider_menuright" onfocus="this.blur()" href="javascript:rotateBanner(1)"></a>
+        <span class="slider_menubar"></span>
+    </div>
+</div>
+
+<div class="page">
+	<a onfocus="this.blur()" href="javascript:jumpeBanner(1)"><img id="page1" src="app/Tpl/red/viewpdf/images/yuan_05.png" /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(2)"><img id="page2" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(3)"><img id="page3" src="app/Tpl/red/viewpdf/images/yuan_01.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_01.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(4)"><img id="page4" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(5)"><img id="page5" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(6)"><img id="page6" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(7)"><img id="page7" src="app/Tpl/red/viewpdf/images/yuan_01.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_01.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(8)"><img id="page8" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(9)"><img id="page9" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(10)"><img id="page10" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(11)"><img id="page11" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(12)"><img id="page12" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(13)"><img id="page13" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(14)"><img id="page14" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(15)"><img id="page15" src="app/Tpl/red/viewpdf/images/yuan_01.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_01.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(16)"><img id="page16" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(17)"><img id="page17" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(18)"><img id="page18" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(19)"><img id="page19" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(20)"><img id="page20" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(21)"><img id="page21" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(22)"><img id="page22" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(23)"><img id="page23" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(24)"><img id="page24" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(25)"><img id="page25" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(26)"><img id="page26" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(27)"><img id="page27" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(28)"><img id="page28" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(29)"><img id="page29" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(30)"><img id="page30" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+    <a onfocus="this.blur()" href="javascript:jumpeBanner(31)"><img id="page31" src="app/Tpl/red/viewpdf/images/yuan_03.png" onmousemove='this.src="app/Tpl/red/viewpdf/images/yuan_05.png"' onMouseOut='this.src="app/Tpl/red/viewpdf/images/yuan_03.png"' /></a>
+</div>
+
+<!-- 代码 结束 -->
+</div>
+</body>
+</html>

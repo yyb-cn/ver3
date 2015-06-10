@@ -1,0 +1,552 @@
+{include file="inc/header.html"}
+	
+<link  rel="stylesheet"  href="{$TMPL}/css/deals.css">
+<div style=" margin:0 auto;width:1000px; position:relative; margin-top:10px;">
+
+
+		
+		<script type="text/javascript">
+		
+				//把数字转换成千分位
+			function commafy(num) {   
+		//1.先去除空格,判断是否空值和非数   
+		num = num + "";   
+		num = num.replace(/[ ]/g, ""); //去除空格  
+			if (num == "") {   
+			return;   
+			}   
+			if (isNaN(num)){  
+			return;   
+			}   
+			//2.针对是否有小数点，分情况处理   
+			var index = num.indexOf(".");   
+			if (index==-1) {//无小数点   
+			  var reg = /(-?\d+)(\d{3})/;   
+				while (reg.test(num)) {   
+				num = num.replace(reg, "$1,$2")   
+				}   
+				
+			} else {   
+				var intPart = num.substring(0, index);   
+				var pointPart = num.substring(index + 1, num.length);   
+				var reg = /(-?\d+)(\d{3})/;   
+				while (reg.test(intPart)) {   
+				intPart = intPart.replace(reg, "$1,$2");   
+				}   
+			   num = intPart +"."+ pointPart;   
+			}   
+		return '￥'+num;   
+		} 
+		//字符串拼接
+	function get_l(data)
+	{
+		var length=data.length
+			var	l=''
+				 for(var i=0; i<length; i++)  
+							  {  
+								l+='<div class="item'  
+								if(i!=0)
+								{
+									l+='  item_1'
+									}
+								l+='  tc" style="width:960px; position:relative; height:85px; padding-top:25px;" onmousemove=\'this.style.background="#e2e6e9"\' onMouseOut=\'this.style.background="#FFF"\'><div class="clearfix" style="padding-top:8px;"><div class="pt10"><div class="f_l tl w171">'
+						l+='<div class="b w171">';
+						l+='<a href="'+data[i].url+'" '
+						l+='target="_blank" id="deal_my_name">';
+						l+=data[i].name +'</a></div>'
+						l+='<div class="f_gray" style="display:none">单位类别：'+data[i].type_match_row+'</div>'
+						l+=' </div>'
+						l+='<div class="f_l w70" style="display:none">'+ data[i].type_match_row+'</div>'
+			            l+= '<div class="f_l f_red w90">'
+			            l+=' <div>'+  commafy(data[i].borrow_amount)+' </div> </div>  '  //注意使用了函数
+			            l+='<div class="f_l w80"><div>'+data[i].rate+'% </div> </div>'      //注意使用了函数//利率        
+			            l+=' <div class="f_l w80"> <div> <span class="f_red">'+data[i].repay_time+'</span>';
+							if(data[i].repay_time_type==0){l+='天'}
+							else{l+='个月'}
+						l+='</div>'
+						l+='</div>'
+						l+= '<div class="f_l w125">'
+			                if(data[i].deal_status== 4)
+							  	{
+								 l+='<span class="f_red">还款中</span>'}
+								else if (data[i].deal_status==1 && data[i].remain_time<=0)
+								 	{l+='<span class="f_red"> 流标</span>'}
+							else{
+			                      l+='<div class="greenProcessBar progressBar prmar newbar">'
+			                      l+='<p>'
+								  if (data[i].deal_status==0){l+='等待材料'}
+								  else{l+=Math.round(data[i].progress_point)+'%'}//用了函数
+								  l+='</p>'
+			                      l+='<div class="p">'
+								  if(data[i].progress_point == 100){
+									 l+='<div class="c bar-c" style="width:100%;">'
+								  }
+								  else{
+									 l+='<div class="c bar-c baring" style="width:'+data[i].progress_point+'%;">'
+								  }
+								  l+='</div></div>'
+			                      l+='</div>'
+			                     l+=' <div class="f_dgray f12"><div>'+data[i].remain_time_format+'</div> </div>'
+								}
+			                  l+='</div>'  
+							  l+='</div> '
+			            
+					l+='<div style="float:right; width:96px; height:36px;position:absolute;left:800px;top:2px;">'
+						if(data[i].deal_status==1){
+						l+='<a style="background:none; border:none; padding:0px" href="'+data[i].url+'" class="btn-orange"><img style=" width:80px; height:80px; margin-top:15px;" src="{$TMPL}/images/load.png" alt="" width="111px" height="34px"></a>'
+							}
+						
+					 else if(data[i].deal_status==2){
+						l+='<a style="background:none; border:none; padding:0px" href="javascript:;" class="btn-orange"><img style=" width:82px;height:82px; margin-top:15px;" src="{$TMPL}/images/load_full.png" alt="" width="111px" height="34px"></a>'
+						}
+						
+					else if(data[i].deal_status==4){
+						
+						l+='<a style="background:none; border:none; padding:0px" href="javascript:;" class="btn-orange"><img style=" width:80px;height:80px; margin-top:15px;" src="{$TMPL}/images/load_in_progress.png" alt="" width="111px" height="34px"></a>'
+						}	
+				else if(data[i].deal_status==5){
+						l+=' <a style="background:none; border:none; padding:0px" href="javascript:;" class="btn-orange"><img style=" width:80px;height:80px; margin-top:15px;" src="{$TMPL}/images/load_done.png" alt="" width="111px" height="34px"></a>'
+						}
+						l+='</div>'
+						  l+='</div>'
+			        l+='</div>'
+				 } // 循环结束
+				 if(l==''){l='<div class="item tc"style="width:730px; height:114px;line-height:114px;">没有符合条件的产品</div>'}
+		return l;
+		}	
+		
+
+		$(document).ready(function(){ 
+		
+		//无刷新多条件筛选
+				$(".condition li a").live('click',function(){
+					var url=window.location.href;
+					$(this).parent().siblings().children().removeClass("li_current")
+					$(this).addClass("li_current")//样式
+					$.ajax({
+					type:"POST",
+					url: url,
+					dataType:'json',//从php返回的值以 JSON方式 解释
+					data:{
+						value:$(this).attr("value"),
+						name:$(this).attr("name"),
+						type:$(this).attr("type")
+						},
+					beforeSend:function(){
+				$("#J_biao_list").append('<img src="{$TMPL}/images/loading.gif" style="position:absolute; left:350px; top:30px;">');
+				
+								},
+					success: function(data){
+						
+						//alert(data['page']);
+						var l=get_l(data['result'])
+		
+					
+					 $("#J_biao_list").html(l);
+					 $("#pages").html(data['page']);
+						}
+				});
+				return false;
+			})
+	//无刷新排序	
+		$(".myselect").click(function(){
+					//alert($(this).attr("check"))
+					if($(this).attr("check")=="asc")
+					{
+						$(".myselect").attr({"check":"asc","class":"myselect bgdown"})
+						$(this).attr({"check":"desc","class":"myselect bgup"})
+						
+						}
+					else($(this).attr({"check":"asc","class":"myselect bgdown"})
+						
+					)
+						//alert($(this).attr("check"))
+					$.ajax({
+					type:"POST",
+					url: "index.php?ctl=deals",
+					dataType:'json',//从php返回的值以 JSON方式 解释
+					data:{
+						name:$(this).attr("name"),
+						type:$(this).attr("type"),
+						check:$(this).attr("check")
+						},
+					beforeSend:function(){
+				$("#J_biao_list").append('<img src="{$TMPL}/images/loading.gif" style="position:absolute; left:350px; top:30px;">');
+				
+								},
+								
+					success: function(data){
+					
+					//alert(data['page'])
+					var l=get_l(data['result']);
+					 $("#J_biao_list").html(l);
+					
+						}
+				});
+				return false;
+					
+			})	
+			
+			
+	//无刷新分页		
+		$("#pages a").live('click',function(){
+			
+			//alert($(this).attr('href'))
+			$.ajax({
+					type:"GET",
+					url: $(this).attr('href'),
+					dataType:'json',//从php返回的值以 JSON方式 解释
+					//data:{a:"1"},
+					/*beforeSend:function(){
+					    $("#J_biao_list").text("请稍等!");
+	           		 },*/
+					success: function(data){
+					//alert(data['page'])
+					var l=get_l(data['result'])
+		
+					 $("#J_biao_list").html(l);
+					 $("#pages").html(data['page']);
+					
+						}
+			
+				})
+			return false;
+			
+			
+			})	
+	//最近理财产品
+		$("#lastdeal").live('click',function(){
+			
+			//$this
+			 //隐藏掉筛选条件()
+			 
+			 //选中样式
+			 $(this).parent().siblings().attr("class","")
+			 $(this).parent().attr("class","current")
+			$.ajax({
+					type:"GET",
+					url: $(this).attr('href'),
+					dataType:'json',//从php返回的值以 JSON方式 解释
+					//data:{a:"1"},
+					/*beforeSend:function(){
+					    $("#J_biao_list").text("请稍等!");
+	           		 },*/
+					success: function(data){
+					
+					var l=get_l(data['result'])
+		
+					 $("#J_biao_list").html(l);
+					 $("#pages").html(data['page']);
+					
+						}
+			
+				})
+			
+			return false
+			
+			
+			
+			
+			})	
+			
+			
+			
+			})
+		</script>
+
+
+
+  <div id="content" class="clearfix">
+		<div class="long f_l white box_shadow" style="width:960px;">
+			<div class="clearfix bddf">
+				{if $cate_id gt 0}
+				<div class="clearfix"><img src="{$TMPL}/images/cate_top_{$cate_id}.jpg"></div>
+				{/if}
+				
+				{if $total_money}
+				<div class="biao_top_countbox clearfix" style="color:#F00; height:auto; text-align:center; font-size:14px; font-weight:bold; padding-bottom:10px;">
+					新客户活动专区<br />
+                    <p style="text-align:left; line-height:18px; text-indent:2em;">此活动专区专为新客户而设计,新注册的客户,无论是使用1000元购买当前页面任何理财产品,都只能获得一次性的40元赠送金,赠送资金会在产品到期当天赠送到账户内.</p>
+				</div>
+				{/if}
+				
+				{if $deal_list}
+				{if $cate_id eq "-1"}
+				<div class="f_dgray b tc" style="height:40px;line-height:40px;">
+			          <div class="f_l tl w172" style="width:340px;"> 标题  / 借款人 </div>
+			          <div class="f_l w90">金额</div> 
+			          <div class="f_l w80">利率</div>
+			          <div class="f_l w80">期限</div>
+			          <div class="f_l w125">状态</div>
+			     </div>
+				{else}
+				<div class="f_dgray b tc" style="height:40px;line-height:40px; padding-left:20px;">
+			          <div class="f_l tl w172"> 标题  / 借款人 </div>
+					
+			          <div class="f_l w90">
+			             <a  href="javascript:;"  class="myselect bgdown" name="borrow_amount" type=2 check="asc" >金额</a>
+			          </div> 
+			          <div class="f_l w80" style="background：#F00">
+			          	<a href="javascript:;"  class="myselect bgdown" name="rate" type=2 check="asc">利率</a>
+			          </div>
+			          <div class="f_l w80">
+			             <a href="javascript:;"  class="myselect bgdown" name="repay_time" type=2 check="asc">期限</a>
+			          </div>
+			          <div class="f_l w111">
+			              <a  href="javascript:;"  class="myselect bgdown" name="progress_point" type=2 check="asc">进度</a>
+			              /
+			              <a href="javascript:;" class="myselect bgdown" name="remain_time" type=2 check="asc">剩余时间</a>
+			          </div>
+			     </div>
+                 
+				 {/if}
+				<div class="biao-list clearfix" id="J_biao_list" style="position:relative; overflow:hidden;">
+					{foreach from=$deal_list item="deal" key=key}
+					<div class="item {if $key mod 2 eq 1}item_1{/if} tc" style="width:960px; position:relative; height:85px; padding-top:25px;" onmousemove='this.style.background="#e2e6e9"' onMouseOut='this.style.background="#FFF"'>
+			              <div class="clearfix" style="padding-top:8px;">
+			                  
+			                  <div class="pt10">
+			                  <div class="f_l tl w171">
+									<div class="b w171 f_l">
+									<a href="{$deal.url}" target="_blank" id="deal_my_name">{$deal.color_name}</a>
+									</div>
+									<div class="f_gray" style="display:none">单位类别：{$deal.type_match_row}</div>
+			                      	
+			                  </div>
+			                  <div class="f_l w70" style="display:none">{$deal.type_match_row}</div>
+			                  <div class="f_l f_red w90">
+			                      <div>
+			                          ￥ {function name="number_format" v="$deal.borrow_amount"}
+			                      </div>
+			                  </div>    
+			                  <div class="f_l w80">
+			                      <div>
+			                        {function name="number_format" v="$deal.rate" f="2"}%
+			                      </div>
+			                      
+			                  </div>
+			                  <div class="f_l w80">
+			                      <div>
+			                          <span class="f_red">{$deal.repay_time}</span>{if $deal.repay_time_type eq 0}天{else}个月{/if}
+			                      </div>
+			                  </div>
+			                  
+			                  <div class="f_l w125">
+			                  	  {if $deal.deal_status eq 4}
+								 	 <span class="f_red">还款中</span>
+								  {elseif $deal.deal_status eq 1 && $deal.remain_time lte 0}
+								 	<span class="f_red"> 流标</span>
+								  {else}
+			                      <div class="greenProcessBar progressBar prmar newbar">
+			                          <p>{if $deal.deal_status eq 0}等待材料{else}{function name="round" v=$deal.progress_point f=0}%{/if}</p>
+			                          <div class="p">
+                                      <!-- 14年5月23日修改进度条样式 -->
+                                      	{if $deal.progress_point eq 100}
+                                        	<div class="c bar-c" style="width:100%;"></div>
+                                        {else}
+                                            <div class="c bar-c baring" style="width:{function name="round" v=$deal.progress_point f=0}%;"></div>
+                                        {/if}
+                                      <!-- 14年5月23日修改进度条样式结束 -->
+                                      </div>
+			                      </div>
+			                      <div class="f_dgray f12">
+			                          <div>
+			                              {$deal.remain_time_format}
+			                          </div>
+			                      </div>
+								  {/if}
+			                  </div>
+                              
+			              
+			</div><div style="float:right; width:96px; height:36px;  position:absolute;left:800px;top:2px;">
+				{if $deal.deal_status eq 1}
+            <a style="background:none; border:none; padding:0px" href="{$deal.url}" class="btn-orange"><img style=" width:80px; height:80px; margin-top:15px;" src="{$TMPL}/images/load.png" alt="" width="111px" height="34px"></a>
+            {elseif $deal.deal_status eq 2}<!--满标-->
+			<a style="background:none; border:none; padding:0px" href="javascript:;" class="btn-orange"><img style=" width:82px;height:82px; margin-top:15px;" src="{$TMPL}/images/load_full.png" alt="" width="111px" height="34px"></a>
+            {elseif $deal.deal_status eq 4}<!--还款中-->
+            <a style="background:none; border:none; padding:0px" href="javascript:;" class="btn-orange"><img style=" width:80px;height:80px; margin-top:15px;" src="{$TMPL}/images/load_in_progress.png" alt="" width="111px" height="34px"></a>
+            {elseif $deal.deal_status eq 5}<!--已还清-->
+            <a style="background:none; border:none; padding:0px" href="javascript:;" class="btn-orange"><img style=" width:80px;height:80px; margin-top:15px;" src="{$TMPL}/images/load_done.png" alt="" width="111px" height="34px"></a>
+             {/if}
+			</div>
+               </div> 
+			              </div>
+					{/foreach}
+                    
+                    	
+                    
+				</div>
+                
+                
+				<div class="blank"></div>
+				<div class="pages" id="pages" style="padding:10px 0;">{$pages}</div>
+				{/if}
+			</div>
+		</div>
+         </div>
+	</div>
+</div>
+
+<script type="text/javascript" language="JavaScript">
+	$(document).ready(function() {
+	
+		$("#searchByKeyForm .searchinput").bind("focus",function(){
+			if($.trim($(this).val())=="请输入您的搜索条件"){
+				$(this).val("");
+				$(this).removeClass("f_dgray");
+			}
+		});
+		
+		$("#searchByKeyForm .searchinput").bind("blur",function(){
+			if($.trim($(this).val())=="请输入您的搜索条件" || $.trim($(this).val())==""){
+				$(this).val("请输入您的搜索条件");
+				$(this).addClass("f_dgray");
+			}
+		});
+		
+		$('body').css('background-color','#E6E6E6');
+		$('.headf').addClass('white box_shadow');
+
+	});
+	
+	
+	function searchByCondition(){
+		$("#searchByConditionForm").submit();
+	}
+	function searchLoans(){
+		if($.trim($("#searchByKeyForm .searchinput").val())=="请输入您的搜索条件" || $.trim($("#searchByKeyForm .searchinput").val())==""){
+			$.showErr("请输入您的搜索条件");
+			return false;
+		}
+		$("#searchByKeyForm").submit();
+	};
+	
+	function calculate(){
+		var amount=$("#calculateAmount").val();
+        var interest=$("#calculateInterest").val();
+        var month=$("#calculateMonth").val();
+		var repayType = $("#repayType").val();
+
+        if((amount.replace(/[ ]/g, "")) == "" || (amount.replace(/[ ]/g, "")) == null||amount==""||amount==null){
+            $.showErr("请输入初始投资");
+            return;
+        }else{
+            amount=$.trim(amount);
+            if(/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/.test(amount)==false){
+                $.showErr("初始投资只能为整数或者小数且最多只能有两位小数");
+                return;
+            }else{
+                if(amount>1000000){
+                    $.showErr("初始投资为100万以下");
+                    return;
+                }
+            }
+        }
+        if((interest.replace(/[ ]/g, "")) == "" || (interest.replace(/[ ]/g, "")) == null||interest==""||interest==null){
+            $.showErr("请输入年利率");
+            return;
+        }else{
+            interest=$.trim(interest);
+            if(/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/.test(interest)==false){
+                $.showErr("年利率只能为整数或者小数且最多只能有两位小数");
+                return;
+            }else{
+                if(interest>=100){
+                    $.showErr("年利率必须在100%以下");
+                    return false;
+                }
+            }
+        }
+        if((month.replace(/[ ]/g, "")) == "" || (month.replace(/[ ]/g, "")) == null||month==""||month==null){
+            $.showErr("请输入投资期限");
+            return;
+        }else{
+            month=$.trim(month);
+            if(/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/.test(month)==false){
+                $.showErr("投资期限只能为整数或者小数且最多只能有两位小数");
+                return;
+            }else{
+                if(month>100){
+                    $.showErr("投资期限为100月以内");
+                    return;
+                }
+            }
+        }
+        var value = 0;
+	    var inters= interest /(100*12);
+		if(repayType==0){
+			value= month*amount*(inters*Math.pow((1+inters), month) / (Math.pow((1+inters),month)-1));
+		}
+		else if(repayType==1){
+			value = parseFloat(amount) + parseFloat(inters*amount*month);
+		}
+		else if(repayType==2){
+			value = parseFloat(amount) + parseFloat(inters*amount*month);
+		}
+		
+        $("#lastValue").html(formatNum(value));
+    }
+	
+</script>
+
+<style>
+/* 14年6月6日新增进度条样式 */
+.newbar{ overflow:hidden; background-color: #F7F7F7; background-image: linear-gradient(to bottom, #F5F5F5, #F9F9F9); background-repeat: repeat-x; border-radius: 4px; box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1) inset; width:100%;}
+
+.progressBar .p .bar-c { border-radius:4px; background-color: #149BDF; background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent); background-size: 30px 30px;}
+
+.progressBar .p .baring { -webkit-animation:bar-bar-bar 2s linear infinite; -moz-animation:bar-bar-bar 2s linear infinite; -ms-animation:bar-bar-bar 2s linear infinite; -o-animation:bar-bar-bar 2s linear infinite; animation:bar-bar-bar 2s linear infinite;}
+
+@-webkit-keyframes bar-bar-bar{
+	from{
+		background-position:30px 0
+	}
+	to{
+		background-position:0 0
+	}
+}
+
+@-moz-keyframes bar-bar-bar{
+	from{
+		background-position:30px 0;
+	}
+	to{
+		background-position:0 0;
+	}
+}
+
+@-ms-keyframes bar-bar-bar{
+	from{
+		background-position:30px 0;
+	}
+	to{
+		background-position:0 0;
+	}
+}
+
+@-o-keyframes bar-bar-bar{
+	from{
+		background-position:30px 0;
+	}
+	to{
+		background-position:0 0;
+	}
+}
+
+@keyframes bar-bar-bar{
+	from{
+		background-position:30px 0;
+	}
+	to{
+		background-position:0 0;
+	}
+}
+/* 14年6月6日新增进度条样式结束 */
+
+/* 14年9月25修改背景灰色样式 */
+.white { background:#FFF;}
+
+.box_shadow { box-shadow:2px 3px 5px #999; -moz-box-shadow:2px 3px 5px #999; -webkit-box-shadow:2px 3px 5px #999; border-bottom:2px\9; border-bottom:#bbb\9; border-right:2px\9; border-right:#bbb\9;}
+/* 14年9月25修改背景灰色样式结束 */
+</style>
+{include file="inc/footer.html"}
