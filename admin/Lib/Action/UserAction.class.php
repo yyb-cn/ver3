@@ -844,13 +844,18 @@ $pid_name=trim($_REQUEST['pid_name']);
 			{		  $pid = M("User")->where("id='".$v['pid']."'")->getField("user_name");
 				      $bankcard = M("User_bank")->where("user_id='".$v['id']."'")->getField("bankcard");
 					  $create_time = M("User")->where("id='".$v['pid']."'")->getField("create_time");
+					  if($v['name']=='HR'){
+					$v['name']='普通';
+					}
+					 
+					 
 			if($lest){
-            if($v['create_time']>1431532800 ){
+            if($v['create_time']>1431532800){
             if(M("DealLoad")->where("user_id='".$v['id']."'")->findAll()){ 
 			   
 	        
-		$arr[0]=array('序号','编号','推荐人','用户名','真实姓名','电子邮箱','身份证','会员组','银行卡号','金额','电话号码','操作备注','申请时间','处理时间','地址');
-		$arr[$k+1]=array($k+1,$v['id'],"$pid",$v['user_name'],$v['real_name'],$v['email'],$v['idno'],$v['name'],"$bankcard",$v['money']+$v['pfcfb'],$v['phone'],$v['desc'],to_date($v['create_time'],'Y-m-d'),to_date($v['update_time'],'Y-m-d'),$v['address']);
+		$arr[0]=array('序号','推荐人','用户名','真实姓名','电子邮箱','身份证','会员组','银行卡号','可用余额');
+		$arr[$k+1]=array($k+1,"$pid",$v['user_name'],$v['real_name'],$v['email'],$v['idno'],$v['name'],"$bankcard",$v['money']+$v['pfcfb']);
 			
 		 }
 			   }
@@ -864,13 +869,9 @@ $pid_name=trim($_REQUEST['pid_name']);
 				$user_value['mobile'] = iconv('utf-8','gbk','"' . $v['mobile'] . '"');
 				$user_value['idno'] = iconv('utf-8','gbk','"' . $v['idno'] . '"');
 				$user_value['level_id'] = iconv('utf-8','gbk','"' . $v['name'] . '"');*/
-				if($v['name']=='HR'){
-					
-					$v['name']='普通';
-					 
-					 }
-				$arr[0]=array('序号','编号','用户名','可用余额','冻结金额','电子邮箱','手机号','身份证','会员等级');
-		$arr[$k+1]=array($k+1,$v['id'],$v['user_name'],$v['money'],$v['lock_money'],$v['email'],$v['mobile'],$v['idno'],$v['name']); 
+				
+				$arr[0]=array('序号','用户名','真实姓名','电子邮箱','会员组');
+		$arr[$k+1]=array($k+1,$v['user_name'],$v['real_name'],$v['email'],$v['name']); 
             }
 				//取出扩展字段的值
 			/*	$extend_fieldsval = M("UserExtend")->where("user_id=".$v['id'])->findAll();
@@ -919,7 +920,7 @@ $pid_name=trim($_REQUEST['pid_name']);
   foreach ($line as $key => &$item)
   {
   $item = mb_convert_encoding($item, 'gbk', $geshi); 
-   $table_data .= '<td>' . $item . '</td>';
+   $table_data .= '<td style="vnd.ms-excel.numberformat:@">' . $item . '</td>';
   }
   $table_data .= '</tr>';
  }
