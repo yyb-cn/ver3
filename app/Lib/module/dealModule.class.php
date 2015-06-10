@@ -562,20 +562,20 @@ class dealModule extends SiteBaseModule
 			$data['mobile'] = strim($_REQUEST['phone']);
 			$data['mobilepassed'] = 1;
 		}
-	if($GLOBALS['user_info']['mobilepassed'] == 0||$GLOBALS['user_info']['idcardpassed']==0){	
-	$pfcfbss= $GLOBALS['db']->getRow("select * from ".DB_PREFIX."pfcfb_huodong where id=1");
-	$time=get_gmtime();
-	if($time<$pfcfbss['end_time'] && $pfcfbss['open_off']==1 && $time>$pfcfbss['start_time']){
-			$unjh_pfcfb=$GLOBALS['user_info']['unjh_pfcfb']+$pfcfbss['song_pfcfb'];
-			$GLOBALS['db']->query("update ".DB_PREFIX."user set unjh_pfcfb =".$unjh_pfcfb." where id = ".$GLOBALS['user_info']['id']);
-            $user_log_b['log_info']="_415活动_注册就送".$pfcfbss['song_pfcfb']."浦发币";
-                  $user_log_b['log_time']=get_gmtime();                
-                  $user_log_b['log_admin_id']=1;
-                  $user_log_b['user_id']=$GLOBALS['user_info']['id'];
-                  $user_log_b['unjh_pfcfb']=$pfcfbss['song_pfcfb'];
-                $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_log_b,"INSERT");//插入一条投资目录		
-			}
-	}		
+	// if($GLOBALS['user_info']['mobilepassed'] == 0||$GLOBALS['user_info']['idcardpassed']==0){	
+	// $pfcfbss= $GLOBALS['db']->getRow("select * from ".DB_PREFIX."pfcfb_huodong where id=1");
+	// $time=get_gmtime();
+	// if($time<$pfcfbss['end_time'] && $pfcfbss['open_off']==1 && $time>$pfcfbss['start_time']){
+			// $unjh_pfcfb=$GLOBALS['user_info']['unjh_pfcfb']+$pfcfbss['song_pfcfb'];
+			// $GLOBALS['db']->query("update ".DB_PREFIX."user set unjh_pfcfb =".$unjh_pfcfb." where id = ".$GLOBALS['user_info']['id']);
+            // $user_log_b['log_info']="_415活动_注册就送".$pfcfbss['song_pfcfb']."浦发币";
+                  // $user_log_b['log_time']=get_gmtime();                
+                  // $user_log_b['log_admin_id']=1;
+                  // $user_log_b['user_id']=$GLOBALS['user_info']['id'];
+                  // $user_log_b['unjh_pfcfb']=$pfcfbss['song_pfcfb'];
+                // $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_log_b,"INSERT");//插入一条投资目录		
+			// }
+	// }		
 			if($data)
 			$GLOBALS['db']->autoExecute(DB_PREFIX."user",$data,"UPDATE","id=".$GLOBALS['user_info']['id']);		
 		
