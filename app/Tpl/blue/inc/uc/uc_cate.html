@@ -22,6 +22,7 @@
 		</ul>
 	</div>
 	{/if}
+        {if $user_info.id eq 6}
 	<div class="hdc c_hds c_hd1">我的配资</div>
 	<div class="c_body">
 		<ul class="menu">
@@ -31,7 +32,6 @@
 		</ul>
 		
 	</div>
-        {if $user_info.id eq 6}
 	<div class="hdc c_hds c_hd1">贷款管理</div>
 	<div class="c_body">
 		<ul class="menu">
@@ -61,7 +61,7 @@
 			<!--<li class="{if $MODULE_NAME eq 'uc_company'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_company"}" title="{$LANG.UC_COMPANY}">{$LANG.UC_COMPANY}</a></li>-->
 			<li class="{if $MODULE_NAME eq 'uc_credit'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_credit"}" title="{$LANG.UC_CREDIT}">{$LANG.UC_CREDIT}</a></li>
 			<li class="{if $MODULE_NAME eq 'uc_account' && $ACTION_NAME eq 'security'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_account#security"}" title="{$LANG.UC_SECURITY}">{$LANG.UC_SECURITY}</a></li>
-			<li class="{if $MODULE_NAME eq 'uc_center' &&$ACTION_NAME eq 'setweibo'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_center#setweibo"}" title="{$LANG.UC_SETWEIBO}">{$LANG.UC_SETWEIBO}</a></li>
+			{if $user_info.id eq 6}<li class="{if $MODULE_NAME eq 'uc_center' &&$ACTION_NAME eq 'setweibo'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_center#setweibo"}" title="{$LANG.UC_SETWEIBO}">{$LANG.UC_SETWEIBO}</a></li>{/if}
 			<li class="{if $MODULE_NAME eq 'uc_deal_quota' && $ACTION_NAME eq 'index'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_deal_quota#index"}" title="授信额度申请">授信额度申请</a></li>
             <li class="{if $MODULE_NAME eq 'uc_quota' && $ACTION_NAME eq 'index'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_quota#index"}" title="申请信用额度">申请信用额度</a></li>	
             <li class="{if $MODULE_NAME eq 'uc_msg' &&$ACTION_NAME eq 'setting'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_msg#setting"}" title="{$LANG.UC_MSG_SETTING}">{$LANG.UC_MSG_SETTING}</a></li>	
