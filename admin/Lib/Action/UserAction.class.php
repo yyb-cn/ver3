@@ -22,6 +22,46 @@ class UserAction extends CommonAction{
 		$this->getUserList(0,0,$map);
 		$this->display ();
 	}
+	public function tongji()
+	{
+        // var_dump($_REQUEST);exit;
+	$msg='';	
+	 if($_REQUEST['begin_time'] || $_REQUEST['end_time'] || $_REQUEST['pid_name']){ 
+	 $tongjirenshu=0;
+if(trim($_REQUEST['pid_name'])){
+$pid_name=trim($_REQUEST['pid_name']);
+	 $pid= M("User")->where("user_name='$pid_name'")->find();
+     $pid_id=$pid['id'];
+	 $msg="pid=".$pid_id;
+	  }
+ if($_REQUEST['begin_time']){
+   $begin_time=strtotime($_REQUEST['begin_time']);
+  if(trim($_REQUEST['pid_name'])){
+  $msg.=" and create_time >".$begin_time;
+  }else{
+      $msg.="create_time >".$begin_time;
+  
+  }
+
+  if($_REQUEST['end_time']){
+      $end_time=strtotime($_REQUEST['end_time']);
+     $msg.=" and create_time <".$end_time; 
+  }else{
+   $msg.=" and create_time <".time(); 
+  }
+  
+ }	
+		 $User=M("User")->where("$msg")->findAll();
+		 // echo M("User")->getLastSql();exit;
+		 foreach($User as $k =>$v){
+		 if(M("DealLoad")->where("user_id=".$v['id'])->findAll()){
+		  $tongjirenshu++;
+		  }
+		 }
+		$this->assign("vip_user",$tongjirenshu);
+		}
+		$this->display ();
+	}
 	
 	public function company_index()
 	{
