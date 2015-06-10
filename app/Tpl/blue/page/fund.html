@@ -1,0 +1,41 @@
+{include file="inc/header.html"}
+<div style="width:928px; height:38px; line-height:38px; background:#f5f5f5; padding-left:30px;  border:solid 1px #dedede; font-size:16px;">共为您找到  <a style="color:#F00; font-weight:bold;" href="#">{$fund_nums}</a>  款正在销售的基金理财产品</div><br />
+<!--基金理财产品-->
+ {foreach from=$fund_array item=fund key=key}
+<dl class="index_invest">
+    <dd>{$fund.fund_company_name}</dd>
+    <dd style="color:#F00;">{$fund.fund_product_name}</dd>
+    <dd style="font-size:18px; font-weight:bold; float:right; padding-right:110px;">最近一周回报率</dd>
+    <dd style="font-size:18px; font-weight:bold; float:right; padding-right:20px;">最新净值</dd>
+</dl>
+<div class="fund_content">
+<div class="fund_left">
+<ul>
+<li>基金代码：{$fund.fund_product_code}</li>
+<li>今年以来回报率：{$fund.fund_year_return}</li>
+</ul>
+<ul>
+<li>基金类型：{$fund.fund_product_type}</li>
+<li>成立以来回报率：{$fund.fund_establish_return}</li>
+</ul>
+<ul>
+<li>成立日期：{$fund.fund_establish_date}</li>
+<li>累计净值：{$fund.fund_cumulative_value}</li>
+</ul>
+</div>
+<div class="fund_center">
+<ul>
+<li style="font-size:26px; font-weight:bold; color:#F60; text-align:center;">{$fund.fund_net_value}</li>
+<li style="padding-top:10px;">日期<span style="font-size:12px; font-weight:bold; color:#F60;">{$fund.fund_net_date}</span></li>
+</ul>
+</div>
+
+<div class="fund_right">
+<span>{$fund.fund_week_return}</span>
+</div>
+           			
+<div class="clear"></div>
+</div>
+ {/foreach}
+
+{include file="inc/footer.html"}

@@ -62,19 +62,21 @@
     
     <div class="goods">
     	<ul>
-        	<li class="goods_1">
-            	<p class="goods_tit">15天理财体验产品</p>
-                <p>(最低投资额度：1000元)</p>
-                <p>(此项目产品不参与活动)</p>
+            {foreach from=$deal_list item=deal key=k}
+                {if $k <= 2}
+        	<li class="goods_{$k}">
+            	<p class="goods_tit">{$deal.sub_name}</p>
+                <p>(最低投资额度：{$deal.min_loan_money})</p>
+                {if $deal.repay_time <= 15 && $deal.repay_time_type eq 0}<p>(此项目产品不参与活动)</p>{else}<p>&nbsp;</p>{/if}
                 <div class="goods_b">
-                	<p><span class="big_font">7</span><span>%</span></p>
+                	<p><span class="big_font">{$deal.rate}</span><span>%</span></p>
                 </div>
                 <div class="goods_button">
-                	<p>投资期限：15天</p>
-                    <a href="#">立即投资</a>
+                	<p>投资期限：{$deal.repay_time}{if $deal.repay_time_type==0}天{else}个月{/if}</p>
+                    <a href="{$deal.url}">立即投资</a>
                 </div>
-            </li>
-        	<li class="goods_2">
+              </li>
+        	<!--<li class="goods_2">
             	<p class="goods_tit">信贷赢1个月产品</p>
                 <p>(最低投资额度：1000元)</p>
                 <p>&nbsp;</p>
@@ -97,7 +99,9 @@
                 	<p>投资期限：3个月</p>
                     <a href="#">立即投资</a>
                 </div>
-            </li>
+            </li> -->
+               {/if}
+        {/foreach}
         </ul>
     </div>
     

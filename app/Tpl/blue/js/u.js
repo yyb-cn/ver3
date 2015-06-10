@@ -77,7 +77,7 @@ function setCarryResult(){
 	var carry_amount = 0;
 	var total_amount =  parseFloat($("#Jcarry_totalAmount").val());
         var total_amount_pfb = ($.trim($("#PfcfB_totalAmount").val()).length > 0)?(parseFloat($("#PfcfB_totalAmount").val())):0;//浦发币金额
-        total_amount = (total_amount + total_amount_pfb)//总金额
+        total_amount = (total_amount + total_amount_pfb);//总金额
 	if ($.trim($("#Jcarry_amount").val()).length > 0) {
 		if ($("#Jcarry_amount").val() == "-") {
 			carry_amount = "-0";

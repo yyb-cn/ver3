@@ -1,0 +1,47 @@
+{include file="inc/header.html"}
+<?php
+$this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
+?>
+
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$dealcss"}" />
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/jiuwan.css" />
+
+<div class="jiubox">
+	<div class="jiuleft"></div>
+    <h1 style="margin-left:200px;">资质证书</h1>
+    <div class="jiuright"></div>
+</div>
+<p class="jiup">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;深圳浦发财富管理有限公司总部成立于中国金融中心深圳的第三方理财公司，注册资金2亿。由香港、海外及内地的资深金融从业人士联手主理、拥有市场研究团队及专业理财师队伍。</p>
+<div class="jiuhang"></div>
+<div class="zhshop1">
+	<div class="zhshop1a"><a><img benefit="benefit1" src="{$TMPL}/images/zhengx_06.png" onmousemove='this.src="{$TMPL}/images/zhengd_06.png"' onMouseOut='this.src="{$TMPL}/images/zhengx_06.png"' /></a></div>
+            
+<div class="zhshop1b">
+	<div class="zhshop1b_a"><a><img benefit="benefit1" src="{$TMPL}/images/zhengx_03.png" onmousemove='this.src="{$TMPL}/images/zhengd_03.png"' onMouseOut='this.src="{$TMPL}/images/zhengx_03.png"' /></a></div>
+    <div class="zhshop1b_b"><a><img benefit="benefit1" src="{$TMPL}/images/zhengx_09.png" onmousemove='this.src="{$TMPL}/images/zhengd_10.png"' onMouseOut='this.src="{$TMPL}/images/zhengx_09.png"' /></a></div>
+</div>           
+</div>
+<div class="zhshop2">
+	<div class="zhshop2a"><a><img benefit="benefit1" src="{$TMPL}/images/zhengx_13.png" onmousemove='this.src="{$TMPL}/images/zhengd_13.png"' onMouseOut='this.src="{$TMPL}/images/zhengx_13.png"' /></a></div>
+</div>
+</div>
+
+<script type='text/javascript'>
+	function fav_result(o)
+	{
+		$(o).html("已关注");
+		$(o).addClass("f_red");
+		$(o).attr("click","");
+	}
+	jQuery(function(){
+		$("#J_deal_tab_select li").click(function(){
+			$("#J_deal_tab_select li").removeClass("right_tab_select");
+			$("#J_deal_tab_select li").addClass("right_tab_unselect");
+			$(this).removeClass("right_tab_unselect");
+			$(this).addClass("right_tab_select");
+			$("#J_deal_tab_box .box_view").addClass("hide");
+			$("#J_deal_tab_box .box_view_"+$(this).attr("rel")).removeClass("hide");
+		});
+	});
+</script>
+{include file="inc/footer.html"}

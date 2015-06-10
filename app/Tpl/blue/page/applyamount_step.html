@@ -1,0 +1,36 @@
+{include file="inc/header.html"}
+<div class="blank"></div>
+<div class="wrap clearfix">
+	<div class="toptitle">申请贷款</div>
+	<div class="line950"></div>
+	<div class="clearfix">
+    	<div class="leftlendstep">
+			<div class="leftlendstepbox vstep{$step}" style="background:url('{$TMPL}/images/lendvstep2.png'){if $step eq 1} left 0{else} right 0{/if} no-repeat; width:155px">
+				<ul>
+					<li>申请额度</li>
+					<li>上传材料</li>
+					<li>获得额度</li>
+				</ul>
+			</div>
+		</div>
+		<div class="rightlendstep">
+			{if $step eq 1}
+			<div id="dashboard" class="dashboard ddbg clearfix">
+				<ul>
+					<li {if $status eq 1}class="current"{/if}>
+						<a href="{url x="index" r="borrow#applyamount" p="status=1"}">个人详细信息</a>
+					</li>
+					{if $user_info.real_name neq ""&&$user_info.idno neq ""&&$user_info.mobile neq ""&&$user_info.marriage neq ""&&$user_info.address neq ""}		
+					<li {if $status eq 2}class="current"{/if}>
+						<a href="{url x="index" r="borrow#applyamount" p="status=2"}">工作认证信息</a>
+					</li>	
+					{/if}									
+				</ul>
+			</div>
+			{/if}
+			{include file="$inc_file"}
+		</div>
+    </div>
+</div>
+<div class="blank"></div>
+{include file="inc/footer.html"}

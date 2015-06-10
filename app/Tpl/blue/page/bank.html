@@ -1,0 +1,34 @@
+{include file="inc/header.html"}
+<style>
+.bank_title{width:928px; font-size:18px; font-weight:bold; height:38px; line-height:38px; padding-left:30px; background:#f5f5f5; margin-bottom:20px; border-bottom:1px solid #dedede;}
+.bank_content{ width:960px; border:solid 1px #dedede; margin:10px 0; padding-bottom:10px;}
+.bank_title2{width:930px; padding-left:30px;}
+.bank_tzqx{ font-size:14px; }
+.bank_sz{ color:#F00; font-size:26px; font-weight:bold;}
+.clear{ clear:left;}
+</style>
+ <!--银行理财产品-->
+<div style="width:928px; height:38px; line-height:38px; padding-left:30px; background:#f5f5f5;  border:solid 1px #dedede; font-size:16px;">共为您找到  <a style="color:#F00; font-weight:bold;" href="#">{$qxs_nums}</a>  款正在销售的银行理财产品</div>
+{foreach from=$qxs_array item=qxs_item key=key}
+ <div class="bank_content" >
+ <div class="bank_title">
+            <span style="color:#F60;">{$qxs_item.qxs_bank_name}&nbsp;&nbsp;</span>
+            <span style=" padding-left:10px;">{$qxs_item.qxs_name_array}</span>
+            </div>
+            
+        <div class="bank_title2">   
+          <div style="float:left; padding:5px 0 0 0;"><span class="bank_tzqx">投资期限</span> <span class="bank_sz">{$qxs_item.qxs_time_arr}<span style="font-size:12px;">天</span></span></div>
+          <div style="float:left; padding:5px 100px 0 100px;"><span class="bank_tzqx">预期收益率</span> <span class="bank_sz">{$qxs_item.qxs_yield_arr}%</span></div>
+           <div style="float:left; padding:5px 0 0 0;"><span class="bank_tzqx">是银行活期收益</span> <span class="bank_sz">{$qxs_item.qxs_multiple_arr}</span></div>
+ 
+           			
+
+</div>
+ <div class="clear"></div>
+    </div>
+ <div class="clear"></div>
+
+{/foreach}
+
+    
+{include file="inc/footer.html"}

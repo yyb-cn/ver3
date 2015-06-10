@@ -1,0 +1,173 @@
+{include file="inc/header_new.html"}
+
+<style>
+/* 公共样式 */
+body{ font-size:12px; color:#333; background:#E9EBED; font-family:"微软雅黑", "黑体", "仿宋";}
+* { padding:0; margin:0; list-style:none;}
+img{border:0px;}
+
+.wraper { width:100%; height:2250px; margin:0 auto; background:url({$TMPL}/images/pfb_bg.png) center top no-repeat; background-color:#f8f3dd; padding-top:595px;}
+	.wraper .pfb_1 { width:925px; height:233px; background:url({$TMPL}/images/pfb_1.png) no-repeat; margin:0 auto;}
+	
+	.wraper .pfb_2 { width:925px; height:674px; background:url({$TMPL}/images/pfb_2.png) no-repeat; margin:0 auto; margin-top:55px; position:relative;}
+		.wraper .pfb_2 .goto { position:absolute; top:520px; left:218px;}
+		
+		.wraper .pfb_2 .userlist { width:240px; height:192px; position:absolute; top:200px; left:640px; overflow:hidden;}
+			.wraper .pfb_2 .scrollNews li { height:24px;}
+				.wraper .pfb_2 .scrollNews li .prize_name { float:left; width:120px; height:24px; text-align:center; line-height:24px; font-size:14px;}
+				.wraper .pfb_2 .scrollNews li .prize_pfb { float:left; width:120px; height:24px; text-align:center; line-height:24px; font-size:14px;}
+		.wraper .pfb_2 .xize { position:absolute; top:400px; left:710px; font-size:14px; font-weight:bold; text-decoration:underline; color:#F00;}
+	
+	.wraper .pfb_3 { width:925px; height:615px; background:url({$TMPL}/images/pfb_3.png) no-repeat; margin:0 auto; margin-top:45px; position:relative;}
+		.wraper .pfb_3 .goto { position:absolute; top:280px; left:218px;}
+		
+		.wraper .pfb_3 .userlist { width:240px; height:144px; position:absolute; top:210px; left:643px; overflow:hidden;}
+			.wraper .pfb_3 .scrollNews1 li { height:24px;}
+				.wraper .pfb_3 .scrollNews1 li .prize_name { float:left; width:120px; height:24px; text-align:center; line-height:24px; font-size:14px;}
+				.wraper .pfb_3 .scrollNews1 li .prize_pfb { float:left; width:120px; height:24px; text-align:center; line-height:24px; font-size:14px;}
+		.wraper .pfb_3 .xize { position:absolute; top:360px; left:710px; font-size:14px; font-weight:bold; text-decoration:underline; color:#F00;}
+	
+	.wraper .pfb_4 { width:925px; height:520px; margin:0 auto; margin-top:85px; position:relative;}
+		.wraper .pfb_4 .pfb_4_bg  { width:296px; height:63px; background:url({$TMPL}/images/pfb_4.png) no-repeat; margin:0 auto;}
+		
+		.wraper .pfb_4 .pfb_4_msg { width:885px; height:400px; margin-top:40px; padding:0 20px;}
+			.wraper .pfb_4 .pfb_4_msg p { color:#fd8865; font-size:16px; line-height:40px; font-weight:bold;}
+
+</style>
+</head>
+
+<body>
+
+<div class="wraper">
+
+	<div class="pfb_1">
+    </div>
+    
+    <div class="pfb_2">
+    	<a class="goto" href="?ctl=deals"><img src="{$TMPL}/images/pfb_button_1.png" /></a>
+        <div class="userlist">
+            <ul class="scrollNews">
+			{foreach from=$hongbao_rank item=hongbao_rank}
+                <li>
+                    <div class="prize_name">{$hongbao_rank.user_name}</div>
+                    <div class="prize_pfb">{function name="round" v=$hongbao_rank.t_m f=2}元</div>
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+        <a target="_blank" class="xize" href="http://www.pfcf88.com/index.php?ctl=notice&id=289">点击查看活动细则</a>
+    </div>
+    
+    <div class="pfb_3">
+    	<a class="goto" href="?ctl=uc_center&act=links"><img src="{$TMPL}/images/pfb_button_2.png" /></a>
+        <div class="userlist">
+        	<ul class="scrollNews1">
+			{foreach from=$tuijianpanghangbang item=deal}
+                <li>
+                    <div class="prize_name">{$deal.user_name}</div>
+                    <div class="prize_pfb">{$deal.num}人</div>
+                </li>
+                	{/foreach}
+            </ul>
+        </div>
+        <a target="_blank" class="xize" href="http://www.pfcf88.com/index.php?ctl=notice&id=288">点击查看活动细则</a>
+    </div>
+    
+    <div class="pfb_4">
+    	<div class="pfb_4_bg"></div>
+        <div class="pfb_4_msg">
+        	<p>1、活动时间：2015年4月15日开始，结束时间以平台公告为准；</p>
+            <p>2、注册送20元浦发币，注册好后系统会自动发放到个人平台账户；</p>
+            <p>3、投资有奖及推荐好友赠送现金红包，将在投资或者成功推荐后自动转入个人账户；</p>
+            <p>4、活动赠送浦发币需进行投资，满期后方可提现，不可马上提现；</p>
+            <p>5、平台每天定时定额发标，具体的开标时间以平台公告为主；</p>
+            <p>6、获得奖励的浦发币需要在活动期内进行有效投资后方可提现，活动结束后自动清零，用户个人原因未能按时投资则视为默认放弃奖励 ；现金红包无须投资即可提现，现金红包的结算时间固定为每周三提现。</p>
+            <p>7、浦发财富可在法律法规允许范围内对本次活动规则进行解释。如有疑问通过以下方式联系客服：在线咨询网站在线客服、拨打全国热线电话400-990-4388、访问企业QQ: 4009904388。</p>
+        </div>
+    </div>
+    
+</div>
+<script>
+	//滚屏获奖名单
+	$(function(){
+
+	  var $this=$(".scrollNews");
+	
+	  $this.hover(function(){
+	
+		   clearInterval(scrollTimer);
+	
+	   },function(){
+	
+		  scrollTimer=setInterval(function(){
+	
+			   scrollNews($this);
+	
+		  },3000);
+	
+	   });
+	
+	  var scrollTimer=setInterval(function(){
+	
+		   scrollNews($this);
+	
+	  },3000);
+	
+	})
+	
+	function scrollNews(obj){
+	
+	  var $self=obj;
+	
+	  var height=$self.find("li").height();
+	
+	  $self.animate({"marginTop":-height+"px"},600,function(){
+	
+		  $self.css("marginTop",0).find("li:first").appendTo($self);
+	
+	})
+	
+	}
+	
+	//滚屏获奖名单
+	$(function(){
+
+	  var $this1=$(".scrollNews1");
+	
+	  $this1.hover(function(){
+	
+		   clearInterval(scrollTimer1);
+	
+	   },function(){
+	
+		  scrollTimer1=setInterval(function(){
+	
+			   scrollNews1($this1);
+	
+		  },5000);
+	
+	   });
+	
+	  var scrollTimer1=setInterval(function(){
+	
+		   scrollNews1($this1);
+	
+	  },5000);
+	
+	})
+	
+	function scrollNews1(obj){
+	
+	  var $self1=obj;
+	
+	  var height1=$self1.find("li").height();
+	
+	  $self1.animate({"marginTop":-height1+"px"},600,function(){
+	
+		  $self1.css("marginTop",0).find("li:first").appendTo($self1);
+	
+	})}
+
+</script>
+</body>
+</html>
