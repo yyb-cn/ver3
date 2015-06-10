@@ -851,9 +851,9 @@ class dealModule extends SiteBaseModule
 	//有效推荐人 $asa
 	
 // $huodong_time=1431574200; //2015.05-14 11.30 时间戳
-  $huodong_time=1429027200;
+ /* $huodong_time=1429027200;
 $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id=".$GLOBALS['user_info']['id']);
-	$uc=array(1871,959,1877,971,1995,2006,2054);
+	// $uc=array(1871,959,1877,971,1995,2006,2054);
 	$no=0;
  if(!$nodeal){ 	
    $pid_id=$GLOBALS['db']->getOne("select `pid` from ".DB_PREFIX."user where id=".$GLOBALS['user_info']['id']);
@@ -880,12 +880,12 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
        if($w+1>=67){
 		 $ox_money=30;
        }
- 	foreach($uc as $k=>$v){
-	  if($v==$pid_id){	
-	  modify_account(array('money'=>30,'score'=>0),$pid_id,"推荐了".$GLOBALS['user_info']['id']."送30现金");
-	   $no=1;
-	   }
-	 }   
+ 	// foreach($uc as $k=>$v){
+	  // if($v==$pid_id){	
+	  // modify_account(array('money'=>30,'score'=>0),$pid_id,"推荐了".$GLOBALS['user_info']['id']."送30现金");
+	   // $no=1;
+	   // }
+	 // }   
         if($no==0){
 		 modify_account(array('money'=>$ox_money,'score'=>0),$pid_id,"推荐了".$GLOBALS['user_info']['id']."送投资卷".$ox_money);
 		}
@@ -893,7 +893,7 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 		
   }
   
-  }
+  }*/
   
   	//以下为代金券判断操作
 	 // if($_REQUEST['virtual_money']!=0)//判断复选框是否为勾选
