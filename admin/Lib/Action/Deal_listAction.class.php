@@ -310,7 +310,7 @@ class Deal_listAction extends CommonAction{
 			}
 		$v['repay_time_type']=$v['repay_time_type']?'月':'日';
 		$arr[0]=array('编号','投资人','真实姓名','电话号码','组别','推荐人','项目名称','交易金额','代金劵','利率','收益','期限','交易时间','银行账号','开户行');
-		$arr[$k+1]=array($v['deal_load_id'],$v['user_name'],$v['real_name'],$v['mobile'],$v['group_name'],$v['pid_name'],$v['name'],$v['u_load_money'],$v['virtual_money'],$v['rate'],$v['get_money'],$v['repay_time'].$v['repay_time_type'],date("Y-m-d H:i:s",$v['deal_time']),$v['bankcard'],$v['bankzone']);
+		$arr[$k+1]=array($v['deal_load_id'],$v['user_name'],$v['real_name'],$v['mobile'],$v['group_name'],$v['pid_name'],$v['name'],$v['u_load_money'],$v['virtual_money'],$v['rate'],$v['get_money'],$v['repay_time'].$v['repay_time_type'],to_date($v['deal_time'],'Y-m-d H:i:s'),$v['bankcard'],$v['bankzone']);
 		}
 		
 		$this->outputXlsHeader($arr,'交易列表'.time());
