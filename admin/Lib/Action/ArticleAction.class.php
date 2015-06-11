@@ -385,6 +385,7 @@ class ArticleAction extends CommonAction{
 	}
 	
 	public  function zhixing(){
+	echo "关闭";exit;
 	set_time_limit(0);
 	require_once(APP_ROOT_PATH."system/libs/user.php");
 	$op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log");
@@ -397,14 +398,16 @@ class ArticleAction extends CommonAction{
    $money_log_info['money']=$v['money'];
    $money_log_info['memo'] = $v['log_info'];
    $money_log_info['user_id'] = $v['log_user_id'];
-   $money_log_info['type'] = 0;
+   $money_log_info['pfcfb'] = $v['pfcfb'];
+   $money_log_info['unjh_pfcfb'] = $v['unjh_pfcfb'];
+   $money_log_info['type'] = 27;
    $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info);
      } 
   if($v['point']!=0){
    $money_log_info['point']=$v['point'];
    $money_log_info['memo'] = $v['log_info'];
    $money_log_info['user_id'] = $v['log_user_id'];
-   $money_log_info['type'] = 0;
+   $money_log_info['type'] = 27;
    $GLOBALS['db']->autoExecute(DB_PREFIX."user_point_log",$money_log_info);
      }  
 	 

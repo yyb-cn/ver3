@@ -99,9 +99,9 @@ class Sqepay_payment implements payment {
 		// 总金额 
 		$Amount = round($payment_notice['money'],2);
 		
-        $ReturnURL = SITE_DOMAIN.APP_ROOT.'/95epay_response.php';
+        $ReturnURL = SITE_DOMAIN.APP_ROOT.'/95epay_callback.php?act=response';
         //后台通知
-        $NotifyURL = SITE_DOMAIN.APP_ROOT.'/95epay_notify.php';
+        $NotifyURL = SITE_DOMAIN.APP_ROOT.'/95epay_callback.php?act=notify';
 
         //支付方式
         $PayType = "CSPAY";
@@ -218,18 +218,18 @@ class Sqepay_payment implements payment {
 				{
 					//开始更新相应的outer_notice_sn					
 					//$GLOBALS['db']->query("update ".DB_PREFIX."payment_notice set outer_notice_sn = '".$BillNo."' where id = ".$payment_notice['id']);
-					echo 1;
+					print "yes";
 					die();
 				}
 				else 
 				{
-					echo 1;
+					print "yes";
 					die();
 				}
 			}
 			else
 			{
-				echo 1;
+				print "yes";
 				die();
 			}
         }
