@@ -22,6 +22,7 @@ class dealsModule extends SiteBaseModule
 			
 			
 			 $user_r = $GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."user where id > 0 ");
+                         $user_r +=500;//加500人
 	    $GLOBALS['tmpl']->assign('user_r',$user_r);
 		
 		$total_money = $GLOBALS['db']->getOne("SELECT sum(borrow_amount) FROM ".DB_PREFIX."deal WHERE deal_status in(2,4) ");
