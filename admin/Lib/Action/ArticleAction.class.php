@@ -385,6 +385,7 @@ class ArticleAction extends CommonAction{
 	}
 	
 	public  function zhixing(){
+	echo "关闭";exit;
 	set_time_limit(0);
 	require_once(APP_ROOT_PATH."system/libs/user.php");
 	$op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log");
