@@ -284,7 +284,7 @@ class Deal_listAction extends CommonAction{
 	
 	}
 	
-	public function export_csv($page = 1)
+	public function daochu($page = 1)
 	{
 		$id = $_REQUEST ['id'];
 		
