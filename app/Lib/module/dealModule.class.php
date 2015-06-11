@@ -475,12 +475,13 @@ class dealModule extends SiteBaseModule
 		
 		
 		//如果未绑定手机
-		if(intval($GLOBALS['user_info']['mobilepassed'])==0){
-			$GLOBALS['tmpl']->assign("page_title","成为借出者");
-			$GLOBALS['tmpl']->display("page/deal_mobilepaseed.html");
-			exit();
+	if($GLOBALS['user_info']['mobilepassed'] == 0||$GLOBALS['user_info']['idcardpassed']==0){
+		app_redirect(url("index","uc_account#security"),3,"请实名认证,填写身份证"); 
 		}
 		
+	if(!$GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."user_bank where user_id=".$GLOBALS['user_info']['id'])){
+	app_redirect(url("index","uc_money#bank"),3,"请添加银行卡"); 
+		}
 		
 		
 		$id = intval($_REQUEST['id']);
