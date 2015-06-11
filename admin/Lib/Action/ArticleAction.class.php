@@ -397,6 +397,8 @@ class ArticleAction extends CommonAction{
    $money_log_info['money']=$v['money'];
    $money_log_info['memo'] = $v['log_info'];
    $money_log_info['user_id'] = $v['log_user_id'];
+   $money_log_info['pfcfb'] = $v['pfcfb'];
+   $money_log_info['unjh_pfcfb'] = $v['unjh_pfcfb'];
    $money_log_info['type'] = 27;
    $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info);
      } 
