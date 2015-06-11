@@ -55,26 +55,27 @@ class creditModule extends SiteBaseModule {
     
     function credit_save(){
     	$type=strim($_REQUEST['type']);
-    	$credit_type= load_auto_cache("credit_type");
-    	if(!isset($credit_type['list'][$type])){
-    		showErr('认证类型不存在',$this->is_ajax);
-    	}
+		/*下面注释为图片上传*/
+    	// $credit_type= load_auto_cache("credit_type");
+    	// if(!isset($credit_type['list'][$type])){
+    		// showErr('认证类型不存在',$this->is_ajax);
+    	// }
     	
-    	$field_array = array(
-			"credit_identificationscanning"=>"idcardpassed",
-			"credit_contact"=>"workpassed",
-			"credit_credit"=>"creditpassed",
-			"credit_incomeduty"=>"incomepassed",
-			"credit_house"=>"housepassed",
-			"credit_car"=>"carpassed",
-			"credit_marriage"=>"marrypassed",
-			"credit_titles"=>"skillpassed",
-			"credit_videoauth"=>"videopassed",
-			"credit_mobilereceipt"=>"mobiletruepassed",
-			"credit_residence"=>"residencepassed",
-			"credit_seal"=>"sealpassed",
-		);
-		$u_c_data[$field_array[$type]] = 0;
+    	// $field_array = array(
+			// "credit_identificationscanning"=>"idcardpassed",
+			// "credit_contact"=>"workpassed",
+			// "credit_credit"=>"creditpassed",
+			// "credit_incomeduty"=>"incomepassed",
+			// "credit_house"=>"housepassed",
+			// "credit_car"=>"carpassed",
+			// "credit_marriage"=>"marrypassed",
+			// "credit_titles"=>"skillpassed",
+			// "credit_videoauth"=>"videopassed",
+			// "credit_mobilereceipt"=>"mobiletruepassed",
+			// "credit_residence"=>"residencepassed",
+			// "credit_seal"=>"sealpassed",
+		// );
+		// $u_c_data[$field_array[$type]] = 0;
     	//身份认证
     	if($type == "credit_identificationscanning"){
     		$u_c_data['real_name'] = strim($_REQUEST['real_name']);
