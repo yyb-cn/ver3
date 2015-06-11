@@ -397,14 +397,14 @@ class ArticleAction extends CommonAction{
    $money_log_info['money']=$v['money'];
    $money_log_info['memo'] = $v['log_info'];
    $money_log_info['user_id'] = $v['log_user_id'];
-   $money_log_info['type'] = 0;
+   $money_log_info['type'] = 27;
    $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info);
      } 
   if($v['point']!=0){
    $money_log_info['point']=$v['point'];
    $money_log_info['memo'] = $v['log_info'];
    $money_log_info['user_id'] = $v['log_user_id'];
-   $money_log_info['type'] = 0;
+   $money_log_info['type'] = 27;
    $GLOBALS['db']->autoExecute(DB_PREFIX."user_point_log",$money_log_info);
      }  
 	 
