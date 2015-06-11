@@ -383,7 +383,7 @@ function daochu(id)
 	}
 	if(geshi='utf-8')
 	
-	window.location = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_csv&id="+id+"&geshi="+geshi
+	window.location = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=daochu&id="+id+"&geshi="+geshi
 	
 }
 //完全删除

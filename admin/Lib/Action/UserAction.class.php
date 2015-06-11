@@ -15,6 +15,19 @@ class UserAction extends CommonAction{
 	}
 	public function index()
 	{
+		
+		
+		$ca=0;
+	$usercongji=M("User")->where("create_time>1431532800")->findAll();
+	foreach($usercongji as $k=>$v){
+		if(M("DealLoad")->where("user_id=".$v['id'])->findAll()){
+			$ca++; 
+		}
+
+	}
+
+		$this->assign("ca",$ca);
+		
 		if(intval($_REQUEST['is_effect'])!=-1 && isset($_REQUEST['is_effect']))
 		{
 			$map[DB_PREFIX.'user.is_effect'] = array('eq',intval($_REQUEST['is_effect']));
@@ -138,11 +151,14 @@ $pid_name=trim($_REQUEST['pid_name']);
 		//定义条件
 		$map[DB_PREFIX.'user.is_delete'] = $is_delete;
 
-		if(intval($_REQUEST['group_id'])>0)
+		if(intval($_REQUEST['group_id'])>0&&intval($_REQUEST['group_id'])!=6)
 		{
 			$map[DB_PREFIX.'user.group_id'] = intval($_REQUEST['group_id']);
 		}
-		
+		if(intval($_REQUEST['group_id'])==6)
+		{   $uc= array('in','1871,959,1877,1995,2006,2054');
+			$map[DB_PREFIX.'user.id'] =$uc;
+		}
 		if(trim($_REQUEST['user_name'])!='')
 		{
 			$map[DB_PREFIX.'user.user_name'] = array('like','%'.trim($_REQUEST['user_name']).'%');
@@ -768,11 +784,15 @@ $pid_name=trim($_REQUEST['pid_name']);
 		//定义条件
 		$map[DB_PREFIX.'user.is_delete'] = 0;
 
-		if(intval($_REQUEST['group_id'])>0)
+		if(intval($_REQUEST['group_id'])>0&&intval($_REQUEST['group_id'])!=6)
 		{
 			$map[DB_PREFIX.'user.group_id'] = intval($_REQUEST['group_id']);
 		}
-		
+		if(intval($_REQUEST['group_id'])==6)
+		{   $uc= array('in','1871,959,1877,1995,2006,2054');
+			$map[DB_PREFIX.'user.pid'] =$uc;
+			$lest = 1;
+		}
 		if(trim($_REQUEST['user_name'])!='')
 		{
 			$map[DB_PREFIX.'user.user_name'] = array('like','%'.trim($_REQUEST['user_name']).'%');
@@ -804,13 +824,13 @@ $pid_name=trim($_REQUEST['pid_name']);
 		{
 			register_shutdown_function(array(&$this, 'export_csv'), $page+1);
 			
-			$user_value = array('id'=>'""','user_name'=>'""','money'=>'""','lock_money'=>'""','email'=>'""','mobile'=>'""','idno'=>'""','level_id'=>'""');
+			//$user_value = array('id'=>'""','user_name'=>'""','money'=>'""','lock_money'=>'""','email'=>'""','mobile'=>'""','idno'=>'""','level_id'=>'""');
 			if($page == 1)
-	    	$content = iconv("utf-8","gbk","编号,用户名,可用余额,冻结金额,电子邮箱,手机号,身份证,会员等级");
+	    	//$content = iconv("utf-8","gbk","编号,用户名,可用余额,冻结金额,电子邮箱,手机号,身份证,会员等级");
 	    	
 	    	
 	    	//开始获取扩展字段
-	    	$extend_fields = M("UserField")->order("sort desc")->findAll();
+	    	/*$extend_fields = M("UserField")->order("sort desc")->findAll();
 	    	foreach($extend_fields as $k=>$v)
 	    	{
 	    		$user_value[$v['field_name']] = '""';
@@ -818,11 +838,29 @@ $pid_name=trim($_REQUEST['pid_name']);
 	    		$content = $content.",".iconv('utf-8','gbk',$v['field_show_name']);
 	    	}   
 	    	if($page==1) 	
-	    	$content = $content . "\n";
+	    	$content = $content . "\n";*/
 	    	
 	    	foreach($list as $k=>$v)
-			{	
-				$user_value = array();
+			{		  $pid = M("User")->where("id='".$v['pid']."'")->getField("user_name");
+				      $bankcard = M("User_bank")->where("user_id='".$v['id']."'")->getField("bankcard");
+					  $create_time = M("User")->where("id='".$v['pid']."'")->getField("create_time");
+					  if($v['name']=='HR'){
+					$v['name']='普通';
+					}
+					 
+					 
+			if($lest){
+            if($v['create_time']>1431532800){
+            if(M("DealLoad")->where("user_id='".$v['id']."'")->findAll()){ 
+			   
+	        
+		$arr[0]=array('序号','推荐人','用户名','真实姓名','电子邮箱','身份证','会员组','银行卡号','可用余额');
+		$arr[$k+1]=array($k+1,"$pid",$v['user_name'],$v['real_name'],$v['email'],$v['idno'],$v['name'],"$bankcard",$v['money']+$v['pfcfb']);
+			
+		 }
+			   }
+                 }else{
+				/*$user_value = array();
 				$user_value['id'] = iconv('utf-8','gbk','"' . $v['id'] . '"');
 				$user_value['user_name'] = iconv('utf-8','gbk','"' . $v['user_name'] . '"');
 				$user_value['money'] = iconv('utf-8','gbk','"' . number_format($v['money'],2) . '"');
@@ -830,10 +868,13 @@ $pid_name=trim($_REQUEST['pid_name']);
 				$user_value['email'] = iconv('utf-8','gbk','"' . $v['email'] . '"');
 				$user_value['mobile'] = iconv('utf-8','gbk','"' . $v['mobile'] . '"');
 				$user_value['idno'] = iconv('utf-8','gbk','"' . $v['idno'] . '"');
-				$user_value['level_id'] = iconv('utf-8','gbk','"' . $v['name'] . '"');
-
+				$user_value['level_id'] = iconv('utf-8','gbk','"' . $v['name'] . '"');*/
+				
+				$arr[0]=array('序号','用户名','真实姓名','电子邮箱','会员组');
+		$arr[$k+1]=array($k+1,$v['user_name'],$v['real_name'],$v['email'],$v['name']); 
+            }
 				//取出扩展字段的值
-				$extend_fieldsval = M("UserExtend")->where("user_id=".$v['id'])->findAll();
+			/*	$extend_fieldsval = M("UserExtend")->where("user_id=".$v['id'])->findAll();
 				foreach($extend_fields as $kk=>$vv)
 				{
 					foreach($extend_fieldsval as $kkk=>$vvv)
@@ -847,12 +888,13 @@ $pid_name=trim($_REQUEST['pid_name']);
 					
 				}
 			
-				$content .= implode(",", $user_value) . "\n";
+				$content .= implode(",", $user_value) . "\n";*/
 			}	
 			
 			
-			header("Content-Disposition: attachment; filename=user_list.csv");
-	    	echo $content;  
+			//header("Content-Disposition: attachment; filename=user_list.csv");
+	    	//echo $content;  
+			$this->outputXlsHeader($arr,'提现名单'.time());
 		}
 		else
 		{
@@ -861,6 +903,31 @@ $pid_name=trim($_REQUEST['pid_name']);
 		}
 		
 	}
+	public function outputXlsHeader($data,$file_name = 'export',$geshi = 'utf8')
+{
+ header('Content-Type: text/xls'); 
+ header ( "Content-type:application/vnd.ms-excel;charset=utf-8" );
+ $str = mb_convert_encoding($file_name, 'gbk', $geshi);   
+ header('Content-Disposition: attachment;filename="' .$str . '.xls"');      
+ header('Cache-Control:must-revalidate,post-check=0,pre-check=0');        
+ header('Expires:0');         
+ header('Pragma:public');
+ 
+ $table_data = '<table border="1">'; 
+ foreach ($data as $line)         
+ {
+  $table_data .= '<tr>';
+  foreach ($line as $key => &$item)
+  {
+  $item = mb_convert_encoding($item, 'gbk', $geshi); 
+   $table_data .= '<td style="vnd.ms-excel.numberformat:@">' . $item . '</td>';
+  }
+  $table_data .= '</tr>';
+ }
+ $table_data .='</table>';
+ echo $table_data;    
+ die();
+}
 	
 	
 	function lock_money(){

@@ -84,6 +84,7 @@ function user_moneyss(user_id){
 <div class="button_row">
 	<input type="button" class="button" value="{%ADD}" onclick="add();" />
 	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+	<input type="button"class="button" value="5月14日开始有效用户{$ca}个">
 </div>
 
 <div class="blank5"></div>
@@ -99,6 +100,7 @@ function user_moneyss(user_id){
 				<foreach name="group_list" item="group_item">
 					<option value="{$group_item.id}" <if condition="intval($_REQUEST['group_id']) eq $group_item['id']">selected="selected"</if>>{$group_item.name}</option>
 				</foreach>
+				<option value="6">特殊推荐会员(本导出是导出会员的推荐用户列表)</option>
 		</select>
 		<if condition="ACTION_NAME eq 'index' or ACTION_NAME eq 'company_index'">
 		<select name="is_effect">

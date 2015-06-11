@@ -66,7 +66,7 @@
 			<li class="{if $MODULE_NAME eq 'uc_deal_quota' && $ACTION_NAME eq 'index'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_deal_quota#index"}" title="授信额度申请">授信额度申请</a></li>
             <li class="{if $MODULE_NAME eq 'uc_quota' && $ACTION_NAME eq 'index'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_quota#index"}" title="申请信用额度">申请信用额度</a></li>	
             <li class="{if $MODULE_NAME eq 'uc_msg' &&$ACTION_NAME eq 'setting'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_msg#setting"}" title="{$LANG.UC_MSG_SETTING}">{$LANG.UC_MSG_SETTING}</a></li>	
-            <li class="{if $MODULE_NAME eq 'uc_exten' &&$ACTION_NAME eq 'exten'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_exten#exten"}" title="推广好友">推广好友</a></li>	
+           <!--     <li class="{if $MODULE_NAME eq 'uc_exten' &&$ACTION_NAME eq 'exten'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_exten#exten"}" title="推广好友">推广好友</a></li>		-->
 		</ul>
 	</div>
 	{if app_conf("INVITE_REFERRALS") eq 1}
@@ -74,7 +74,7 @@
 	<div class="c_body">
 		<ul class="menu">
 			<li class="{if $MODULE_NAME eq 'uc_invite' }act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_invite"}" title="{$LANG.UC_INVITE}">{$LANG.UC_INVITE}</a></li>
-            <li class="{if $MODULE_NAME eq 'uc_exten' &&$ACTION_NAME eq 'exten'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_exten#exten"}" title="推广好友">推广好友</a></li>	
+         <!--   <li class="{if $MODULE_NAME eq 'uc_exten' &&$ACTION_NAME eq 'exten'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_exten#exten"}" title="推广好友">推广好友</a></li>	-->
 		</ul>
 	</div>
 	{/if}

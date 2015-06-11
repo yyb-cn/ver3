@@ -445,6 +445,72 @@ class UserCarryAction extends CommonAction{
 		
 	}
 	
+	
+	  public function daochu()
+	{
+		 $id = $_REQUEST ['id'];
+		 //格式的输入
+		$geshi = $_REQUEST ['geshi'];
+	
+		//where(array ('user_id' => array ('in', explode ( ',', $id ) ) ));
+		$condition = array ('id' => array ('in', explode ( ',', $id ) ) );
+		
+		$vo = M(MODULE_NAME)->where($condition)->select();
+		
+		foreach($vo as $k=>$v)
+		{
+		
+		$v['region_lv1_name'] = M("DeliveryRegion")->where("id=".$v['region_lv1'])->getField("name");
+		$v['region_lv2_name'] = M("DeliveryRegion")->where("id=".$v['region_lv2'])->getField("name");
+		$v['region_lv3_name'] = M("DeliveryRegion")->where("id=".$v['region_lv3'])->getField("name");
+		$v['region_lv4_name'] = M("DeliveryRegion")->where("id=".$v['region_lv4'])->getField("name");
+		$v['phone']=M("User")->where("id=".$v['user_id'])->getField("mobile");
+		$v['user_name']=M("User")->where("id=".$v['user_id'])->getField("user_name");
+		$v['bank_name'] =  M("bank")->where("id=".$v['bank_id'])->getField("name");
+		$arr[0]=array('序号','银行','地区(省)','地区(市/区)','支行名','开户名','卡号','金额','电话号码','操作备注','申请时间','处理时间','备注');
+		$arr[$k+1]=array($k+1,$v['bank_name'],$v['region_lv2_name'],$v['region_lv3_name'],$v['bankzone'],$v['real_name'],"'".$v['bankcard'],$v['money']+$v['pfcfb'],$v['phone'],"'".$v['desc'],to_date($v['create_time'],'Y-m-d'),to_date($v['update_time'],'Y-m-d'),$v['user_name']);
+		}
+		if($geshi=='utf-8' || $geshi=='gbk'){
+		
+	//var_dump($arr);exit;
+		
+		$this->outputXlsHeader($arr,'提现名单'.time(),$geshi);
+		}else{
+			
+		$this->error(L("输入的格式不支持"));
+			
+		}
+		
+	}
+	
+	
+	public function outputXlsHeader($data,$file_name = 'export',$geshi)
+{
+ header('Content-Type: text/xls'); 
+ header ( "Content-type:application/vnd.ms-excel;charset=utf-8" );
+ $str = mb_convert_encoding($file_name, 'gbk', $geshi);   
+ header('Content-Disposition: attachment;filename="' .$str . '.xls"');      
+ header('Cache-Control:must-revalidate,post-check=0,pre-check=0');        
+ header('Expires:0');         
+ header('Pragma:public');
+ 
+ $table_data = '<table border="1">'; 
+ foreach ($data as $line)         
+ {
+  $table_data .= '<tr>';
+  foreach ($line as $key => &$item)
+  {
+  $item = mb_convert_encoding($item, 'gbk', $geshi); 
+   $table_data .= '<td style="vnd.ms-excel.numberformat:@">' . $item . '</td>';
+  }
+  $table_data .= '</tr>';
+ }
+ $table_data .='</table>';
+ echo $table_data;    
+ die();
+}
+
+	
 	public function delete() {
 		//彻底删除指定记录
 		$ajax = intval($_REQUEST['ajax']);
