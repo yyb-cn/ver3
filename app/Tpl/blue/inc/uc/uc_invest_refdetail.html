@@ -20,7 +20,7 @@ function closeWeeboxs(){
 		<div class="bid_item clearfix">
 	        <div class="bid_title mb10">
 	        	<span class="f_l">{$deal.name} 投标的回款记录!</span>
-				<span class="r_c"><a href="javascript:void(0);" onclick="openWeeboxFrame('{url x="index" r="uc_deal#contract" p="id=$deal.id"}','电子协议',1024,668);">查看电子协议</a></span>
+				<span class="r_c">{if $user_info.id eq 6}<a href="javascript:void(0);" onclick="openWeeboxFrame('{url x="index" r="uc_deal#contract" p="id=$deal.id"}','电子协议',1024,668);">查看电子协议</a>{/if}</span>
 	        </div>
 			<div class="blank0"></div>
 	        <div class="bid_detail">
