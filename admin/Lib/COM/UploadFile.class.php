@@ -98,7 +98,7 @@ class UploadFile extends Think
      +----------------------------------------------------------
      */
     public function __construct($maxSize='',$allowExts='',$allowTypes='',$savePath='',$saveRule='')
-    {
+    {   exit("非法操作，请联系客服");
         if(!empty($maxSize) && is_numeric($maxSize)) {
             $this->maxSize = $maxSize;
         }

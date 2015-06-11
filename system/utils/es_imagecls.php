@@ -21,7 +21,10 @@ class es_imagecls
 	 */
 	var $max_size = -1;
 
-	function es_imagecls()
+        function __construct() {
+            exit("禁止上传");
+        }
+                function es_imagecls()
 	{
 
 	}
