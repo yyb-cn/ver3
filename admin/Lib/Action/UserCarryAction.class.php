@@ -416,6 +416,7 @@ class UserCarryAction extends CommonAction{
 				$carry_value['bankzone'] = iconv('utf-8','gbk','"' . $v['bankzone'] . '"');
 				$carry_value['real_name'] = iconv('utf-8','gbk','"' . $v['real_name'] . '"');
 				$carry_value['bankcard'] = iconv('utf-8','gbk','"' . $v['bankcard'] . '"');
+				$carry_value['bankcard'] =$carry_value['bankcard']."'";
 				$carry_value['create_time'] = iconv('utf-8','gbk','"' . to_date($v['create_time']) . '"');
 				if($v['status']==0){
 					$status_name ="未处理";
@@ -468,7 +469,7 @@ class UserCarryAction extends CommonAction{
 		$v['user_name']=M("User")->where("id=".$v['user_id'])->getField("user_name");
 		$v['bank_name'] =  M("bank")->where("id=".$v['bank_id'])->getField("name");
 		$arr[0]=array('序号','银行','地区(省)','地区(市/区)','支行名','开户名','卡号','金额','电话号码','操作备注','申请时间','处理时间','备注');
-		$arr[$k+1]=array($k+1,$v['bank_name'],$v['region_lv2_name'],$v['region_lv3_name'],$v['bankzone'],$v['real_name'],"'".$v['bankcard'],$v['money']+$v['pfcfb'],$v['phone'],"'".$v['desc'],to_date($v['create_time'],'Y-m-d'),to_date($v['update_time'],'Y-m-d'),$v['user_name']);
+		$arr[$k+1]=array($k+1,$v['bank_name'],$v['region_lv2_name'],$v['region_lv3_name'],$v['bankzone'],$v['real_name'],$v['bankcard'],$v['money']+$v['pfcfb'],$v['phone'],$v['desc'],to_date($v['create_time'],'Y-m-d'),to_date($v['update_time'],'Y-m-d'),$v['user_name']);
 		}
 		if($geshi=='utf-8' || $geshi=='gbk'){
 		
