@@ -17,16 +17,17 @@ class UserAction extends CommonAction{
 	{
 		
 		
-		$ca=0;
-	$usercongji=M("User")->where("create_time>1431532800")->findAll();
-	foreach($usercongji as $k=>$v){
-		if(M("DealLoad")->where("user_id=".$v['id'])->findAll()){
-			$ca++; 
-		}
-
-	}
-
-		$this->assign("ca",$ca);
+//		$ca=0;
+//	$usercongji=M("User")->where("create_time>1431532800")->findAll();
+//	foreach($usercongji as $k=>$v){
+//		if(M("DealLoad")->where("user_id=".$v['id'])->findAll()){
+//			$ca++; 
+//		}
+//
+//	}
+                
+                
+//		$this->assign("ca",$ca);
 		
 		if(intval($_REQUEST['is_effect'])!=-1 && isset($_REQUEST['is_effect']))
 		{
