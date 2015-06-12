@@ -150,6 +150,20 @@ class userModule extends SiteBaseModule
 			//更新来路
 			$GLOBALS['db']->query("update ".DB_PREFIX."user set referer = '".$GLOBALS['referer']."' where id = ".$user_id);
 			$user_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where id = ".$user_id);
+	         $ecv['user_id'] =$user_info['id'];
+  		     $ecv['receive'] = 1;
+		     $ecv['receive_time'] = get_gmtime();
+		     $ecv['ecv_type_id'] = 27;	
+			 $ecv['last_time'] = get_gmtime()+604800;
+			 $ecv['password']=rand(10000000,99999999);
+             $ecv['sn'] = uniqid();
+             $GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$ecv);    
+             $user_ecv['log_info'] ="注册就送20投资代金劵";
+  	         $user_ecv['log_time'] =get_gmtime();
+	         $user_ecv['money'] =0;
+	         $user_ecv['user_id'] =$GLOBALS['user_info']['id'];
+             $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$user_ecv);   																																			
+   				
 			if($user_info['is_effect']==1)
 			{
 				//在此自动登录
