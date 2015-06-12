@@ -28,7 +28,10 @@
 							</div>
 						</td>
 						<td>
-							{function name="format_price" v="$item.u_load_money"}
+							{function name="format_price" v="$item.u_load_money"} <br>
+						{if $item.virtual_money!=0}
+                       {function name="format_price" v="$item.virtual_money"}代金劵
+                        {/if}						
 						</td>
 						<td>
 							{$item.repay_time}{if $item.repay_time_type eq 0}天{else}个月{/if} / 
