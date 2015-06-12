@@ -598,7 +598,18 @@ define("ACCOUNT_NO_VERIFY_ERROR",3); //帐户未激活
 			$GLOBALS['db']->autoExecute(DB_PREFIX."user_lock_money_log",$money_log_info);
 			
 		}
-		
+		if($data['pfcfb'] || $data['referee_money']){
+			$money_log_info['memo'] = $log_msg;
+			$money_log_info['money'] = 0;
+			$money_log_info['account_money'] = $GLOBALS['db']->getOne("SELECT money FROM ".DB_PREFIX."user where is_delete = 0 and is_effect = 1 and id = ".$user_id);
+			$money_log_info['user_id'] = $user_id;
+			$money_log_info['create_time'] = TIME_UTC;
+			$money_log_info['create_time_ymd'] = to_date(TIME_UTC,"Y-m-d");
+			$money_log_info['create_time_ym'] = to_date(TIME_UTC,"Ym");
+			$money_log_info['create_time_y'] = to_date(TIME_UTC,"Y");
+			$money_log_info['type'] = $type;
+			$GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info);
+		}
 		if(isset($data['point'])){
 			$point_log_info['memo'] = $log_msg;
 			$point_log_info['point'] = floatval($data['point']);

@@ -868,8 +868,9 @@ class dealModule extends SiteBaseModule
 
 	//有效推荐人 $asa
 	
-// $huodong_time=1431574200; //2015.05-14 11.30 时间戳
- /* $huodong_time=1429027200;
+// $huodong_time=1434124800; //2015.06-13  时间戳
+
+ $huodong_time=1434124800;
 $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id=".$GLOBALS['user_info']['id']);
 	// $uc=array(1871,959,1877,971,1995,2006,2054);
 	$no=0;
@@ -885,17 +886,17 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 	       } 
           }     
      
-       if($w+1<20){
+       if($w+1<10){
 
 		$ox_money=15;
         }
-       if($w+1>=21 && $w+1<=40){
+       if($w+1>=11 && $w+1<=60){
 		$ox_money=20; 
          }
-       if($w+1>=41 && $w+1<=66){
+       if($w+1>=61 && $w+1<=100){
 		$ox_money=25; 
         }
-       if($w+1>=67){
+       if($w+1>=101){
 		 $ox_money=30;
        }
  	// foreach($uc as $k=>$v){
@@ -904,14 +905,14 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 	   // $no=1;
 	   // }
 	 // }   
-        if($no==0){
-		 modify_account(array('money'=>$ox_money,'score'=>0),$pid_id,"推荐了".$GLOBALS['user_info']['id']."送投资卷".$ox_money);
-		}
+        // if($no==0){
+		 modify_account(array('pfcfb'=>$ox_money,'score'=>0),$pid_id,"推荐了".$GLOBALS['user_info']['id']."获得".$ox_money."现金红包");
+		// }
 	
 		
   }
   
-  }*/
+  }
   
   	//以下为代金券判断操作
 	 // if($_REQUEST['virtual_money']!=0)//判断复选框是否为勾选
