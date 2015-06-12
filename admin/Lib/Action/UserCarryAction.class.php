@@ -281,7 +281,169 @@ class UserCarryAction extends CommonAction{
 			$this->error(L("UPDATE_FAILED").$DBerr,0);
 		}
 	}
-	
+	//批量编辑取现
+        public function edit_arr(){
+            $array_id = $_REQUEST['id'];
+                $id_arr = explode ( ',', $array_id );
+                foreach ($id_arr as $key => $value) {
+                    $condition['id'] = $value;
+                    $condition['status'] = 0;
+                    $result[$key] = M(MODULE_NAME)->where($condition)->find();
+                    if($result[$key]==''){
+                         continue; 
+                    }
+
+                    $realname = M("User")->where("id=".$result[$key]['user_id'])->getField("real_name");//判断用户开户名是否与注册认证真实姓名一致
+                    
+                    if($realname!=$result[$key]['real_name'])
+                    {
+                        $result[$key]['red_name'] = 1;
+                        $result[$key]['user_real_name'] = $realname;
+                    }else{
+                        $result[$key]['red_name'] = 0;
+                    }
+                    
+                    $result[$key]['region_lv1_name'] = M("DeliveryRegion")->where("id=".$result[$key]['region_lv1'])->getField("name");
+                    $result[$key]['region_lv2_name'] = M("DeliveryRegion")->where("id=".$result[$key]['region_lv2'])->getField("name");
+                    $result[$key]['region_lv3_name'] = M("DeliveryRegion")->where("id=".$result[$key]['region_lv3'])->getField("name");
+                    $result[$key]['region_lv4_name'] = M("DeliveryRegion")->where("id=".$result[$key]['region_lv4'])->getField("name");
+                    $result[$key]['bank_name'] =  M("bank")->where("id=".$result[$key]['bank_id'])->getField("name");
+                    
+                }
+            $result = array_filter($result);
+            $num = count($result);
+            $this->assign("idnum",$num);
+            $this->assign("result",$result);
+            $this->assign("array_id",$array_id);
+            $this->display ();
+        }
+        //批量处理取现
+        public function update_arr(){
+                B('FilterString');
+                $result = $_REQUEST;
+		//开始验证有效性
+                foreach ($result['id'] as $key => $value) {
+                    
+                    $data['id'] = $value;
+                    $data['status'] = $result['status'];
+                    $data['desc'] = $result['desc'];
+                    // 更新数据
+                    switch($data['status']){
+                            case 0:
+                                    $action = 'wait';
+                                    break;
+                            case 1:
+                                    $action = 'success';
+                                    break;
+                            case 2:
+                                    $action = 'failed';
+                                    break;
+                            case 3:
+                                    $action = 'waitpay';
+                                    break;
+                            case 4:
+                                    $action = 'reback';
+                                    break;
+                            default :
+                                    $action = 'index';
+                                    break;
+                    }
+
+                    // 更新数据
+                    $list=M(MODULE_NAME)->save ($data);
+
+                    if ($list > 0) {
+                            $sdata['update_time'] = TIME_UTC;
+                            $sdata['id'] = $data['id'];
+                            M(MODULE_NAME)->save ($sdata);
+                            //成功提示
+                            $vo = M(MODULE_NAME)->where("id=".$data['id'])->find();
+                            $user_id = $vo['user_id'];
+                            $user_info = M("User")->where("id=".$user_id)->find();
+                            require_once APP_ROOT_PATH."/system/libs/user.php";
+                            if($data['status']==1){
+                                    //提现
+                                    modify_account(array("lock_money"=>-$vo['money']),$vo['user_id'],"提现成功",8);
+                                    modify_account(array("lock_money"=>-$vo['fee']),$vo['user_id'],"提现成功",9);
+                                    $content = "您于".to_date($vo['create_time'],"Y年m月d日 H:i:s")."提交的".format_price($vo['money'])."提现申请汇款成功，请查看您的资金记录。";
+
+
+                                    $group_arr = array(0,$user_id);
+                                    sort($group_arr);
+                                    $group_arr[] =  6;
+
+                                    $msg_data['content'] = $content;
+                                    $msg_data['to_user_id'] = $user_id;
+                                    $msg_data['create_time'] = TIME_UTC;
+                                    $msg_data['type'] = 0;
+                                    $msg_data['group_key'] = implode("_",$group_arr);
+                                    $msg_data['is_notice'] = 6;
+
+                                    $GLOBALS['db']->autoExecute(DB_PREFIX."msg_box",$msg_data);
+                                    $id = $GLOBALS['db']->insert_id();
+                                    $GLOBALS['db']->query("update ".DB_PREFIX."msg_box set group_key = '".$msg_data['group_key']."_".$id."' where id = ".$id);
+
+                                    //短信通知
+                                    if(app_conf("SMS_ON")==1)
+                                    {
+                                            $tmpl = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."msg_template where name = 'TPL_CARYY_SUCCESS_SMS'");				
+                                            $tmpl_content = $tmpl['content'];
+
+                                            $notice['user_name'] = $user_info["user_name"];
+                                            $notice['carry_money'] = $vo['money'];
+                                            $notice['site_name'] = app_conf("SHOP_TITLE");
+
+                                            $GLOBALS['tmpl']->assign("notice",$notice);
+
+                                            $msg = $GLOBALS['tmpl']->fetch("str:".$tmpl_content);
+
+                                            $msg_data['dest'] = $user_info['mobile'];
+                                            $msg_data['send_type'] = 0;
+                                            $msg_data['title'] = "提现成功短信提醒";
+                                            $msg_data['content'] = addslashes($msg);;
+                                            $msg_data['send_time'] = 0;
+                                            $msg_data['is_send'] = 0;
+                                            $msg_data['create_time'] = TIME_UTC;
+                                            $msg_data['user_id'] = $user_info['id'];
+                                            $msg_data['is_html'] = $tmpl['is_html'];
+                                            $GLOBALS['db']->autoExecute(DB_PREFIX."deal_msg_list",$msg_data); //插入				
+                                    }
+                            }
+                            elseif($data['status']==2){
+                                    //驳回
+                                    modify_account(array("money"=>$vo['money'],"lock_money"=>-$vo['money']),$vo['user_id'],"提现失败",8);
+                                    modify_account(array("money"=>$vo['fee'],"lock_money"=>-$vo['fee']),$vo['user_id'],"提现失败",9);
+                                    $content = "您于".to_date($vo['create_time'],"Y年m月d日 H:i:s")."提交的".format_price($vo['money'])."提现申请被我们驳回，驳回原因\"".$data['msg']."\"";
+
+                                    $group_arr = array(0,$user_id);
+                                    sort($group_arr);
+                                    $group_arr[] =  7;
+
+                                    $msg_data['content'] = $content;
+                                    $msg_data['to_user_id'] = $user_id;
+                                    $msg_data['create_time'] = TIME_UTC;
+                                    $msg_data['type'] = 0;
+                                    $msg_data['group_key'] = implode("_",$group_arr);
+                                    $msg_data['is_notice'] = 7;
+
+                                    $GLOBALS['db']->autoExecute(DB_PREFIX."msg_box",$msg_data);
+                                    $id = $GLOBALS['db']->insert_id();
+                                    $GLOBALS['db']->query("update ".DB_PREFIX."msg_box set group_key = '".$msg_data['group_key']."_".$id."' where id = ".$id);
+                            }
+                            save_log("编号为".$data['id']."的提现申请".L("UPDATE_SUCCESS"),1);
+                            //开始验证有效性
+                            $this->assign("jumpUrl",u(MODULE_NAME."/".$action));
+                            parent::success(L("UPDATE_SUCCESS"));
+                    }else {
+                            //错误提示
+                            $DBerr = M()->getDbError();
+                            save_log("编号为".$data['id']."的提现申请".L("UPDATE_FAILED").$DBerr,0);
+                            $this->error(L("UPDATE_FAILED").$DBerr,0);
+                    }
+                }
+            $this->success(L("UPDATE_SUCCESS"));    
+        }
+        
 	public function config(){
 		$list = M()->query("SELECT * FROM ".DB_PREFIX."user_carry_config ORDER BY id ASC");
 		$this->assign("list",$list);
