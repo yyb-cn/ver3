@@ -15,7 +15,7 @@
 						<th>标题</th>
 						<th style="width:12%">我的投标金额</th>
 						<th style="width:16%">期限/利率</th>
-						<th style="width:10%">信用等级</th>
+					<!--	<th style="width:10%">信用等级</th>-->
 						<th style="width:15%">进度/剩余时间</th>
 					</tr>
 					{foreach from=$list item="item" key=key}
@@ -37,9 +37,9 @@
 							{$item.repay_time}{if $item.repay_time_type eq 0}天{else}个月{/if} / 
 	                        {function name="number_format" v="$item.rate" f="2"}%
 						</td>
-						<td>
+						<!--	<td>
 							<img src="{$TMPL}/images/{$item.point_level}.png" width="40" align="absmiddle" alt="{$item.point_level}" title="{$item.point_level}">
-						</td>
+						</td>-->
 						<td>
 							<div class="greenProcessBar progressBar w100" style="border:1px solid #FDECC7; background:#FFF6E5">
 		                        <div class="p"><div class="c" style="width:{$item.progress_point}%;{if $item.deal_status eq 4 || $item.deal_status eq 5}background:url('{$TMPL}/images/progressBarBg2.png') repeat-x{/if}"></div></div>
