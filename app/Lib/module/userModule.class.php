@@ -43,7 +43,23 @@ class userModule extends SiteBaseModule
 				showErr($GLOBALS['lang']['VERIFY_CODE_ERROR'],0,url("shop","user#register"));
 			}
 		}
-		
+	if($_POST['pid_name'])
+		{
+			
+			$user_pid=$GLOBALS['db']->
+			getOne("select `id` from ".DB_PREFIX."user where `user_name` = '".$_POST['pid_name']."' "."or `real_name`= '".$_POST['pid_name']."' " );
+			
+			if($user_pid>0&&!empty($user_pid)){
+					$_POST['pid']=$user_pid;
+				}
+			else{
+				showErr("推荐人不存在");
+						
+				}
+		}
+	if(intval($_REQUEST['p'])>0){
+	      $_POST['pid']=$_REQUEST['p'];
+			 }		
 		require_once APP_ROOT_PATH."system/libs/user.php";
 		$user_data = $_POST;
 		if(!$user_data){
@@ -105,8 +121,7 @@ class userModule extends SiteBaseModule
 			}
 			$user_data['is_effect'] = 1;
 			$user_data['mobilepassed'] = 1;
-		}
-		
+		}		 
 		//判断是否为邮箱注册
 		if((app_conf("REGISTER_TYPE") == 0 || app_conf("REGISTER_TYPE") == 2) && (app_conf("USER_VERIFY") == 1 || app_conf("USER_VERIFY") == 2)){
 			

@@ -172,7 +172,15 @@ var to_send_msg = false;
 							<div class="blank1"></div>
 							{/if}
 						{/if}
-					
+						<div class="field password pr" id="and">
+							<div class="u_icon"></div>
+							<label for="signup-password"><span class="f_red">*</span> 推荐人</label>
+							<span class="holder_tip ps" >推荐人</span>
+							<input type="text" class="f-input ipttxt"  name="pid_name" size="30">
+							<span class="f-input-tip"></span> 
+							<input type="hidden" name="user_pwd">
+							<span class="hint"></span> 
+						</div>
 						
 						
 						<div class="field password pr" id="and">
@@ -182,7 +190,6 @@ var to_send_msg = false;
 							<input type="password" class="f-input ipttxt" id="signup-password" size="30">
 							<span class="f-input-tip"></span> 
 							<input type="hidden" id="signup-password-ipt" name="user_pwd">
-							<span class="hint">{$LANG.USER_TITLE_USER_PWD_TIP}</span> 
 						</div>
 						<div class="blank1"></div>
 						<div class="field password pr">
