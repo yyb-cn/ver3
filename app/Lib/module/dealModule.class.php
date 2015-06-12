@@ -578,23 +578,23 @@ class dealModule extends SiteBaseModule
                 // $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_log_b,"INSERT");//插入一条投资目录		
 			// }
 	// }	
-	if($GLOBALS['user_info']['mobilepassed'] == 0||$GLOBALS['user_info']['idcardpassed']==0){	
-	    $ecv['user_id'] =$GLOBALS['user_info']['id'];
-  		$ecv['receive'] = 1;
-		$ecv['receive_time'] = get_gmtime();
-		$ecv['ecv_type_id'] = 27;	
-		$ecv['last_time'] = get_gmtime()+604800;
-		$ecv['password']=rand(10000000,99999999);
-        $ecv['sn'] = uniqid();
-   $GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$ecv);    
-    $user_ecv['log_info'] ="注册就送20投资代金劵";
-  	$user_ecv['log_time'] =get_gmtime();
-	$user_ecv['money'] =0;
-	$user_ecv['account_money'] =$GLOBALS['user_info']['money'];
-	$user_ecv['user_id'] =$GLOBALS['user_info']['id'];
-   $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$user_ecv);   
+	// if($GLOBALS['user_info']['mobilepassed'] == 0||$GLOBALS['user_info']['idcardpassed']==0){	
+	    // $ecv['user_id'] =$GLOBALS['user_info']['id'];
+  		// $ecv['receive'] = 1;
+		// $ecv['receive_time'] = get_gmtime();
+		// $ecv['ecv_type_id'] = 27;	
+		// $ecv['last_time'] = get_gmtime()+604800;
+		// $ecv['password']=rand(10000000,99999999);
+        // $ecv['sn'] = uniqid();
+   // $GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$ecv);    
+    // $user_ecv['log_info'] ="注册就送20投资代金劵";
+  	// $user_ecv['log_time'] =get_gmtime();
+	// $user_ecv['money'] =0;
+	// $user_ecv['account_money'] =$GLOBALS['user_info']['money'];
+	// $user_ecv['user_id'] =$GLOBALS['user_info']['id'];
+   // $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$user_ecv);   
    
-	   } 	
+	   // } 	
 			if($data)
 			$GLOBALS['db']->autoExecute(DB_PREFIX."user",$data,"UPDATE","id=".$GLOBALS['user_info']['id']);		
 		
