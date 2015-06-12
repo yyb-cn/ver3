@@ -10,12 +10,30 @@
 <load href='__TMPL__Common/js/calendar/calendar.js' />
 <script type="text/javascript">
 	var r_status = '<php>echo $_REQUEST['status'];</php>';
+        function modify_carry_arr(id){
+    if(!id){
+            idBox = $(".key:checked");
+            if(idBox.length == 0)
+            {
+                    alert('请选择需要处理的用户ID');
+                    return;
+            }
+            idArray = new Array();
+            $.each( idBox, function(i, n){
+                    idArray.push($(n).val());
+            });
+            id = idArray.join(",");
+        }
+        
+    $.weeboxs.open(ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=edit_arr&id="+id, {contentType:'ajax',showButton:false,title:"提现申请批量处理",width:900,height:780});
+}
 </script>
 <div class="main">
 <div class="main_title">{:L(MODULE_NAME."_".ACTION_NAME)}</div>
 <div class="blank5"></div>
 <div class="button_row">
-	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+    <input type="button" class="button" value="{%DEL}" onclick="del();" />&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" class="button" value="批量处理用户"  onclick="modify_carry_arr();"/>(注：只能批量处理通过)
 </div>
 <php>
 	function get_carry_status($status){
@@ -67,7 +85,7 @@
 	checkbox="true" 
 	action="true" 
 	datasource="list" 
-	show="id:{%ID}|50px,user_id|get_user_name:{%USER_NAME},money|format_price:提现金额,fee|format_price:手续费,pfcfb:PFCFB,totle_money:提现总额,create_time|to_date:申请时间,status|get_carry_status:提现状态,update_time|to_date:处理时间" 
+	show="id:{%ID}|50px,user_id|get_user_name:{%USER_NAME},real_name:真实姓名,money|format_price:提现金额,fee|format_price:手续费,pfcfb:PFCFB,totle_money:提现总额,create_time|to_date:申请时间,status|get_carry_status:提现状态,update_time|to_date:处理时间" 
 	actionlist="id|modify_carry=$user" /> 
 
 <div class="blank5"></div>
