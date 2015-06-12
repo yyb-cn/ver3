@@ -868,9 +868,9 @@ class dealModule extends SiteBaseModule
 
 	//有效推荐人 $asa
 	
-// $huodong_time=1434124800; //2015.06-13  时间戳
+// $huodong_time=1431619200; //2015.04-15  时间戳
 
- $huodong_time=1434124800;
+ $huodong_time=1431619200;
 $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id=".$GLOBALS['user_info']['id']);
 	// $uc=array(1871,959,1877,971,1995,2006,2054);
 	$no=0;
@@ -906,7 +906,7 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 	   // }
 	 // }   
         // if($no==0){
-		 modify_account(array('pfcfb'=>$ox_money,'score'=>0),$pid_id,"推荐了".$GLOBALS['user_info']['id']."获得".$ox_money."现金红包");
+		 modify_account(array('pfcfb'=>$ox_money,'score'=>0),$pid_id,"推荐了".$GLOBALS['user_info']['id']."获得".$ox_money."推荐奖励6月豪礼");
 		// }
 	
 		

@@ -538,15 +538,12 @@ class uc_moneyModule extends SiteBaseModule
 	public function delbank(){
 		$id = intval($_REQUEST['id']);
 		if($id==0){
-			showErr("数据不存在",1);
+			showErr("不存在此银行",1);
 		}
-		$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."user_bank where user_id=".intval($GLOBALS['user_info']['id'])." and id=".$id);
-		if($GLOBALS['db']->affected_rows()){
-			showSuccess("删除成功",1);
-		}
-		else{
-			showErr("删除失败",1);
-		}
+	  if($GLOBALS['db']->query("update ".DB_PREFIX."user_bank set status =1 where id = ".$id)){
+
+   	  	showSuccess("删除成功",1); 
+	   }
 	}
 	
 	/**
@@ -654,10 +651,10 @@ class uc_moneyModule extends SiteBaseModule
 			$paypassword = strim(FW_DESPWD($_REQUEST['paypassword']));
 		
 			$amount = floatval($_REQUEST['amount']);
-			$pfcfb = floatval($GLOBALS['user_info']['pfcfb']);//获取用户拥有多少浦发币
+			// $pfcfb = floatval($GLOBALS['user_info']['pfcfb']);//获取用户拥有多少浦发币
 			$bid = floatval($_REQUEST['bid']);
 			//@pfcfb 浦发币 新添		
-			$status = getUcSaveCarry($amount,$paypassword,$bid,$pfcfb);
+			$status = getUcSaveCarry($amount,$paypassword,$bid);
 			
 		 if($status['status'] == 0){
 			  showErr($status['show_err']);

@@ -1031,7 +1031,7 @@
 	}	
 	
 	//用户提现;
-	function getUcSaveCarry($amount,$paypassword,$bid,$pfcfb){
+	function getUcSaveCarry($amount,$paypassword,$bid){
 		$status = array('status'=>0,'show_err'=>'');
 	
 		if($GLOBALS['user_info']['id'] > 0){
@@ -1087,13 +1087,14 @@
 			if($feel_type == 1){
 				$fee = $data['money'] * $fee * 0.01;
 			}	
-				
+				$data['fee'] = $fee;
+				$da = date("w"); 
+  if($da==3){				
 			if(($data['money'] + $fee) > (floatval($GLOBALS['user_info']['money'])+$GLOBALS['user_info']['pfcfb'])){
 				$status['status'] = 0;
 				$status['show_err'] = $GLOBALS['lang']['CARRY_MONEY_NOT_ENOUGHT'];
 				return $status;
 			}
-			$data['fee'] = $fee;
 				
 			//将$data['money']拆开扣除
                         if($data['money'] > $pfcfb){//取现金额大于浦发币金额
@@ -1106,7 +1107,18 @@
                             $data['money'] = 0;//取现本金为0
                             
                         }
-				
+		}else{
+			if(($data['money'] + $fee) > (floatval($GLOBALS['user_info']['money']))){
+				$status['status'] = 0;
+				$status['show_err'] = $GLOBALS['lang']['CARRY_MONEY_NOT_ENOUGHT'];
+				return $status;
+			}
+		
+		
+		
+		}	
+
+         			
 			if($bid == 0)
 			{
 				$status['status'] = 0;
