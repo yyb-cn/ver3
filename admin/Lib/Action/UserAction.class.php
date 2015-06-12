@@ -1806,6 +1806,8 @@ $pid_name=trim($_REQUEST['pid_name']);
 	function login_site(){
 		$user_id = intval($_REQUEST['id']);
 		$user_info = M("User")->getById($user_id);
+	   // $user_info = M("User")->getById($user_id);
+		$adm_session = es_session::get(md5(conf("AUTH_KEY")));
 		require_once APP_ROOT_PATH."system/utils/es_session.php";
 			clear_dir_file(get_real_path()."public/runtime/app/data_caches/");				
 			clear_dir_file(get_real_path()."public/runtime/app/db_caches/");
@@ -1821,6 +1823,15 @@ $pid_name=trim($_REQUEST['pid_name']);
 			clear_auto_cache("youhui_page_recommend_youhui_list");
 	    es_session::set("user_info",$user_info);
 		$GLOBALS['user_info']=$user_info;
+		$log_data['log_info'] = "前台用户'".$user_info['user_name']."'登录成功";
+		$log_data['log_time'] = TIME_UTC;
+		$log_data['log_admin'] = intval($adm_session['adm_id']);
+		$log_data['log_ip']	= get_client_ip();
+		$log_data['log_status'] = 1;	
+		$log_data['module']	=	MODULE_NAME;
+		$log_data['action'] = 	ACTION_NAME;
+		M("Log")->add($log_data);
+	
 		app_redirect(url("index"));	
 		
        
