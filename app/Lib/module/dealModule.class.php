@@ -585,13 +585,14 @@ class dealModule extends SiteBaseModule
 		$ecv['ecv_type_id'] = 27;	
 		$ecv['last_time'] = get_gmtime()+604800;
 		$ecv['password']=rand(10000000,99999999);
-                $ecv['sn'] = uniqid();
+        $ecv['sn'] = uniqid();
    $GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$ecv);    
     $user_ecv['log_info'] ="注册就送20投资代金劵";
   	$user_ecv['log_time'] =get_gmtime();
-	$user_ecv['money'] =20;
+	$user_ecv['money'] =0;
+	$user_ecv['account_money'] =$GLOBALS['user_info']['money'];
 	$user_ecv['user_id'] =$GLOBALS['user_info']['id'];
-   $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_ecv);   
+   $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$user_ecv);   
    
 	   } 	
 			if($data)
