@@ -662,7 +662,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 		$map['user_id'] = $user_id;
 		if(trim($_REQUEST['log_info'])!='')
 		{
-			if($t=="" || $t=="quota")
+			if($t=="" || $t=="quota" || $t=="old_user")
 			{
 				$map['log_info'] = array('like','%'.trim($_REQUEST['log_info']).'%');	
 			}else {
@@ -672,7 +672,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 		
 		if($log_end_time==0)
 		{
-			if($t=="" || $t=="quota")
+			if($t=="" || $t=="quota" || $t=="old_user")
 			{
 				$map['log_time'] = array('gt',$log_begin_time);	
 			}else {
@@ -680,7 +680,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 			}
 		}
 		elseif($log_begin_time > 0 || $log_end_time > 0){
-			if($t==""  || $t=="quota")
+			if($t==""  || $t=="quota" || $t=="old_user")
 			{
 				$map['log_time'] = array('between',array($log_begin_time,$log_end_time));	
 			}else {
@@ -701,7 +701,6 @@ $pid_name=trim($_REQUEST['pid_name']);
 		}elseif($t=="freeze"){
 			$model = M ("UserLockMoneyLog");
 		}else{
-			// $map['quota'] = array('gt',0);
 			$model = M ("UserLog");
 		}
 		if (! empty ( $model )) {

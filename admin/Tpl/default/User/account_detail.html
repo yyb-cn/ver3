@@ -19,7 +19,8 @@
 		<input class="button conf_btn <if condition="$t eq money">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=account_detail&id={$user_id}&t=money'" value="资金日志">
 		<input class="button conf_btn <if condition="$t eq point">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=account_detail&id={$user_id}&t=point'" value="信用积分日志">
 		<input class="button conf_btn <if condition="$t eq freeze">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=account_detail&id={$user_id}&t=freeze'" value="冻结资金">
-		<input class="button conf_btn <if condition="$t eq quota">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=account_detail&id={$user_id}&t=quota'" value="v2用户资金变动记录(额度)">
+		<input class="button conf_btn <if condition="$t eq quota">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=account_detail&id={$user_id}&t=quota'" value="额度">
+		<input class="button conf_btn <if condition="$t eq old_user">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=account_detail&id={$user_id}&t=old_user'" value="用户明细资金">
 	</div>
 </div>
 
@@ -84,7 +85,6 @@
 		,create_time_ymd:操作时间
 		"
 		/> 
-	 
 <elseif condition="$t eq quota"/>
 
 	<html:list 
@@ -100,9 +100,27 @@
 		,quota:额度		
 		,log_time|to_date:操作时间"  
 		
-		/> 
-	 
+		/> 	
+<elseif condition="$t eq old_user"/>
+	<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="log" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,money:操作金额
+		,pfcfb:激活PFCFB
+		,unjh_pfcfb:未激活PFCFB
+		,log_info:操作类型
+		,quota:额度		
+		,log_time|to_date:操作时间"  
+		
+		/> 		
 </if>
+
+
+
+
 
 <div class="blank5"></div>
 <div class="page">{$page}</div>
