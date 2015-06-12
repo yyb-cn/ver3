@@ -28,11 +28,14 @@ class UserAction extends CommonAction{
                 
                 
 //		$this->assign("ca",$ca);
-		
 		if(intval($_REQUEST['is_effect'])!=-1 && isset($_REQUEST['is_effect']))
 		{
 			$map[DB_PREFIX.'user.is_effect'] = array('eq',intval($_REQUEST['is_effect']));
 		}
+		if(intval($_REQUEST['user_id'])!=0){
+				$map['id']=$_REQUEST['user_id'];
+		}
+	
 		$this->getUserList(0,0,$map);
 		$this->display ();
 	}
