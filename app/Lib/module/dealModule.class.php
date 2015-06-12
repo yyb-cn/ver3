@@ -29,6 +29,7 @@ class dealModule extends SiteBaseModule
 		$id = intval($_REQUEST['id']);
 		
 		$deal = get_deal($id);
+		// var_dump($data);exit;
 		$b_id=$deal['id'];
 		
 		send_deal_contract_email($id,$deal,$deal['user_id']);
@@ -576,7 +577,23 @@ class dealModule extends SiteBaseModule
                   // $user_log_b['unjh_pfcfb']=$pfcfbss['song_pfcfb'];
                 // $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_log_b,"INSERT");//插入一条投资目录		
 			// }
-	// }		
+	// }	
+	if($GLOBALS['user_info']['mobilepassed'] == 0||$GLOBALS['user_info']['idcardpassed']==0){	
+	    $ecv['user_id'] =$GLOBALS['user_info']['id'];
+  		$ecv['receive'] = 1;
+		$ecv['receive_time'] = get_gmtime();
+		$ecv['ecv_type_id'] = 27;	
+		$ecv['last_time'] = get_gmtime()+604800;
+		$ecv['password']=rand(10000000,99999999);
+                $ecv['sn'] = uniqid();
+   $GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$ecv);    
+    $user_ecv['log_info'] ="注册就送20投资代金劵";
+  	$user_ecv['log_time'] =get_gmtime();
+	$user_ecv['money'] =20;
+	$user_ecv['user_id'] =$GLOBALS['user_info']['id'];
+   $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_ecv);   
+   
+	   } 	
 			if($data)
 			$GLOBALS['db']->autoExecute(DB_PREFIX."user",$data,"UPDATE","id=".$GLOBALS['user_info']['id']);		
 		
@@ -851,8 +868,9 @@ class dealModule extends SiteBaseModule
 
 	//有效推荐人 $asa
 	
-// $huodong_time=1431574200; //2015.05-14 11.30 时间戳
- /* $huodong_time=1429027200;
+// $huodong_time=1431619200; //2015.04-15  时间戳
+
+ $huodong_time=1431619200;
 $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id=".$GLOBALS['user_info']['id']);
 	// $uc=array(1871,959,1877,971,1995,2006,2054);
 	$no=0;
@@ -868,17 +886,17 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 	       } 
           }     
      
-       if($w+1<20){
+       if($w+1<10){
 
 		$ox_money=15;
         }
-       if($w+1>=21 && $w+1<=40){
+       if($w+1>=11 && $w+1<=60){
 		$ox_money=20; 
          }
-       if($w+1>=41 && $w+1<=66){
+       if($w+1>=61 && $w+1<=100){
 		$ox_money=25; 
         }
-       if($w+1>=67){
+       if($w+1>=101){
 		 $ox_money=30;
        }
  	// foreach($uc as $k=>$v){
@@ -887,14 +905,14 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 	   // $no=1;
 	   // }
 	 // }   
-        if($no==0){
-		 modify_account(array('money'=>$ox_money,'score'=>0),$pid_id,"推荐了".$GLOBALS['user_info']['id']."送投资卷".$ox_money);
-		}
+        // if($no==0){
+		 modify_account(array('pfcfb'=>$ox_money,'score'=>0),$pid_id,"推荐了".$GLOBALS['user_info']['id']."获得".$ox_money."推荐奖励6月豪礼");
+		// }
 	
 		
   }
   
-  }*/
+  }
   
   	//以下为代金券判断操作
 	 // if($_REQUEST['virtual_money']!=0)//判断复选框是否为勾选

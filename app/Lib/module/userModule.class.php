@@ -618,7 +618,7 @@ class userModule extends SiteBaseModule
 				showSuccess("验证成功",0,APP_ROOT."/index.php?ctl=collocation&act=CreateNewAcct&user_type=0&user_id=".$id);
 			}
 			else{
-				showSuccess("注册成功",0,APP_ROOT."/");
+				showSuccess("注册成功",0,APP_ROOT."/index.php?ctl=huodong&act=huodong5&user_type=0&user_id=".$id);
 				
 			}
 		}

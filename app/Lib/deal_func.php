@@ -42,8 +42,17 @@ function get_deal($id=0,$is_effect=1)
 
 	if($deal)
 	{
+	//V2老标
+	 if($deal['deal_status']==5){
+	 
+		if(!$GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."deal_repay WHERE  deal_id=$id ")){
+					$data['deal_status'] = 4;
+		$GLOBALS['db']->autoExecute(DB_PREFIX."deal",$data,"UPDATE","id=".$id);
+		$deal['deal_status']=4;
+		 }
+		}
 		if($deal['deal_status']!=3 && $deal['deal_status']!=5)
-		{
+		{		
 			$temp_data =syn_deal_status($deal['id']);
 			$deal = array_merge($deal,$temp_data);
 		}

@@ -90,7 +90,7 @@ class uc_activityModule extends SiteBaseModule
 		}
 		
 	 //获得推荐人浦发币
-	  $pid_pfb = $GLOBALS['db']->getRow("select `unjh_pfcfb`,`referee_money` from ".DB_PREFIX."user where  id = ".$GLOBALS['user_info']['id']);
+	  $pid_pfb = $GLOBALS['db']->getRow("select `pfcfb`,`referee_money` from ".DB_PREFIX."user where  id = ".$GLOBALS['user_info']['id']);
 	     //时间	
 	  //推荐人信息
       $pid_nm = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."user where create_time>".$create_time." and pid = ".$GLOBALS['user_info']['id']);
@@ -190,7 +190,7 @@ $sql_no_limit = "select d.name,d.rate,d.repay_time,d.repay_time_type, dl.money a
 	 
 	   $user_info =$GLOBALS['user_info'];
 	   // print_r($user_info);exit;
-	   
+		  $GLOBALS['tmpl']->assign("pfcfb",$GLOBALS['user_info']['pfcfb']);   
 	  $GLOBALS['tmpl']->assign("lpl",$GLOBALS['user_info']['id']);
 	  $GLOBALS['tmpl']->assign("user_data",$user_info);
 		

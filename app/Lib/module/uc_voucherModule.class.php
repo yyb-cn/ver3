@@ -124,5 +124,40 @@ class uc_voucherModule extends SiteBaseModule
 			}
 		}
 	}
+	 public function get_new_voucher()
+        {
+            $id = $_REQUEST['id'];//23/24/25/26
+            $user_id= $GLOBALS['user_info']['id'];
+            
+
+        
+
+            $ecv = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."ecv where user_id = ".$user_id." and ecv_type_id in ('23','24','25','26')");
+            
+            $ecv_record = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."ecv_type where id = ".$id);
+           $olduser=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id = ".$user_id);
+         if($olduser){
+		    showErr("新注册用户才可领取",0,APP_ROOT."/");
+		 }
+            if(!$ecv && $ecv_record){
+                $ecv_info['user_id'] = $user_id;
+                $ecv_info['used_yn'] = 0;
+                $ecv_info['receive'] = 1;
+                $ecv_info['receive_time'] = get_gmtime();
+                $ecv_info['last_time'] = get_gmtime()+ 7*24*3600;
+                $ecv_info['ecv_type_id'] = $id;
+                $ecv_info['password'] = rand(10000000,99999999);
+                $ecv_info['sn'] = uniqid();
+                $GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$ecv_info);
+
+                showSuccess("领取成功",0,"index.php?ctl=deals");
+            }   else {
+                
+                showErr("领取失败",0,APP_ROOT."/");
+                
+
+            }
+        }
+
 }
 ?>

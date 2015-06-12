@@ -413,7 +413,8 @@ function syn_deal_status($id)
 				}
 				
 				//判断是否完成还款
-				if($GLOBALS['db']->getOne("SELECT count(*) FROM ".DB_PREFIX."deal_repay WHERE has_repay=0 AND deal_id=$id ") == 0){
+				//多加了一条判断if &&之后的sql语句 2015 -06-12
+				if($GLOBALS['db']->getOne("SELECT count(*) FROM ".DB_PREFIX."deal_repay WHERE has_repay=0 AND deal_id=$id ") == 0 && $GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."deal_repay WHERE  deal_id=$id ")){
 					$data['deal_status'] = 5;
 				}
 				else{
