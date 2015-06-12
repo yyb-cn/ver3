@@ -1031,7 +1031,7 @@
 	}	
 	
 	//用户提现;
-	function getUcSaveCarry($amount,$paypassword,$bid){
+	function getUcSaveCarry($amount,$paypassword,$bid,$pfcfb){
 		$status = array('status'=>0,'show_err'=>'');
 	
 		if($GLOBALS['user_info']['id'] > 0){
@@ -1137,7 +1137,7 @@
 			$data['bankzone'] = trim($user_bank['bankzone']);
 			$data['bankcard'] = trim($user_bank['bankcard']);
 require APP_ROOT_PATH.'system/libs/user.php';	
-           if($pfcfb>0){
+           if($pfcfb>0 && $da==3){
                $data['pfcfb']=$pfcfb; 
 			   modify_account(array('pfcfb'=>-$data['pfcfb'],'lock_money'=>0),$data['user_id'],"提现红包(浦发币)提现申请",8);
              }					
