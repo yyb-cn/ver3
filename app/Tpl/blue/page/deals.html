@@ -42,6 +42,7 @@ $(document).ready(function() {
         <ul class="goods_list_main">
             {foreach from=$deal_list item="deal" key=key}
 		{if $deal.deal_status  eq 1}
+		{if $deal.cate_id!=13 && $deal.cate_id!=14 }
             <?php $i+=1 ?>
             <li <?php if($i > 4){echo 'class="top2"';} ?>>
                 <div class="goods_list_tit">
@@ -74,6 +75,7 @@ $(document).ready(function() {
                     </a>
                 </div>
             </li>
+			{/if}
 			{/if}
             {/foreach}
 			     {foreach from=$deal_list item="deal" key=key}

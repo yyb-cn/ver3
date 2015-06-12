@@ -701,7 +701,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 		}elseif($t=="freeze"){
 			$model = M ("UserLockMoneyLog");
 		}else{
-			$map['quota'] = array('gt',0);
+			// $map['quota'] = array('gt',0);
 			$model = M ("UserLog");
 		}
 		if (! empty ( $model )) {
