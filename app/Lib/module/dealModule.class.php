@@ -476,7 +476,7 @@ class dealModule extends SiteBaseModule
 		
 		
 		//如果未绑定手机
-	if($GLOBALS['user_info']['mobilepassed'] == 0||$GLOBALS['user_info']['idcardpassed']==0){
+	if($GLOBALS['user_info']['mobilepassed'] == 0){
 		app_redirect(url("index","uc_account#security"),3,"请实名认证,填写身份证"); 
 		}
 		
@@ -779,9 +779,10 @@ class dealModule extends SiteBaseModule
 		    $GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$assa,"INSERT");//插入一条投资目录
      $assa_ecv['log_info'] ="使用投资代金劵".$total_money_4;
   	 $assa_ecv['log_time'] =get_gmtime();
-	 $assa_ecv['money'] =$total_money_4;
+	 $assa_ecv['money'] =0;
+	  $assa_ecv['account_money'] =$GLOBALS['user_info']['money'];
 	 $assa_ecv['user_id'] =$GLOBALS['user_info']['id'];
-     $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$assa_ecv); 
+     $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$assa_ecv); 
              $laoyonghu['used_yn']=1;
 	$GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$laoyonghu,"UPDATE","ecv_type_id in(31,32,33,34) and user_id=".$ecv_user_id);	
   	
@@ -791,10 +792,11 @@ class dealModule extends SiteBaseModule
      // 注册
 			if($total_money_1){
 		 $nob['log_time']= get_gmtime();
-		 $nob['money']= 20;
+	   $assa_ecv['money'] =0;
+	  $assa_ecv['account_money'] =$GLOBALS['user_info']['money'];
 		 $nob['log_info']="使用了注册代金卷20金额";
 		 $nob['user_id']= $ecv_user_id;
-	  	 $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$nob,"INSERT");//
+	  	 $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$nob,"INSERT");//
 		    $ecec['used_yn']=1;
 			$GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$ecec,"UPDATE","ecv_type_id=27 and user_id=".$ecv_user_id);
 			}
@@ -802,9 +804,11 @@ class dealModule extends SiteBaseModule
 	        if($total_money_2){
      $user_ecv['log_info'] ="使用投资代金劵".$total_money_2;
   	 $user_ecv['log_time'] =get_gmtime();
-	 $user_ecv['money'] =$total_money_2;
+		 $nob['log_time']= get_gmtime();
+	   $assa_ecv['money'] =0;
+	  $assa_ecv['account_money'] =$GLOBALS['user_info']['money'];
 	 $user_ecv['user_id'] =$GLOBALS['user_info']['id'];
-     $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_ecv); 	
+     $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$user_ecv); 	
 				
 		    $ecec['used_yn']=1;
 			$GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$ecec,"UPDATE","ecv_type_id=".$ee_id." and user_id=".$ecv_user_id);

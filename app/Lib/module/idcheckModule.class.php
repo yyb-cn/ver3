@@ -90,7 +90,8 @@ class idcheckModule extends SiteBaseModule
 		
 		
 		//验证返回AJAX
-		if(check_id($_POST['idno'])){	
+		if(check_id($_POST['idno'])){
+   	$GLOBALS['db']->query("update ".DB_PREFIX."user set idcardpassed = 1 where id = ".$GLOBALS['user_info']['id']);		
 			echo json_encode(1);
 		}
 		else{
