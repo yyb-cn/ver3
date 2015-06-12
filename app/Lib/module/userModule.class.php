@@ -11,7 +11,10 @@ class userModule extends SiteBaseModule
 {
 	public function register()
 	{			
-
+         // echo $_REQUEST['p'] ;exit;
+		 if($_REQUEST['p']){
+		   	$GLOBALS['tmpl']->assign("p",$_REQUEST['p']);
+		 }
 		$GLOBALS['tmpl']->assign("page_title",$GLOBALS['lang']['USER_REGISTER']);
 		
 		$field_list =load_auto_cache("user_field_list");
@@ -57,7 +60,8 @@ class userModule extends SiteBaseModule
 						
 				}
 		}
-	if(intval($_REQUEST['p'])>0){
+	if(intval($_POST['p'])>0){
+	 // echo 1;exit;
 	      $_POST['pid']=$_REQUEST['p'];
 			 }		
 		require_once APP_ROOT_PATH."system/libs/user.php";
