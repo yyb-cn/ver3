@@ -1209,6 +1209,7 @@ class DealAction extends CommonAction{
 			
 			}
 			//发公告
+		if($data['cate_id']!=13 && $data['cate_id']!=14){	
 		$data_a['cate_id']= 5;
 		$data_a['title']=$data['name'].'开标了，欢迎各位朋友投资';
 		$data_a['content']='"'.$data['name'].'"投资金额为'.$data['borrow_amount'].'元,年利率为'.$data['rate'].'%,投资期限为'.$data['repay_time'].$time_type_name.','.$data['min_loan_money'].'元起投,<a style="text-decoration:none;color:#F00" href="index.php?ctl=deal&id='.$list.'">投标请点击这里。</a>';
@@ -1225,6 +1226,7 @@ class DealAction extends CommonAction{
 			syn_deal_status($list);
 			syn_deal_match($list);
 			save_log("编号：$list，".$log_info.L("INSERT_SUCCESS"),1);
+						}	
 			$this->assign("jumpUrl",u(MODULE_NAME."/add"));
 			$this->success(L("INSERT_SUCCESS"));
 		} else {
