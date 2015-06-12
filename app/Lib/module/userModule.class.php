@@ -13,7 +13,8 @@ class userModule extends SiteBaseModule
 	{			
          // echo $_REQUEST['p'] ;exit;
 		 if($_REQUEST['p']){
-		   	$GLOBALS['tmpl']->assign("p",$_REQUEST['p']);
+	$user_pid=$GLOBALS['db']->getRow("select * from fanwe_user where id=".$_REQUEST['p'] );
+			$GLOBALS['tmpl']->assign("p",$user_pid['user_name']);	
 		 }
 		$GLOBALS['tmpl']->assign("page_title",$GLOBALS['lang']['USER_REGISTER']);
 		
