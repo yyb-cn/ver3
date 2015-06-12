@@ -505,7 +505,11 @@ define("ACCOUNT_NO_VERIFY_ERROR",3); //帐户未激活
 		{
 			$GLOBALS['db']->query("update ".DB_PREFIX."user set lock_money = lock_money + ".floatval($data['lock_money'])." where id =".$user_id);
 		}
-		
+		if(floatval($data['referee_money'])!=0)
+		{
+			$GLOBALS['db']->query("update ".DB_PREFIX."user set referee_money = referee_money + ".floatval($data['referee_money'])." where id =".$user_id);
+		}
+
 		if(intval($data['score'])!=0||floatval($data['money'])!=0||intval($data['point'])!=0||floatval($data['quota'])!=0 || floatval($data['lock_money']) != 0 ||floatval($data['pfcfb'])!=0)
 		{		
 			$log_info['log_info'] = $log_msg;
