@@ -60,11 +60,7 @@ class userModule extends SiteBaseModule
 				showErr("推荐人不存在");
 						
 				}
-		}
-	if(intval($_POST['p'])>0){
-	 // echo 1;exit;
-	      $_POST['pid']=$_REQUEST['p'];
-			 }		
+		}	
 		require_once APP_ROOT_PATH."system/libs/user.php";
 		$user_data = $_POST;
 		if(!$user_data){
