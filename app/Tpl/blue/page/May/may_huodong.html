@@ -175,6 +175,7 @@
 	top:3109px;
 	width:1920px;
 	height:331px;
+ background-image:url({$TMPL}/page/May/images/U_21.jpg);
 }
 
 #V-22 {
@@ -183,6 +184,8 @@
 	top:3440px;
 	width:1920px;
 	height:517px;
+	
+	  background-image:url({$TMPL}/page/May/images/V_22.jpg);
 }
 
 #W-23 {
@@ -305,10 +308,51 @@
 		<img src="{$TMPL}/page/May/images/T_20.jpg" width="1920" height="400" alt="">
 	</div>
 	<div id="U-21">
-		<img src="{$TMPL}/page/May/images/U_21.jpg" width="1920" height="331" alt="">
+		<div style="position:absolute;margin-left:600px;margin-top:120px;">
+			<ul>
+			<li style="float:left;margin-top:20px;width:160px;text-align:center; margin-left:0px;">{$first_all.0.create_time}</li>
+			<li style="float:left;margin-top:20px;width:160px;text-align:center;margin-left:0px;">{$first_all.0.user_name}</li>
+			<li style="float:left;margin-top:20px;width:160px;text-align:center;margin-left:-26px;">{$first_all.0.money}</li>
+		   <li style="float:left;margin-top:20px;width:160px;text-align:center;margin-left:0px;">58元代金劵</li>
+			<li style="float:left;margin-top:20px;width:160px;text-align:center;margin-left:0px;">抢先一步</li>
+			</ul>
+						<ul>
+			<li style="float:left;margin-top:40px;width:160px;text-align:center; margin-left:0px;">{$first_all.1.create_time}</li>
+			<li style="float:left;margin-top:40px;width:160px;text-align:center;margin-left:0px;">{$first_all.1.user_name}</li>
+			<li style="float:left;margin-top:40px;width:160px;text-align:center;margin-left:-26px;">{$first_all.1.money}</li>
+		   <li style="float:left;margin-top:40px;width:160px;text-align:center;margin-left:0px;">58元代金劵</li>
+			<li style="float:left;margin-top:40px;width:160px;text-align:center;margin-left:0px;">抢先一步</li>	
+					</ul>
+											<ul>
+			<li style="float:left;margin-top:30px;width:160px;text-align:center; margin-left:0px;">{$last_all.0.create_time}</li>
+			<li style="float:left;margin-top:30px;width:160px;text-align:center;margin-left:0px;">{$last_all.0.user_name}</li>
+			<li style="float:left;margin-top:30px;width:160px;text-align:center;margin-left:-26px;">{$last_all.0.money}</li>
+		   <li style="float:left;margin-top:30px;width:160px;text-align:center;margin-left:0px;">58元代金劵</li>
+			<li style="float:left;margin-top:30px;width:160px;text-align:center;margin-left:0px;">扭转乾坤</li>
+								</ul>
+									<ul>
+			<li style="float:left;margin-top:30px;width:160px;text-align:center; margin-left:0px;">{$last_all.1.create_time}</li>
+			<li style="float:left;margin-top:30px;width:160px;text-align:center;margin-left:0px;">{$last_all.1.user_name}</li>
+			<li style="float:left;margin-top:30px;width:160px;text-align:center;margin-left:-26px;">{$last_all.1.money}</li>
+		   <li style="float:left;margin-top:30px;width:160px;text-align:center;margin-left:0px;">58元代金劵</li>
+			<li style="float:left;margin-top:30px;width:160px;text-align:center;margin-left:0px;">扭转乾坤</li>				
+			</ul>
+	   </div>
 	</div>
 	<div id="V-22">
-		<img src="{$TMPL}/page/May/images/V_22.jpg" width="1920" height="517" alt="">
+	
+		<div style="position:absolute;margin-left:600px;margin-top:170px;">
+			{foreach from=$touzipanghangbang item=v key=key}
+			<ul>
+			<li>
+				<p style="float:left;margin-top:20px;width:190px;text-align:center;">{$v.user_name}</p>
+				<p style="float:left;margin-top:20px;width:190px;text-align:center">{$v.mobile}</p>
+				<p style="float:left;margin-top:20px;width:190px;text-align:center">{$v.t_m}</p>
+				<p style="float:left;margin-top:20px;width:190px;text-align:center">{$v.sec}</p>
+			</li>
+			</ul>
+			{/foreach}
+	   </div>
 	</div>
 	<div id="W-23">
 		<img src="{$TMPL}/page/May/images/W_23.jpg" width="1920" height="220" alt="">
