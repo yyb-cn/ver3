@@ -15,7 +15,7 @@ class huodongModule extends SiteBaseModule
 	{
 
 		//投资排行榜
-  	$time='2015-05-10 00:00:00';
+  	$time='2015-06-13 00:00:00';
 	$create_time=strtotime($time);
 	$touzipanghangbang=$GLOBALS['db']->getAll("select SUM(dl.money) as t_m,u.user_name,u.mobile from ".DB_PREFIX."deal_load dl left join ".DB_PREFIX."user u on dl.user_id=u.id  where dl.create_time>".$create_time." group by user_id order by t_m desc limit 8" );	
 	foreach($touzipanghangbang as $k=>$v){
