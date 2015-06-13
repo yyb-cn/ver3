@@ -101,7 +101,7 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 				 <!--注册直接送的券，在后台中心领取-->
 		 {foreach from="$user_ecv" item="v" key="k"}
 		  {if  ($v.last_time>$get_gmtime) }   
-			{if  ( ($v.ecv_type_id eq 27)) }	
+			{if  ( ($v.ecv_type_id eq 42)) }	
 			<tr>
 					<td class="tit tr w100">{$v.name}:</td>
 					<td>{$v.money}元<input type="checkbox" name="total_money_1" id="total_money_1" value="{$v.money}" /></td>
@@ -115,7 +115,7 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 		{foreach from="$user_ecv" item="v" key="k"}
 		          {if  ($v.last_time>$get_gmtime) }    
 		           {if  ( (!$nodeal)) }	
-                 		 {if  ( ($v.ecv_type_id!=27)) }
+                 		 {if  ( ($v.ecv_type_id!=42)) }
 			<tr>
 				<td class="tit tr w100">{$v.name}:</td>
 				<td>{$v.money}元<input type="checkbox" name="total_money_2" id="total_money_2" value="{$v.money}" /></td>
@@ -131,7 +131,7 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 		{foreach from="$user_ecv" item="v" key="k"}
 		          {if  ($v.last_time>$get_gmtime) }    
 		           {if  ( ($nodeal)) }	
-                 		 {if  ( ($v.ecv_type_id!=27)) }
+                 		 {if  ( ($v.ecv_type_id!=42)) }
 			<tr>
 				<td class="tit tr w100">{$v.name}:</td>
 				<td>{$v.money}元<input type="checkbox" name="total_money_2" id="total_money_2" value="{$v.money}" /></td>
