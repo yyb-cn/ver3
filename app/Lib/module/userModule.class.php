@@ -169,7 +169,7 @@ class userModule extends SiteBaseModule
 	         $ecv['user_id'] =$user_info['id'];
   		     $ecv['receive'] = 1;
 		     $ecv['receive_time'] = get_gmtime();
-		     $ecv['ecv_type_id'] = 27;	
+		     $ecv['ecv_type_id'] = 42;	
 			 $ecv['last_time'] = get_gmtime()+604800;
 			 $ecv['password']=rand(10000000,99999999);
              $ecv['sn'] = uniqid();
