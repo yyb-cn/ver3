@@ -345,13 +345,12 @@
 	function get_voucher_list($limit,$user_id)
 	{
 		$user_id = intval($user_id);
-		$sql = "select * from ".DB_PREFIX."ecv as e left join ".DB_PREFIX."ecv_type as et on e.ecv_type_id = et.id where e.user_id = ".$user_id." order by e.id desc limit ".$limit;
+		$sql = "select *,e.id as eid,et.id as etid from ".DB_PREFIX."ecv as e left join ".DB_PREFIX."ecv_type as et on e.ecv_type_id = et.id where e.user_id = ".$user_id." order by e.id desc limit ".$limit;
+		//return($sql);
 		$sql_count = "select count(*) from ".DB_PREFIX."ecv where user_id = ".$user_id;
-		$count = $GLOBALS['db']->getOne($sql_count);
-		$list = array();
-		if($count > 0)
-			$list = $GLOBALS['db']->getAll($sql);
 		
+		$list = $GLOBALS['db']->getAll($sql);
+		$count = $GLOBALS['db']->getOne($sql_count);
 		return array("list"=>$list,'count'=>$count);
 	}
 	

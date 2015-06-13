@@ -124,6 +124,44 @@ class uc_voucherModule extends SiteBaseModule
 			}
 		}
 	}
+	  public function get_voucher ()
+        {
+            $eid = intval($_REQUEST['eid']);
+			//print_r($eid);exit;
+            $user_id = intval($_REQUEST['user_id']);
+            $time_limitd = intval($_REQUEST['time_limitd']);
+            
+            $ecv_record = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."ecv where id = ".$eid." and user_id = ".$user_id);
+            
+            if($ecv_record){
+                //领取成功 将receive值改为1
+                $last_time = get_gmtime()+$time_limitd*24*3600;
+                $sql = '';
+                if(isset($time_limitd)){
+                    
+                    $sql = ",last_time = ".$last_time;
+                }
+                $receive_time = get_gmtime();
+
+                $re = $GLOBALS['db']->query("update ".DB_PREFIX."ecv set receive = 1,receive_time = ".$receive_time.$sql." where id = ".$eid);
+                if($re){
+                    
+                    showSuccess("领取成功");
+                    
+                }  else {
+                    
+                    showErr("领取失败");
+                    
+                }
+                
+                
+            }else{
+                //用户没有代金券记录
+                showErr("没有获得代金券条件");
+                
+            }
+            
+        }
 	 public function get_new_voucher()
         {
             $id = $_REQUEST['id'];//23/24/25/26
@@ -132,7 +170,7 @@ class uc_voucherModule extends SiteBaseModule
 
         
 
-            $ecv = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."ecv where user_id = ".$user_id." and ecv_type_id in ('23','24','25','26')");
+            $ecv = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."ecv where user_id = ".$user_id." and ecv_type_id in ('46','45','44','43')");
             
             $ecv_record = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."ecv_type where id = ".$id);
            $olduser=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id = ".$user_id);

@@ -461,7 +461,7 @@ class dealModule extends SiteBaseModule
         $user_ecv = $GLOBALS['db']->getAll("SELECT *,e.id AS eid,et.id AS etid FROM ".DB_PREFIX."ecv AS e LEFT JOIN ".DB_PREFIX."ecv_type AS et ON e.ecv_type_id = et.id WHERE e.used_yn=0 AND e.receive=1 AND e.user_id = ".$ecv_user_id." ORDER BY e.id DESC");
 	  //var_dump($user_ecv);exit;
 	//老用户的券
-	$laoyonghuyongdequan=$GLOBALS['db']->getAll("SELECT *,e.id AS eid,et.id AS etid FROM ".DB_PREFIX."ecv AS e LEFT JOIN ".DB_PREFIX."ecv_type AS et ON e.ecv_type_id = et.id WHERE e.used_yn=0 AND e.receive=1 AND et.id in(31,32,33,34)  and  e.user_id = ".$ecv_user_id." ORDER BY et.money asc");
+	$laoyonghuyongdequan=$GLOBALS['db']->getAll("SELECT *,e.id AS eid,et.id AS etid FROM ".DB_PREFIX."ecv AS e LEFT JOIN ".DB_PREFIX."ecv_type AS et ON e.ecv_type_id = et.id WHERE e.used_yn=0 AND e.receive=1 AND et.id in(40,39,38,37)  and  e.user_id = ".$ecv_user_id." ORDER BY et.money asc");
 	//print_r($laoyonghuyongdequan);exit;
 	$GLOBALS['tmpl']->assign("laoyonghuyongdequan",$laoyonghuyongdequan);
 
@@ -784,7 +784,7 @@ class dealModule extends SiteBaseModule
 	 $assa_ecv['user_id'] =$GLOBALS['user_info']['id'];
      $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$assa_ecv); 
              $laoyonghu['used_yn']=1;
-	$GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$laoyonghu,"UPDATE","ecv_type_id in(31,32,33,34) and user_id=".$ecv_user_id);	
+	$GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$laoyonghu,"UPDATE","ecv_type_id in(40,39,38,37) and user_id=".$ecv_user_id);	
   	
 		}
 }
@@ -798,7 +798,7 @@ class dealModule extends SiteBaseModule
 		 $nob['user_id']= $ecv_user_id;
 	  	 $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$nob,"INSERT");//
 		    $ecec['used_yn']=1;
-			$GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$ecec,"UPDATE","ecv_type_id=27 and user_id=".$ecv_user_id);
+			$GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$ecec,"UPDATE","ecv_type_id=42 and user_id=".$ecv_user_id);
 			}
 			// 投资
 	        if($total_money_2){
