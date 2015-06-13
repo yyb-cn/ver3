@@ -278,8 +278,12 @@ class EcvTypeAction extends CommonAction{
 				{
 					foreach($user_list as $v)
 					{
+					 if(M("DealLoad")->where("user_id=".$v['id'])->findAll())
+					 {
 						send_voucher($ecv_type_id,$v['id'],$need_password);
+					 }
 					}
+					
 					$this->assign("jumpUrl",u("EcvType/doSend",array("ecv_type_id"=>$ecv_type_id,'need_password'=>$need_password,'send_type'=>$send_type,'user_group'=>$user_group,'user_id'=>$user_ids,'gen_count'=>$gen_count,'page'=>($page+1))));
 					$msg = sprintf(l("SEND_VOUCHER_PAGE_SUCCESS"),($page-1)*$page_size,$page*$page_size);
 					$this->success($msg);

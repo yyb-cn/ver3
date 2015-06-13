@@ -24,6 +24,7 @@ function send_voucher($ecv_type_id,$user_id=0,$is_password=false)
 	$ecv_data['money'] = $ecv_type['money'];
 	$ecv_data['ecv_type_id'] = $ecv_type_id;
 	$ecv_data['user_id'] = $user_id;	
+	$ecv_data['receive'] = 1;		
 
 	do{
 		$ecv_data['sn'] = uniqid();
