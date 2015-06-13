@@ -305,12 +305,12 @@ return array(
 									array("name"=>"活动列表","module"=>"Award","action"=>"huodong"),
 							),				
 					),
-					"EcvType"	=>	array(
+					"Ecv"	=>	array(
 							"name"	=>	"发送代金劵",
-							"key"	=>	"EcvType",
+							"key"	=>	"Ecv",
 							"nodes"	=>	array(
-									array("name"=>"抽奖记录","module"=>"EcvType","action"=>"send_list"),
-									array("name"=>"抽奖机会","module"=>"EcvType","action"=>"index"),
+									array("name"=>"代金劵列表","module"=>"EcvType","action"=>"send_list"),
+									array("name"=>"代金劵记录","module"=>"EcvType","action"=>"index"),
 							),				
 					),
 			),

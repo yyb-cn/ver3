@@ -21,6 +21,8 @@ function send_voucher($ecv_type_id,$user_id=0,$is_password=false)
 	$ecv_data['use_limit'] = $ecv_type['use_limit'];
 	$ecv_data['begin_time'] = $ecv_type['begin_time'];
 	$ecv_data['end_time'] = $ecv_type['end_time'];
+	$ecv_data['receive_tine'] = $ecv_type['begin_time'];
+	$ecv_data['last_time'] = $ecv_type['end_time'];
 	$ecv_data['money'] = $ecv_type['money'];
 	$ecv_data['ecv_type_id'] = $ecv_type_id;
 	$ecv_data['user_id'] = $user_id;	
