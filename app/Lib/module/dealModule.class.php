@@ -642,7 +642,7 @@ class dealModule extends SiteBaseModule
 			}
 				}
 		//新用户的得到的劵的判断
-		if($total_money_2!=0){
+		if($total_money_2!=0 && $total_money_2){
 			if($total_money_2!=10 && $_REQUEST["bid_money"]>=1000 && $_REQUEST["bid_money"]<5000){
 				 showErr('1K-5K只能使用10元的代金券',$ajax);
 			}
