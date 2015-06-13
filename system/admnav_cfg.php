@@ -305,6 +305,14 @@ return array(
 									array("name"=>"活动列表","module"=>"Award","action"=>"huodong"),
 							),				
 					),
+					"EcvType"	=>	array(
+							"name"	=>	"发送代金劵",
+							"key"	=>	"EcvType",
+							"nodes"	=>	array(
+									array("name"=>"抽奖记录","module"=>"EcvType","action"=>"send_list"),
+									array("name"=>"抽奖机会","module"=>"EcvType","action"=>"index"),
+							),				
+					),
 			),
 	),
 	
