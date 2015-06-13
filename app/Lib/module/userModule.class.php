@@ -629,8 +629,12 @@ class userModule extends SiteBaseModule
 		if($GLOBALS['db']->getOne("SELECT count(*) FROM ".DB_PREFIX."user where idno = '.$idno.' and id<> $id ") > 0 ){
 			showErr("该实名已被其他用户认证，非本人请联系客服");
 		}
-		
-		
+		if($GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."user where idno = ".$idno)){
+			showErr("该实名已被其他用户认证，非本人请联系客服");
+		}	
+		if($GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."user where idno = ".$idno)){
+			showErr("该实名已被其他用户认证，非本人请联系客服");
+		}			
 		if($user = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where id =".$id))
 		{	
 			$user_info_re = array();
