@@ -39,6 +39,14 @@
 	{
 		location.href = ROOT+"?"+VAR_MODULE+"=Ecv&"+VAR_ACTION+"=index&ecv_type_id="+id+"&";
 	}
+         function send_all(id){
+            
+            window.open("?m=EcvType&a=doSend_arr&ecv_id="+id+"&lao=1&receive=1");
+        }
+         function send_all2(id){
+            
+            window.open("?m=EcvType&a=doSend_arr&ecv_id="+id+"&lao=1&receive=0");
+        }
 </script>
 <div class="main">
 <div class="main_title">{$main_title}</div>
@@ -70,9 +78,10 @@
 	,end_time|to_date:{%VOUCHER_END_TIME}
 	,gen_count:{%VOUCHER_GEN_COUNT}
 	,send_type|get_send_types:{%VOUCHER_SEND_TYPE}" 
-	actionlist="edit:{%EDIT},foreverdel:{%FOREVERDEL},id|get_send,view:{%VIEW}" /> 
+	actionlist="edit:{%EDIT},foreverdel:{%FOREVERDEL},id|get_send,view:{%VIEW},send_all:A发送,send_all2:B发送" /> 
 
 <div class="blank5"></div>
 <div class="page">{$page}</div>
+注：A发送为发给老用户并自动领取，B发送为发给老用户不自动领取
 </div>
 <include file="Public:footer" />

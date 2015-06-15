@@ -377,12 +377,12 @@ class EcvTypeAction extends CommonAction{
 	
         public function doSend_arr(){
                
-            $user_id_arr = $_REQUEST['user_id_arr'];//获取array的user_id
+//          $user_id_arr = $_REQUEST['user_id_arr'];//获取array的user_id
             $ecv_id  = intval($_REQUEST['ecv_id']);//获取代金券id
             $receive = intval($_REQUEST['receive']);//获取是否帮老客户自动领取 1为已领取 0为未领取
             $old_user = intval($_REQUEST['lao']);//获取发给老用户命令
             
-            if(empty($user_id_arr) && $old_user!=1){
+            if($old_user!=1){
                 $this->error("没有用户ID");
             }else{
                 
