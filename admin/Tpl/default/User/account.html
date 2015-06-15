@@ -3,9 +3,14 @@
 <script type="text/javascript">
 	function check_incharge_form()
 	{
-		if($("input[name='point']").val()==''&&$("input[name='quota']").val()=='')
+		if($("input[name='money']").val()==''&&$("input[name='point']").val()==''&&$("input[name='quota']").val()==''&&$("input[name='score']").val()=='')
 		{
 			alert("资金，信用积分，信用额度至少要填一项");
+			return false;
+		}
+		if($("input[name='money']").val()!=''&&isNaN($("input[name='money']").val()))
+		{
+			alert(LANG['MONEY_FORMAT_ERROR']);
 			return false;
 		}
 		
@@ -31,21 +36,44 @@
 	<tr>
 		<td colspan=2 class="topTd"></td>
 	</tr>
-	
+	<tr>
+		<td class="item_title">{%INCHARGE_USER_MONEY}:</td>
+		<td class="item_input"><input type="text" class="textbox" name="money" />
+		<span class='tip_span'>[{%INCHARGE_USER_MONEY_TIP}]</span>
+		</td>
+	</tr>
+        <tr>
+		<td class="item_title">冻结资金:</td>
+		<td class="item_input"><input type="text" class="textbox" name="lock_money" />
+		<span class='tip_span'>[{%INCHARGE_USER_MONEY_TIP}]</span>
+		</td>
+	</tr>
 	<tr>
 		<td class="item_title">信用积分:</td>
-		<td class="item_input"><input type="text" class="textbox require" name="point" />
+		<td class="item_input"><input type="text" class="textbox " name="point" />
 		<span class='tip_span'>[正数为增加信用，负数为减少信用]</span>
 		</td>
 	</tr>
 	
 	<tr>
 		<td class="item_title">信用额度:</td>
-		<td class="item_input"><input type="text" class="textbox require" name="quota" />
+		<td class="item_input"><input type="text" class="textbox " name="quota" />
 		<span class='tip_span'>[正数为增加额度，负数为减少额度]</span>
 		</td>
 	</tr>
 	
+	<tr>
+		<td class="item_title">浦发币:</td>
+		<td class="item_input"><input type="text" class="textbox " name="pfcfb" />
+		<span class='tip_span'>[正数为增加，负数为减少]</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">未激活的浦发币:</td>
+		<td class="item_input"><input type="text" class="textbox " name="unjh_pfcfb" />
+		<span class='tip_span'>[正数为增加，负数为减少]</span>
+		</td>
+	</tr>
 	<tr>
 		<td class="item_title">{%INCHARGE_MSG}:</td>
 		<td class="item_input"><input type="text" class="textbox" name="msg" style="width:400px;" />

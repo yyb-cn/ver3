@@ -610,12 +610,15 @@ $pid_name=trim($_REQUEST['pid_name']);
 	public function modify_account()
 	{
 		$user_id = intval($_REQUEST['id']);
-		$money = 0;
+		$money = floatval($_REQUEST['money']);
+   
 		$score = intval($_REQUEST['score']);
 		$point = intval($_REQUEST['point']);
 		$quota = floatval($_REQUEST['quota']);
 		$lock_money = floatval($_REQUEST['lock_money']);
-		
+		$pfcfb = floatval($_REQUEST['pfcfb']);
+		$unjh_pfcfb = floatval($_REQUEST['unjh_pfcfb']);
+		// print_r($lottery_score);exit;
 		if($lock_money!=0){
 			if($lock_money > 0 && $lock_money > D("User")->where('id='.$user_id)->getField("money")){
 				$this->error("输入的冻结资金不得超过账户总余额"); 
@@ -629,7 +632,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 		}
 		
 		$msg = trim($_REQUEST['msg'])==''?l("ADMIN_MODIFY_ACCOUNT"):trim($_REQUEST['msg']);
-		modify_account(array('money'=>$money,'score'=>$score,'point'=>$point,'quota'=>$quota,'lock_money'=>$lock_money),$user_id,$msg,13);
+		modify_account(array('money'=>$money,'pfcfb'=>$pfcfb,'unjh_pfcfb'=>$unjh_pfcfb,'score'=>$score,'point'=>$point,'quota'=>$quota,'lock_money'=>$lock_money),$user_id,$msg,13);
 		if(floatval($_REQUEST['quota'])!=0){
 			$content = "您好，".app_conf("SHOP_TITLE")."审核部门经过综合评估您的信用资料及网站还款记录，将您的信用额度调整为：".D("User")->where("id=".$user_id)->getField('quota')."元";
 			

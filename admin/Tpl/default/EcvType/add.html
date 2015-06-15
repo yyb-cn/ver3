@@ -58,6 +58,68 @@
 			{%EXCHANGE_SCORE}：<input type="text" class="textbox" name="exchange_score" /> {%EVERY_USER_CAN_EXCHANGE} <input type="text" class="textbox" name="exchange_limit" />  {%EMPTY_EXCHANGE_LIMIT_TIP}
 		</td>
 	</tr>
+        <!--代金券活动增加字段-->
+        <tr>
+		<td class="item_title">选为送注册用户:</td>
+		<td class="item_input">
+			<lable>是<input type="radio" name="reg_send" value="1" checked="checked" /></lable>
+			<lable>否<input type="radio" name="reg_send" value="0"  /></lable>
+		</td>
+	</tr>
+        <tr>
+		<td class="item_title">最低使用限额（含）</td>
+		<td class="item_input"><input type="text" class="textbox require" name="money_limit_min" value=""/> 元</td>
+	</tr>
+        
+        <tr>
+		<td class="item_title">最高使用限额（不含）</td>
+		<td class="item_input"><input type="text" class="textbox require" name="money_limit_max" value=""/> 元</td>
+	</tr>
+        
+        <tr>
+		<td class="item_title">使用期限</td>
+		<td class="item_input"><input type="text" class="textbox require" name="time_limitd" value=""/> 天</td>
+	</tr>
+        
+        <tr>
+		<td class="item_title">代金券类别</td>
+		<td class="item_input">
+                    <input type="text" class="textbox require" name="category" value=""/>用于控制不可叠加的代金券类别（限数字）
+                </td>
+	</tr>
+        
+        <tr>
+		<td class="item_title">允许使用的用户类型</td>
+		<td class="item_input">
+                    <input name="user_type[]" type="checkbox" value="1" />新用户
+                    <input name="user_type[]" type="checkbox" value="2" />老用户
+                </td>
+	</tr>
+        
+	<tr>
+		<td class="item_title">是否可用于提现:</td>
+		<td class="item_input">
+			<lable><input type="radio" name="get_cash" value="1" />可以</lable>
+			<lable><input type="radio" name="get_cash"  value="0"/>不可以</lable>
+		</td>
+	</tr>
+        
+        <tr>
+		<td class="item_title">是否可用于投资:</td>
+		<td class="item_input">
+                        <lable><input type="radio" name="get_invest" value="1"/>可以</lable>
+			<lable><input type="radio" name="get_invest"  value="0"/>不可以</lable>
+		</td>
+	</tr>
+        
+        <tr>
+		<td class="item_title">是否属于推荐人奖励:</td>
+		<td class="item_input">
+			<lable><input type="radio" name="referee" value="1" />是</lable>
+			<lable><input type="radio" name="referee"  value="0" checked="checked"/>否</lable>
+		</td>
+	</tr>
+        <!--代金券活动增加字段-->
 	<tr>
 		<td class="item_title"></td>
 		<td class="item_input">
