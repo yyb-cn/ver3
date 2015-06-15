@@ -300,7 +300,7 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 			query.total_money_1 =$("#total_money_1").val();
 			query.last_time_1 =$("#last_time_1").val();
 var chk = document.getElementById('total_money_2');
-if(chk.checked){
+if(chk && chk.checked){
 		query.total_money_2 =$("#total_money_2").val();
 }else{
 query.total_money_2 =0;
