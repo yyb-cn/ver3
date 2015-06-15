@@ -476,7 +476,7 @@ class dealModule extends SiteBaseModule
 		
 		
 		//如果未绑定手机
-	if($GLOBALS['user_info']['mobilepassed'] == 1){
+	if($GLOBALS['user_info']['idcardpassed'] == 0){
 		app_redirect(url("index","uc_account#security"),3,"请实名认证,填写身份证"); 
 		}
 		
