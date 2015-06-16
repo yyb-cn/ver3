@@ -1,0 +1,160 @@
+{// 引入标签库 }
+
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+
+<script type="text/javascript">
+	function preview(id)
+	{
+		window.open("__ROOT__/index.php?ctl=deal&id="+id+"&preview=1");
+	}
+</script>
+<php>
+	
+	function a_get_buy_status($buy_status,$deal_id)
+	{
+		if($buy_status==2){
+			return "<span style='color:red'>".l("DEAL_STATUS_".$buy_status)."</span>";
+		}
+		else{
+			return l("DEAL_STATUS_".$buy_status);
+		}
+	}
+	function date_int($time)
+	{
+		
+		return date("Y-m-d H:i:s",$time);
+	}
+	function reg_send($reg)
+	{
+		if($reg){return '是';}else{ return '否';}
+	}
+	function day_type($a)
+	{
+		if($a){return '月';}else{return '日';}
+	
+	}
+</php>
+<div class="main" onload="opener.location.reload()">
+
+<div class="main_title">数据报表</div>
+<div class="blank5"></div>
+
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+	
+		开始时间:
+			<input type="text" class="textbox" name="start_time" value="{$_GET['start_time']}" id="start_time"  onfocus="this.blur(); return showCalendar('start_time', '%Y-%m-%d %H:%M:%S', false, false, 'start_time');" size="15" />
+			
+		结束时间:
+			<input type="text" class="textbox" name="end_time" value="{$_GET['end_time']}" id="end_time"  onfocus="this.blur(); return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'end_time');" size="15"/>
+			
+			
+		<input type="hidden" value="Dataanalysis" name="m" />
+		<input type="hidden" value="index" name="a" />
+		<input type="submit" class="button" value="确定" />
+		<input type="button" class="button" value="清空时间" onclick="$('#start_time').val('');$('#end_time').val('');" />	
+	</form>
+</div>
+<div class="button_row">
+	<!--<input type="button" class="button" value="导出" onclick="daochu();" /> 导出-->
+</div>
+<div class="blank5"></div>
+	<table id="dataTable" class="dataTable" cellpadding="0" cellspacing="0">
+<tr>
+	<td colspan="9" class="topTd">
+		&nbsp;
+	</td>
+</tr>
+<tr class="row">
+	<th width="8">
+		<input type="checkbox" id="check" onclick="CheckAll('dataTable')">
+	</th>
+	<th width="100 ">
+		日期
+	</th>
+	<th>
+		注册人数 
+	</th>
+	<th>
+		投资人数 
+	</th>
+	<th>
+		推荐红包数  
+	</th>
+	<th>
+		投资送出浦发币 
+	</th>
+	<th>
+		支出 
+	</th>
+	<th>
+		收入  
+	</th>
+	<th>
+	支出占比 (%)
+	</th>
+	<?php foreach($list['biao'] as $k=>$v) :?>
+	<th>
+		{$v.repay_time}个月标(满标用时)
+	</th>
+	<?php endforeach;?>
+</tr>
+
+<tr class="row">
+	<td>
+		<input type="checkbox" name="key" class="key" value="{$list.id}">
+	</td>
+	<td>
+		&nbsp;{$list.b_time}
+	</td>
+	<td>
+		&nbsp;{$list.reg}
+	</td>
+	<td>
+		&nbsp;{$list.reg_tz}
+	</td>
+	<td>
+		&nbsp;{$list.hongbao_tuijian}
+	</td>
+	<td>
+		&nbsp;{$list.hongbao_touzi}
+	</td>
+	<td>
+		&nbsp;{$list.hongbao_total}
+	</td>
+	<td>
+		&nbsp;{$list.money_in}
+	</td>
+	<td>
+		&nbsp;<a href="javascript:;" onclick="preview({$v.deal_id})">{$list.money_percent}<a/>
+	</td>
+	
+	<?php foreach($list['biao'] as $k=>$v) :?>
+	<td>
+		&nbsp;{$v.borrow_amount}元<br />
+		{$v.manbiaotime}<br />
+		<a href="?m=Deal&a=index&id={$v.id}">查看</a>
+	</td>
+	<?php endforeach;?>
+
+	
+</tr>
+
+<tr>
+	<td colspan="9" class="bottomTd">
+		 &nbsp;
+	</td>
+</tr>
+</table>
+
+
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />
