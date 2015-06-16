@@ -462,6 +462,8 @@ class dealModule extends SiteBaseModule
 	  //var_dump($user_ecv);exit;
 	//老用户的券
 	$laoyonghuyongdequan=$GLOBALS['db']->getAll("SELECT *,e.id AS eid,et.id AS etid FROM ".DB_PREFIX."ecv AS e LEFT JOIN ".DB_PREFIX."ecv_type AS et ON e.ecv_type_id = et.id WHERE e.used_yn=0 AND e.receive=1 AND et.id in(40,39,38,37)  and  e.user_id = ".$ecv_user_id." ORDER BY et.money asc");
+	//特殊劵
+	$teishujuan=$GLOBALS['db']->getAll("SELECT *,e.id AS eid,et.id AS etid FROM ".DB_PREFIX."ecv AS e LEFT JOIN ".DB_PREFIX."ecv_type AS et ON e.ecv_type_id = et.id WHERE e.used_yn=0 AND e.receive=1 AND et.id in(35,36)  and  e.user_id = ".$ecv_user_id." ORDER BY et.money asc");
 	//print_r($laoyonghuyongdequan);exit;
 	$GLOBALS['tmpl']->assign("laoyonghuyongdequan",$laoyonghuyongdequan);
 
