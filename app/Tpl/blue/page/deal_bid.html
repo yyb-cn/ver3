@@ -31,12 +31,10 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 				<tr>
 					<td class="tit tr w100">借款年利率：</td>
 					<td class="f_red">{function name="number_format" v=$deal.rate f=2} %</td>
-					<input type="hidden"  name="bit_rate" id="rate" value="{function name="number_format" v=$deal.rate f=2} %" />
 				</tr>
 				<tr>
 					<td class="tit tr w100">借款期限：</td>
 					<td class="f_red bg">{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}</td>
-					<input type="hidden" name="bid_term" id="term" value="{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}" />
 				</tr>
 				<tr>
 					<td class="tit tr w100">还款周期：</td>
@@ -310,8 +308,6 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 				return false;
 			}
 			var query = new Object();
-			query.bid_rate=$("#rate").val();
-			query.bid_term=$("#term").val();
 			query.bid_money=$("#J_BIDMONEY").val();
 			query.id=$(".bid-table input[name='id']").val();
 			query.bid_paypassword = FW_Password($("#J_PAYPASSWORD").val());
