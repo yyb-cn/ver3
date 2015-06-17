@@ -91,9 +91,15 @@ jQuery(function(){
 		.my_statistics_list li .my_statistics_list_2 { float:left; width:250px; height:30px; text-align:center;}
 		.my_statistics_list li .my_statistics_list_3 { float:left; width:230px; height:30px; text-align:center;}
 		.my_statistics_list .my_statistics_list_tit { background:#e3e6e8; font-size:16px; height:40px; line-height:40px;} 
+		.wenxin{ margin-left:11px;  }
+		.wenxin :hover { background:#e9ecee;}
 </style>
 
 <div class="statistics">
+{if !$now_old}
+<div>温馨提示,如果注册时忘记领取活动代金劵请点击以下链接</div>
+<div class="wenxin" ><a href="index.php?ctl=huodong&act=huodong5&user_type=0&user_id={$lpl}"><u>index.php?ctl=huodong</u></a></div>
+{/if}
 	<div class="blank"></div>
 		<div class="uc-table">
 			<table cellspacing="0" cellpadding="0" border="0" class="coupons-table" >
