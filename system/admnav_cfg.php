@@ -195,7 +195,8 @@ return array(
 							"key"	=>	"ecvtype",
 							"nodes"	=>	array(
 									array("name"=>"代金券类型","module"=>"EcvType","action"=>"index"),
-                                                                        array("name"=>"会员代金券管理","module"=>"EcvType","action"=>"send_list"),
+                                    array("name"=>"会员代金券管理","module"=>"EcvType","action"=>"send_list"),
+									array("name"=>"会员代金券列表","module"=>"EcvType","action"=>"send_list_ecv"),
 							),
 					),
 					"userconfig"	=>	array(
