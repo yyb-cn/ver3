@@ -268,6 +268,7 @@ class EcvTypeAction extends CommonAction{
 				
 					foreach($ecv_list as $kk=>$vv){
 					                            $ecv_list[$kk]['user_id'] = M("User")->where("id=".$vv['user_id'])->getField("user_name");
+												$ecv_list[$kk]['ecv_type_id_id'] = $vv['ecv_type_id'];
 												$ecv_list[$kk]['ecv_type_id'] = M("Ecv_type")->where("id=".$vv['ecv_type_id'])->getField("name");
                                                 $ecv_list[$kk]['end_time'] = date('Y-m-d H:i:s',$vv['end_time']);//到期时间
                                                 $ecv_list[$kk]['receive_time'] = date('Y-m-d H:i:s',$vv['receive_time']);//领取代金券时间

@@ -453,7 +453,7 @@ class dealModule extends SiteBaseModule
 		//有数据为老客户，没数据为新客户；
 		$nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id=".$GLOBALS['user_info']['id']);
         //老用户有数据为使用过投资劵。
-		//$total_money_4=$GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."ecv where used_yn=3 and user_id=".$ecv_user_id);
+		$total_money_4=$GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."ecv where used_yn=2 and user_id=".$ecv_user_id);
 		
 	
 	
@@ -775,10 +775,10 @@ class dealModule extends SiteBaseModule
 			$assa['user_id']=$ecv_user_id;
 			
 			//老用户使用字段['used_yn']=3;
-			//$assa['used_yn']=3;
-			//$assa['receive']=1;
-			//$assa['last_time']=get_gmtime();	
-		   // $GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$assa,"INSERT");//插入一条投资目录
+			$assa['used_yn']=2;
+			$assa['receive']=1;
+			$assa['last_time']=get_gmtime();	
+		   $GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$assa,"INSERT");//插入一条投资目录
      $assa_ecv['log_info'] ="使用投资代金劵".$total_money_4;
   	 $assa_ecv['log_time'] =get_gmtime();
 	 $assa_ecv['money'] =0;
