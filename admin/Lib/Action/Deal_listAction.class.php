@@ -146,9 +146,6 @@ class Deal_listAction extends CommonAction{
 		$count=$count[0]['count'];
 		// 查询满足要求的总记录数
 		$per_page=$_REQUEST['per_page']?$_REQUEST['per_page']:30;
-			if($deviceType!='computer'){
-				$per_page = 10;
-			}
 		$Page   = new Page($count,$per_page);// 实例化分页类 传入总记录数和每页显示的记录数
 		$show   = $Page->show();// 分页显示输出
 		$this->assign('page',$show);// 赋值分页输出
