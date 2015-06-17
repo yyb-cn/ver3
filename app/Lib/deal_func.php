@@ -1064,7 +1064,7 @@ function dobid2_ok($deal_id,$user_id){
 	}	
 }
 
-function dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc=0,$unjh_pfcfb,$virtual_money){
+function dobid2($deal_id,$bid_money,$bid_rate,$bid_term,$bid_paypassword,$is_pc=0,$unjh_pfcfb,$virtual_money){
 	$root = check_dobid2($deal_id,$bid_money,$bid_paypassword,$is_pc);
 	if ($root["status"] == 0){
 		return $root;
@@ -1183,7 +1183,7 @@ $deal = get_deal($deal_id);
 			}
 	//-------购买成功，新增购物确认函------------author :@313616432
 		//更改资金记录
-		$msg = '[<a href="'.$root['deal']['url'].'" target="_blank">'.$root['deal']['name'].'</a>]的投标,付款单号'.$load_id;
+		$msg = '[<a href="'.$root['deal']['url'].'" target="_blank">'.$root['deal']['name'].'</a>]的投标,付款单号'.$load_id.'<br/>'.'&nbsp;&nbsp;'.'投资金额：'.$bid_money.'元'.'&nbsp;&nbsp;'.'年利率：'.$bid_rate.'&nbsp;&nbsp;'.'借款期限：'.$bid_term;
 		// require_once APP_ROOT_PATH."system/libs/user.php";
 		modify_account(array('money'=>-$bid_money,'lock_money'=>$bid_money),$GLOBALS['user_info']['id'],$msg,2);
 		

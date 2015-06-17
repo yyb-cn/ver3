@@ -973,6 +973,8 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 		
 		/*这里结束*/
 		$bid_money = floatval($_REQUEST["bid_money"]);
+		$bid_rate=$_REQUEST["bid_rate"];
+		$bid_term=$_REQUEST["bid_term"];
 	   if(!$bid_money){ 
 	      showSuccess("金额错误",$ajax,url("index","uc_money#incharge"));
 		 }		
@@ -980,7 +982,7 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 		if($unjh_pfcfb>$GLOBALS['user_info']['unjh_pfcfb']){
 		  showErr("虚拟币操作错误",$ajax);
 		}  //判断投资虚拟币是否大于本身拥有
-	    $status = dobid2($id,$bid_money,$bid_paypassword,1,$unjh_pfcfb,$virtual_money);
+	    $status = dobid2($id,$bid_money,$bid_rate,$bid_term,$bid_paypassword,1,$unjh_pfcfb,$virtual_money);
 		
 		if($status['status'] == 0){
 			showErr($status['show_err'],$ajax);
