@@ -150,7 +150,7 @@
 	<th>
 		<a href="javascript:sortBy('u_load_money','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照交易金额 ">交易金额   </a>
 		<br /><span style="background:#999999;color:#FFF">当前页总计:&nbsp;</span><span style="background:#CCCCCC;" >{$total_limit}</span>
-				<span style="background:#999999;color:#FFF">总计:&nbsp;</span><span style="background:#CCCCCC;" >{$total_no_limit}</span>
+		<br />		<span style="background:#999999;color:#FFF">总计:&nbsp;</span><span style="background:#CCCCCC;" >{$total_no_limit}</span>
 	</th>
 	<th>
 		<a href="javascript:sortBy('name','<?php echo $_GET[_sort]?0:1?>','rate','index')" title="按照项目名称 ">利率  </a>(%)
@@ -158,7 +158,7 @@
 	<th>
 		收益
 		<br /><span style="background:#999999;color:#FFF">当前页总计:&nbsp;</span><span style="background:#CCCCCC;" >{$total_rate_money}</span>
-				<span style="background:#999999;color:#FFF">总计:&nbsp;</span><span style="background:#CCCCCC;" >{$total_rate_money_nolimit}</span>
+		<br />		<span style="background:#999999;color:#FFF">总计:&nbsp;</span><span style="background:#CCCCCC;" >{$total_rate_money_nolimit}</span>
 	</th>
 	<th>
 		<a href="javascript:sortBy('repay_time','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照期限 ">期限   </a>
@@ -166,9 +166,9 @@
 	<th>
 		<a href="javascript:sortBy('deal_time','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照交易时间 ">交易时间      </a>
 	</th>
-	
-	
-	
+	<th>
+		<a href="javascript:sortBy('deal_time','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照交易时间 ">交易时间      </a>
+	</th>
 	
 	<th>
 			<a href="javascript:sortBy('deal_load_check_yn','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="认购证明 ">认购证明      </a>
@@ -218,7 +218,10 @@
 	<td>
 		&nbsp;<?php echo to_date($v['deal_time'],"Y-m-d H:i:s")?>
 	</td>
-	
+	<td>
+   还款开始日&nbsp;<?php echo to_date($v['repay_start_time'],"Y-m-d H:i:s")?>
+ </br>最后还款日&nbsp;<?php echo to_date($v['repay_start_time'],"Y-m-d H:i:s")?>
+	</td>
 	
 	<td width=200>
 	<a  style="text-decoration:none;color:#FFFFFF;font-weight:bold;background:#CC6633;padding:2px;"  href="http://rg.jlpefund.com/m.php?c=index&a=outside_add&yn={$v.deal_load_id}&real_name={$v.real_name}&produce_name=
