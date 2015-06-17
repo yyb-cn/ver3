@@ -59,6 +59,7 @@ function get_deal($id=0,$is_effect=1)
 		format_deal_item($deal);
 			
 	}
+	//print_r($deal);die;
 	return $deal;
 
 }
@@ -1183,7 +1184,7 @@ $deal = get_deal($deal_id);
 			}
 	//-------购买成功，新增购物确认函------------author :@313616432
 		//更改资金记录
-		$msg = '[<a href="'.$root['deal']['url'].'" target="_blank">'.$root['deal']['name'].'</a>]的投标,付款单号'.$load_id;
+		$msg = '[<a href="'.$root['deal']['url'].'" target="_blank">'.$root['deal']['name'].'</a>]的投标,付款单号'.$load_id.'<br/>'.'&nbsp;&nbsp;'.'投资金额：'.$bid_money.'元'.'&nbsp;&nbsp;'.'年利率：'.$deal['rate'].'%'.'&nbsp;&nbsp;'.'借款期限：'.$deal['repay_time'].'个月';
 		// require_once APP_ROOT_PATH."system/libs/user.php";
 		modify_account(array('money'=>-$bid_money,'lock_money'=>$bid_money),$GLOBALS['user_info']['id'],$msg,2);
 		

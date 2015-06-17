@@ -165,7 +165,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 		}
 		if(trim($_REQUEST['user_name'])!='')
 		{
-			$map[DB_PREFIX.'user.user_name'] = array('like','%'.trim($_REQUEST['user_name']).'%');
+			$map[DB_PREFIX.'user.user_name'] = trim($_REQUEST['user_name']);
 		}
 		if(trim($_REQUEST['email'])!='')
 		{
