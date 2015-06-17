@@ -25,7 +25,19 @@ class DealAction extends CommonAction{
 			$map['is_has_received'] = array("eq",intval($_REQUEST['is_has_received']));
 			$map['buy_count'] = array("gt",0);
 		}
+		if($_REQUEST['begin_time'] || $_REQUEST['end_time']){
 		
+			$begin_time  = trim($_REQUEST['begin_time'])==''?0:to_timespan($_REQUEST['begin_time']);
+			$end_time  = trim($_REQUEST['end_time'])==''?0:to_timespan($_REQUEST['end_time']);
+			if($begin_time > 0 || $end_time > 0){
+				if($end_time==0)
+				{
+					$map['create_time'] = array('egt',$begin_time);
+				}
+					else
+						$map['create_time']= array("between",array($begin_time,$end_time));
+			}
+		}
 		
 		$this->getDeallist($map,intval($_REQUEST['cate_id']),$_REQUEST['user_name'],$deal_status);
 		
