@@ -58,7 +58,7 @@ td { text-align: center;}
                     <div class='pt10 uinfo_settting'>
                         <a class='set smobile{if $user_data.mobilepassed eq 1}passed{/if}' href='{url x="index" r="uc_account#security"}' title="手机认证，{if $user_data.mobilepassed eq 1}已认证{else}未认证{/if}">手机认证</a>
                         <a class='set saccount{if $user_data.idcardpassed eq 1}passed{/if}' href='{url x="index" r="uc_account#security"}' title="实名认证，{if $user_data.idcardpassed eq 1}已认证{else}未认证{/if}">实名认证</a>
-                        <a class='set semail{if $user_data.emailpassed eq 1}passed{/if}' href='{url x="index" r="uc_account#security"}' title="邮箱认证，{if $user_data.emailpassed eq 1}已认证{else}未认证{/if}">邮箱认证</a>
+                        <a class='set semail{if $user_data.email}passed{/if}' href='{url x="index" r="uc_account#security"}' title="邮箱认证，{if $user_data.email}已认证{else}未认证{/if}">邮箱认证</a>
                         <a class='set spaypwd{if $user_data.paypassword neq ''}passed{/if}' href='{url x="index" r="uc_account#security"}' title="支付密码，{if $user_data.paypassword neq ''}已设置{else}未设置{/if}">支付密码</a>
                         <a class='set ssetting' href="{url x="index" r="uc_account"}" title="账户设置">账户设置</a>
                     </div>

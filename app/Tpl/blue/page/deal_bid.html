@@ -142,8 +142,23 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 						{/if}
                         {/if}
 					 {/foreach}	
-    {/if}					 
+    {/if}			
+ <!--特殊劵-->	
+{if  ( ($teishujuan)) }		
+		{foreach from="$teishujuan" item="v" key="k"}
+		          {if  ($v.last_time>$get_gmtime) }    
+
+			<tr>
+				<td class="tit tr w100">{$v.name}:</td>
+				<td>{$v.money}元<input type="checkbox" name="total_money_2" id="total_money_2" value="{$v.money}" /></td>
+				<input type="hidden" name="ee_id" id="ee_id" value="{$v.ecv_type_id}" />
+				<input type="hidden" name="last_time_2" id="last_time_2" value="{$v.last_time }" />
+			</tr>         
+                        {/if}
+					 {/foreach}	
+    {/if}				
 	<!--老用户的券-->
+	{if  ( (!$teishujuan)) }		
 	{if  ( ($laoyonghuyongdequan)) }	
 		{if  ( ($nodeal)) }	
 		 {if  ( (!$total_money_4)) }	
@@ -167,7 +182,7 @@ $this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
 			{/if}	  
 		{/if}
 	     {/if}
-
+{/if}
 
 
 					 {if  ( ($total_money_3 neq 0)) }	

@@ -462,6 +462,8 @@ class dealModule extends SiteBaseModule
 	  //var_dump($user_ecv);exit;
 	//老用户的券
 	$laoyonghuyongdequan=$GLOBALS['db']->getAll("SELECT *,e.id AS eid,et.id AS etid FROM ".DB_PREFIX."ecv AS e LEFT JOIN ".DB_PREFIX."ecv_type AS et ON e.ecv_type_id = et.id WHERE e.used_yn=0 AND e.receive=1 AND et.id in(40,39,38,37)  and  e.user_id = ".$ecv_user_id." ORDER BY et.money asc");
+	//特殊劵
+	$teishujuan=$GLOBALS['db']->getAll("SELECT *,e.id AS eid,et.id AS etid FROM ".DB_PREFIX."ecv AS e LEFT JOIN ".DB_PREFIX."ecv_type AS et ON e.ecv_type_id = et.id WHERE e.used_yn=0 AND e.receive=1 AND et.id in(47,10000)  and  e.user_id = ".$ecv_user_id." ORDER BY et.money asc");
 	//print_r($laoyonghuyongdequan);exit;
 	$GLOBALS['tmpl']->assign("laoyonghuyongdequan",$laoyonghuyongdequan);
 
@@ -511,8 +513,8 @@ class dealModule extends SiteBaseModule
 		$seo_keyword = $deal['seo_keyword']!=''?$deal['seo_keyword']:$deal['type_match_row'].",".$deal['name'];
 		$GLOBALS['tmpl']->assign("page_keyword",$seo_keyword.",");
 		$seo_description = $deal['seo_description']!=''?$deal['seo_description']:$deal['name'];
-        
-		$GLOBALS['tmpl']->assign("total_money_3",$total_money_3);
+   		$GLOBALS['tmpl']->assign("total_money_3",$total_money_3);     
+		$GLOBALS['tmpl']->assign("teishujuan",$teishujuan);
 		$GLOBALS['tmpl']->assign("total_money_4",$total_money_4);
 		$GLOBALS['tmpl']->assign("nodeal",$nodeal);
 		$GLOBALS['tmpl']->assign("user_ecv",$user_ecv);
