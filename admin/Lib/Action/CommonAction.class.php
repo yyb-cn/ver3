@@ -102,7 +102,11 @@ class CommonAction extends AuthAction{
 			//分页查询数据
 
 			$voList = $model->where($map)->order( "`" . $order . "` " . $sort)->limit($p->firstRow . ',' . $p->listRows)->findAll ( );
-			// var_dump($voList);exit;
+			foreach ($voList as $key => $value) {
+				$voList[$key]['pfcfb']=format_price($value['pfcfb']);
+				$voList[$key]['unjh_pfcfb']=format_price($value['unjh_pfcfb']);
+			}
+			//print_r($voList);exit;
 			// echo $model->getlastsql();
 			//分页跳转的时候保证查询条件
 			foreach ( $map as $key => $val ) {
