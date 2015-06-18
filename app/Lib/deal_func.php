@@ -1370,7 +1370,8 @@ function getUcRepayBorrowMoney($id,$ids){
 	$id = intval($id);
 	$root = array();
 	$root["status"] = 0;//0:出错;1:正确;
-
+    $luo_id=intval($ids);//luo+还款id；
+	$luo_ids=$luo_id+1;//luo+还款id；
 	if($id == 0){
 		$root["show_err"] = "操作失败！";
 		return $root;
@@ -1495,8 +1496,25 @@ function getUcRepayBorrowMoney($id,$ids){
 								}
 			
 								//更新用户账户资金记录
+                         //改动回报本息明细 开始、唯一系统改动的地方
+						if($deal['repay_time_type']==0){		
 								modify_account(array("money"=>$user_load_data['true_repay_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,回报本息",5);
-								
+						  }
+						if($deal['repay_time_type']==1){
+                           if($deal['loantype']==1){
+                                if($luo_ids!=$deal['repay_time']){       						   
+								modify_account(array("money"=>$user_load_data['true_repay_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,纯利息",5);
+							    }
+                                if($luo_ids==$deal['repay_time']){       						   
+								modify_account(array("money"=>$user_load_data['true_repay_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,回报本息",5);
+							    }
+							}
+						
+                           if($deal['loantype']!=1){					
+								modify_account(array("money"=>$user_load_data['true_repay_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,回报本息",5);
+							}
+                          }								
+                           //改动回报本息明细 结束 @luo
 								modify_account(array("money"=>-$user_load_data['true_manage_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,投标管理费",20);	
 								if($user_load_data['impose_money'] != 0)
 									modify_account(array("money"=>$user_load_data['impose_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,逾期罚息",21);
