@@ -323,7 +323,6 @@ class UserCarryAction extends CommonAction{
                 $result = $_REQUEST;
 		//开始验证有效性
                 foreach ($result['id'] as $key => $value) {
-                    
                     $data['id'] = $value;
                     $data['status'] = $result['status'];
                     $data['desc'] = $result['desc'];
@@ -410,6 +409,7 @@ class UserCarryAction extends CommonAction{
                                     }
                             }
                             elseif($data['status']==2){
+							  echo 1 ;exit;
                                     //驳回
                                     modify_account(array("money"=>$vo['money'],"lock_money"=>-$vo['money']),$vo['user_id'],"提现失败",8);
                                     modify_account(array("money"=>$vo['fee'],"lock_money"=>-$vo['fee']),$vo['user_id'],"提现失败",9);
@@ -432,8 +432,8 @@ class UserCarryAction extends CommonAction{
                             }
                             save_log("编号为".$data['id']."的提现申请".L("UPDATE_SUCCESS"),1);
                             //开始验证有效性
-                            $this->assign("jumpUrl",u(MODULE_NAME."/".$action));
-                            parent::success(L("UPDATE_SUCCESS"));
+                            // $this->assign("jumpUrl",u(MODULE_NAME."/".$action));
+                            // parent::success(L("UPDATE_SUCCESS"));
                     }else {
                             //错误提示
                             $DBerr = M()->getDbError();
@@ -441,7 +441,8 @@ class UserCarryAction extends CommonAction{
                             $this->error(L("UPDATE_FAILED").$DBerr,0);
                     }
                 }
-            $this->success(L("UPDATE_SUCCESS"));    
+                            $this->assign("jumpUrl",u(MODULE_NAME."/".$action));
+                            parent::success(L("UPDATE_SUCCESS")); 
         }
         
 	public function config(){
