@@ -1,0 +1,124 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script>
+	
+	function doSend_one(id)
+{
+	$a=$("select option:selected")
+	
+	//location.href = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=doSend_one&id="+id;
+}
+
+</script>
+<php>
+	function get_user_group($group_id)
+	{
+		$group_name = M("UserGroup")->where("id=".$group_id)->getField("name");
+		if($group_name)
+		{
+			return $group_name;
+		}
+		else
+		{
+			return l("NO_GROUP");
+		}
+	}
+	function get_user_level($id)
+	{
+		$level_name = M("UserLevel")->where("id=".$id)->getField("name");
+		if($level_name)
+		{
+			return $level_name;
+		}
+		else
+		{
+			return "没有等级";
+		}
+	}
+	function get_referrals_name($user_id)
+	{
+		$user_name = M("User")->where("id=".$user_id)->getField("user_name");
+		if($user_name)
+		return $user_name;
+		else
+		return l("NO_REFERRALS");
+	}
+	function f_to_date($date){
+		return to_date($date,"Y-m-d H:i");
+	}
+	function lock_money_func($money,$id){
+		return "<a href='javascript:eidt_lock_money(".$id.");'>".format_price($money)."</a>";
+	}
+</php>
+<div class="main">
+
+<div class="blank5"></div>
+
+
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		拥有劵的会员名：<input type="text" class="textbox" name="user_name" value="" style="width:100px;" />
+		编号：<input type="text" class="textbox" name="id" value="" style="width:100px;" />
+		是否使用: 
+		<select name="used_yn">
+		        <option ></option>
+				<option value="0" >没使用</option>
+                <option value="1" >已使用</option>				
+		</select>
+		
+		<input type="hidden" value="EcvType" name="m" />
+		<input type="hidden" value="send_list_ecv_search" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	
+	</form>
+</div>
+<div class="blank5"></div>
+<table id="dataTable" class="dataTable" cellpadding=0 cellspacing=0 >
+<tr><td colspan="11" class="topTd" >&nbsp; </td></tr>
+<tr class="row" >
+<th width="8"><input type="checkbox" id="check" onclick="CheckAll('dataTable')"></th>
+<th width="50px"><a href="javascript:sortBy('id','<?php echo $_GET[_sort]?0:1?>','EcvType','send_list')" title="按照编号升序排列 ">编号<img src="/pfcf88/admin/Tpl/default/Common/images/desc.gif" width="12" height="17" border="0" align="absmiddle"></a></th>
+<th><a href="javascript:sortBy('user_id','<?php echo $_GET[_sort]?0:1?>','EcvType','send_list')" title="按照会员名称升序排列 ">拥有劵的会员</a></th>
+<th><a href="javascript:sortBy('used_yn','<?php echo $_GET[_sort]?0:1?>','EcvType','send_list')" title="按照会员名称升序排列 ">是否使用</a></th>
+<th><a href="javascript:sortBy('receive_time','<?php echo $_GET[_sort]?0:1?>','EcvType','send_list')" title="按照会员邮件升序排列 ">领取时间</a></th>
+<th><a href="javascript:sortBy('end_time','<?php echo $_GET[_sort]?0:1?>','EcvType','send_list')" title="按照手机号升序排列 ">到期时间</a></th>
+<th><a href="javascript:sortBy('last_time','<?php echo $_GET[_sort]?0:1?>','EcvType','send_list')" title="按照手机号升序排列 ">使用到期时间</a></th>
+<th><a href="javascript:sortBy('ecv_type_id','<?php echo $_GET[_sort]?0:1?>','EcvType','send_list')" title="按照会员组别升序排列 ">代金劵类型</a></th>
+
+
+<th style="width:">操作</th>
+
+</tr>
+<foreach name="ecv_list" item="v">
+	<tr class="row" >
+	<td><input type="checkbox" name="key" class="key" value="{$v.id}"></td>
+	<td>{$v.id}</td>
+	<td>{$v.user_id}</td>
+	<td>{$v.used_yn}</td>
+	<td>{$v.receive_time}</td>
+	<td>{$v.end_time}</td>
+	<td>{$v.last_time}</td>
+	<td>{$v.ecv_type_id}(在类型表中的id：{$v.ecv_type_id_id})</td>
+	<td>
+            <a href="?m=EcvType&a=send_list_ecv_edit&id={$v.id}">修改</a>
+			<a href="?m=EcvType&a=send_list_ecv_delete&id={$v.id}">删除</a>
+		</td>
+	</tr>
+</foreach>
+
+
+<tr><td colspan="11" class="bottomTd"> &nbsp;</td></tr></table>
+<!-- Think 系统列表组件结束 -->
+
+
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

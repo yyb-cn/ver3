@@ -193,7 +193,10 @@
 				<option value="{$cate_item.id}" <if condition="intval($_REQUEST['cate_id']) eq $cate_item['id']">selected="selected"</if>>{$cate_item.title_show}</option>
 			</foreach>
 		</select>
-		
+		贷款时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'begin_time');" style="width:130px" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'end_time');" style="width:130px" />
 		<if condition="ACTION_NAME eq 'index'">
 		贷款状态
 		<select name="deal_status">
@@ -239,6 +242,7 @@
 		,is_recommend|get_toogle_status=$deal['id']#is_recommend:{%IS_RECOMMEND}
 		,mer_bill_no|get_ips_status=$deal:同步到第三方|100px
 		,sort|get_sort=$deal['id']:{%SORT}
+		,create_time|to_date:贷款时间
 		,is_effect|get_is_effect=$deal['id']:{%IS_EFFECT}" 
 	actionlist="edit:{%EDIT},id|check_del=$deal,id|do_apart=$deal,id|get_repay_plan=$deal,preview:{%PREVIEW}"
 	actionwidth="200px" /> 

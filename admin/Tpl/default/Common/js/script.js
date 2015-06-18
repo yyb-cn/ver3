@@ -381,9 +381,15 @@ function daochu(id)
 		});
 		id = idArray.join(",");
 	}
+var url = window.location.href;
+ 
+var t = url.split("=")[4];
+ 
+ 
+ 
 	if(geshi='utf-8')
 	
-	window.location = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=daochu&id="+id+"&geshi="+geshi
+	window.location = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=daochu&id="+id+"&geshi="+geshi+"&t="+t
 	
 }
 //完全删除

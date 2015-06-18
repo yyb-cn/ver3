@@ -165,7 +165,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 		}
 		if(trim($_REQUEST['user_name'])!='')
 		{
-			$map[DB_PREFIX.'user.user_name'] = array('like','%'.trim($_REQUEST['user_name']).'%');
+			$map[DB_PREFIX.'user.user_name'] = trim($_REQUEST['user_name']);
 		}
 		if(trim($_REQUEST['email'])!='')
 		{
@@ -709,9 +709,8 @@ $pid_name=trim($_REQUEST['pid_name']);
 		}else{
 			$model = M ("UserLog");
 		}
-		if (! empty ( $model )) {
-			$this->_list ( $model, $map );
-
+		if (! empty ( $model )) {	
+		$this->_list ( $model, $map );
 		}
 		$this->assign("t",$t);
 		$this->assign("user_id",$user_id);
@@ -783,10 +782,11 @@ $pid_name=trim($_REQUEST['pid_name']);
 	}
 	
 	public function export_csv($page = 1)
-	{
-		set_time_limit(0);
-		$limit = (($page - 1)*intval(app_conf("BATCH_PAGE_SIZE"))).",".(intval(app_conf("BATCH_PAGE_SIZE")));
-		
+	{   
+		//set_time_limit(0);
+		//$limit = (($page - 1)*intval(app_conf("BATCH_PAGE_SIZE"))).",".(intval(app_conf("BATCH_PAGE_SIZE")));
+		//导出的数量
+		$limit = '';
 		//定义条件
 		$map[DB_PREFIX.'user.is_delete'] = 0;
 
@@ -900,6 +900,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 			
 			//header("Content-Disposition: attachment; filename=user_list.csv");
 	    	//echo $content;  
+		
 			$this->outputXlsHeader($arr,'提现名单'.time());
 		}
 		else
@@ -909,6 +910,86 @@ $pid_name=trim($_REQUEST['pid_name']);
 		}
 		
 	}
+	
+	public function daochu($page = 1)
+	{
+		$id = $_REQUEST ['id'];
+		
+		if($_REQUEST['t']=='money'){      $main='lo.id';   $lo='user_money_log';       }
+		if($_REQUEST['t']=='point'){      $main='lo.id';   $lo='user_point_log';       }
+		if($_REQUEST['t']=='freeze'){     $main='lo.id';   $lo='user_lock_money_log';  }
+		if($_REQUEST['t']=='quota'){      $main='lo.id';   $lo='user_log';             }
+		if($_REQUEST['t']=='old_user'){   $main='lo.id';   $lo='user_log';             }
+	
+		$condition ="$main in ($id) " ;
+		$order="order by lo.id desc";
+		
+		
+		
+		
+		if($_REQUEST['t']=='money'){
+		$sql = "select lo.memo as log_memo,lo.account_money as log_account_money,lo.money as log_money,lo.id as log_load_id,lo.create_time as deal_time from ".DB_PREFIX."$lo as lo where ".$condition .' '. $order ;
+	
+		$list = $GLOBALS['db']->getAll($sql);
+		foreach($list as $k=>$v)
+		{
+		$arr[0]=array('编号','操作金额','结余','操作备注','操作时间');
+		$arr[$k+1]=array($v['log_load_id'],$v['log_money'],$v['log_account_money'],$v['log_memo'],date("Y-m-d H:i:s",$v['deal_time']));
+		}
+		
+		$this->outputXlsHeader($arr,'账户明细(资金日志)'.time());
+		}
+		if($_REQUEST['t']=='point'){
+		$sql = "select lo.memo as log_memo,lo.point as log_point,lo.account_point as log_account_point,lo.id as log_load_id,lo.create_time as deal_time from ".DB_PREFIX."$lo as lo where ".$condition .' '. $order ;
+	
+		$list = $GLOBALS['db']->getAll($sql);
+		foreach($list as $k=>$v)
+		{
+		$arr[0]=array('编号','操作积分','结余','操作备注','操作时间');
+		$arr[$k+1]=array($v['log_load_id'],$v['log_point'],$v['log_account_point'],$v['log_memo'],date("Y-m-d H:i:s",$v['deal_time']));
+		}
+		
+		$this->outputXlsHeader($arr,'账户明细(信用积分日志)'.time());
+		}
+		if($_REQUEST['t']=='freeze'){
+		$sql = "select lo.memo as log_memo,lo.account_lock_money as log_account_lock_money,lo.lock_money as log_lock_money,lo.id as log_load_id,lo.create_time as deal_time from ".DB_PREFIX."$lo as lo where ".$condition .' '. $order ;
+	
+		$list = $GLOBALS['db']->getAll($sql);
+		foreach($list as $k=>$v)
+		{
+		$arr[0]=array('编号','操作金额','结余','操作备注','操作时间');
+		$arr[$k+1]=array($v['log_load_id'],$v['log_lock_money'],$v['log_account_lock_money'],$v['log_memo'],date("Y-m-d H:i:s",$v['deal_time']));
+		}
+		
+		$this->outputXlsHeader($arr,'账户明细(冻结资金)'.time());
+		}
+		if($_REQUEST['t']=='quota'){
+		$sql = "select lo.log_info as log_log_info,lo.quota as log_quota,lo.id as log_load_id,lo.log_time as log_log_time from ".DB_PREFIX."$lo as lo where ".$condition .' '. $order ;
+	
+		$list = $GLOBALS['db']->getAll($sql);
+		foreach($list as $k=>$v)
+		{
+		$arr[0]=array('编号','操作类型','额度','操作时间');
+		$arr[$k+1]=array($v['log_load_id'],$v['log_log_info'],$v['log_quota'],date("Y-m-d H:i:s",$v['log_log_time']));
+		}
+		
+		$this->outputXlsHeader($arr,'账户明细(额度)'.time());
+		}
+		if($_REQUEST['t']=='old_user'){
+		$sql = "select lo.unjh_pfcfb as log_unjh_pfcfb,lo.pfcfb as log_pfcfb,lo.money as log_money,lo.log_info as log_log_info,lo.quota as log_quota,lo.id as log_load_id,lo.log_time as log_log_time from ".DB_PREFIX."$lo as lo where ".$condition .' '. $order ;
+	
+		$list = $GLOBALS['db']->getAll($sql);
+		foreach($list as $k=>$v)
+		{
+		$arr[0]=array('编号','操作金额','激活PFCFB','未激活PFCFB','操作类型','额度','操作时间');
+		$arr[$k+1]=array($v['log_load_id'],$v['log_money'],$v['log_pfcfb'],$v['log_unjh_pfcfb'],$v['log_log_info'],$v['log_quota'],date("Y-m-d H:i:s",$v['log_log_time']));
+		}
+		
+		$this->outputXlsHeader($arr,'账户明细(用户明细资金)'.time());
+		}
+		
+	}
+	
 	public function outputXlsHeader($data,$file_name = 'export',$geshi = 'utf8')
 {
  header('Content-Type: text/xls'); 

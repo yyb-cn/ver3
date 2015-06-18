@@ -59,6 +59,7 @@ function get_deal($id=0,$is_effect=1)
 		format_deal_item($deal);
 			
 	}
+	//print_r($deal);die;
 	return $deal;
 
 }
@@ -1183,7 +1184,7 @@ $deal = get_deal($deal_id);
 			}
 	//-------购买成功，新增购物确认函------------author :@313616432
 		//更改资金记录
-		$msg = '[<a href="'.$root['deal']['url'].'" target="_blank">'.$root['deal']['name'].'</a>]的投标,付款单号'.$load_id;
+		$msg = '[<a href="'.$root['deal']['url'].'" target="_blank">'.$root['deal']['name'].'</a>]的投标,付款单号'.$load_id.'<br/>'.'&nbsp;&nbsp;'.'投资金额：'.$bid_money.'元'.'&nbsp;&nbsp;'.'年利率：'.$deal['rate'].'%'.'&nbsp;&nbsp;'.'借款期限：'.$deal['repay_time'].'个月';
 		// require_once APP_ROOT_PATH."system/libs/user.php";
 		modify_account(array('money'=>-$bid_money,'lock_money'=>$bid_money),$GLOBALS['user_info']['id'],$msg,2);
 		
@@ -1369,7 +1370,8 @@ function getUcRepayBorrowMoney($id,$ids){
 	$id = intval($id);
 	$root = array();
 	$root["status"] = 0;//0:出错;1:正确;
-
+    $luo_id=intval($ids);//luo+还款id；
+	$luo_ids=$luo_id+1;//luo+还款id；
 	if($id == 0){
 		$root["show_err"] = "操作失败！";
 		return $root;
@@ -1494,8 +1496,25 @@ function getUcRepayBorrowMoney($id,$ids){
 								}
 			
 								//更新用户账户资金记录
+                         //改动回报本息明细 开始、唯一系统改动的地方
+						if($deal['repay_time_type']==0){		
 								modify_account(array("money"=>$user_load_data['true_repay_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,回报本息",5);
-								
+						  }
+						if($deal['repay_time_type']==1){
+                           if($deal['loantype']==1){
+                                if($luo_ids!=$deal['repay_time']){       						   
+								modify_account(array("money"=>$user_load_data['true_repay_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,纯利息",5);
+							    }
+                                if($luo_ids==$deal['repay_time']){       						   
+								modify_account(array("money"=>$user_load_data['true_repay_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,回报本息",5);
+							    }
+							}
+						
+                           if($deal['loantype']!=1){					
+								modify_account(array("money"=>$user_load_data['true_repay_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,回报本息",5);
+							}
+                          }								
+                           //改动回报本息明细 结束 @luo
 								modify_account(array("money"=>-$user_load_data['true_manage_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,投标管理费",20);	
 								if($user_load_data['impose_money'] != 0)
 									modify_account(array("money"=>$user_load_data['impose_money']),$in_user_id,"[<a href='".$deal['url']."' target='_blank'>".$deal['name']."</a>],第".($kk+1)."期,逾期罚息",21);

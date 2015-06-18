@@ -228,7 +228,8 @@ $sql_no_limit = "select d.name,d.rate,d.repay_time,d.repay_time_type, dl.money a
 	
 	$user_info =$GLOBALS['user_info'];
 	 $GLOBALS['tmpl']->assign("lpl",$GLOBALS['user_info']['id']);
-	
+   	  $now_old=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id = ".$GLOBALS['user_info']['id']);
+	    $GLOBALS['tmpl']->assign("now_old",$now_old);
 	  	$user_info['pid_num']=$pid_num;
 	  $GLOBALS['tmpl']->assign("user_data",$user_info);
 		

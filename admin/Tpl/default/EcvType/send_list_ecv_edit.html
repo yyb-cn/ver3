@@ -1,0 +1,64 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/user_edit.js' />
+<load href='__TMPL__Common/js/conf.js' />
+<load href='__ROOT__/system/region.js' />
+<div class="main">
+<div class="main_title">{%EDIT} <a href="{:u("User/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<div class="blank5"></div>
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+    <tr>
+		<td class="item_title">编号:</td>
+		<td class="item_input">
+			<input type="hidden" class="textbox require" name="user_id" value="{$id}" />
+			{$id}
+		</td>
+	</tr>
+     <tr>
+	<td class="item_title">拥有劵的会员:</td>
+		<td class="item_input">
+			<input type="hidden" class="textbox require" name="user_name" value="{$user_name}" />
+			{$user_name}
+		</td>
+	</tr>
+    
+	<td class="item_title">是否使用:</td>
+		<td class="item_input">
+			<label><input type="radio" class="f-radio" value="1" name="used_yn"  <if condition="$used_yn eq 1 || $used_yn eq 2">checked="checked"</if>>使用了</label>
+			<label><input type="radio" class="f-radio" value="0" name="used_yn"  <if condition="$used_yn eq 0">checked="checked"</if>>没使用</label>
+		</td>
+	</tr>
+   
+	
+</table>
+
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="EcvType" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="send_list_ecv_update" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%EDIT}" />
+			<input type="reset" class="button" value="{%RESET}" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 	 
+</form>
+</div>
+<include file="Public:footer" />
