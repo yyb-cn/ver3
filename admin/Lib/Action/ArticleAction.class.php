@@ -411,6 +411,7 @@ class ArticleAction extends CommonAction{
    echo "执行了".$a."行成功";exit;
 	}
 	public  function yue(){
+		set_time_limit(0);
 	// DELETE FROM Person WHERE LastName = 'Wilson' 
     $GLOBALS['db']->query("UPDATE fanwe_user_money_log SET account_money =0 ");
 	// echo "NICE";exit;	
