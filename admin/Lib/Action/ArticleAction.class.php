@@ -390,14 +390,14 @@ class ArticleAction extends CommonAction{
 	require_once(APP_ROOT_PATH."system/libs/user.php");
 	// $limit = '';//数据量大的时候用limit控制数量，按时间asc排序
 	// $op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log where money<>0 limit 0,500");
-    $op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log where money<>0 limit 0,30000 ");
-    $money_log = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_money_log where type = 27 and money<>0 limit 0,30000");
+    $op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log where money<>0  ");
+    $money_log = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_money_log where type = 27 and money<>0");
 	$a=0;
 	foreach ($op as $k=>$v){
-		$data_string = $v['log_time'].date("Y-m-d",$v['log_time']).$v['money'].$v['log_info'].$v['log_user_id'].$v['pfcfb'].$v['unjh_pfcfb'];
+		$data_string = $v['log_time'].$v['money'].$v['log_info'].$v['log_user_id'].$v['pfcfb'].$v['unjh_pfcfb'];
 		$temp = 0;
 		foreach($money_log as $kk=>$value){
-		$data_string1 = $value['create_time'].$value['create_time_ymd'].$value['money'].$value['memo'].$value['user_id'].$value['pfcfb'].$value['unjh_pfcfb'];
+		$data_string1 = $value['create_time'].$value['money'].$value['memo'].$value['user_id'].$value['pfcfb'].$value['unjh_pfcfb'];
 			if($data_string == $data_string1){
 				$temp = 1;
 			}
@@ -446,6 +446,13 @@ class ArticleAction extends CommonAction{
      // }  
    echo "执行了".$a."行";exit;
 	// echo $a;
+	
+	
+	
+	
+	
+	
+	
 	}
 }
 ?>

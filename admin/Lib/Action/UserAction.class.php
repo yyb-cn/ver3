@@ -709,7 +709,32 @@ $pid_name=trim($_REQUEST['pid_name']);
 		}else{
 			$model = M ("UserLog");
 		}
-		if (! empty ( $model )) {	
+		if (! empty ( $model )) {
+               $m_id='id';
+               $m_sort='asc';		   
+		$list_money = M("UserMoneyLog")->where("user_id=". $user_id)->order("id asc")->findAll ( );
+		foreach($list_money as $k =>$v){
+			
+			if($k==0){
+				 $id=$v['id'];
+			$money=$v['money'];
+				
+		$data['account_money']=0+$money;  
+
+		    $one = M("UserMoneyLog")->where("id=".$id)->save($data);
+			
+			}		
+			else	
+		   {
+			   $account_money=$list_money[$k-1]['account_money'];//上一次余额；
+		       $money=$v['money'];
+		       $id=$v['id'];
+				$data['account_money']=$account_money+$money;
+				 $one = M("UserMoneyLog")->where("id=".$id)->save($data);
+		   }
+			
+			
+		}
 		$this->_list ( $model, $map );
 		}
 		$this->assign("t",$t);
