@@ -220,6 +220,29 @@ class IndexAction extends AuthAction{
 		$this->assign("adm_session",$adm_session);
 		$this->display();
 	}
+	/*会员投标记录*/
+	public function loads()
+	{
+		
+		
+		$id = intval($_REQUEST['user_id']);
+	
+			
+ 			$list =M("DealLoad")->where('user_id='.$id)->findAll();
+		foreach ($list as $k => $v){
+			$deal_id=$v['deal_id'];
+		    $deal_name = M("Deal")->where("id=".$deal_id)->getField("name");
+			$list[$k]['deal_name']=$deal_name;
+			
+			
+			
+		}
+		
+	
+		
+		$this->assign("list",$list);
+		$this->display();
+	}
 	public function insert_carry()
 	{
 		$admin_id = intval($_REQUEST['admin_id']);
