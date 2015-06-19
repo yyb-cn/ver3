@@ -254,6 +254,24 @@ class WebsiteStatisticsAction extends CommonAction {
 
 		$this->display();		
 	}
+	//普通会员交易金额统计
+	public function website_cost_user_money(){
+		
+		$list_no_limit = M("User")->where('group_id=1')->findAll ( );
+		
+		foreach($list_no_limit as $k=>$v)
+		{
+			$total_no_limit+=$v['money'];
+			$ta_limit=$k;
+		}
+		
+		$total_no_limit=number_format($total_no_limit);
+		$this->assign('ta_limit',$ta_limit);
+		$this->assign('total_no_limit',$total_no_limit);
+			
+
+		$this->display();		
+	}
 	
 	//充值明细
 	public function website_recharge_info(){

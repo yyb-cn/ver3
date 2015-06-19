@@ -424,6 +424,7 @@ return array(
 										array("name"=>"用户统计","module"=>"WebsiteStatistics","action"=>"website_users_total"),
 										array("name"=>"网站垫付统计","module"=>"WebsiteStatistics","action"=>"website_advance_total"),
 										array("name"=>"网站费用统计","module"=>"WebsiteStatistics","action"=>"website_cost_total"),
+										array("name"=>"普通会员余额统计","module"=>"WebsiteStatistics","action"=>"website_cost_user_money"),
 								),
 						),
 							
