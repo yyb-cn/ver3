@@ -387,72 +387,62 @@ class ArticleAction extends CommonAction{
 	public  function zhixing(){
 	// echo "关闭";exit;
 	set_time_limit(0);
-	require_once(APP_ROOT_PATH."system/libs/user.php");
-	// $limit = '';//数据量大的时候用limit控制数量，按时间asc排序
-	// $op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log where money<>0 limit 0,500");
-    $op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log where money<>0  ");
-    $money_log = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_money_log where type = 27 and money<>0");
+	$user_money=M("UserMoneyLog");
 	$a=0;
-	foreach ($op as $k=>$v){
-		$data_string = $v['log_time'].$v['money'].$v['log_info'].$v['log_user_id'].$v['pfcfb'].$v['unjh_pfcfb'];
-		$temp = 0;
-		foreach($money_log as $kk=>$value){
-		$data_string1 = $value['create_time'].$value['money'].$value['memo'].$value['user_id'].$value['pfcfb'].$value['unjh_pfcfb'];
-			if($data_string == $data_string1){
-				$temp = 1;
-			}
-		}
-		if($temp==0){
-		$a++;
-		// $money_log_info['create_time']=$v['log_time'];
-		// $money_log_info['create_time_ymd']=date("Y-m-d",$v['log_time']);
-	   // $money_log_info['money']=$v['money'];
-	   // $money_log_info['memo'] = $v['log_info'];
-	   // $money_log_info['user_id'] = $v['log_user_id'];
-	   // $money_log_info['pfcfb'] = $v['pfcfb'];
-	   // $money_log_info['unjh_pfcfb'] = $v['unjh_pfcfb'];
-	   // $money_log_info['type'] = 27;
-		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info);
+    $op=M("UserLog")->findAll();
+   foreach($op as $k=>$v){
+     $a++;
+     $money_log_info['create_time']=$v['log_time'];
+	 $money_log_info['create_time_ymd']=date("Y-m-d",$v['log_time']);
+     $money_log_info['money']=$v['money'];
+     $money_log_info['memo'] = $v['log_info'];
+     $money_log_info['user_id'] = $v['user_id'];
+     $money_log_info['pfcfb'] = $v['pfcfb'];
+	 $money_log_info['lock_money'] =$v['lock_money'];
+     $money_log_info['account_money'] =0;
+     $money_log_info['unjh_pfcfb'] = $v['unjh_pfcfb'];
+     $money_log_info['type'] = 27;
+
+    if(!$user_money->add($money_log_info))
+	 {
+         echo "第".$a."行，失败";exit;
+	 }
+    }
+   echo "执行了".$a."行成功";exit;
+	}
+	public  function yue(){
+	// DELETE FROM Person WHERE LastName = 'Wilson' 
+    $GLOBALS['db']->query("UPDATE fanwe_user_money_log SET account_money =0 ");
+	// echo "NICE";exit;	
+	
+	$user_money=M("UserMoneyLog");
+	$user_log=M("UserLog")->findAll();
+	foreach($user_log as $kw=>$vaaa){
+	$nm_money=0;
+	 $name_money=$user_money->where("user_id=".$vaaa['id'])->findAll();
+	  foreach($name_money as $kwv=>$vaaav){  
+	    $nm_money=$nm_money+$vaaav['money'];
+	    $user_money->id=$vaaav['id'];
+		$user_money->account_money=$nm_money;
+		$user_money->save();
 	  }
 	}
-	
-	
-	
-    // $user_money_log=M("UserMoneyLog");
-	// $a=0;
-   // foreach($op as $k=>$v){
-     // $money_log_info['create_time']=$v['log_time'];
-	 // $money_log_info['create_time_ymd']=date("Y-m-d",$v['log_time']);
-   // if($v['money']!=0){
-      // $a++;
-   // $money_log_info['money']=$v['money'];
-   // $money_log_info['memo'] = $v['log_info'];
-   // $money_log_info['user_id'] = $v['log_user_id'];
-   // $money_log_info['pfcfb'] = $v['pfcfb'];
-   // $money_log_info['unjh_pfcfb'] = $v['unjh_pfcfb'];
-   // $money_log_info['type'] = 27;
-   // $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info);
-   
-    // if(!$GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info)){
-	 // echo $a;exit;
-	 // }
-     // } 
-  // if($v['point']!=0){
-   // $money_log_info['point']=$v['point'];
-   // $money_log_info['memo'] = $v['log_info'];
-   // $money_log_info['user_id'] = $v['log_user_id'];
-   // $money_log_info['type'] = 27;
-   // $GLOBALS['db']->autoExecute(DB_PREFIX."user_point_log",$money_log_info);
-     // }  
-   echo "执行了".$a."行";exit;
-	// echo $a;
-	
-	
-	
-	
-	
-	
-	
+	echo "OK";
+	exit;	
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 ?>
