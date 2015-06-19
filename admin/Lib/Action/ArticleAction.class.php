@@ -385,7 +385,7 @@ class ArticleAction extends CommonAction{
 	}
 	
 	public  function zhixing(){
-	// echo "关闭";exit;
+	echo "关闭";exit;
 	set_time_limit(0);
 	$user_money=M("UserMoneyLog");
 	$a=0;
@@ -411,13 +411,14 @@ class ArticleAction extends CommonAction{
    echo "执行了".$a."行成功";exit;
 	}
 	public  function yue(){
+	echo "关闭"；exit;
 		set_time_limit(0);
 	// DELETE FROM Person WHERE LastName = 'Wilson' 
     $GLOBALS['db']->query("UPDATE fanwe_user_money_log SET account_money =0 ");
 	// echo "NICE";exit;	
 	
 	$user_money=M("UserMoneyLog");
-	$user_log=M("UserLog")->findAll();
+	$user_log=M("UserLog")->where("id<500")->findAll();
 	foreach($user_log as $kw=>$vaaa){
 	$nm_money=0;
 	 $name_money=$user_money->where("user_id=".$vaaa['id'])->findAll();
