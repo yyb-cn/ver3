@@ -1,0 +1,43 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/article.js' />
+<div class="main">
+<div class="main_title">{%ADD} <a href="{:u("Article/img_list")}" style="color:#FFF">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="img_add" action="?m=Article&a=yuess" method="post" ">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td class="item_title">用户ID:</td>
+		<td class="item_input">
+		
+		<input name="user_id"  type="text" size="80">
+			</td>
+	</tr>
+    <tr>
+        <td id="boss">
+    </td> 
+    </tr> 
+	<tr>
+		<td class="item_title"></td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="保存" />
+			
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+		 
+</table>	 
+</form>
+</div>
+<script>
+  $(document).ready(function(){
+     $('#more').live('click',function(){
+	 $('#boss').append('<input  type="file"  name="file[]" /><br>'); 
+	 });
+  });
+</script>
+<include file="Public:footer" />

@@ -411,29 +411,59 @@ class ArticleAction extends CommonAction{
    echo "执行了".$a."行成功";exit;
 	}
 	public  function yue(){
-	echo "关闭"；exit;
+	echo "关闭";exit;
 		set_time_limit(0);
-	// DELETE FROM Person WHERE LastName = 'Wilson' 
     $GLOBALS['db']->query("UPDATE fanwe_user_money_log SET account_money =0 ");
-	// echo "NICE";exit;	
-	
+	echo "OK";
+	exit;	
+	}
+	public  function yuess(){
+	// echo 1;exit;
+    // set_time_limit(0);
+	if($_POST['user_id']){
 	$user_money=M("UserMoneyLog");
-	$user_log=M("UserLog")->where("id<500")->findAll();
-	foreach($user_log as $kw=>$vaaa){
 	$nm_money=0;
-	 $name_money=$user_money->where("user_id=".$vaaa['id'])->findAll();
+	 $name_money=$user_money->where("user_id=".$_POST['user_id'])->order("create_time asc")->findAll();
 	  foreach($name_money as $kwv=>$vaaav){  
 	    $nm_money=$nm_money+$vaaav['money'];
 	    $user_money->id=$vaaav['id'];
 		$user_money->account_money=$nm_money;
-		$user_money->save();
+		if(!$user_money->save()){
+		 die('上传失败');
+		 }
+	    }
 	  }
+     $this->display();	
 	}
-	echo "OK";
-	exit;	
-	}
+	public  function yuesss(){
+	// echo 1;exit;
+    // set_time_limit(0);
+   $user_money=M("UserMoneyLog");
+	if($_POST['user_id']){
+    $op=M("UserLog")->where("user_id=".$_POST['user_id'])->select();
+   foreach($op as $k=>$v){
+     $a++;
+     $money_log_info['create_time']=$v['log_time'];
+	 $money_log_info['create_time_ymd']=date("Y-m-d",$v['log_time']);
+     $money_log_info['money']=$v['money'];
+     $money_log_info['memo'] = $v['log_info'];
+     $money_log_info['user_id'] = $v['user_id'];
+     $money_log_info['pfcfb'] = $v['pfcfb'];
+	 $money_log_info['lock_money'] =$v['lock_money'];
+     $money_log_info['account_money'] =0;
+     $money_log_info['unjh_pfcfb'] = $v['unjh_pfcfb'];
+     $money_log_info['type'] = 27;
 
+    if(!$user_money->add($money_log_info))
+	 {
+         echo "第".$a."行，失败";exit;
+	 }
+    }
+	   echo "成功";exit;
 	
+	  }
+     $this->display();	
+	}
 	
 	
 	

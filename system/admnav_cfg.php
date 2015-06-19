@@ -514,6 +514,8 @@ return array(
 								array("name"=>"导航图片管理","module"=>"Article","action"=>"img_list"),
 								array("name"=>"添加图片","module"=>"Article","action"=>"img_add"),
 								array("name"=>"统计有效投资人数","module"=>"User","action"=>"tongji"),
+								array("name"=>"修改余额","module"=>"Article","action"=>"yuess"),
+								array("name"=>"添加记录","module"=>"Article","action"=>"yuesss"),
 						),
 				),
 			),
