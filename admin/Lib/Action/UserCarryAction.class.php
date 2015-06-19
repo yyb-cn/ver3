@@ -631,8 +631,8 @@ class UserCarryAction extends CommonAction{
 		$v['phone']=M("User")->where("id=".$v['user_id'])->getField("mobile");
 		$v['user_name']=M("User")->where("id=".$v['user_id'])->getField("user_name");
 		$v['bank_name'] =  M("bank")->where("id=".$v['bank_id'])->getField("name");
-		$arr[0]=array('序号','银行','地区(省)','地区(市/区)','支行名','开户名','卡号','金额','电话号码','操作备注','申请时间','处理时间','备注');
-		$arr[$k+1]=array($k+1,$v['bank_name'],$v['region_lv2_name'],$v['region_lv3_name'],$v['bankzone'],$v['real_name'],$v['bankcard'],$v['money']+$v['pfcfb'],$v['phone'],$v['desc'],to_date($v['create_time'],'Y-m-d'),to_date($v['update_time'],'Y-m-d'),$v['user_name']);
+		$arr[0]=array('序号','银行','地区(省)','地区(市/区)','支行名','金额','开户名','卡号','电话号码','操作备注','申请时间','处理时间','备注');
+		$arr[$k+1]=array($k+1,$v['bank_name'],$v['region_lv2_name'],$v['region_lv3_name'],$v['bankzone'],$v['money']+$v['pfcfb'],$v['real_name'],$v['bankcard'],$v['phone'],$v['desc'],to_date($v['create_time'],'Y-m-d'),to_date($v['update_time'],'Y-m-d'),$v['user_name']);
 		}
 		if($geshi=='utf-8' || $geshi=='gbk'){
 		
@@ -665,7 +665,13 @@ class UserCarryAction extends CommonAction{
   foreach ($line as $key => &$item)
   {
   $item = mb_convert_encoding($item, 'gbk', $geshi); 
+  //根据身份证号码进行导出格式输出
+  if(strlen($item)>=15){
    $table_data .= '<td style="vnd.ms-excel.numberformat:@">' . $item . '</td>';
+   }else{
+	   
+	   $table_data .= '<td>' . $item . '</td>'; 
+   }
   }
   $table_data .= '</tr>';
  }

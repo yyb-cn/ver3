@@ -385,45 +385,67 @@ class ArticleAction extends CommonAction{
 	}
 	
 	public  function zhixing(){
-	echo "关闭";exit;
+	// echo "关闭";exit;
 	set_time_limit(0);
 	require_once(APP_ROOT_PATH."system/libs/user.php");
-	$op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log");
+	// $limit = '';//数据量大的时候用limit控制数量，按时间asc排序
+	// $op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log where money<>0 limit 0,500");
+    $op = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_log where money<>0 limit 0,30000 ");
+    $money_log = $GLOBALS['db']->getAll("select *  from ".DB_PREFIX."user_money_log where type = 27 and money<>0 limit 0,30000");
 	$a=0;
-   foreach($op as $k=>$v){
-     $money_log_info['create_time']=$v['log_time'];
-	 $money_log_info['create_time_ymd']=date("Y-m-d",$v['log_time']);
-   if($v['money']!=0){
-      $a++;
-   $money_log_info['money']=$v['money'];
-   $money_log_info['memo'] = $v['log_info'];
-   $money_log_info['user_id'] = $v['log_user_id'];
-   $money_log_info['pfcfb'] = $v['pfcfb'];
-   $money_log_info['unjh_pfcfb'] = $v['unjh_pfcfb'];
-   $money_log_info['type'] = 27;
-   $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info);
-     } 
-  if($v['point']!=0){
-   $money_log_info['point']=$v['point'];
-   $money_log_info['memo'] = $v['log_info'];
-   $money_log_info['user_id'] = $v['log_user_id'];
-   $money_log_info['type'] = 27;
-   $GLOBALS['db']->autoExecute(DB_PREFIX."user_point_log",$money_log_info);
-     }  
-	 
-	 
-	 
-	 
-   }
+	foreach ($op as $k=>$v){
+		$data_string = $v['log_time'].date("Y-m-d",$v['log_time']).$v['money'].$v['log_info'].$v['log_user_id'].$v['pfcfb'].$v['unjh_pfcfb'];
+		$temp = 0;
+		foreach($money_log as $kk=>$value){
+		$data_string1 = $value['create_time'].$value['create_time_ymd'].$value['money'].$value['memo'].$value['user_id'].$value['pfcfb'].$value['unjh_pfcfb'];
+			if($data_string == $data_string1){
+				$temp = 1;
+			}
+		}
+		if($temp==0){
+		$a++;
+		// $money_log_info['create_time']=$v['log_time'];
+		// $money_log_info['create_time_ymd']=date("Y-m-d",$v['log_time']);
+	   // $money_log_info['money']=$v['money'];
+	   // $money_log_info['memo'] = $v['log_info'];
+	   // $money_log_info['user_id'] = $v['log_user_id'];
+	   // $money_log_info['pfcfb'] = $v['pfcfb'];
+	   // $money_log_info['unjh_pfcfb'] = $v['unjh_pfcfb'];
+	   // $money_log_info['type'] = 27;
+		// $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info);
+	  }
+	}
+	
+	
+	
+    // $user_money_log=M("UserMoneyLog");
+	// $a=0;
+   // foreach($op as $k=>$v){
+     // $money_log_info['create_time']=$v['log_time'];
+	 // $money_log_info['create_time_ymd']=date("Y-m-d",$v['log_time']);
+   // if($v['money']!=0){
+      // $a++;
+   // $money_log_info['money']=$v['money'];
+   // $money_log_info['memo'] = $v['log_info'];
+   // $money_log_info['user_id'] = $v['log_user_id'];
+   // $money_log_info['pfcfb'] = $v['pfcfb'];
+   // $money_log_info['unjh_pfcfb'] = $v['unjh_pfcfb'];
+   // $money_log_info['type'] = 27;
+   // $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info);
+   
+    // if(!$GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$money_log_info)){
+	 // echo $a;exit;
+	 // }
+     // } 
+  // if($v['point']!=0){
+   // $money_log_info['point']=$v['point'];
+   // $money_log_info['memo'] = $v['log_info'];
+   // $money_log_info['user_id'] = $v['log_user_id'];
+   // $money_log_info['type'] = 27;
+   // $GLOBALS['db']->autoExecute(DB_PREFIX."user_point_log",$money_log_info);
+     // }  
    echo "执行了".$a."行";exit;
 	// echo $a;
-	
-	
-	
-	
-	
-	
-	
 	}
 }
 ?>

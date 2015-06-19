@@ -709,9 +709,8 @@ $pid_name=trim($_REQUEST['pid_name']);
 		}else{
 			$model = M ("UserLog");
 		}
-		if (! empty ( $model )) {
-			$this->_list ( $model, $map );
-
+		if (! empty ( $model )) {	
+		$this->_list ( $model, $map );
 		}
 		$this->assign("t",$t);
 		$this->assign("user_id",$user_id);
@@ -783,10 +782,11 @@ $pid_name=trim($_REQUEST['pid_name']);
 	}
 	
 	public function export_csv($page = 1)
-	{
-		set_time_limit(0);
-		$limit = (($page - 1)*intval(app_conf("BATCH_PAGE_SIZE"))).",".(intval(app_conf("BATCH_PAGE_SIZE")));
-		
+	{   
+		//set_time_limit(0);
+		//$limit = (($page - 1)*intval(app_conf("BATCH_PAGE_SIZE"))).",".(intval(app_conf("BATCH_PAGE_SIZE")));
+		//导出的数量
+		$limit = '';
 		//定义条件
 		$map[DB_PREFIX.'user.is_delete'] = 0;
 
@@ -900,6 +900,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 			
 			//header("Content-Disposition: attachment; filename=user_list.csv");
 	    	//echo $content;  
+		
 			$this->outputXlsHeader($arr,'提现名单'.time());
 		}
 		else
