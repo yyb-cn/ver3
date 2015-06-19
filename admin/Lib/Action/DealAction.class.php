@@ -18,7 +18,10 @@ class DealAction extends CommonAction{
 		{
 			$map['name'] = array('like','%'.trim($_REQUEST['name']).'%');		
 		}
-
+		if(intval($_REQUEST['name_id'])>0)
+		{
+			$map['id'] =intval($_REQUEST['name_id']) ;		
+		}
 		$deal_status = isset($_REQUEST['deal_status']) ? trim($_REQUEST['deal_status']) : 'all';
 
 		if(isset($_REQUEST['is_has_received']) && trim($_REQUEST['is_has_received']) != 'all'){
