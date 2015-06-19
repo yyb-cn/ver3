@@ -444,17 +444,8 @@ class ArticleAction extends CommonAction{
    // $money_log_info['type'] = 27;
    // $GLOBALS['db']->autoExecute(DB_PREFIX."user_point_log",$money_log_info);
      // }  
-	 
-   }
    echo "执行了".$a."行";exit;
 	// echo $a;
-	
-	
-	
-	
-	
-	
-	
 	}
 }
 ?>
