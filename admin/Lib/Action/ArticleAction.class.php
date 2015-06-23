@@ -429,7 +429,7 @@ class ArticleAction extends CommonAction{
 	    $user_money->id=$vaaav['id'];
 		$user_money->account_money=$nm_money;
 		if(!$user_money->save()){
-		 die('上传失败');
+		 die('修改失败');
 		 }
 	    }
 	  }
@@ -440,7 +440,10 @@ class ArticleAction extends CommonAction{
     // set_time_limit(0);
    $user_money=M("UserMoneyLog");
 	if($_POST['user_id']){
-    $op=M("UserLog")->where("user_id=".$_POST['user_id'])->select();
+    $op=M("UserLog")->where("user_id=".$_POST['user_id']." and log_time<1434211200")->select();
+	// echo M("UserLog")->getLastSql();exit;
+	// print_r($op);exit;
+	
    foreach($op as $k=>$v){
      $a++;
      $money_log_info['create_time']=$v['log_time'];
@@ -452,7 +455,7 @@ class ArticleAction extends CommonAction{
 	 $money_log_info['lock_money'] =$v['lock_money'];
      $money_log_info['account_money'] =0;
      $money_log_info['unjh_pfcfb'] = $v['unjh_pfcfb'];
-     $money_log_info['type'] = 27;
+     $money_log_info['type'] = 28;
 
     if(!$user_money->add($money_log_info))
 	 {
