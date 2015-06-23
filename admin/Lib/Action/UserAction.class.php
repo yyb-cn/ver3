@@ -735,7 +735,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 				 // $one = M("UserMoneyLog")->where("id=".$id)->save($data);
 		   // }
 		// }
-		// $this->_list ( $model, $map );
+		$this->_list ( $model, $map );
 
 		if (isset ( $_REQUEST ['_order'] )) {
 			$order = $_REQUEST ['_order'];
