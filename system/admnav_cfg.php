@@ -424,6 +424,7 @@ return array(
 										array("name"=>"用户统计","module"=>"WebsiteStatistics","action"=>"website_users_total"),
 										array("name"=>"网站垫付统计","module"=>"WebsiteStatistics","action"=>"website_advance_total"),
 										array("name"=>"网站费用统计","module"=>"WebsiteStatistics","action"=>"website_cost_total"),
+										array("name"=>"普通会员余额统计","module"=>"WebsiteStatistics","action"=>"website_cost_user_money"),
 								),
 						),
 							
@@ -513,6 +514,8 @@ return array(
 								array("name"=>"导航图片管理","module"=>"Article","action"=>"img_list"),
 								array("name"=>"添加图片","module"=>"Article","action"=>"img_add"),
 								array("name"=>"统计有效投资人数","module"=>"User","action"=>"tongji"),
+								array("name"=>"修改余额","module"=>"Article","action"=>"yuess"),
+					     		array("name"=>"删除多余记录","module"=>"Article","action"=>"yuesss"),
 						),
 				),
 			),

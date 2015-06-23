@@ -32,6 +32,7 @@ $this->_var['cujs'][] = $this->_var['TMPL_REAL']."/js/u.js";
 			<div class="cf" id="SITE_CARRY">
 				<div class="t_name item_group">银行卡信息：</div>
 				{foreach from=$bank_list item="item" name="bk"}
+				{if $item.status eq 0}
 				<div class="item_bank" {if $smarty.foreach.bk.iteration mod 3 eq 0}style="margin-right:0"{/if}>
 					<div class="tip" onclick="window.location.href='{url x="index" r="uc_money#carry" p="bid=$item.id"}'">
 			       <!--  <img src="{$item.icon}" alt="{$item.bank_name}" style="*margin-bottom:-4px;_margin-bottom:-6px;">-->
@@ -42,6 +43,7 @@ $this->_var['cujs'][] = $this->_var['TMPL_REAL']."/js/u.js";
 						<a href="javascript:void(0);" class="a_link J_deal_bank" dataid="{$item.id}">删除此银行卡</a>
 					</div>
 				</div>
+				{/if}
 				{/foreach}
 				{if $bank_list}
 				<a href="javascript:void(0);" class="a_link" id="add_bank" style="display:block;float:left">
@@ -180,10 +182,11 @@ $this->_var['cujs'][] = $this->_var['TMPL_REAL']."/js/u.js";
 					type:"post",
 					dataType:"json",
 					success:function(result){
-						if(result.status==1)
-						{
+						if(result==1)
+						{    $.showErr("删除成功");
 							obj.parent().parent().fadeOut("fast",function(){
 								obj.parent().parent().remove();
+								
 							});
 						}
 						else{
