@@ -71,17 +71,16 @@
         ,money_limit_max:最高使用限额(元)
         ,time_limitd:使用期限(天)
         ,user_type|user_types:限制用户类型
-        ,get_invest|reg_send:是否用于投资
-        ,get_cash|reg_send:是否用于取现
-        ,reg_send|reg_send:注册发送:edit
+        ,category:代金券类型
 	,begin_time|to_date:{%VOUCHER_BEGIN_TIME}
 	,end_time|to_date:{%VOUCHER_END_TIME}
 	,gen_count:{%VOUCHER_GEN_COUNT}
 	,send_type|get_send_types:{%VOUCHER_SEND_TYPE}" 
-	actionlist="edit:{%EDIT},foreverdel:{%FOREVERDEL},id|get_send,view:{%VIEW},send_all:A发送,send_all2:B发送" /> 
+	actionlist="edit:{%EDIT},foreverdel:{%FOREVERDEL},id|get_send,view:{%VIEW}" /> 
 
 <div class="blank5"></div>
 <div class="page">{$page}</div>
 注：A发送为发给老用户并自动领取，B发送为发给老用户不自动领取
+注：代金券类型规则：编号为相同类型，0则没有同类型的，每种不同类型的代金券可以同时使用
 </div>
 <include file="Public:footer" />

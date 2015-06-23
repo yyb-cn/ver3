@@ -384,8 +384,8 @@ class ArticleAction extends CommonAction{
 		return $File;
 	}
 	
-	public  function zhixing(){
-	echo "关闭";exit;
+/*	public  function zhixing(){
+	 echo "关闭";exit;
 	set_time_limit(0);
 	$user_money=M("UserMoneyLog");
 	$a=0;
@@ -410,58 +410,50 @@ class ArticleAction extends CommonAction{
     }
    echo "执行了".$a."行成功";exit;
 	}
+	
 	public  function yue(){
 	echo "关闭";exit;
 		set_time_limit(0);
     $GLOBALS['db']->query("UPDATE fanwe_user_money_log SET account_money =0 ");
 	echo "OK";
 	exit;	
-	}
+	}*/
+	
 	public  function yuess(){
-	// echo 1;exit;
-    // set_time_limit(0);
 	if($_POST['user_id']){
 	$user_money=M("UserMoneyLog");
 	$nm_money=0;
-	 $name_money=$user_money->where("user_id=".$_POST['user_id'])->order("create_time asc")->findAll();
+	$name_money=$user_money->where("user_id=".$_POST['user_id'])->order("create_time asc")->findAll();
 	  foreach($name_money as $kwv=>$vaaav){  
 	    $nm_money=$nm_money+$vaaav['money'];
 	    $user_money->id=$vaaav['id'];
 		$user_money->account_money=$nm_money;
-		if(!$user_money->save()){
-		 die('修改失败');
-		 }
+		$user_money->save();
 	    }
 	  }
+	  echo "成功";exit;
      $this->display();	
 	}
-	public  function yuesss(){
-	// echo 1;exit;
-    // set_time_limit(0);
-   $user_money=M("UserMoneyLog");
-	if($_POST['user_id']){
-    $op=M("UserLog")->where("user_id=".$_POST['user_id']." and log_time<1434211200")->select();
-	// echo M("UserLog")->getLastSql();exit;
-	// print_r($op);exit;
 	
-   foreach($op as $k=>$v){
-     $a++;
-     $money_log_info['create_time']=$v['log_time'];
-	 $money_log_info['create_time_ymd']=date("Y-m-d",$v['log_time']);
-     $money_log_info['money']=$v['money'];
-     $money_log_info['memo'] = $v['log_info'];
-     $money_log_info['user_id'] = $v['user_id'];
-     $money_log_info['pfcfb'] = $v['pfcfb'];
-	 $money_log_info['lock_money'] =$v['lock_money'];
-     $money_log_info['account_money'] =0;
-     $money_log_info['unjh_pfcfb'] = $v['unjh_pfcfb'];
-     $money_log_info['type'] = 28;
 
-    if(!$user_money->add($money_log_info))
-	 {
-         echo "第".$a."行，失败";exit;
-	 }
-    }
+	public  function yuesss(){
+     $user_money=M("UserMoneyLog");
+	 if($_POST['user_id']){
+     $op=$user_money->where("user_id=".$_POST['user_id']." and create_time<1434729600 and create_time>1434038400")->select();
+	for ($i=0;$i<count($op);$i++){
+		$pipi=$op[$i]['create_time'].$op[$i]['memo'].$op[$i]['user_id'].$op[$i]['money'].$op[$i]['pfcfb'];
+		for($k=$i+1;$k<count($op);$k++){
+			$pk=$op[$k]['create_time'].$op[$k]['memo'].$op[$k]['user_id'].$op[$k]['money'].$op[$k]['pfcfb'];
+			if($pipi==$pk){
+				if(!$user_money->where('id='.$op[$k]['id'])->delete()){
+				echo $op[$k]['id']."-失败";
+				
+				}
+			}
+		
+		}
+	}
+
 	   echo "成功";exit;
 	
 	  }

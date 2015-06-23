@@ -34,6 +34,14 @@ class EcvTypeAction extends CommonAction{
                 $data['user_type'] = implode("|",$data['user_type']);//1为新用户，2为老用户
 		$data['begin_time'] = trim($data['begin_time'])==''?0:to_timespan($data['begin_time']);
 		$data['end_time'] = trim($data['end_time'])==''?0:to_timespan($data['end_time']);
+                $data['category'] = trim($data['category']);//
+                $category = explode("_", $data['category']);
+                foreach ($category as $value) {
+                    $res = M(MODULE_NAME)->where("id = ".$value)->find();
+                    if(!$res){
+                       $this->error(L("代金券类型错误")); 
+                    }
+                }
 		// 更新数据
 		$log_info = $data['name'];
 		$list=M(MODULE_NAME)->add($data);
@@ -78,6 +86,13 @@ class EcvTypeAction extends CommonAction{
                 $data['user_type'] = implode("|",$data['user_type']);//1为新用户，2为老用户
 		$data['begin_time'] = trim($data['begin_time'])==''?0:to_timespan($data['begin_time']);
 		$data['end_time'] = trim($data['end_time'])==''?0:to_timespan($data['end_time']);
+                $category = explode("_", $data['category']);
+                foreach ($category as $value) {
+                    $res = M(MODULE_NAME)->where("id = ".$value)->find();
+                    if(!$res){
+                       $this->error(L("代金券类型错误")); 
+                    }
+                }
 		// 更新数据
 		$list=M(MODULE_NAME)->save ($data);
 		if (false !== $list) {
