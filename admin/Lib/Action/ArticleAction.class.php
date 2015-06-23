@@ -431,7 +431,6 @@ class ArticleAction extends CommonAction{
 		$user_money->save();
 	    }
 	  }
-	  echo "成功";exit;
      $this->display();	
 	}
 	
