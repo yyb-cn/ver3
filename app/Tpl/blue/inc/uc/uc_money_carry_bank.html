@@ -43,9 +43,8 @@ $this->_var['cujs'][] = $this->_var['TMPL_REAL']."/js/u.js";
 						<a href="javascript:void(0);" class="a_link J_deal_bank" dataid="{$item.id}">删除此银行卡</a>
 					</div>
 				</div>
-{/if}		
-		{/foreach}
-		
+				{/if}
+				{/foreach}
 				{if $bank_list}
 				<a href="javascript:void(0);" class="a_link" id="add_bank" style="display:block;float:left">
 				<div class="item_bank add_bank">
@@ -181,12 +180,14 @@ $this->_var['cujs'][] = $this->_var['TMPL_REAL']."/js/u.js";
 					url:'{url x="index" r="uc_money#delbank"}',
 					data:query,
 					type:"post",
-					//dataType:"json",
+					dataType:"json",
 					success:function(result){
-					confirm(result);
 						if(result==1)
-						{
-							$.showErr("操作成功");
+						{    $.showErr("删除成功");
+							obj.parent().parent().fadeOut("fast",function(){
+								obj.parent().parent().remove();
+								
+							});
 						}
 						else{
 							$.showErr(result.info);

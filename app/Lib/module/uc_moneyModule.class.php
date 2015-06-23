@@ -537,8 +537,11 @@ class uc_moneyModule extends SiteBaseModule
 	
 	public function delbank(){
 		$id = intval($_REQUEST['id']);
-		
-	echo  $GLOBALS['db']->query("update ".DB_PREFIX."user_bank set status =1 where id = ".$id);
+		   if($GLOBALS['db']->query("update ".DB_PREFIX."user_bank set status =1 where id = ".$id)){
+			   
+		echo 	   1;
+		   }
+	
 	}
 	
 	/**
