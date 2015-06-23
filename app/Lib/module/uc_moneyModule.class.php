@@ -507,7 +507,7 @@ class uc_moneyModule extends SiteBaseModule
 			$GLOBALS['tmpl']->assign("fee_config",$fee_config);
 			$GLOBALS['tmpl']->assign("json_fee",json_encode($json_fee));
 		}
-		// var_dump($bank_list);exit;
+	// var_dump($bank_list);exit;
 		$GLOBALS['tmpl']->assign("page_title",$GLOBALS['lang']['UC_CARRY']);
 		$GLOBALS['tmpl']->assign("inc_file","inc/uc/uc_money_carry_bank.html");
 		$GLOBALS['tmpl']->display("page/uc.html");
@@ -522,7 +522,7 @@ class uc_moneyModule extends SiteBaseModule
 		
 		
 		$bank_list = $GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."bank ORDER BY is_rec DESC,sort DESC,id ASC");
-		
+	
 		$GLOBALS['tmpl']->assign("bank_list",$bank_list);
 		
 		//地区列表
@@ -537,13 +537,8 @@ class uc_moneyModule extends SiteBaseModule
 	
 	public function delbank(){
 		$id = intval($_REQUEST['id']);
-		if($id==0){
-			showErr("不存在此银行",1);
-		}
-	  if($GLOBALS['db']->query("update ".DB_PREFIX."user_bank set status =1 where id = ".$id)){
-
-   	  	showSuccess("删除成功",1); 
-	   }
+		
+	echo  $GLOBALS['db']->query("update ".DB_PREFIX."user_bank set status =1 where id = ".$id);
 	}
 	
 	/**
