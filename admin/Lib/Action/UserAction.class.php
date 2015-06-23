@@ -701,6 +701,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 		{	//资金日志
 		// echo 1 ;exit;
 			$model = M ("UserMoneyLog");
+			$order = 'create_time';
 		}elseif($t=="point"){
 			$model = M ("UserPointLog");
 			//信用积分日志
@@ -708,34 +709,89 @@ $pid_name=trim($_REQUEST['pid_name']);
 			$model = M ("UserLockMoneyLog");
 		}else{
 			$model = M ("UserLog");
+	     	$order = 'log_time';	
 		}
 		if (! empty ( $model )) {
-               $m_id='id';
-               $m_sort='asc';		   
-		$list_money = M("UserMoneyLog")->where("user_id=". $user_id)->order("id asc")->findAll ( );
-		foreach($list_money as $k =>$v){
+               // $m_id='id';
+               // $m_sort='asc';		   
+		// $list_money = M("UserMoneyLog")->where("user_id=". $user_id)->order("id asc")->findAll ( );
+		// foreach($list_money as $k =>$v){
 			
-			if($k==0){
-				 $id=$v['id'];
-			$money=$v['money'];
+			// if($k==0){
+				 // $id=$v['id'];
+			// $money=$v['money'];
 				
-		$data['account_money']=0+$money;  
+		// $data['account_money']=0+$money;  
 
-		    $one = M("UserMoneyLog")->where("id=".$id)->save($data);
+		    // $one = M("UserMoneyLog")->where("id=".$id)->save($data);
 			
-			}		
-			else	
-		   {
-			   $account_money=$list_money[$k-1]['account_money'];//上一次余额；
-		       $money=$v['money'];
-		       $id=$v['id'];
-				$data['account_money']=$account_money+$money;
-				 $one = M("UserMoneyLog")->where("id=".$id)->save($data);
-		   }
-			
-			
+			// }		
+			// else	
+		   // {
+			   // $account_money=$list_money[$k-1]['account_money'];//上一次余额；
+		       // $money=$v['money'];
+		       // $id=$v['id'];
+				// $data['account_money']=$account_money+$money;
+				 // $one = M("UserMoneyLog")->where("id=".$id)->save($data);
+		   // }
+		// }
+		// $this->_list ( $model, $map );
+
+		if (isset ( $_REQUEST ['_order'] )) {
+			$order = $_REQUEST ['_order'];
+		} else {
+			$order = ! empty ( $sortBy ) ? $sortBy : $model->getPk ();
 		}
-		$this->_list ( $model, $map );
+		//排序方式默认按照倒序排列
+		//接受 sost参数 0 表示倒序 非0都 表示正序
+		if (isset ( $_REQUEST ['_sort'] )) {
+			$sort = $_REQUEST ['_sort'] ? 'asc' : 'desc';
+		} else {
+			$sort = $asc ? 'asc' : 'desc';
+		}
+		//取得满足条件的记录数
+		$count = $model->where ( $map )->count ( 'id' );
+		if ($count > 0) {
+			//创建分页对象
+			if (! empty ( $_REQUEST ['listRows'] )) {
+				$listRows = $_REQUEST ['listRows'];
+			} else {
+				$listRows = '';
+			}
+			$p = new Page ( $count, $listRows );
+			//分页查询数据
+
+			$voList = $model->where($map)->order( "`" . $order . "` " . $sort)->limit($p->firstRow . ',' . $p->listRows)->findAll ( );
+			foreach ($voList as $key => $value) {
+				$voList[$key]['pfcfb']=format_price($value['pfcfb']);
+				$voList[$key]['unjh_pfcfb']=format_price($value['unjh_pfcfb']);
+			}
+			//print_r($voList);exit;
+			// echo $model->getlastsql();
+			//分页跳转的时候保证查询条件
+			foreach ( $map as $key => $val ) {
+				if (! is_array ( $val )) {
+					$p->parameter .= "$key=" . urlencode ( $val ) . "&";
+				}
+			}
+			//分页显示
+
+			$page = $p->show ();
+			//列表排序显示
+			$sortImg = $sort; //排序图标
+			$sortAlt = $sort == 'desc' ? l("ASC_SORT") : l("DESC_SORT"); //排序提示
+			$sort = $sort == 'desc' ? 1 : 0; //排序方式
+			//模板赋值显示
+			
+			$this->assign ( 'list', $voList );
+			$this->assign ( 'sort', $sort );
+			$this->assign ( 'order', $order );
+			$this->assign ( 'sortImg', $sortImg );
+			$this->assign ( 'sortType', $sortAlt );
+			$this->assign ( "page", $page );
+			$this->assign ( "nowPage",$p->nowPage);
+}
+	//_list函数结尾	
 		}
 		$this->assign("t",$t);
 		$this->assign("user_id",$user_id);
