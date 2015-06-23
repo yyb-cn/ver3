@@ -735,7 +735,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 				 // $one = M("UserMoneyLog")->where("id=".$id)->save($data);
 		   // }
 		// }
-		// $this->_list ( $model, $map );
+		//$this->_list ( $model, $map );
 
 		if (isset ( $_REQUEST ['_order'] )) {
 			$order = $_REQUEST ['_order'];
@@ -762,10 +762,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 			//分页查询数据
 
 			$voList = $model->where($map)->order( "`" . $order . "` " . $sort)->limit($p->firstRow . ',' . $p->listRows)->findAll ( );
-			foreach ($voList as $key => $value) {
-				$voList[$key]['pfcfb']=format_price($value['pfcfb']);
-				$voList[$key]['unjh_pfcfb']=format_price($value['unjh_pfcfb']);
-			}
+			
 			//print_r($voList);exit;
 			// echo $model->getlastsql();
 			//分页跳转的时候保证查询条件
