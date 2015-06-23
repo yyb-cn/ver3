@@ -270,9 +270,9 @@ class EcvTypeAction extends CommonAction{
 					                $ecv_list[$kk]['user_id'] = M("User")->where("id=".$vv['user_id'])->getField("user_name");
 									$ecv_list[$kk]['ecv_type_id_id'] = $vv['ecv_type_id'];
 									$ecv_list[$kk]['ecv_type_id'] = M("Ecv_type")->where("id=".$vv['ecv_type_id'])->getField("name");
-									$ecv_list[$kk]['end_time'] = isset($vv['end_time']) ? '--' : date('Y-m-d H:i:s',$vv['end_time']);//到期时间
-									$ecv_list[$kk]['receive_time'] = isset($vv['receive_time']) ? '--' : date('Y-m-d H:i:s',$vv['receive_time']);//领取代金券时间
-									$ecv_list[$kk]['last_time'] = isset($vv['last_time']) ? '--' : date('Y-m-d H:i:s',$vv['last_time']);//使用到期时间
+									$ecv_list[$kk]['end_time'] =($vv['end_time']==0) ? '--' : date('Y-m-d H:i:s',$vv['end_time']);//到期时间
+									$ecv_list[$kk]['receive_time'] =($vv['receive_time']==0) ? '--' : date('Y-m-d H:i:s',$vv['receive_time']);//领取代金券时间
+									$ecv_list[$kk]['last_time'] =($vv['last_time']==0 ||$vv['last_time']=='') ? '--' : date('Y-m-d H:i:s',$vv['last_time']);//使用到期时间
                                     $ecv_list[$kk]['used_yn']   =   ($vv['used_yn']==1 || $vv['used_yn']==2)? '已用': '未用';	
 					}
 				
