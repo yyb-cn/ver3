@@ -737,18 +737,18 @@ $pid_name=trim($_REQUEST['pid_name']);
 		// }
 		//$this->_list ( $model, $map );
 
-		if (isset ( $_REQUEST ['_order'] )) {
-			$order = $_REQUEST ['_order'];
-		} else {
-			$order = ! empty ( $sortBy ) ? $sortBy : $model->getPk ();
-		}
+		// if (isset ( $_REQUEST ['_order'] )) {
+			// $order = $_REQUEST ['_order'];
+		// } else {
+			// $order = ! empty ( $sortBy ) ? $sortBy : $model->getPk ();
+		// }
 		//排序方式默认按照倒序排列
 		//接受 sost参数 0 表示倒序 非0都 表示正序
-		if (isset ( $_REQUEST ['_sort'] )) {
-			$sort = $_REQUEST ['_sort'] ? 'asc' : 'desc';
-		} else {
-			$sort = $asc ? 'asc' : 'desc';
-		}
+		// if (isset ( $_REQUEST ['_sort'] )) {
+			// $sort = $_REQUEST ['_sort'] ? 'asc' : 'desc';
+		// } else {
+			$sort ='desc';
+		// }
 		//取得满足条件的记录数
 		$count = $model->where ( $map )->count ( 'id' );
 		if ($count > 0) {
