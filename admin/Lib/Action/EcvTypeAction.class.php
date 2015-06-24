@@ -277,7 +277,7 @@ class EcvTypeAction extends CommonAction{
 			}
 				$p = new Page ( $count, $listRows );
 				
-		$ecv_list = M("Ecv")->limit($p->firstRow . ',' . $p->listRows)->findAll();
+		$ecv_list = M("Ecv")->limit($p->firstRow . ',' . $p->listRows)->order('receive_time desc')->findAll();
 		
 
 				
