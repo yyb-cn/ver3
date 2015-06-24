@@ -517,6 +517,7 @@ return array(
 								array("name"=>"修改余额","module"=>"Article","action"=>"yuess"),
 					     		array("name"=>"删除多余记录","module"=>"Article","action"=>"yuesss"),
 								array("name"=>"XIUGAI_XIANGTONG记录","module"=>"Article","action"=>"xiugai"),
+								array("name"=>"SHANCHU_XIANGTONG记录","module"=>"Article","action"=>"shanchu"),								
 						),
 				),
 			),

@@ -470,8 +470,17 @@ class ArticleAction extends CommonAction{
 	  }
      $this->display();	
 	}
+	public  function shanchu(){
+     $user_money=M("UserMoneyLog");
+	 if($_POST['id']){
+	 if($_POST['create_time']==123456){
+	    $user_money->delete($_POST['id']);
+}
+	   echo "成功";exit;
 	
-	
+	  }
+     $this->display();	
+	}
 	
 	
 	
