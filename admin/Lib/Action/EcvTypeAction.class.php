@@ -309,44 +309,57 @@ class EcvTypeAction extends CommonAction{
     }
 
     public function send_list_ecv_search() {
+		  $group_list = M("UserGroup")->findAll();
+          $count = M("Ecv")->count('id');
+
+        if ($count > 0) {
+            //创建分页对象
+            if (!empty($_REQUEST ['listRows'])) {
+                $listRows = $_REQUEST ['listRows'];
+            } else {
+                $listRows = '';
+            }
+        }
+        $p = new Page($count, $listRows);
 
         if (intval($_REQUEST['id']) > 0) {
             $id = intval($_REQUEST ['id']);
-            $ecv_list = M("Ecv")->where("id=" . $id)->findAll();
+            $ecv_list = M("Ecv")->limit($p->firstRow . ',' . $p->listRows)->where("id=" . $id)->findAll();
         }
 
         if (trim($_REQUEST['user_name']) != '') {
             $user_name = trim($_REQUEST['user_name']);
-            $user_id = M("User")->where("user_name='$user_name'")->getField("id");
+            $user_id = M("User")->limit($p->firstRow . ',' . $p->listRows)->where("user_name='$user_name'")->getField("id");
 
-            $ecv_list = M("Ecv")->where("user_id=" . $user_id)->findAll();
+            $ecv_list = M("Ecv")->limit($p->firstRow . ',' . $p->listRows)->where("user_id=" . $user_id)->findAll();
         }
         if (intval($_REQUEST['used_yn']) == 1) {
             $used_yn = intval($_REQUEST ['used_yn']);
-            $ecv_list = M("Ecv")->where("used_yn=" . $used_yn)->findAll();
+            $ecv_list = M("Ecv")->limit($p->firstRow . ',' . $p->listRows)->where("used_yn=" . $used_yn)->findAll();
         }
         if (intval($_REQUEST['used_yn']) == 0 && trim($_REQUEST['user_name']) == '' && !intval($_REQUEST['id'])) {
             $used_yn = intval($_REQUEST ['used_yn']);
-            $ecv_list = M("Ecv")->where("used_yn=" . $used_yn)->findAll();
+            $ecv_list = M("Ecv")->limit($p->firstRow . ',' . $p->listRows)->where("used_yn=" . $used_yn)->findAll();
         }
 
-        $group_list = M("UserGroup")->findAll();
+      
+
+       
+
         foreach ($ecv_list as $kk => $vv) {
             $ecv_list[$kk]['user_id'] = M("User")->where("id=" . $vv['user_id'])->getField("user_name");
+            $ecv_list[$kk]['ecv_type_id_id'] = $vv['ecv_type_id'];
             $ecv_list[$kk]['ecv_type_id'] = M("Ecv_type")->where("id=" . $vv['ecv_type_id'])->getField("name");
-            $ecv_list[$kk]['end_time'] = date('Y-m-d H:i:s', $vv['end_time']); //到期时间
-            $ecv_list[$kk]['receive_time'] = date('Y-m-d H:i:s', $vv['receive_time']); //领取代金券时间
-            $ecv_list[$kk]['last_time'] = date('Y-m-d H:i:s', $vv['last_time']); //使用到期时间
-            if ($vv['used_yn'] == 1 || $vv['used_yn'] == 2) {
-                $ecv_list[$kk]['used_yn'] = '以用';
-            } else {
-
-                $ecv_list[$kk]['used_yn'] = '未用';
-            }
+            $ecv_list[$kk]['end_time'] = ($vv['end_time'] == 0) ? '--' : date('Y-m-d H:i:s', $vv['end_time']); //到期时间
+            $ecv_list[$kk]['receive_time'] = ($vv['receive_time'] == 0) ? '--' : date('Y-m-d H:i:s', $vv['receive_time']); //领取代金券时间
+            $ecv_list[$kk]['last_time'] = ($vv['last_time'] == 0 || $vv['last_time'] == '') ? '--' : date('Y-m-d H:i:s', $vv['last_time']); //使用到期时间
+            $ecv_list[$kk]['used_yn'] = ($vv['used_yn'] == 1 || $vv['used_yn'] == 2) ? '已用' : '未用';
         }
 
+        $page = $p->show();
         $this->assign('ecv_list', $ecv_list);
         $this->assign("group_list", $group_list);
+        $this->assign("page", $page);
         $this->display('send_list_ecv');
     }
 
