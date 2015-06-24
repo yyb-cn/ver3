@@ -52,7 +52,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 	 $msg="pid=".$pid_id;
 	  }
  if($_REQUEST['begin_time']){
-   $begin_time=strtotime($_REQUEST['begin_time']);
+   $begin_time=to_timespan($_REQUEST['begin_time']);
   if(trim($_REQUEST['pid_name'])){
   $msg.=" and create_time >".$begin_time;
   }else{
@@ -61,13 +61,13 @@ $pid_name=trim($_REQUEST['pid_name']);
   }
 
   if($_REQUEST['end_time']){
-      $end_time=strtotime($_REQUEST['end_time']);
+      $end_time=to_timespan($_REQUEST['end_time']);
      $msg.=" and create_time <".$end_time; 
   }else{
    $msg.=" and create_time <".time(); 
   }
   
- }	
+ }	echo $end_time;exit;
 		 $User=M("User")->where("$msg")->findAll();
 		 // echo M("User")->getLastSql();exit;
 		 foreach($User as $k =>$v){
