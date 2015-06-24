@@ -38,7 +38,7 @@ class EcvTypeAction extends CommonAction{
                 $category = explode("_", $data['category']);
                 foreach ($category as $value) {
                     $res = M(MODULE_NAME)->where("id = ".$value)->find();
-                    if(!$res){
+                    if(!$res&&$value!=0){
                        $this->error(L("代金券类型错误")); 
                     }
                 }
@@ -89,7 +89,7 @@ class EcvTypeAction extends CommonAction{
                 $category = explode("_", $data['category']);
                 foreach ($category as $value) {
                     $res = M(MODULE_NAME)->where("id = ".$value)->find();
-                    if(!$res){
+                    if(!$res&&$value!=0){
                        $this->error(L("代金券类型错误")); 
                     }
                 }
