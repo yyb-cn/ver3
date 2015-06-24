@@ -712,29 +712,6 @@ $pid_name=trim($_REQUEST['pid_name']);
 	     	$order = 'log_time';	
 		}
 		if (! empty ( $model )) {
-               // $m_id='id';
-               // $m_sort='asc';		   
-		// $list_money = M("UserMoneyLog")->where("user_id=". $user_id)->order("id asc")->findAll ( );
-		// foreach($list_money as $k =>$v){
-			
-			// if($k==0){
-				 // $id=$v['id'];
-			// $money=$v['money'];
-				
-		// $data['account_money']=0+$money;  
-
-		    // $one = M("UserMoneyLog")->where("id=".$id)->save($data);
-			
-			// }		
-			// else	
-		   // {
-			   // $account_money=$list_money[$k-1]['account_money'];//上一次余额；
-		       // $money=$v['money'];
-		       // $id=$v['id'];
-				// $data['account_money']=$account_money+$money;
-				 // $one = M("UserMoneyLog")->where("id=".$id)->save($data);
-		   // }
-		// }
 		//$this->_list ( $model, $map );
 
 		// if (isset ( $_REQUEST ['_order'] )) {
@@ -747,7 +724,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 		// if (isset ( $_REQUEST ['_sort'] )) {
 			// $sort = $_REQUEST ['_sort'] ? 'asc' : 'desc';
 		// } else {
-			$sort ='desc';
+			$sort =' desc';
 		// }
 		//取得满足条件的记录数
 		$count = $model->where ( $map )->count ( 'id' );
@@ -761,7 +738,7 @@ $pid_name=trim($_REQUEST['pid_name']);
 			$p = new Page ( $count, $listRows );
 			//分页查询数据
 
-			$voList = $model->where($map)->order( "`" . $order . "` " . $sort)->limit($p->firstRow . ',' . $p->listRows)->findAll ( );
+			$voList = $model->where($map)->order( "`" . $order . "` " . $sort.", id desc")->limit($p->firstRow . ',' . $p->listRows)->findAll ( );
 			
 			//print_r($voList);exit;
 			// echo $model->getlastsql();
