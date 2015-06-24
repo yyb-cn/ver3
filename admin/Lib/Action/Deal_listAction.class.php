@@ -333,7 +333,7 @@ class Deal_listAction extends CommonAction{
   foreach ($line as $key => &$item)
   {
    $item = mb_convert_encoding($item, 'gbk', 'utf-8'); 
-   $table_data .= '<td style="vnd.ms-excel.numberformat:@">' . $item . '</td>';
+   $table_data .= '<td>' . $item . '</td>';
   }
   $table_data .= '</tr>';
  }
