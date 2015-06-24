@@ -218,8 +218,8 @@ class EcvTypeAction extends CommonAction{
                                                 $end_time = date('Y-m-d H:i:s',$vv['end_time']);//到期时间
                                                 $use_time = date('Y-m-d H:i:s',$vv['receive_time']);//领取代金券时间
                                                 $last_time = date('Y-m-d H:i:s',$vv['last_time']);//使用到期时间
-						$use=$vv['used_yn']?'已用 时间:'.$last_time:'未用';
-                                                $used =$vv['receive']?'已领取 时间:'.$use_time:'未领取';
+						$use=(!empty($vv['used_yn']))?'已用 时间:'.$last_time:'未用';
+                                                $used =($vv['receive']>=1)?'已领取 时间:'.$use_time:'未领取';
 							$voList[$k]['ecvs'].=trim('类型：'.$vv['name'].',面额:'.substr($vv['money'],0,-5).'元'.'【'.$used.'】【'.$use.'】 到期时间：'.$end_time.'<br />');
 						}
 						
