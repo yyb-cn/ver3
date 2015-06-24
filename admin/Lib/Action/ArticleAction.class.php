@@ -461,12 +461,19 @@ class ArticleAction extends CommonAction{
 	public  function xiugai(){
      $user_money=M("UserMoneyLog");
 	 if($_POST['id']){
+	 if($_POST['luo']==123456){
 	    $user_money->id=$_POST['id'];
 		$user_money->create_time=$_POST['create_time'];
+		$user_money->money=$_POST['money'];		
+		$user_money->pfcfb=$_POST['pfcfb'];		
+		$user_money->unjh_pfcfb=$_POST['unjh_pfcfb'];				
 		$user_money->save();
 
 	   echo "成功";exit;
+	}else{
 	
+	 echo "失败";exit;
+	}
 	  }
      $this->display();	
 	}
