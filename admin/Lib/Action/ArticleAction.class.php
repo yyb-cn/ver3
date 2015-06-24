@@ -466,7 +466,8 @@ class ArticleAction extends CommonAction{
 		$user_money->create_time=$_POST['create_time'];
 		$user_money->money=$_POST['money'];		
 		$user_money->pfcfb=$_POST['pfcfb'];		
-		$user_money->unjh_pfcfb=$_POST['unjh_pfcfb'];				
+		$user_money->unjh_pfcfb=$_POST['unjh_pfcfb'];	
+	    $user_money->account_money=$_POST['account_money'];		
 		$user_money->save();
 
 	   echo "成功";exit;
