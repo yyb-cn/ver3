@@ -181,6 +181,9 @@ class uc_voucherModule extends SiteBaseModule
                 $ecv_info['user_id'] = $user_id;
                 $ecv_info['used_yn'] = 0;
                 $ecv_info['receive'] = 1;
+                $ecv_info['begin_time'] = $ecv_record['begin_time'];
+                $ecv_info['end_time'] = $ecv_record['end_time'];
+                $ecv_info['money']=$ecv_record['money'];
                 $ecv_info['receive_time'] = get_gmtime();
                 $ecv_info['last_time'] = get_gmtime()+ 7*24*3600;
                 $ecv_info['ecv_type_id'] = $id;

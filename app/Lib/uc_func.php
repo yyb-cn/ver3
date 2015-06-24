@@ -363,17 +363,52 @@
 		$count = $GLOBALS['db']->getOne($sql_count);
 		return array("list"=>$list,'count'=>$count);
 	}
+        //查询并验证用户可使用的代金券
+        function get_voucher_list_do($user_id,$ecv_id_array='')
+	{       
+                $condition = '';
+                $user_id = intval($user_id);
+                $list = array();
+                $group = array();
+                $error = array();
+                foreach ($ecv_id_array as $ecv_id) {
+                    $condition = " and e.id =".$ecv_id;
+                    $sql = "select *,e.id as id from ".DB_PREFIX."ecv as e left join ".DB_PREFIX."ecv_type as et on e.ecv_type_id = et.id where e.user_id = ".$user_id." and e.used_yn=0 and receive=1 and last_time>".time().$condition." and (e.end_time<=0 or e.end_time>" .time().")";
+                    $ecv_one = $GLOBALS['db']->getRow($sql);   
+                    if($ecv_one){
+                       $list[] = $ecv_one;
+                       $group[] = $ecv_one['category'];         
+                    }else{
+                       $error[]= $ecv_one['id'];
+                    }
+                    
+                }
+                $count = count($list);
+		return array("list"=>$list,'count'=>$count,'group'=>$group,'error'=>$error);
+	}
         //查询用户可用的代金券
 	function get_voucher_list_can($user_id)
-	{
+	{       
 		$user_id = intval($user_id);
-		 $sql = "select * from ".DB_PREFIX."ecv as e left join ".DB_PREFIX."ecv_type as et on e.ecv_type_id = et.id where e.user_id = ".$user_id." and e.used_yn=0 and receive=1 and last_time>".time()." and (e.end_time<=0 or e.end_time>" .time().  " ) order by e.id desc ";
+		 $sql = "select *,e.id as id from ".DB_PREFIX."ecv as e left join ".DB_PREFIX."ecv_type as et on e.ecv_type_id = et.id where e.user_id = ".$user_id." and e.used_yn=0 and receive=1 and last_time>".time()."  and (e.end_time<=0 or e.end_time>" .time().  " ) order by e.id desc ";
 		
 		 $sql_count = "select count(*) from ".DB_PREFIX."ecv where user_id = ".$user_id;
-		
+                 
 		$list = $GLOBALS['db']->getAll($sql);
-		$count = $GLOBALS['db']->getOne($sql_count);
-		return array("list"=>$list,'count'=>$count);
+                $count = $GLOBALS['db']->getOne($sql_count);
+                $category_id = array();
+                                
+                     foreach ($list as $value){//筛选出同一种类的代金券的id
+                        foreach ($list as $k=>$v){
+                            if($value['category']==$v['category'] && !in_array($v['id'], $category_id[$value['category']])){
+
+                                $category_id[$value['category']][] =$v['id'];//
+
+                            }
+                        }
+                    }
+                   
+		return array("list"=>$list,'count'=>$count,'group'=>$category_id);
 	}
 	//查询可兑换代金券列表
 	function get_exchange_voucher_list($limit)

@@ -427,65 +427,48 @@ class dealModule extends SiteBaseModule
 	
 	function bid(){
 	// echo 1;exit;
-		if(!$GLOBALS['user_info']){
-			set_gopreview();
-			app_redirect(url("index","user#login")); 
-		}
-		
-
+            if(!$GLOBALS['user_info']){//判断是否登录
+                set_gopreview();
+                app_redirect(url("index","user#login")); 
+            }
+                   
+            if($GLOBALS['user_info']['idcardpassed'] == 0){ //判断未绑定身份证
+                app_redirect(url("index","uc_account#security"),3,"请实名认证,填写身份证"); 
+            }
+            
+            if(!$GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."user_bank where user_id=".$GLOBALS['user_info']['id'])){//判断是否添加银行卡
+                app_redirect(url("index","uc_money#bank"),3,"请添加银行卡"); 
+            }
 		// $noshenfenzheng=$GLOBALS['db']->getOne("SELECT * FROM ".DB_PREFIX."user_bank where status=0 and user_id=".$GLOBALS['user_info']['id']);
   
 	 // if(!$noshenfenzheng){
 		 // showErr("请绑定银行卡",0,url("shop","uc_money#bank"));
 	   // }
 
-		//注册送的
-		$ecv_user_id=$GLOBALS['user_info']['id'];
-		//修改活动的类型：
-		
-		
-		
-	    
-			
-		//查询领取了的代金劵数量的总额
-		$total_money_3=$GLOBALS['db']->getOne("SELECT `referee_money` FROM ".DB_PREFIX."user where id=".$ecv_user_id);
-		
-		//有数据为老客户，没数据为新客户；
-		$nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id=".$GLOBALS['user_info']['id']);
-        //老用户有数据为使用过投资劵。
-		$total_money_4=$GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."ecv where used_yn=2 and user_id=".$ecv_user_id);
-		
-	
-	
-		 //搜索出该用户有多少张注册和投资获取的代金券，
-        $user_ecv = $GLOBALS['db']->getAll("SELECT *,e.id AS eid,et.id AS etid FROM ".DB_PREFIX."ecv AS e LEFT JOIN ".DB_PREFIX."ecv_type AS et ON e.ecv_type_id = et.id WHERE e.used_yn=0 AND e.receive=1 AND e.user_id = ".$ecv_user_id." ORDER BY e.id DESC");
-	  //var_dump($user_ecv);exit;
-	//老用户的券
-	$laoyonghuyongdequan=$GLOBALS['db']->getAll("SELECT *,e.id AS eid,et.id AS etid FROM ".DB_PREFIX."ecv AS e LEFT JOIN ".DB_PREFIX."ecv_type AS et ON e.ecv_type_id = et.id WHERE e.used_yn=0 AND e.receive=1 AND et.id in(40,39,38,37)  and  e.user_id = ".$ecv_user_id." ORDER BY et.money asc");
-	//特殊劵
-	$teishujuan=$GLOBALS['db']->getAll("SELECT *,e.id AS eid,et.id AS etid FROM ".DB_PREFIX."ecv AS e LEFT JOIN ".DB_PREFIX."ecv_type AS et ON e.ecv_type_id = et.id WHERE e.used_yn=0 AND e.receive=1 AND et.id in(47,10000)  and  e.user_id = ".$ecv_user_id." ORDER BY et.money asc");
-	//print_r($laoyonghuyongdequan);exit;
-	$GLOBALS['tmpl']->assign("laoyonghuyongdequan",$laoyonghuyongdequan);
-
-	
-	    //判断劵是否过期
-		$get_gmtime=get_gmtime();
-		//print_r($get_gmtime);exit;
-		$GLOBALS['tmpl']->assign("get_gmtime",$get_gmtime);
-		
-		
-		
-		
-		
-		//如果未绑定手机
-	if($GLOBALS['user_info']['idcardpassed'] == 0){
-		app_redirect(url("index","uc_account#security"),3,"请实名认证,填写身份证"); 
-		}
-		
-	if(!$GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."user_bank where user_id=".$GLOBALS['user_info']['id'])){
-	app_redirect(url("index","uc_money#bank"),3,"请添加银行卡"); 
-		}
-		
+		$ecv_user_id=$GLOBALS['user_info']['id'];//用户id
+		//查询领取了的推荐代金劵的总额
+//		$total_money_3=$GLOBALS['db']->getOne("SELECT `referee_money` FROM ".DB_PREFIX."user where id=".$ecv_user_id);
+//		
+//		//有数据为老客户，没数据为新客户；
+//		$nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id=".$GLOBALS['user_info']['id']);
+//        //老用户有数据为使用过投资劵。
+//		$total_money_4=$GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."ecv where used_yn=2 and user_id=".$ecv_user_id);
+//		
+//	
+//	
+//		 //搜索出该用户有多少张注册和投资获取的代金券，
+//        $user_ecv = $GLOBALS['db']->getAll("SELECT *,e.id AS eid,et.id AS etid FROM ".DB_PREFIX."ecv AS e LEFT JOIN ".DB_PREFIX."ecv_type AS et ON e.ecv_type_id = et.id WHERE e.used_yn=0 AND e.receive=1 AND e.user_id = ".$ecv_user_id." ORDER BY e.id DESC");
+//	  //var_dump($user_ecv);exit;
+//	//老用户的券
+//	$laoyonghuyongdequan=$GLOBALS['db']->getAll("SELECT *,e.id AS eid,et.id AS etid FROM ".DB_PREFIX."ecv AS e LEFT JOIN ".DB_PREFIX."ecv_type AS et ON e.ecv_type_id = et.id WHERE e.used_yn=0 AND e.receive=1 AND et.id in(40,39,38,37)  and  e.user_id = ".$ecv_user_id." ORDER BY et.money asc");
+//	//print_r($laoyonghuyongdequan);exit;
+//	$GLOBALS['tmpl']->assign("laoyonghuyongdequan",$laoyonghuyongdequan);
+//
+//	
+//	    //判断劵是否过期
+//		$get_gmtime=get_gmtime();
+//		//print_r($get_gmtime);exit;
+//		$GLOBALS['tmpl']->assign("get_gmtime",$get_gmtime);
 		
 		$id = intval($_REQUEST['id']);
 		$deal = get_deal($id);
@@ -504,20 +487,33 @@ class dealModule extends SiteBaseModule
 		if($deal['uloadtype'] == 1){
 			$GLOBALS['tmpl']->assign("has_bid_portion",intval($has_bid_money)/($deal['borrow_amount']/$deal['portion']));
 		}
-		
-		// $result = get_voucher_list_can($GLOBALS['user_info']['id']);//查询代金券
-		// $GLOBALS['tmpl']->assign("voucher",$result['list']);//查询代金券
+		 require APP_ROOT_PATH.'app/Lib/uc.php';
+		 $result = get_voucher_list_can($GLOBALS['user_info']['id']);//查询该用户拥有可用的代金券
+//                 var_dump($result['list']);exit;
+                 $voucher_self = array();
+                 $voucher_gourp = array();
+                  foreach ($result['list'] as $val){
+                      if($val['category'] == 0){
+                          
+                          $voucher_self[] = $val;
+                          
+                      }  elseif (is_array($result['group'][$val['category']])) {
+                          
+                          $voucher_gourp[$val['category']][] = $val;
+                          
+                      }
+                   }
+                   
+                 $GLOBALS['tmpl']->assign("voucher_count",$result['count']); 
+                 $GLOBALS['tmpl']->assign("voucher_gourp",$voucher_gourp);
+                 $GLOBALS['tmpl']->assign("voucher_self",$voucher_self);
+		 $GLOBALS['tmpl']->assign("voucher",$result['list']);
 		
 		$seo_title = $deal['seo_title']!=''?$deal['seo_title']:$deal['type_match_row'] . " - " . $deal['name'];
 		$GLOBALS['tmpl']->assign("page_title",$seo_title);
 		$seo_keyword = $deal['seo_keyword']!=''?$deal['seo_keyword']:$deal['type_match_row'].",".$deal['name'];
 		$GLOBALS['tmpl']->assign("page_keyword",$seo_keyword.",");
 		$seo_description = $deal['seo_description']!=''?$deal['seo_description']:$deal['name'];
-   		$GLOBALS['tmpl']->assign("total_money_3",$total_money_3);     
-		$GLOBALS['tmpl']->assign("teishujuan",$teishujuan);
-		$GLOBALS['tmpl']->assign("total_money_4",$total_money_4);
-		$GLOBALS['tmpl']->assign("nodeal",$nodeal);
-		$GLOBALS['tmpl']->assign("user_ecv",$user_ecv);
 		$GLOBALS['tmpl']->assign("deal",$deal);
 		$GLOBALS['tmpl']->display("page/deal_bid.html");
 	}
@@ -609,109 +605,28 @@ class dealModule extends SiteBaseModule
 		$ajax = intval($_REQUEST["ajax"]);
 		$bid_paypassword = strim(FW_DESPWD($_REQUEST['bid_paypassword']));
 		$id = intval($_REQUEST["id"]);
-	if(md5($bid_paypassword)!=$GLOBALS['user_info']['paypassword']){
-	  showErr("支付密码错误",$ajax);
-	}
+                if(md5($bid_paypassword)!=$GLOBALS['user_info']['paypassword']){
+                  showErr("支付密码错误",$ajax);
+                }
 		//用户ID；
 		$ecv_user_id=$GLOBALS['user_info']['id'];
 		
 		/*这里开始*/
-			if(floatval($_REQUEST["bid_money"]) > $GLOBALS['user_info']['money']){
-			showErr($GLOBALS['lang']['MONEY_NOT_ENOUGHT'],$ajax);
-		}	
-	
-			//使用活动卷的值；
-       
-	     $total_money_1=$_REQUEST["total_money_1"];  //注册
-     	 $total_money_2=$_REQUEST["total_money_2"];  //新用户投资
-		 $total_money_3=$_REQUEST["total_money_3"];  //推荐
-     	$total_money_4=$_REQUEST["total_money_4"];  //老用户投资
-		$last_time_1=intval($_REQUEST["last_time_1"]);        //新用户注册劵的使用期限
-		$last_time_2=intval($_REQUEST["last_time_2"]);      //老用户注册劵的使用期限
-		$get_gmtime=get_gmtime();
-		$ee_id=$_REQUEST["ee_id"];   
-		$virtual_money=$total_money_1+$total_money_2+$total_money_3+$total_money_4;
-		
-		//判断过期劵不能使用
-		if($last_time_1>0){
-		if($last_time_1<$get_gmtime){
-				 showErr('当前劵使用期限已过',$ajax);
-			}
+                if(floatval($_REQUEST["bid_money"]) > $GLOBALS['user_info']['money'] && floatval($_REQUEST["bid_money"])==0){
+                showErr($GLOBALS['lang']['MONEY_NOT_ENOUGHT'],$ajax);
+                exit();
 		}
-				if($last_time_2>0){
-	    if($last_time_2<$get_gmtime){
-				 showErr('当前劵使用期限已过',$ajax);
-			}
-				}
-		//新用户的得到的劵的判断
-		if($total_money_2!=0 && $total_money_2){
-			if($total_money_2!=10 && $_REQUEST["bid_money"]>=1000 && $_REQUEST["bid_money"]<5000){
-				 showErr('1K-5K只能使用10元的代金券',$ajax);
-			}
-		    if($total_money_2!=58 && $_REQUEST["bid_money"]>=5000 && $_REQUEST["bid_money"]<10000){
-				 showErr('5K-1W只能使用58元的代金券',$ajax);
-			}
-			if($total_money_2!=108 && $_REQUEST["bid_money"]>=10000 && $_REQUEST["bid_money"]<50000){
-				 showErr('1W-5W只能使用108元的代金券',$ajax);
-			}
-			if($total_money_2!=388 && $_REQUEST["bid_money"]>=50000){
-				 showErr('5W只能使用388元的代金券',$ajax);
-			}
-		}
-		//老用户的投资得到的劵的判断  1000    0
-		if($total_money_4!=0){
-			
-			
-		if($total_money_4!=20 && $_REQUEST["bid_money"]>=1000 && $_REQUEST["bid_money"]<=5000){
-				 showErr('1K-5K只能使用20元的代金券',$ajax);
-			}
-		
-		if($total_money_4!=30 && $_REQUEST["bid_money"]>5000&& $_REQUEST["bid_money"]<=10000){
-				  showErr('5K-1W只能使用30元的代金券',$ajax);
-			}
-       // 10000W  
-        if($total_money_4!=50 && $_REQUEST["bid_money"]>10000 && $_REQUEST["bid_money"]<=50000){
-				  showErr('1w-5w只能使用50元的代金券',$ajax);
-			}
-       
-        if($total_money_4!=100 && $_REQUEST["bid_money"]>50000){
-				  showErr('5W以上只能使用100元的代金券',$ajax);
-			} 	
-		}
-		
-			
-
-		
-		//推荐金处理
-	$referee_money=$GLOBALS['db']->getOne("SELECT `referee_money` FROM ".DB_PREFIX."user where id=".$ecv_user_id);
-		    $adw['referee_money']=$referee_money-$total_money_3;
-		//判断推荐奖励劵金额是有这么多
-		if($adw['referee_money']<0){
-			 showErr('你的推荐奖励劵金额不足',$ajax);
-			}
-			
-			// 如果用过一次就补能在用了
-		$n=(floor(($_REQUEST["bid_money"]+$total_money_3)/1000))*200;
-		
-		if($total_money_3<=$n){
-			 //判断$total_money_3没有值时,$_REQUEST["bid_money"]不能少于1000;
-			 
-	 if(!$total_money_3){
-   	  if($_REQUEST["bid_money"]<1000){
-			   showErr($GLOBALS['lang']['BID_MONEY_NOT_TRUE'],$ajax);
-           }		
-	 } 
-	 if($total_money_3){
-   if($total_money_3+$_REQUEST["bid_money"]<1000){
-		   showErr($GLOBALS['lang']['BID_MONEY_NOT_TRUE'],$ajax);
-          }
-	 }
-		
-	 
-	 
-	 
-		if(!$GLOBALS['user_info'])
+                if(!$GLOBALS['user_info']){
 		showErr($GLOBALS['lang']['PLEASE_LOGIN_FIRST'],$ajax);
+                exit();
+                }
+                $bid_money = floatval($_REQUEST["bid_money"]);//检验用户输入金额数值
+                if(!$bid_money){ 
+                    showErr("金额错误",$ajax,url("index","uc_money#incharge"));
+		}
+                
+                require_once APP_ROOT_PATH."system/libs/user.php";	 
+	 
 		$deal = get_deal($id);
 		$unjh_pfcfb=$_REQUEST["unjh_pfcfb"];
 		if(trim($_REQUEST["bid_money"])=="" || !is_numeric($_REQUEST["bid_money"]) || floatval($_REQUEST["bid_money"])<=0){
@@ -748,7 +663,7 @@ class dealModule extends SiteBaseModule
 		if(floatval($_REQUEST["unjh_pfcfb"]) > $GLOBALS['user_info']['unjh_pfcfb']){
 			showErr('浦发币不足，无法投标',$ajax);
 		}
-	//浦发财富b
+                //浦发财富b
 		if($_REQUEST['unjh_pfcfb']){
 			if($deal['repay_time']>=1&&$deal['repay_time_type']==1){
 			$data['unjh_pfcfb']=$_REQUEST['unjh_pfcfb'];
@@ -761,227 +676,124 @@ class dealModule extends SiteBaseModule
 		if(floatval($_REQUEST["bid_money"]) > ($deal['borrow_amount'] - $deal['load_money'])){
 			showErr(sprintf($GLOBALS['lang']['DEAL_LOAN_NOT_ENOUGHT'],format_price($deal['borrow_amount'] - $deal['load_money'])),$ajax);
 		}
-		//判断推荐红包使用数额是否正确；
-	 	require_once APP_ROOT_PATH."system/libs/user.php";	 
-  	    if($total_money_3){
-     	if($_REQUEST["bid_money"]+$total_money_3<1000){
-			   showErr($GLOBALS['lang']['BID_MONEY_NOT_TRUE'],$ajax);
-            }
-		modify_account(array('referee_money'=>-$total_money_3,'score'=>0),$GLOBALS['user_info']['id'],"推荐人送投资卷扣".$total_money_3);
 
-			}
-	   if($total_money_4){
-       if($total_money_4!='选择投资券'){
-			$assa['user_id']=$ecv_user_id;
-			
-			//老用户使用字段['used_yn']=3;
-			$assa['used_yn']=2;
-			$assa['receive']=1;
-			$assa['last_time']=get_gmtime();	
-		   $GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$assa,"INSERT");//插入一条投资目录
-     $assa_ecv['memo'] ="使用投资代金劵".$total_money_4;
-  	 $assa_ecv['create_time'] =get_gmtime();
-	 $assa_ecv['money'] =0;
-	 $assa_ecv['type'] =27;
-	 $assa_ecv['account_money'] =$GLOBALS['user_info']['money'];
-	 $assa_ecv['user_id'] =$GLOBALS['user_info']['id'];
-     $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$assa_ecv); 
-             $laoyonghu['used_yn']=1;
-	$GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$laoyonghu,"UPDATE","ecv_type_id in(40,39,38,37) and user_id=".$ecv_user_id);	
-  	
-		}
-}
+               //-----------------------处理代金券开始-------------------------------
+                require APP_ROOT_PATH.'app/Lib/uc.php';
+                $ecv_id_arr = explode('_', $_REQUEST['voucher_id']);//获取用户选择代金券group的id(数组)
+                $ecv_id_self_arr = explode('_', $_REQUEST['voucher_id_self']);//获取用户选择代金券self的id(数组)
+                $ecv_id = array();
+                foreach ($ecv_id_arr as $v) {//检验代金券group传的值是否是数字
+                    if(is_numeric($v)){
+                       $ecv_id[] = $v;
+                    }
+                }
+                foreach ($ecv_id_self_arr as $v) {//检验代金券self传的值是否是数字
+                    if(is_numeric($v)){
+                       $ecv_id[] = $v;
+                    }
+                }
 
-     // 注册
-			if($total_money_1){
-		 $nob['create_time']= get_gmtime();
-	     $nob['money'] =0;
-	     $nob['account_money'] =$GLOBALS['user_info']['money'];
-		 $nob['memo']="使用了注册代金卷20金额";
-		 $nob['user_id']= $ecv_user_id;
-		 $nob['type'] =27;
-	  	 $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$nob,"INSERT");//
-		    $ecec['used_yn']=1;
-			$GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$ecec,"UPDATE","ecv_type_id=42 and user_id=".$ecv_user_id);
-			}
-			// 投资
-	        if($total_money_2){
-     $user_ecv['memo'] ="使用投资代金劵".$total_money_2;
-  	 $user_ecv['create_time'] =get_gmtime();
-		// $nob['log_time']= get_gmtime();
-	 $user_ecv['money'] =0;
-     $user_ecv['type'] =27;
-	 $user_ecv['account_money'] =$GLOBALS['user_info']['money'];
-	 $user_ecv['user_id'] =$GLOBALS['user_info']['id'];
-     $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$user_ecv); 	
-				
-		    $ecec['used_yn']=1;
-			$GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$ecec,"UPDATE","ecv_type_id=".$ee_id." and user_id=".$ecv_user_id);
-			}
-	
-	
+                $result = get_voucher_list_do($GLOBALS['user_info']['id'],$ecv_id);//查询该用户拥有可用的代金券
+                if($result['error']){
+                    $error_id = implode(",", $result['error']);
+                    showErr("代金券不存在，请联系客服。错误ID为".$error_id,$ajax);
+                    exit();
+                }
+                
+                foreach ($result['list'] as $value) {//判断代金券的限制投资金额
+                    
+                        if ($value['money_limit_max']>0 &&($bid_money<$value['money_limit_min'] || $bid_money>$value['money_limit_max'])){
+                            
+                            showErr("投资金额错误！<br/>【".$value['name']."】投资金额范围在￥".$value['money_limit_min']."至￥".$value['money_limit_max'],$ajax);
+                            exit();
+                        
+                        }elseif($value['money_limit_max']<=0 && $bid_money<$value['money_limit_min']) {
 
-		
-		$data['user_id'] = $user_id=$GLOBALS['user_info']['id'];
-		$data['user_name'] = $GLOBALS['user_info']['user_name'];
-		$data['deal_id'] = $id;
-		$data['money'] = trim($_REQUEST["bid_money"]);
-		$data['create_time'] = get_gmtime();
-		
-		
-			/*送浦发币
-			if($deal['repay_time']>=1&&$deal['repay_time_type']==1){	
-	           $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id=".$GLOBALS['user_info']['id']);
-                if(!$nodeal){ //客户首次投资给推荐他的人送20可提现的现金红包
-				/*
-		        if($_REQUEST["bid_money"]>=10000){ 
-		          $more_unjh_pfcfb=$GLOBALS['user_info']['unjh_pfcfb']+108;
-                  $GLOBALS['db']->query("update ".DB_PREFIX."user set `unjh_pfcfb`=".$more_unjh_pfcfb." where id = ".$GLOBALS['user_info']['id']);    //投资一万送108	
-                  $user_log_a['log_info']="_415活动_首次投资一个月资金10000以上就送108浦发币";
-                  $user_log_a['log_time']=get_gmtime();                
-                  $user_log_a['log_admin_id']=1;
-                  $user_log_a['user_id']=$GLOBALS['user_info']['id'];
-                  $user_log_a['unjh_pfcfb']=108;
-                $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_log_a,"INSERT");//插入一条投资目录
-		          }
-	             if($_REQUEST["bid_money"]<10000){
-		          $more_unjh_pfcfb=$GLOBALS['user_info']['unjh_pfcfb']+20;
-                  $GLOBALS['db']->query("update ".DB_PREFIX."user set `unjh_pfcfb`=".$more_unjh_pfcfb." where id = ".$GLOBALS['user_info']['id']);    //投资一万送20
-                  $user_log_a['log_info']="_415活动_首次投资一个月资金10000以下就送20浦发币";
-                  $user_log_a['log_time']=get_gmtime();                
-                  $user_log_a['log_admin_id']=1;
-                  $user_log_a['user_id']=$GLOBALS['user_info']['id'];
-                  $user_log_a['unjh_pfcfb']=20;
-                $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_log_a,"INSERT");//插入一条投资目录				  
-		          }
-				  
-				  
-	             $pid_id=$GLOBALS['db']->getOne("select `pid` from ".DB_PREFIX."user where id=".$GLOBALS['user_info']['id']);
-				 $pid_user_id=$GLOBALS['db']->getOne("select `pid` from ".DB_PREFIX."user where id=".$pid_id);
-		 if($pid_id!=$pid_user_id){//本公司员工除外
-		if($pid_id!=0){
-		         $pid_pfcfb=$GLOBALS['db']->getOne("select `pfcfb` from ".DB_PREFIX."user where id=".$pid_id);	
-		         $pid_pfcfbs=$pid_pfcfb+20;
-		         $GLOBALS['db']->query("update ".DB_PREFIX."user set `pfcfb`=".$pid_pfcfbs." where id = ".$pid_id);   //推荐人得20浦发富币
-                  $user_log_b['log_info']="_415活动_你推荐了用户".$GLOBALS['user_info']['user_name']."获得20可提现的浦发币";
-                  $user_log_b['log_time']=get_gmtime();                
-                  $user_log_b['log_admin_id']=1;
-                  $user_log_b['user_id']=$pid_id;
-                  $user_log_b['pfcfb']=20;
-                $GLOBALS['db']->autoExecute(DB_PREFIX."user_log",$user_log_b,"INSERT");//插入一条投资目录							 
-                                }
-	               }	
-            }				   
-		}	
-		
-		*/
-
-	//有效推荐人 $asa
+                            showErr("投资金额错误！<br/>【".$value['name']."】金额不小于￥".$value['money_limit_min'],$ajax);
+                            exit();
+                        } 
+                }
+                
+                foreach ($result['list'] as $value) {//操作代金券
+                    $data_ecv['used_yn'] = 1;
+                    $data_ecv['used_time'] = time();
+                    $re = $GLOBALS['db']->autoExecute(DB_PREFIX."ecv",$data_ecv,"UPDATE","id =".$value['id']);
+                    if ($re){
+                        $data_log['user_id'] =$GLOBALS['user_info']['id'];
+                        $data_log['money'] =0;
+                        $data_log['account_money'] =$GLOBALS['user_info']['money'];
+                        $data_log['memo'] ="投资产品【".$deal['name']."】编号为【".$id."】，使用编号为【".$value['ecv_type_id']."】代金券金额为【".number_format($value['money'])."元】。";
+                        $data_log['type'] = 22;//兑换
+                        $data_log['create_time'] =time();
+                        $data_log['create_time_ymd']=  date('Y-m-d', time());
+                        $data_log['create_time_ym']=  date('Ym', time());
+                        $data_log['create_time_y']=  date('Y', time());
+                        $re1 = $GLOBALS['db']->autoExecute(DB_PREFIX."user_money_log",$data_log); 
+                        if($re1){
+                            $virtual_money += $value['money'];
+                        }else{
+                            showErr("使用代金券失败请联系客服，错误ID".$value['id'],$ajax);
+                            exit();
+                        }
+                        if($value['category']!=0){//update有相同种类的代金券
+                           $value_ecv_type_id = explode("_", $value['category']); 
+                           foreach ($value_ecv_type_id as $val){//相同种类的代金券使用后used_yn设为2
+                            $GLOBALS['db']->query("update ".DB_PREFIX."ecv set used_yn = used_yn + 1,used_time = ".time()." where user_id =".$ecv_user_id." and ecv_type_id =".$val); 
+                           }
+                        }
+                    }else{
+                        showErr("扣除代金券错误，请联系客服".$re,$ajax);
+                        exit();
+                    }
+                }
+                //-----------------------------------------------------处理代金券结束-----------------------------------------------------------------
+//有效推荐人 $asa
 	
 // $huodong_time=1431619200; //2015.04-15  时间戳
 
- $huodong_time=1431619200;
-$nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id=".$GLOBALS['user_info']['id']);
-	// $uc=array(1871,959,1877,971,1995,2006,2054);
-	$no=0;
- if(!$nodeal){ 	
-   $pid_id=$GLOBALS['db']->getOne("select `pid` from ".DB_PREFIX."user where id=".$GLOBALS['user_info']['id']);
-           if($pid_id!=0){
-          $w=0;   
-         $asa= $GLOBALS['db']->getAll("select `id` from ".DB_PREFIX."user where `pid`=".$pid_id." and create_time>".$huodong_time);
-	 
-		foreach($asa as $k=>$v){
-	      if($GLOBALS['db']->getAll("select id  from ".DB_PREFIX."deal_load where user_id=".$v['id'] )){
-	     $w++;
-	       } 
-          }     
-     
-       if($w+1<10){
+            $huodong_time=1431619200;
+            $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_id=".$GLOBALS['user_info']['id']);
+                   // $uc=array(1871,959,1877,971,1995,2006,2054);
+            $no=0;
+            if(!$nodeal){ 	
+                $pid_id=$GLOBALS['db']->getOne("select `pid` from ".DB_PREFIX."user where id=".$GLOBALS['user_info']['id']);
+                    if($pid_id!=0){
+                    $w=0;   
+                    $asa= $GLOBALS['db']->getAll("select `id` from ".DB_PREFIX."user where `pid`=".$pid_id." and create_time>".$huodong_time);
+                        foreach($asa as $k=>$v){
+                            if($GLOBALS['db']->getAll("select id  from ".DB_PREFIX."deal_load where user_id=".$v['id'] )){
+                                $w++;
+                            } 
+                        }     
 
-		$ox_money=15;
-        }
-       if($w+1>=11 && $w+1<=60){
-		$ox_money=20; 
-         }
-       if($w+1>=61 && $w+1<=100){
-		$ox_money=25; 
-        }
-       if($w+1>=101){
-		 $ox_money=30;
-       }
- 	// foreach($uc as $k=>$v){
-	  // if($v==$pid_id){	
-	  // modify_account(array('money'=>30,'score'=>0),$pid_id,"推荐了".$GLOBALS['user_info']['id']."送30现金");
-	   // $no=1;
-	   // }
-	 // }   
-        // if($no==0){
-		 modify_account(array('pfcfb'=>$ox_money,'score'=>0),$pid_id,"推荐了".$GLOBALS['user_info']['id']."获得".$ox_money."推荐奖励6月豪礼");
-		// }
-	
-		
-  }
-  
-  }
-  
-  	//以下为代金券判断操作
-	 // if($_REQUEST['virtual_money']!=0)//判断复选框是否为勾选
-		// {	
-		// }
-			// if($_REQUEST['virtual_money']!=0)//判断复选框是否为勾选
-			// {
-		
-			// if($_REQUEST['virtual_money']>3200){
-				// showErr('单笔投资代金券不能超过3200',$ajax);
-			// }
-			// if($deal['repay_time']==1&&$deal['repay_time_type']==1){  //一个月的标
-				// $i=0;
-				// foreach ($_REQUEST['v_money'] as $k=>$v){
-				
-				 // $sql = "select *,e.id as ecv_id from ".DB_PREFIX."ecv as e left join ".DB_PREFIX."ecv_type as et on e.ecv_type_id = et.id where e.user_id = ".$user_id." and e.used_yn=0 and (et.end_time=0 or et.end_time>" .time().  " ) and e.password=".$k." and et.money=".$v;
-				/// showErr($sql,$ajax);
-				// $one = $GLOBALS['db']->getRow($sql);
-				// $virtual_money+=$one['money'];
-					
-				 // if(!$one)
-				 // {
-				 // showErr('代金券不存在,请联系客服',$ajax);
-				 // }
-				
-					// $id_str.=($i==0)?$one['ecv_id']:','.$one['ecv_id'];
-					// $i+=1; 
-				 
-				// }
-				///showErr('代金券'.$id_str,$ajax);
-				// if($virtual_money!=$_REQUEST['virtual_money']){
-					// showErr('单笔投资代金券不能超过'.$_REQUEST['v_money'],$ajax);
-				// showErr('代金券金额出错',$ajax);
-				// }
-				// else{
-					// $data['virtual_money']=$_REQUEST['virtual_money'];  //记录data的虚拟金额
-					///修改代金券已用
-					// $GLOBALS['db']->query("update ".DB_PREFIX."ecv set used_yn = 1 where id in (".$id_str.")");											
-					// }
-				// require APP_ROOT_PATH.'app/Lib/uc.php';
-			// }
-			// else{
-			// showErr('只能用于投资1个月的标',$ajax);
-			// }
-		// }
-		
-	   
+                    if($w+1<10){
+                        $ox_money=15;
+                    }
+                    if($w+1>=11 && $w+1<=60){
+                        $ox_money=20; 
+                    }
+                    if($w+1>=61 && $w+1<=100){
+                        $ox_money=25; 
+                    }
+                    if($w+1>=101){
+                        $ox_money=30;
+                    }
+                   // foreach($uc as $k=>$v){
+                     // if($v==$pid_id){	
+                     // modify_account(array('money'=>30,'score'=>0),$pid_id,"推荐了".$GLOBALS['user_info']['id']."送30现金");
+                      // $no=1;
+                      // }
+                    // }   
+                   // if($no==0){
+                        modify_account(array('pfcfb'=>$ox_money,'score'=>0),$pid_id,"推荐了".$GLOBALS['user_info']['id']."获得".$ox_money."推荐奖励6月豪礼");
+                           // }
+                    }
+             }
 
-
-
-		
 		/*这里结束*/
-		$bid_money = floatval($_REQUEST["bid_money"]);
-	   if(!$bid_money){ 
-	      showSuccess("金额错误",$ajax,url("index","uc_money#incharge"));
-		 }		
 		   // $user_deal= $GLOBALS['db']->getRow("select * from ".DB_PREFIX."deal where id= ".$id); 
 		if($unjh_pfcfb>$GLOBALS['user_info']['unjh_pfcfb']){
-		  showErr("虚拟币操作错误",$ajax);
+		  showSuccess("虚拟币操作错误",$ajax);
 		}  //判断投资虚拟币是否大于本身拥有
 	    $status = dobid2($id,$bid_money,$bid_paypassword,1,$unjh_pfcfb,$virtual_money);
 		
@@ -994,41 +806,35 @@ $nodeal=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."deal_load where user_
 		}else{	 
 		//插入一条认购确认函 author @313616432
 		//顶标用户除外$GLOBALS['user_info']['group_id']==1
-  			$data_rg['deal_time']= get_gmtime()+24*3600;//录入时间
-			$data_rg['admin_name']='系统';
-			$data_rg['admin_id']=0;
-			$data_rg['user_name']=$GLOBALS['user_info']['real_name'];
-			$data_rg['produce_name']=$deal['name'];
-			$data_rg['deal_monney']=trim($_REQUEST["bid_money"]);
-			$data_rg['deal_sn']=$load_id;
-			$data_rg['check_yn']=0;
-			$data_rg['check_time']=0;
-			$data_rg['voucher']=0;
-			$data_temp['deal_time_type']=$deal['repay_time_type']?'个月':'天';
-			$data_rg['longtime']=$deal['repay_time'].$data_temp['deal_time_type'];
-			$data_rg['check_name']='';//确认时间
-			$data_rg['cus_time']= get_gmtime();//购物时间
-			$host='rdsf6fn32zmbb7j.mysql.rds.aliyuncs.com';
-			$user='rengou';
-			$password='dontGuess777';
-			if($_SERVER['SERVER_NAME']!='localhost'){
-			$con=mysql_connect("$host","$user","$password");
-			mysql_select_db("rengou", $con);
-			mysql_query("set names utf8"); 
-			$sql="INSERT INTO `deal` (`".implode('`,`', array_keys($data_rg))."`) VALUES ('".implode("','", $data_rg)."')";
-			$result=mysql_query($sql);//插入语句
-			mysql_close($con);
-			}		
+//  			$data_rg['deal_time']= get_gmtime()+24*3600;//录入时间
+//			$data_rg['admin_name']='系统';
+//			$data_rg['admin_id']=0;
+//			$data_rg['user_name']=$GLOBALS['user_info']['real_name'];
+//			$data_rg['produce_name']=$deal['name'];
+//			$data_rg['deal_monney']=trim($_REQUEST["bid_money"]);
+//			$data_rg['deal_sn']=$load_id;
+//			$data_rg['check_yn']=0;
+//			$data_rg['check_time']=0;
+//			$data_rg['voucher']=0;
+//			$data_temp['deal_time_type']=$deal['repay_time_type']?'个月':'天';
+//			$data_rg['longtime']=$deal['repay_time'].$data_temp['deal_time_type'];
+//			$data_rg['check_name']='';//确认时间
+//			$data_rg['cus_time']= get_gmtime();//购物时间
+//			$host='rdsf6fn32zmbb7j.mysql.rds.aliyuncs.com';
+//			$user='rengou';
+//			$password='dontGuess777';
+//			if($_SERVER['SERVER_NAME']!='localhost'){
+//			$con=mysql_connect("$host","$user","$password");
+//			mysql_select_db("rengou", $con);
+//			mysql_query("set names utf8"); 
+//			$sql="INSERT INTO `deal` (`".implode('`,`', array_keys($data_rg))."`) VALUES ('".implode("','", $data_rg)."')";
+//			$result=mysql_query($sql);//插入语句
+//			mysql_close($con);
+//			}		
 			//showSuccess($GLOBALS['lang']['DEAL_BID_SUCCESS'],$ajax,url("index","deal",array("id"=>$id)));
 			showSuccess($GLOBALS['lang']['DEAL_BID_SUCCESS'],$ajax,url("index","uc_invest"));
 		}	
-}else{
-		 showErr('请输入正确的奖励劵金额',$ajax);
-			
-		
-			
-			
-		}
+
 			
 	}
 		

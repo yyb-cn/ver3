@@ -13,6 +13,10 @@
 	<tr>
 		<td colspan=2 class="topTd"></td>
 	</tr>
+        <tr>
+		<td class="item_title">代金券编号:</td>
+		<td class="item_input">{$vo.id}</td>
+	</tr>
 	<tr>
 		<td class="item_title">{%VOUCHER_NAME}:</td>
 		<td class="item_input"><input type="text" class="textbox require" name="name" value="{$vo.name}" /></td>
@@ -60,9 +64,9 @@
 	</tr>
         
         <tr>
-		<td class="item_title">代金券类别</td>
+		<td class="item_title">代金券类型</td>
 		<td class="item_input">
-                    <input type="text" class="textbox require" name="category" value="{$vo.category}"/>用于控制不可叠加的代金券类别（限数字）
+                    <input type="text" class="textbox require" name="category" value="{$vo.category}"/>填写相同类型的代金券的编号如：23_24_25，编号23、24、25的代金券为相同类型。无相同类型填写0
                 </td>
 	</tr>
         
