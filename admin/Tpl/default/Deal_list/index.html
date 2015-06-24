@@ -221,7 +221,7 @@
 	<td>
 	<?php  if($v['repay_start_time']):?>
    还款开始日&nbsp;<?php echo to_date($v['repay_start_time'],"Y-m-d H:i:s")?>
- </br>最后还款日&nbsp;<?php echo to_date($v['repay_start_time'],"Y-m-d H:i:s")?>
+ </br>最后还款日&nbsp;<?php echo to_date($v['last_repay_time'],"Y-m-d H:i:s")?>
 	<?php endif; ?>
 	<?php  if(!$v['repay_start_time']):?>
   此标 未满标放款
