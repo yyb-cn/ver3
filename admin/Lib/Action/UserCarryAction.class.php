@@ -284,10 +284,11 @@ class UserCarryAction extends CommonAction{
 	//批量编辑取现
         public function edit_arr(){
             $array_id = $_REQUEST['id'];
+			
                 $id_arr = explode ( ',', $array_id );
                 foreach ($id_arr as $key => $value) {
                     $condition['id'] = $value;
-                    $condition['status'] = 0;
+                   
                     $result[$key] = M(MODULE_NAME)->where($condition)->find();
                     if($result[$key]==''){
                          continue; 
@@ -347,7 +348,7 @@ class UserCarryAction extends CommonAction{
                                     $action = 'index';
                                     break;
                     }
-
+          
                     // 更新数据
                     $list=M(MODULE_NAME)->save ($data);
 
@@ -409,7 +410,7 @@ class UserCarryAction extends CommonAction{
                                     }
                             }
                             elseif($data['status']==2){
-							  echo 1 ;exit;
+							
                                     //驳回
                                     modify_account(array("money"=>$vo['money'],"lock_money"=>-$vo['money']),$vo['user_id'],"提现失败",8);
                                     modify_account(array("money"=>$vo['fee'],"lock_money"=>-$vo['fee']),$vo['user_id'],"提现失败",9);
