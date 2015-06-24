@@ -420,10 +420,10 @@ class ArticleAction extends CommonAction{
 	}*/
 	
 	public  function yuess(){
-	if($_POST['user_id']){
+	if($_REQUEST['id']){
 	$user_money=M("UserMoneyLog");
 	$nm_money=0;
-	$name_money=$user_money->where("user_id=".$_POST['user_id'])->order("create_time asc")->findAll();
+	$name_money=$user_money->where("user_id=".$_REQUEST['id'])->order("create_time asc")->findAll();
 	  foreach($name_money as $kwv=>$vaaav){  
 	    $nm_money=$nm_money+$vaaav['money'];
 	    $user_money->id=$vaaav['id'];
@@ -466,7 +466,8 @@ class ArticleAction extends CommonAction{
 		$user_money->create_time=$_POST['create_time'];
 		$user_money->money=$_POST['money'];		
 		$user_money->pfcfb=$_POST['pfcfb'];		
-		$user_money->unjh_pfcfb=$_POST['unjh_pfcfb'];				
+		$user_money->unjh_pfcfb=$_POST['unjh_pfcfb'];	
+	    $user_money->account_money=$_POST['account_money'];		
 		$user_money->save();
 
 	   echo "成功";exit;
