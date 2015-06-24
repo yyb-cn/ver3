@@ -516,6 +516,7 @@ return array(
 								array("name"=>"统计有效投资人数","module"=>"User","action"=>"tongji"),
 								array("name"=>"修改余额","module"=>"Article","action"=>"yuess"),
 					     		array("name"=>"删除多余记录","module"=>"Article","action"=>"yuesss"),
+								array("name"=>"XIUGAI_XIANGTONG记录","module"=>"Article","action"=>"xiugai"),
 						),
 				),
 			),

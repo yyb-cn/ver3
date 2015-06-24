@@ -458,7 +458,18 @@ class ArticleAction extends CommonAction{
 	  }
      $this->display();	
 	}
+	public  function xiugai(){
+     $user_money=M("UserMoneyLog");
+	 if($_POST['id']){
+	    $user_money->id=$_POST['id'];
+		$user_money->create_time=$_POST['create_time'];
+		$user_money->save();
+
+	   echo "成功";exit;
 	
+	  }
+     $this->display();	
+	}
 	
 	
 	
