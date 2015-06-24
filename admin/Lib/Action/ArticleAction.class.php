@@ -438,7 +438,7 @@ class ArticleAction extends CommonAction{
 	public  function yuesss(){
      $user_money=M("UserMoneyLog");
 	 if($_POST['user_id']){
-     $op=$user_money->where("user_id=".$_POST['user_id']." and create_time<1434729600 and create_time>1434038400")->select();
+     $op=$user_money->where("user_id=".$_POST['user_id'])->select();
 	for ($i=0;$i<count($op);$i++){
 		$pipi=$op[$i]['create_time'].$op[$i]['memo'].$op[$i]['user_id'].$op[$i]['money'].$op[$i]['pfcfb'];
 		for($k=$i+1;$k<count($op);$k++){
