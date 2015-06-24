@@ -428,11 +428,8 @@ class ArticleAction extends CommonAction{
 	    $nm_money=$nm_money+$vaaav['money'];
 	    $user_money->id=$vaaav['id'];
 		$user_money->account_money=$nm_money;
-		if($user_money->save()<0){
-		 die('修改失败，请联系程序猿');
-		  }
+		$user_money->save();
 	    }
-		$this->success(l("操作成功"));	
 	  }
      $this->display();	
 	}
