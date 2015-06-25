@@ -122,7 +122,6 @@ function setCarryResult(){
 	if(fee_type == 1){
 		fee = carry_amount * fee * 0.01;
 	}
-	
 	if(carry_amount + fee > total_amount){
 		$("#Jcarry_balance").html(LANG.CARRY_MONEY_NOT_ENOUGHT);
 	}
