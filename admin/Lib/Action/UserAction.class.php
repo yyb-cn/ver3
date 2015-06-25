@@ -41,35 +41,36 @@ class UserAction extends CommonAction{
 	}
 	public function tongji()
 	{
+		$group_list = M("UserGroup")->findAll();
+		$this->assign("group_list",$group_list);	
         // var_dump($_REQUEST);exit;
-	$msg='';	
-	 if($_REQUEST['begin_time'] || $_REQUEST['end_time'] || $_REQUEST['pid_name']){ 
-	 $tongjirenshu=0;
-if(trim($_REQUEST['pid_name'])){
-$pid_name=trim($_REQUEST['pid_name']);
-	 $pid= M("User")->where("user_name='$pid_name'")->find();
-     $pid_id=$pid['id'];
-	 $msg="pid=".$pid_id;
-	  }
- if($_REQUEST['begin_time']){
-   $begin_time=to_timespan($_REQUEST['begin_time']);
-  if(trim($_REQUEST['pid_name'])){
-  $msg.=" and create_time >".$begin_time;
-  }else{
-      $msg.="create_time >".$begin_time;
-  
-  }
+		 $msg="1=1 ";	
+	 if($_REQUEST['begin_time'] || $_REQUEST['end_time'] || $_REQUEST['pid_name'] || $_REQUEST['group_id']){ 
+	    $tongjirenshu=0;
+   if(trim($_REQUEST['pid_name'])){
+        $pid_name=trim($_REQUEST['pid_name']);
+	    $pid= M("User")->where("user_name='$pid_name'")->find();
+        $pid_id=$pid['id'];
+	    $msg.=" and pid=".$pid_id;
+	   } 
+   if($_REQUEST['begin_time']){
+       $begin_time=to_timespan($_REQUEST['begin_time']);
+        $msg.=" and create_time >".$begin_time;
 
-  if($_REQUEST['end_time']){
+
+   if($_REQUEST['end_time']){
       $end_time=to_timespan($_REQUEST['end_time']);
-     $msg.=" and create_time <".$end_time; 
-  }else{
-   $msg.=" and create_time <".time(); 
-  }
-  
- }	
+      $msg.=" and create_time <".$end_time; 
+      }else{
+      $msg.=" and create_time <".time(); 
+      }
+      }
+	  if($_REQUEST['group_id']){
+      $msg.=" and group_id=".$_REQUEST['group_id'];
+	     }	  
+	  // print_r($_REQUEST);exit;
 		 $User=M("User")->where("$msg")->findAll();
-		 // echo M("User")->getLastSql();exit;
+		 echo M("User")->getLastSql();exit;
 		 foreach($User as $k =>$v){
 		 if(M("DealLoad")->where("user_id=".$v['id'])->findAll()){
 		  $tongjirenshu++;
