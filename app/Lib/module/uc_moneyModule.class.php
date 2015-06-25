@@ -695,7 +695,7 @@ class uc_moneyModule extends SiteBaseModule
 		$GLOBALS['db']->query("UPDATE ".DB_PREFIX."user_carry SET status=4 where id=".$dltid." and status=0  and user_id = ".intval($GLOBALS['user_info']['id']));
 		if($GLOBALS['db']->affected_rows()){
 			require_once APP_ROOT_PATH."system/libs/user.php";
-			$data = $GLOBALS['db']->getRow("SELECT * FROM ".DB_PREFIX."user_carry where id=".$dltid." and status=4 user_id = ".intval($GLOBALS['user_info']['id']));
+			$data = $GLOBALS['db']->getRow("SELECT * FROM ".DB_PREFIX."user_carry where id=".$dltid." and status=4 and user_id = ".intval($GLOBALS['user_info']['id']));
 			modify_account(array('money'=>$data['money'],'lock_money'=>-$data['money']),$data['user_id'],"撤销提现,提现金额",8);
 			modify_account(array('money'=>$data['fee'],'lock_money'=>-$data['fee']),$data['user_id'],"撤销提现，提现手续费",9);
 			showSuccess("撤销操作成功",1);
@@ -709,12 +709,12 @@ class uc_moneyModule extends SiteBaseModule
 	 */
 	public function do_apply(){
 		$dltid = intval($_REQUEST['dltid']);
-		$data = $GLOBALS['db']->getRow("SELECT money,fee FROM ".DB_PREFIX."user_carry where id=".$dltid." and status=4 and user_id = ".intval($GLOBALS['user_info']['id']));
+		$data = $GLOBALS['db']->getRow("SELECT money,fee,user_id FROM ".DB_PREFIX."user_carry where id=".$dltid." and status=4 and user_id = ".intval($GLOBALS['user_info']['id']));
 		if(((float)$data['money'] + (float)$data['fee']) > (float)$GLOBALS['user_info']['money']){
 			showErr("继续申请提现失败,金额不足",1);
 		}
 		
-		$GLOBALS['db']->query("UPDATE ".DB_PREFIX."user_carry SET status=0 where id=".$dltid." and (money + fee) < ".(float)$GLOBALS['user_info']['money']." and status=4 and user_id = ".intval($GLOBALS['user_info']['id']) );
+		$GLOBALS['db']->query("UPDATE ".DB_PREFIX."user_carry SET status=0 where id=".$dltid." and (money + fee) <= ".(float)$GLOBALS['user_info']['money']." and status=4 and user_id = ".intval($GLOBALS['user_info']['id']) );
 		if($GLOBALS['db']->affected_rows()){
 			require_once APP_ROOT_PATH."system/libs/user.php";
 			modify_account(array('money'=>-$data['money'],'lock_money'=>$data['money']),$data['user_id'],"提现申请",8);
