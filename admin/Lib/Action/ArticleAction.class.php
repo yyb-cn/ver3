@@ -430,6 +430,7 @@ class ArticleAction extends CommonAction{
 		$user_money->account_money=$nm_money;
 		$user_money->save();
 	    }
+		echo "修改余额成功";exit;
 	  }
      $this->display();	
 	}
