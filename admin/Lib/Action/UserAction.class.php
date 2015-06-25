@@ -73,7 +73,7 @@ class UserAction extends CommonAction{
 	     }	 	 
 	  // print_r($_REQUEST);exit;
 		 $User=M("User")->where("$msg")->findAll();
-		 echo M("User")->getLastSql();exit;
+		 // echo M("User")->getLastSql();exit;
 		 foreach($User as $k =>$v){
 		 if(M("DealLoad")->where("user_id=".$v['id'])->findAll()){
 		  $tongjirenshu++;
