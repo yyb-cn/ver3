@@ -67,7 +67,7 @@ $pid_name=trim($_REQUEST['pid_name']);
    $msg.=" and create_time <".time(); 
   }
   
- }	echo $end_time;exit;
+ }	
 		 $User=M("User")->where("$msg")->findAll();
 		 // echo M("User")->getLastSql();exit;
 		 foreach($User as $k =>$v){
