@@ -1163,12 +1163,6 @@
                             
                         }
 		}else{
-		   if($data['money']<100){
-		     $fee=2;
-		   }else{
-		   $fee=0;
-		   
-		   }
 			if(($data['money'] + $fee) > (floatval($GLOBALS['user_info']['money']))){
 				$status['status'] = 0;
 				$status['show_err'] = $GLOBALS['lang']['CARRY_MONEY_NOT_ENOUGHT'];
