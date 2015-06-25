@@ -16,11 +16,11 @@
 <div class="blank5"></div>
 <div class="main_title">
 	<div class="sub_nav">
-		<input class="button conf_btn <if condition="$t eq money">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=account_detail&id={$user_id}&t=money'" value="资金日志">
+		<input class="button conf_btn <if condition="$t eq money">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=account_detail&id={$user_id}&t=money'" value="用户明细资金(有余额)">
 		<input class="button conf_btn <if condition="$t eq point">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=account_detail&id={$user_id}&t=point'" value="信用积分日志">
 		<input class="button conf_btn <if condition="$t eq freeze">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=account_detail&id={$user_id}&t=freeze'" value="冻结资金">
 		<input class="button conf_btn <if condition="$t eq quota">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=account_detail&id={$user_id}&t=quota'" value="额度">
-		<input class="button conf_btn <if condition="$t eq old_user">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=account_detail&id={$user_id}&t=old_user'" value="用户明细资金">
+		<input class="button conf_btn <if condition="$t eq old_user">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=account_detail&id={$user_id}&t=old_user'" value="用户明细(只做参考)">
 	</div>
 </div>
 
@@ -117,7 +117,6 @@
 	datasource="list" 
 	show="id:{%ID}|50px
 		,money|format_price:操作金额
-		,account_money|format_price:账号余额
 		,pfcfb|format_price:激活PFCFB
 		,unjh_pfcfb|format_price:未激活PFCFB
 		,log_info:操作类型
