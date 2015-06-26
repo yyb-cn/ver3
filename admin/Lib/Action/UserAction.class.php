@@ -45,7 +45,7 @@ class UserAction extends CommonAction{
 		$this->assign("group_list",$group_list);	
         // var_dump($_REQUEST);exit;
 		 $msg="1=1 ";	
-	 if($_REQUEST['begin_time'] || $_REQUEST['end_time'] || $_REQUEST['pid_name'] || $_REQUEST['group_id']){ 
+	 if($_REQUEST['begin_time'] || $_REQUEST['end_time'] || $_REQUEST['pid_name'] || $_REQUEST['group_id'] || $_REQUEST['pid']){ 
 	    $tongjirenshu=0;
    if(trim($_REQUEST['pid_name'])){
         $pid_name=trim($_REQUEST['pid_name']);
@@ -68,9 +68,12 @@ class UserAction extends CommonAction{
 	  if($_REQUEST['group_id']){
       $msg.=" and group_id=".$_REQUEST['group_id'];
 	     }	  
+	 if($_REQUEST['pid']){
+      $msg.=" and pid<>0 ";
+	     }	 	 
 	  // print_r($_REQUEST);exit;
 		 $User=M("User")->where("$msg")->findAll();
-		 echo M("User")->getLastSql();exit;
+		 // echo M("User")->getLastSql();exit;
 		 foreach($User as $k =>$v){
 		 if(M("DealLoad")->where("user_id=".$v['id'])->findAll()){
 		  $tongjirenshu++;

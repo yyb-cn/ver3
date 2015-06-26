@@ -96,6 +96,8 @@ function user_moneyss(user_id){
 					<option value="{$group_item.id}" <if condition="intval($_REQUEST['group_id']) eq $group_item['id']">selected="selected"</if>>{$group_item.name}</option>
 				</foreach>
 		</select>	
+		<br>
+		是否有推荐人：<input type="checkbox" class="textbox" name="pid" <?php if($_REQUEST['pid']) echo 'checked'; ?> style="width:100px;" />
 	<div class="blank5"></div>
 		
 		注册时间：
