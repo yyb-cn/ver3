@@ -181,7 +181,6 @@ class Deal_listAction extends CommonAction{
 		{	
 			
 			$res=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."user_log where user_id = ".$v['user_id']." and log_time <=".$v['deal_time']." and (log_info like '%订单冲值%' and log_info like '%回报本息%')  order by id desc limit 0,10");
-			
 			if($res){
 				for($kk=0;$kk<count(res);$kk++){
 					 if(strpos($res['log_info'],"订单冲值")){
