@@ -150,7 +150,7 @@ class Deal_listAction extends CommonAction{
 		$show   = $Page->show();// 分页显示输出
 		$this->assign('page',$show);// 赋值分页输出
 		
-    	$sql = "select m.memo,m.create_time,u.real_name,u.mobile,u.pid,g.name as group_name, d.name,d.repay_start_time,d.last_repay_time,d.rate,d.repay_time,d.repay_time_type,d.id as deal_id,dl.user_name,dl.user_id,dl.money as u_load_money,dl.id as deal_load_id,dl.create_time as deal_time , dl.deal_load_check_yn,dl.virtual_money from ".DB_PREFIX."deal d left join ".DB_PREFIX."deal_load as dl on d.id = dl.deal_id LEFT JOIN ".DB_PREFIX."user u ON u.id=dl.user_id  left join ".DB_PREFIX."user_group as g on u.group_id = g.id  left join ".DB_PREFIX."user_lock_money_log as m on u.id = m.user_id   where ".$condition .' '. $order . ' limit '.$Page->firstRow.','.$Page->listRows ;
+    	$sql = "select u.real_name,u.mobile,u.pid,g.name as group_name, d.name,d.repay_start_time,d.last_repay_time,d.rate,d.repay_time,d.repay_time_type,d.id as deal_id,dl.user_name,dl.user_id,dl.money as u_load_money,dl.id as deal_load_id,dl.create_time as deal_time , dl.deal_load_check_yn,dl.virtual_money from ".DB_PREFIX."deal d left join ".DB_PREFIX."deal_load as dl on d.id = dl.deal_id LEFT JOIN ".DB_PREFIX."user u ON u.id=dl.user_id  left join ".DB_PREFIX."user_group as g on u.group_id = g.id  where ".$condition .' '. $order . ' limit '.$Page->firstRow.','.$Page->listRows ;
 		/*
 		d   是  deal
 		dl  是  deal_load
@@ -176,8 +176,28 @@ class Deal_listAction extends CommonAction{
 		$list = $GLOBALS['db']->getAll($sql);
 		// echo $sql_no_limit;exit;
 		//deal_load_check_yn
+		
 		foreach($list as $k=>$v)
-		{
+		{	
+			
+			$res=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."user_log where user_id = ".$v['user_id']." and log_time <=".$v['deal_time']." and (log_info like '%订单冲值%' and log_info like '%回报本息%')  order by id desc limit 0,10");
+			
+			if($res){
+				for($kk=0;$kk<count(res);$kk++){
+					 if(strpos($res['log_info'],"订单冲值")){
+						 $list[$k]['status']='充值购买';
+						 
+					 }elseif(strpos($res['log_info'],"回报本息")){
+						 
+						 $list[$k]['status']='转签购买';
+					 }else{
+						 
+						 $list[$k]['status']=$res['log_info'];
+					 }
+						
+				}
+			}
+				
 			$total_limit+=$v['u_load_money'];//当页累计成交金额
 			if($v['repay_time_type']==1){ //1表示月0表示日
 			$list[$k]['get_money']=number_format((($v['u_load_money']+$v['virtual_money'])*$v['rate']/12)*$v['repay_time']*0.01,2);
@@ -189,14 +209,16 @@ class Deal_listAction extends CommonAction{
 			$total_rate_money+=$list[$k]['get_money'];//当页累计效益
 			$list[$k]['urlencode_name']=str_replace('+','%2b',$v['name']);
 		}
-		
+			
 			$this->assign('total_rate_money',$total_rate_money);
-		print_r($list);exit;
+		
 		$total_limit=number_format($total_limit);
 		$this->assign('total_limit',$total_limit);
 		$total_no_limit=number_format($total_no_limit);
 		$this->assign('total_no_limit',$total_no_limit);
-		// echo $sql;exit;
+		
+		 
+	//print_r($list);die;
 		$this->assign('list',$list);
 		// if($deviceType!='computer'){	
 		// echo 123;exit;
