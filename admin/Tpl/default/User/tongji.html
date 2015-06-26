@@ -89,7 +89,17 @@ function user_moneyss(user_id){
 <div class="search_row">
 	<form name="search" action="__APP__" method="get">	
 		{%REFERRALS_NAME}：<input type="text" class="textbox" name="pid_name" value="{:trim($_REQUEST['pid_name'])}" style="width:100px;" />
-		<div class="blank5"></div>
+		<br>
+		<select name="group_id">
+				<option value="0" <if condition="intval($_REQUEST['group_id']) eq 0">selected="selected"</if>>{%ALL}</option>
+				<foreach name="group_list" item="group_item">
+					<option value="{$group_item.id}" <if condition="intval($_REQUEST['group_id']) eq $group_item['id']">selected="selected"</if>>{$group_item.name}</option>
+				</foreach>
+		</select>	
+		<br>
+		是否有推荐人：<input type="checkbox" class="textbox" name="pid" <?php if($_REQUEST['pid']) echo 'checked'; ?> style="width:100px;" />
+	<div class="blank5"></div>
+		
 		注册时间：
 		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d ', false, false, 'begin_time');" style="width:130px" />
 		-

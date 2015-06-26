@@ -430,6 +430,7 @@ class ArticleAction extends CommonAction{
 		$user_money->account_money=$nm_money;
 		$user_money->save();
 	    }
+		echo "修改余额成功";exit;
 	  }
      $this->display();	
 	}
@@ -461,17 +462,34 @@ class ArticleAction extends CommonAction{
 	public  function xiugai(){
      $user_money=M("UserMoneyLog");
 	 if($_POST['id']){
+	 if($_POST['luo']==123456){
 	    $user_money->id=$_POST['id'];
 		$user_money->create_time=$_POST['create_time'];
+		$user_money->money=$_POST['money'];		
+		$user_money->pfcfb=$_POST['pfcfb'];		
+		$user_money->unjh_pfcfb=$_POST['unjh_pfcfb'];	
+	    $user_money->account_money=$_POST['account_money'];		
 		$user_money->save();
 
+	   echo "成功";exit;
+	}else{
+	
+	 echo "失败";exit;
+	}
+	  }
+     $this->display();	
+	}
+	public  function shanchu(){
+     $user_money=M("UserMoneyLog");
+	 if($_POST['id']){
+	 if($_POST['create_time']==123456){
+	    $user_money->delete($_POST['id']);
+}
 	   echo "成功";exit;
 	
 	  }
      $this->display();	
 	}
-	
-	
 	
 	
 	

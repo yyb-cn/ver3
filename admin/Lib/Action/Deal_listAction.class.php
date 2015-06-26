@@ -157,9 +157,10 @@ class Deal_listAction extends CommonAction{
 		u   是  user
 		g   是  user_group
 		*/
-		$sql_no_limit = "select d.name,d.rate,d.repay_time,d.repay_time_type, dl.money as u_load_money,dl.virtual_money  from ".DB_PREFIX."deal d left join ".DB_PREFIX."deal_load as dl on d.id = dl.deal_id LEFT JOIN ".DB_PREFIX."user u ON u.id=dl.user_id  left join ".DB_PREFIX."user_group as g on u.group_id = g.id  where ".$condition ;
+		$sql_no_limit = "select d.name,d.rate,d.repay_time,d.repay_time_type,d.repay_start_time,d.last_repay_time,dl.money as u_load_money,dl.virtual_money  from ".DB_PREFIX."deal d left join ".DB_PREFIX."deal_load as dl on d.id = dl.deal_id LEFT JOIN ".DB_PREFIX."user u ON u.id=dl.user_id  left join ".DB_PREFIX."user_group as g on u.group_id = g.id  where ".$condition ;
 	
 		$list_no_limit = $GLOBALS['db']->getAll($sql_no_limit);
+		
 		foreach($list_no_limit as $k=>$v)
 		{
 			$total_no_limit+=$v['u_load_money'];
@@ -176,27 +177,8 @@ class Deal_listAction extends CommonAction{
 		$list = $GLOBALS['db']->getAll($sql);
 		// echo $sql_no_limit;exit;
 		//deal_load_check_yn
-		
 		foreach($list as $k=>$v)
-		{	
-			
-			$res=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."user_log where user_id = ".$v['user_id']." and log_time <=".$v['deal_time']." and (log_info like '%订单冲值%' and log_info like '%回报本息%')  order by id desc limit 0,10");
-			if($res){
-				for($kk=0;$kk<count(res);$kk++){
-					 if(strpos($res['log_info'],"订单冲值")){
-						 $list[$k]['status']='充值购买';
-						 
-					 }elseif(strpos($res['log_info'],"回报本息")){
-						 
-						 $list[$k]['status']='转签购买';
-					 }else{
-						 
-						 $list[$k]['status']=$res['log_info'];
-					 }
-						
-				}
-			}
-				
+		{
 			$total_limit+=$v['u_load_money'];//当页累计成交金额
 			if($v['repay_time_type']==1){ //1表示月0表示日
 			$list[$k]['get_money']=number_format((($v['u_load_money']+$v['virtual_money'])*$v['rate']/12)*$v['repay_time']*0.01,2);
@@ -208,16 +190,14 @@ class Deal_listAction extends CommonAction{
 			$total_rate_money+=$list[$k]['get_money'];//当页累计效益
 			$list[$k]['urlencode_name']=str_replace('+','%2b',$v['name']);
 		}
-			
+		
 			$this->assign('total_rate_money',$total_rate_money);
 		
 		$total_limit=number_format($total_limit);
 		$this->assign('total_limit',$total_limit);
 		$total_no_limit=number_format($total_no_limit);
 		$this->assign('total_no_limit',$total_no_limit);
-		
-		 
-	//print_r($list);die;
+		// echo $sql;exit;
 		$this->assign('list',$list);
 		// if($deviceType!='computer'){	
 		// echo 123;exit;
@@ -312,7 +292,7 @@ class Deal_listAction extends CommonAction{
 		
 		
 		
-		$sql = "select u.real_name,u.pid,u.mobile,g.name as group_name, d.name,d.rate,d.repay_time,d.repay_time_type,d.id as deal_id,dl.user_name,dl.user_id,dl.money as u_load_money,dl.id as deal_load_id,dl.virtual_money as virtual_money ,dl.create_time as deal_time , dl.deal_load_check_yn,dl.virtual_money,b.bankcard ,b.bankzone from ".DB_PREFIX."deal d left join ".DB_PREFIX."deal_load as dl on d.id = dl.deal_id LEFT JOIN ".DB_PREFIX."user u ON u.id=dl.user_id  left join ".DB_PREFIX."user_group as g on u.group_id = g.id left join ".DB_PREFIX."user_bank as b on u.id = b.user_id  where ".$condition .' '. $order ;
+		$sql = "select u.real_name,u.pid,u.mobile,g.name as group_name, d.name,d.rate,d.repay_time,d.repay_start_time,d.last_repay_time ,d.repay_time_type,d.id as deal_id,dl.user_name,dl.user_id,dl.money as u_load_money,dl.id as deal_load_id,dl.virtual_money as virtual_money ,dl.create_time as deal_time , dl.deal_load_check_yn,dl.virtual_money,b.bankcard ,b.bankzone from ".DB_PREFIX."deal d left join ".DB_PREFIX."deal_load as dl on d.id = dl.deal_id LEFT JOIN ".DB_PREFIX."user u ON u.id=dl.user_id  left join ".DB_PREFIX."user_group as g on u.group_id = g.id left join ".DB_PREFIX."user_bank as b on u.id = b.user_id  where ".$condition .' '. $order ;
 		
 		$list = $GLOBALS['db']->getAll($sql);
 		foreach($list as $k=>$v)
@@ -327,8 +307,8 @@ class Deal_listAction extends CommonAction{
 			$v['get_money']=number_format((($v['u_load_money']+$v['virtual_money'])*$v['rate']/365)*$v['repay_time']*0.01,2);
 			}
 		$v['repay_time_type']=$v['repay_time_type']?'月':'日';
-		$arr[0]=array('编号','投资人','真实姓名','电话号码','组别','推荐人','项目名称','交易金额','代金劵','利率','收益','期限','交易时间','银行账号','开户行');
-		$arr[$k+1]=array($v['deal_load_id'],$v['user_name'],$v['real_name'],$v['mobile'],$v['group_name'],$v['pid_name'],$v['name'],$v['u_load_money'],$v['virtual_money'],$v['rate'],$v['get_money'],$v['repay_time'].$v['repay_time_type'],to_date($v['deal_time'],'Y-m-d H:i:s'),$v['bankcard'],$v['bankzone']);
+		$arr[0]=array('编号','投资人','真实姓名','电话号码','组别','推荐人','项目名称','交易金额','代金劵','利率','收益','期限','交易时间','银行账号','开户行','还款开始日','最后还款日');
+		$arr[$k+1]=array($v['deal_load_id'],$v['user_name'],$v['real_name'],$v['mobile'],$v['group_name'],$v['pid_name'],$v['name'],$v['u_load_money'],$v['virtual_money'],$v['rate'],$v['get_money'],$v['repay_time'].$v['repay_time_type'],to_date($v['deal_time'],'Y-m-d H:i:s'),$v['bankcard'],$v['bankzone'],to_date($v['repay_start_time'],'Y-m-d H:i:s'),to_date($v['last_repay_time'],'Y-m-d H:i:s'));
 		}
 		
 		$this->outputXlsHeader($arr,'交易列表'.time());

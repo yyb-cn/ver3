@@ -527,8 +527,9 @@ define("ACCOUNT_NO_VERIFY_ERROR",3); //帐户未激活
 			}
 			/*pfcfb*/
 			if(floatval($data['pfcfb'])!=0){
-			  $data['money']=floatval($data['pfcfb']);
+			  $data['money']=0;
 			  $log_info['pfcfb'] = floatval($data['pfcfb']);
+			  $money_log_info['pfcfb'] = floatval($data['pfcfb']);
 			  }
 			if(floatval($data['unjh_pfcfb'])!=0){
 			  $data['unjh_pfcfb']=floatval($data['unjh_pfcfb']);

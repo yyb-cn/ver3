@@ -41,33 +41,37 @@ class UserAction extends CommonAction{
 	}
 	public function tongji()
 	{
+		$group_list = M("UserGroup")->findAll();
+		$this->assign("group_list",$group_list);	
         // var_dump($_REQUEST);exit;
-	$msg='';	
-	 if($_REQUEST['begin_time'] || $_REQUEST['end_time'] || $_REQUEST['pid_name']){ 
-	 $tongjirenshu=0;
-if(trim($_REQUEST['pid_name'])){
-$pid_name=trim($_REQUEST['pid_name']);
-	 $pid= M("User")->where("user_name='$pid_name'")->find();
-     $pid_id=$pid['id'];
-	 $msg="pid=".$pid_id;
-	  }
- if($_REQUEST['begin_time']){
-   $begin_time=strtotime($_REQUEST['begin_time']);
-  if(trim($_REQUEST['pid_name'])){
-  $msg.=" and create_time >".$begin_time;
-  }else{
-      $msg.="create_time >".$begin_time;
-  
-  }
+		 $msg="1=1 ";	
+	 if($_REQUEST['begin_time'] || $_REQUEST['end_time'] || $_REQUEST['pid_name'] || $_REQUEST['group_id'] || $_REQUEST['pid']){ 
+	    $tongjirenshu=0;
+   if(trim($_REQUEST['pid_name'])){
+        $pid_name=trim($_REQUEST['pid_name']);
+	    $pid= M("User")->where("user_name='$pid_name'")->find();
+        $pid_id=$pid['id'];
+	    $msg.=" and pid=".$pid_id;
+	   } 
+   if($_REQUEST['begin_time']){
+       $begin_time=to_timespan($_REQUEST['begin_time']);
+        $msg.=" and create_time >".$begin_time;
 
-  if($_REQUEST['end_time']){
-      $end_time=strtotime($_REQUEST['end_time']);
-     $msg.=" and create_time <".$end_time; 
-  }else{
-   $msg.=" and create_time <".time(); 
-  }
-  
- }	
+
+   if($_REQUEST['end_time']){
+      $end_time=to_timespan($_REQUEST['end_time']);
+      $msg.=" and create_time <".$end_time; 
+      }else{
+      $msg.=" and create_time <".time(); 
+      }
+      }
+	  if($_REQUEST['group_id']){
+      $msg.=" and group_id=".$_REQUEST['group_id'];
+	     }	  
+	 if($_REQUEST['pid']){
+      $msg.=" and pid<>0 ";
+	     }	 	 
+	  // print_r($_REQUEST);exit;
 		 $User=M("User")->where("$msg")->findAll();
 		 // echo M("User")->getLastSql();exit;
 		 foreach($User as $k =>$v){
@@ -147,14 +151,65 @@ $pid_name=trim($_REQUEST['pid_name']);
 	 * $user_type  0普通会员 1企业会员
 	 */
 	private function getUserList($user_type=0,$is_delete = 0,$map){
-		
+	
 		$group_list = M("UserGroup")->findAll();
 		$this->assign("group_list",$group_list);
 		
 		$map[DB_PREFIX.'user.user_type'] = $user_type;
 		//定义条件
 		$map[DB_PREFIX.'user.is_delete'] = $is_delete;
-
+        //投过资
+		if(intval($_REQUEST['is_deal_load'])==1)
+		{  
+           	$is_user_id = $GLOBALS['db']->getAll("select id from ".DB_PREFIX."user "); 
+           
+            $is_arr=' ';			
+			foreach($is_user_id as $k=>$v){
+				
+			
+			$one = $GLOBALS['db']->getRow("select id from ".DB_PREFIX."deal_load where  user_id=".$v['id']);
+			if($one){
+				//print_r($one);exit;
+				$is_arr.=$v['id'].",";
+			}
+			
+		
+		
+			}
+				
+			$is_arr = substr($is_arr,0,strlen($str)-1);
+            	   
+		     
+	        $uc= array('in',"$is_arr");
+	
+			 $map[DB_PREFIX.'user.id'] =$uc; 
+		}
+		//没投过资
+		if(intval($_REQUEST['is_deal_load'])==2)
+		{  
+           	$is_user_id = $GLOBALS['db']->getAll("select id from ".DB_PREFIX."user "); 
+          
+            $is_arr=' ';			
+			foreach($is_user_id as $k=>$v){
+				
+			
+			$one = $GLOBALS['db']->getRow("select id from ".DB_PREFIX."deal_load where  user_id=".$v['id']);
+			if(!$one){
+				//print_r($one);exit;
+				$is_arr.=$v['id'].",";
+			}
+			
+		
+		
+			}
+				
+			$is_arr = substr($is_arr,0,strlen($str)-1);
+            	   
+		     
+	        $uc= array('in',"$is_arr");
+	
+			 $map[DB_PREFIX.'user.id'] =$uc; 
+		}
 		if(intval($_REQUEST['group_id'])>0&&intval($_REQUEST['group_id'])!=6)
 		{
 			$map[DB_PREFIX.'user.group_id'] = intval($_REQUEST['group_id']);

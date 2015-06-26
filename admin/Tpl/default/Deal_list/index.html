@@ -153,9 +153,6 @@
 		<br />		<span style="background:#999999;color:#FFF">总计:&nbsp;</span><span style="background:#CCCCCC;" >{$total_no_limit}</span>
 	</th>
 	<th>
-		<a href="javascript:sortBy('name','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="按照操作类别 ">操作类别</a>
-	</th>
-	<th>
 		<a href="javascript:sortBy('name','<?php echo $_GET[_sort]?0:1?>','rate','index')" title="按照项目名称 ">利率  </a>(%)
 	</th>
 	<th>
@@ -177,6 +174,7 @@
 			<a href="javascript:sortBy('deal_load_check_yn','<?php echo $_GET[_sort]?0:1?>','Deal_list','index')" title="认购证明 ">认购证明      </a>
 	</th>
 </tr>
+
 <?php foreach($list as $k=>$v) :?>
 <tr class="row">
 	<td>
@@ -209,9 +207,6 @@
 		<?php if($v['virtual_money']!=0) :?>代金券:{$v.virtual_money|number_format=2}<?php endif;?>
 	</td>
 	<td>
-		&nbsp;{$v.status}
-	</td>
-	<td>
 		&nbsp;{$v.rate}
 	</td>
 	<td>
@@ -226,7 +221,7 @@
 	<td>
 	<?php  if($v['repay_start_time']):?>
    还款开始日&nbsp;<?php echo to_date($v['repay_start_time'],"Y-m-d H:i:s")?>
- </br>最后还款日&nbsp;<?php echo to_date($v['repay_start_time'],"Y-m-d H:i:s")?>
+ </br>最后还款日&nbsp;<?php echo to_date($v['last_repay_time'],"Y-m-d H:i:s")?>
 	<?php endif; ?>
 	<?php  if(!$v['repay_start_time']):?>
   此标 未满标放款
