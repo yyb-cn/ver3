@@ -153,14 +153,65 @@ class UserAction extends CommonAction{
 	 * $user_type  0普通会员 1企业会员
 	 */
 	private function getUserList($user_type=0,$is_delete = 0,$map){
-		
+	
 		$group_list = M("UserGroup")->findAll();
 		$this->assign("group_list",$group_list);
 		
 		$map[DB_PREFIX.'user.user_type'] = $user_type;
 		//定义条件
 		$map[DB_PREFIX.'user.is_delete'] = $is_delete;
-
+        //投过资
+		if(intval($_REQUEST['is_deal_load'])==1)
+		{  
+           	$is_user_id = $GLOBALS['db']->getAll("select id from ".DB_PREFIX."user "); 
+           
+            $is_arr=' ';			
+			foreach($is_user_id as $k=>$v){
+				
+			
+			$one = $GLOBALS['db']->getRow("select id from ".DB_PREFIX."deal_load where  user_id=".$v['id']);
+			if($one){
+				//print_r($one);exit;
+				$is_arr.=$v['id'].",";
+			}
+			
+		
+		
+			}
+				
+			$is_arr = substr($is_arr,0,strlen($str)-1);
+            	   
+		     
+	        $uc= array('in',"$is_arr");
+	
+			 $map[DB_PREFIX.'user.id'] =$uc; 
+		}
+		//没投过资
+		if(intval($_REQUEST['is_deal_load'])==2)
+		{  
+           	$is_user_id = $GLOBALS['db']->getAll("select id from ".DB_PREFIX."user "); 
+          
+            $is_arr=' ';			
+			foreach($is_user_id as $k=>$v){
+				
+			
+			$one = $GLOBALS['db']->getRow("select id from ".DB_PREFIX."deal_load where  user_id=".$v['id']);
+			if(!$one){
+				//print_r($one);exit;
+				$is_arr.=$v['id'].",";
+			}
+			
+		
+		
+			}
+				
+			$is_arr = substr($is_arr,0,strlen($str)-1);
+            	   
+		     
+	        $uc= array('in',"$is_arr");
+	
+			 $map[DB_PREFIX.'user.id'] =$uc; 
+		}
 		if(intval($_REQUEST['group_id'])>0&&intval($_REQUEST['group_id'])!=6)
 		{
 			$map[DB_PREFIX.'user.group_id'] = intval($_REQUEST['group_id']);

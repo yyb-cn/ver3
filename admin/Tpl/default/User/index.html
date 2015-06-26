@@ -107,6 +107,7 @@ function user_moneyss(user_id){
 				<option value="6">特殊推荐会员(本导出是导出会员的推荐用户列表)</option>
 		</select>
 		<if condition="ACTION_NAME eq 'index' or ACTION_NAME eq 'company_index'">
+		状态:
 		<select name="is_effect">
 				<option value="-1" <if condition="$_REQUEST['is_effect'] eq -1 || $_REQUEST['is_effect'] eq ''">selected="selected"</if>>{%ALL}</option>
 				<option value="1" <if condition="intval($_REQUEST['is_effect']) eq 1">selected="selected"</if>>有效</option>
@@ -114,6 +115,12 @@ function user_moneyss(user_id){
 				
 		</select>
 		</if>
+		是否投过资:
+		<select name="is_deal_load">
+				<option value="-1" <if condition="$_REQUEST['is_effect'] eq -1 || $_REQUEST['is_effect'] eq ''">selected="selected"</if>>{%ALL}</option>
+				<option value="1" <if condition="intval($_REQUEST['is_effect']) eq 1">selected="selected"</if>>投过资</option>
+				<option value="2" <if condition="intval($_REQUEST['is_effect']) eq 0 && isset($_REQUEST['is_effect'])">selected="selected"</if>>没投过资</option>	
+		</select>
 		<div class="blank5"></div>
 		注册时间：
 		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'begin_time');" style="width:130px" />
