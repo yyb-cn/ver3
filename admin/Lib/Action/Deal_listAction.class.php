@@ -169,7 +169,7 @@ class Deal_listAction extends CommonAction{
 		
 		foreach($sql_no_scale as $k=>$v)
 		{     if(!$v['repay_start_time'] && $v['group_id'] == 1){
-			    $dd+=1;
+			  
 		        $total_no_scale+=$v['u_load_money'];
 			if($v['repay_time_type']==1){ //1表示月0表示日
 			$sql_no_scale[$k]['get_money']=number_format((($v['u_load_money']+$v['virtual_money'])*$v['rate']/12)*$v['repay_time']*0.01,2);
