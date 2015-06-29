@@ -157,20 +157,21 @@ class Deal_listAction extends CommonAction{
 		u   是  user
 		g   是  user_group
 		*/
-		$sql_no_limit = "select d.name,d.rate,d.repay_time,d.repay_time_type,d.repay_start_time,d.last_repay_time,dl.money as u_load_money,dl.virtual_money,u.group_id  from ".DB_PREFIX."deal d left join ".DB_PREFIX."deal_load as dl on d.id = dl.deal_id LEFT JOIN ".DB_PREFIX."user u ON u.id=dl.user_id  left join ".DB_PREFIX."user_group as g on u.group_id = g.id  where ".$condition ;
+		$sql_no_limit = "select d.name,d.deal_status,d.rate,d.repay_time,d.repay_time_type,d.repay_start_time,d.last_repay_time,dl.money as u_load_money,dl.virtual_money,u.group_id  from ".DB_PREFIX."deal d left join ".DB_PREFIX."deal_load as dl on d.id = dl.deal_id LEFT JOIN ".DB_PREFIX."user u ON u.id=dl.user_id  left join ".DB_PREFIX."user_group as g on u.group_id = g.id  where ".$condition ;
 	
 		$list_no_limit = $GLOBALS['db']->getAll($sql_no_limit);
 		
 		//当前页未满标的计算
-		$sql_no_scale = "select d.name,d.rate,d.repay_time,d.repay_time_type,d.repay_start_time,d.last_repay_time,dl.money as u_load_money,dl.virtual_money  from ".DB_PREFIX."deal d left join ".DB_PREFIX."deal_load as dl on d.id = dl.deal_id LEFT JOIN ".DB_PREFIX."user u ON u.id=dl.user_id  left join ".DB_PREFIX."user_group as g on u.group_id = g.id  where ".$condition ;
+		$sql_no_scale = "select d.name,d.rate,d.deal_status,c.money as user_carry_money,c.status,d.repay_time,d.repay_time_type,d.repay_start_time,d.last_repay_time,dl.money as u_load_money,dl.virtual_money  from ".DB_PREFIX."deal d left join ".DB_PREFIX."deal_load as dl on d.id = dl.deal_id LEFT JOIN ".DB_PREFIX."user u ON u.id=dl.user_id  left join ".DB_PREFIX."user_group as g on u.group_id = g.id  left join ".DB_PREFIX."user_carry as c on u.id = c.user_id  where ".$condition ;
 	
-		$sql_no_scale = $GLOBALS['db']->getAll($sql_no_limit);
+		$sql_no_scale = $GLOBALS['db']->getAll($sql_no_scale);
 		
 		
 		foreach($sql_no_scale as $k=>$v)
-		{     if(!$v['repay_start_time'] && $v['group_id'] == 1){
-			  
-		        $total_no_scale+=$v['u_load_money'];
+		{   
+		if($v['deal_status'] != 5 && $v['status']==1){
+			  $user_carry_money+=$v['user_carry_money'];
+		      $total_no_scale+=$v['u_load_money'];
 			if($v['repay_time_type']==1){ //1表示月0表示日
 			$sql_no_scale[$k]['get_money']=number_format((($v['u_load_money']+$v['virtual_money'])*$v['rate']/12)*$v['repay_time']*0.01,2);
 			//计算利率
@@ -181,7 +182,10 @@ class Deal_listAction extends CommonAction{
 			}
 			$total_rate_money_scale+=$sql_no_scale[$k]['get_money'];//当页累计效益
 		}
-		$this->assign('total_rate_money_scale',$total_rate_money_scale);
+		$total_rate_money_sc=$total_rate_money_scale+$total_no_scale;//投标总金额
+		$user_carry_money=$total_rate_money_sc-$user_carry_money;//剩余未还交易金额
+		
+	
 		
 		
 		foreach($list_no_limit as $k=>$v)
@@ -220,8 +224,8 @@ class Deal_listAction extends CommonAction{
 		$this->assign('total_limit',$total_limit);
 		$total_no_limit=number_format($total_no_limit);
 		$this->assign('total_no_limit',$total_no_limit);
-		$total_no_limit=number_format($total_no_scale);
-		$this->assign('total_no_scale',$total_no_scale);
+		$user_carry_money=number_format($user_carry_money);
+		$this->assign('user_carry_money',$user_carry_money);
 		// echo $sql;exit;
 		$this->assign('list',$list);
 		// if($deviceType!='computer'){	
