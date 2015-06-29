@@ -1168,8 +1168,7 @@
 			  }else{
 			   $fee=0;
 			  }
-		
-		
+          $data['fee'] = $fee;
 			if(($data['money'] + $fee) > (floatval($GLOBALS['user_info']['money']))){
 				$status['status'] = 0;
 				$status['show_err'] = $GLOBALS['lang']['CARRY_MONEY_NOT_ENOUGHT'];
