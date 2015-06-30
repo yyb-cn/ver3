@@ -666,17 +666,18 @@ class UserCarryAction extends CommonAction{
 		$v['region_lv2_name'] = M("DeliveryRegion")->where("id=".$v['region_lv2'])->getField("name");
 		$v['region_lv3_name'] = M("DeliveryRegion")->where("id=".$v['region_lv3'])->getField("name");
 		$v['region_lv4_name'] = M("DeliveryRegion")->where("id=".$v['region_lv4'])->getField("name");
-
+        $v['user_bank_bankzone'] = M("UserBank")->where("bankcard=".$v['bankcard'])->getField("bankzone");
+$user_bank_bankzone=$v['user_bank_bankzone'];
 		$v['phone']=M("User")->where("id=".$v['user_id'])->getField("mobile");
 	    $one = substr($v['bankzone'],'兴业');
 		$ome = substr($v['bankzone'],$v['region_lv3_name']);
-	    if($ome==''){$v['region_lv3_name']='否';}else{$v['region_lv3_name']='是';}
+	    if($ome==''){$v['ome']='否';}else{$v['ome']='是';}
 		if($one==''){$bankzone='否';}else{$bankzone='是';}
-	
+	    if($v['region_lv2_name']=$v['region_lv3_name']){$region_name=$v['region_lv2_name'];}else{$region_name=$v['region_lv2_name']."".$v['region_lv3_name'];}
 		$v['bank_name'] =  M("bank")->where("id=".$v['bank_id'])->getField("name");
 		$arr[0]=array('序号','是否兴业银行账户','收款账号','收款户名','收款银行及营业网点','是否同城','汇入地址','转账金额','转账用途');
 		$all_money=$v['pfcfb']+$v['money'];
-		$arr[$k+1]=array($k+1,$bankzone,$v['bankcard'],$v['real_name'],$v['bankzone'],$v['region_lv3_name'],$v['region_lv1_name']."".$v['region_lv2_name']."".$v['region_lv3_name']."".$v['region_lv4_name'],$all_money,'利息');
+		$arr[$k+1]=array($k+1,$bankzone,$v['bankcard'],$v['real_name'],$user_bank_bankzone,$v['ome'],$v['region_lv1_name']."".$region_name."".$v['region_lv4_name'],$all_money,'利息');
 		}
 		if($geshi=='utf-8' || $geshi=='gbk'){
 		
