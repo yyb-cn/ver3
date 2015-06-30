@@ -392,6 +392,33 @@ var t = url.split("=")[4];
 	window.location = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=daochu&id="+id+"&geshi="+geshi+"&t="+t
 	
 }
+function dao_chu(id)
+{
+	if(!id)
+	{
+		idBox = $(".key:checked");
+		if(idBox.length == 0)
+		{
+			alert('请选择要导出的选项');
+			return;
+		}
+		idArray = new Array();
+		$.each( idBox, function(i, n){
+			idArray.push($(n).val());
+		});
+		id = idArray.join(",");
+	}
+var url = window.location.href;
+ 
+var t = url.split("=")[4];
+ 
+ 
+ 
+	if(geshi='utf-8')
+	
+	window.location = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=dao_chu&id="+id+"&geshi="+geshi+"&t="+t
+	
+}
 //完全删除
 function foreverdel(id)
 {

@@ -648,6 +648,48 @@ class UserCarryAction extends CommonAction{
 		}
 		
 	}
+	  public function dao_chu()
+	{
+		 $id = $_REQUEST ['id'];
+		 //格式的输入
+		$geshi = $_REQUEST ['geshi'];
+	
+		//where(array ('user_id' => array ('in', explode ( ',', $id ) ) ));
+		$condition = array ('id' => array ('in', explode ( ',', $id ) ) );
+		
+		$vo = M(MODULE_NAME)->where($condition)->select();
+		
+		foreach($vo as $k=>$v)
+		{
+		
+		$v['region_lv1_name'] = M("DeliveryRegion")->where("id=".$v['region_lv1'])->getField("name");
+		$v['region_lv2_name'] = M("DeliveryRegion")->where("id=".$v['region_lv2'])->getField("name");
+		$v['region_lv3_name'] = M("DeliveryRegion")->where("id=".$v['region_lv3'])->getField("name");
+		$v['region_lv4_name'] = M("DeliveryRegion")->where("id=".$v['region_lv4'])->getField("name");
+
+		$v['phone']=M("User")->where("id=".$v['user_id'])->getField("mobile");
+	    $one = substr($v['bankzone'],'兴业');
+		$ome = substr($v['bankzone'],$v['region_lv3_name']);
+	    if($ome==''){$v['region_lv3_name']='否';}else{$v['region_lv3_name']='是';}
+		if($one==''){$bankzone='否';}else{$bankzone='是';}
+	
+		$v['bank_name'] =  M("bank")->where("id=".$v['bank_id'])->getField("name");
+		$arr[0]=array('序号','是否兴业银行账户','收款账号','收款户名','收款银行及营业网点','是否同城','汇入地址','转账金额','转账用途');
+		$all_money=$v['pfcfb']+$v['money'];
+		$arr[$k+1]=array($k+1,$bankzone,$v['bankcard'],$v['real_name'],$v['bankzone'],$v['region_lv3_name'],$v['region_lv1_name']."".$v['region_lv2_name']."".$v['region_lv3_name']."".$v['region_lv4_name'],$all_money,'利息');
+		}
+		if($geshi=='utf-8' || $geshi=='gbk'){
+		
+	//var_dump($arr);exit;
+		
+		$this->outputXlsHeader($arr,'提现名单'.time(),$geshi);
+		}else{
+			
+		$this->error(L("输入的格式不支持"));
+			
+		}
+		
+	}
 	
 	
 	public function outputXlsHeader($data,$file_name = 'export',$geshi)
