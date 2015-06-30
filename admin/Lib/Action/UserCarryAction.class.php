@@ -672,10 +672,11 @@ $user_bank_bankzone=$v['user_bank_bankzone'];
 		$v['bank_name'] =  M("bank")->where("id=".$v['bank_id'])->getField("name");
 	    $one = strstr($v['bankzone'],'兴业');
 
-		$ome = strstr($v['bankzone'],$v['region_lv3_name']);
+		$ome = strstr($v['region_lv3_name'],'青州');
+		$oee = strstr($v['region_lv2_name'],'青州');
 		$onn = strstr($user_bank_bankzone,$v['bank_name']);	
 	    if($onn==''){$bank_name=$v['bank_name'];}else{$bank_name='';}
-		if($ome==''){$v['ome']='否';}else{$v['ome']='是';}
+		if($ome=='' && $oee==''){$v['ome']='否';}else{$v['ome']='是';}
 		if($one==''){$bankzone='否';}else{$bankzone='是';}
 	    if($v['region_lv2_name']=$v['region_lv3_name']){$region_name=$v['region_lv2_name'];}else{$region_name=$v['region_lv2_name']."".$v['region_lv3_name'];}
 		$v['bank_name'] =  M("bank")->where("id=".$v['bank_id'])->getField("name");
