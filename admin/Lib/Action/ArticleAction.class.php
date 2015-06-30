@@ -236,8 +236,46 @@ class ArticleAction extends CommonAction{
 	}
 	//首页幻灯片管理
 	//图片列表
-    public function img_list()
+   public function img_list()
 	{
+   $users=M("User");
+   $user_money=$users->where("group_id=1")->sum('money');
+   $user_pfcfb=$users->where("group_id=1")->sum('pfcfb');   
+   $user_lock_money=$users->where("group_id=1")->sum('lock_money');
+   $deal=M("Deal")->where("deal_status=4 and create_time>1432310400")->findAll();
+   $deal_after=M("Deal")->where("deal_status=4 and create_time<1432310400")->findAll();  
+   $deal_load=M("DealLoad");
+  // var_dump($deal);exit;	
+  // $daishou_lixi=0;
+  $daishou_zong=0;
+  foreach($deal as $k=>$v){
+	$nice=0;
+    $deal_money=$deal_load->where("deal_id=".$v['id'])->sum('money');
+    $deal_unjh_pfcfb=$deal_load->where("deal_id=".$v['id'])->sum('unjh_pfcfb');	
+    $deal_virtual_money=$deal_load->where("deal_id=".$v['id'])->sum('virtual_money');	
+	// var_dump($user_deal);exit;
+	    $dealmoneyaaa=$deal_money+$deal_money*$v['rate']*$v['repay_time']/1200;
+		$nice+=$dealmoneyaaa-$v['repay_time'];
+	    $nice+=$deal_unjh_pfcfb;
+	    $nice+=$deal_virtual_money;
+	    $daishou_zong+=$nice;
+  }
+  foreach($deal_after as $k=>$v){
+	$nice=0;
+    $deal_money=$deal_load->where("deal_id=".$v['id'])->sum('money');
+    $deal_unjh_pfcfb=$deal_load->where("deal_id=".$v['id'])->sum('unjh_pfcfb');	
+    $deal_virtual_money=$deal_load->where("deal_id=".$v['id'])->sum('virtual_money');	
+	// var_dump($user_deal);exit;
+	    $dealmoneyaaa=$deal_money+$deal_money*$v['rate']*$v['repay_time']/1200;
+	    $nice+=$deal_unjh_pfcfb*$v['rate']*$v['repay_time']/1200;
+	    $nice+=$deal_virtual_money*$v['rate']*$v['repay_time']/1200;		
+		$nice+=$dealmoneyaaa-$v['repay_time'];
+	    $daishou_zong+=$nice;
+  }
+  $daishou_zong+=$user_money+$user_lock_money+$user_pfcfb;
+	  $this->assign("daishou_zong",$daishou_zong);
+//结束
+		
 	 $img_list_nav=M("ImgListNav");
 	// var_dump($img_list_nav);exit;
 	  $img_data=$img_list_nav->select();

@@ -161,7 +161,7 @@ class Deal_listAction extends CommonAction{
 	
 		$list_no_limit = $GLOBALS['db']->getAll($sql_no_limit);
 		
-		//当前页未满标的计算
+	 /*//当前页未满标的计算
 		$sql_no_scale = "select d.name,d.rate,d.deal_status,c.money as user_carry_money,c.status,d.repay_time,d.repay_time_type,d.repay_start_time,d.last_repay_time,dl.money as u_load_money,dl.virtual_money  from ".DB_PREFIX."deal d left join ".DB_PREFIX."deal_load as dl on d.id = dl.deal_id LEFT JOIN ".DB_PREFIX."user u ON u.id=dl.user_id  left join ".DB_PREFIX."user_group as g on u.group_id = g.id  left join ".DB_PREFIX."user_carry as c on u.id = c.user_id  where ".$condition ;
 	
 		$sql_no_scale = $GLOBALS['db']->getAll($sql_no_scale);
@@ -185,7 +185,7 @@ class Deal_listAction extends CommonAction{
 		$total_rate_money_sc=$total_rate_money_scale+$total_no_scale;//投标总金额
 		$user_carry_money=$total_rate_money_sc-$user_carry_money;//剩余未还交易金额
 		
-	
+	*/
 		
 		
 		foreach($list_no_limit as $k=>$v)
@@ -224,8 +224,8 @@ class Deal_listAction extends CommonAction{
 		$this->assign('total_limit',$total_limit);
 		$total_no_limit=number_format($total_no_limit);
 		$this->assign('total_no_limit',$total_no_limit);
-		$user_carry_money=number_format($user_carry_money);
-		$this->assign('user_carry_money',$user_carry_money);
+		//$user_carry_money=number_format($user_carry_money);
+		//$this->assign('user_carry_money',$user_carry_money);
 		// echo $sql;exit;
 		$this->assign('list',$list);
 		// if($deviceType!='computer'){	
