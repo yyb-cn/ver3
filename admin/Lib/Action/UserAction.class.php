@@ -939,7 +939,7 @@ class UserAction extends CommonAction{
 				->join(DB_PREFIX.'user_level ON '.DB_PREFIX.'user.level_id = '.DB_PREFIX.'user_level.id')
 				->field(DB_PREFIX.'user.*,'.DB_PREFIX.'user_level.name')
 				->limit($limit)->findAll();
-       
+       echo M(MODULE_NAME)->getLastSql();exit;
 		if($list)
 		{
 			register_shutdown_function(array(&$this, 'export_csv'), $page+1);

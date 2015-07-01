@@ -161,7 +161,7 @@ class Deal_listAction extends CommonAction{
 	
 		$list_no_limit = $GLOBALS['db']->getAll($sql_no_limit);
 		
-	 /*//当前页未满标的计算
+	//当前页未满标的计算
 		$sql_no_scale = "select d.name,d.rate,d.deal_status,c.money as user_carry_money,c.status,d.repay_time,d.repay_time_type,d.repay_start_time,d.last_repay_time,dl.money as u_load_money,dl.virtual_money  from ".DB_PREFIX."deal d left join ".DB_PREFIX."deal_load as dl on d.id = dl.deal_id LEFT JOIN ".DB_PREFIX."user u ON u.id=dl.user_id  left join ".DB_PREFIX."user_group as g on u.group_id = g.id  left join ".DB_PREFIX."user_carry as c on u.id = c.user_id  where ".$condition ;
 	
 		$sql_no_scale = $GLOBALS['db']->getAll($sql_no_scale);
@@ -182,10 +182,9 @@ class Deal_listAction extends CommonAction{
 			}
 			$total_rate_money_scale+=$sql_no_scale[$k]['get_money'];//当页累计效益
 		}
-		$total_rate_money_sc=$total_rate_money_scale+$total_no_scale;//投标总金额
-		$user_carry_money=$total_rate_money_sc-$user_carry_money;//剩余未还交易金额
+		$this->assign('total_rate_money_scale',$total_rate_money_scale);
 		
-	*/
+
 		
 		
 		foreach($list_no_limit as $k=>$v)
