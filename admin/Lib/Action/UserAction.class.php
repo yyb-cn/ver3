@@ -909,6 +909,11 @@ class UserAction extends CommonAction{
 			$map[DB_PREFIX.'user.pid'] =$uc;
 			$lest = 1;
 		}
+		if(intval($_REQUEST['group_id'])==7)
+		{   $uc=1;
+			$map[DB_PREFIX.'user.group_id'] =$uc;
+			$lsst = 1;
+		}
 		if(trim($_REQUEST['user_name'])!='')
 		{
 			$map[DB_PREFIX.'user.user_name'] = array('like','%'.trim($_REQUEST['user_name']).'%');
@@ -934,8 +939,7 @@ class UserAction extends CommonAction{
 				->join(DB_PREFIX.'user_level ON '.DB_PREFIX.'user.level_id = '.DB_PREFIX.'user_level.id')
 				->field(DB_PREFIX.'user.*,'.DB_PREFIX.'user_level.name')
 				->limit($limit)->findAll();
-
-
+       
 		if($list)
 		{
 			register_shutdown_function(array(&$this, 'export_csv'), $page+1);
@@ -963,7 +967,14 @@ class UserAction extends CommonAction{
 					  if($v['name']=='HR'){
 					$v['name']='普通';
 					}
-					 
+	if($lsst && $v['money']!=0)
+		{    $user_money+=$v['money'];
+	        $arr[0]=array('总余额',':',$user_money);
+			$arr[1]=array('编号','用户名','余额','身份证名称');
+		$arr[$k+2]=array($v['id'],$v['user_name'],$v['money'],$v['real_name']);
+			
+			
+		}	 
 					 
 			if($lest){
             if($v['create_time']>1431532800){
@@ -975,7 +986,10 @@ class UserAction extends CommonAction{
 			
 		 }
 			   }
-                 }else{
+                 }
+				 
+				 
+				 if($lsst!=1 &&$lest!=1 ){
 				/*$user_value = array();
 				$user_value['id'] = iconv('utf-8','gbk','"' . $v['id'] . '"');
 				$user_value['user_name'] = iconv('utf-8','gbk','"' . $v['user_name'] . '"');
