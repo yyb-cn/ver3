@@ -99,9 +99,17 @@ class UserCarryAction extends CommonAction{
 		$all_list=$model->where ( $map )->	findAll ( );
 	foreach($all_list as $k=>$v){
 				$more_money+=$v['money']+$v['pfcfb'];
+				
+				if($v['status']==1){
+				
+				$ome_money+=$v['money']+$v['pfcfb'];
+				}
 			}
-				$this->assign ( 'more_money', $more_money );
-			
+	
+		$ome=$more_money-$ome_money;
+		       $this->assign ( 'ome_money', $ome_money );
+			$this->assign ( 'more_money', $more_money );
+			   $this->assign ( 'ome', $ome );
 			//分页查询数据
         $all_money=0;
 			$voList = $model->where ( $map )->order( "`" . $order . "` " . $sort)->limit($p->firstRow . ',' . $p->listRows)->findAll ( );
