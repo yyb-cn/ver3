@@ -255,7 +255,7 @@ class ArticleAction extends CommonAction{
     $deal_virtual_money=$deal_load->where("deal_id=".$v['id'])->sum('virtual_money');	
 	// var_dump($user_deal);exit;
 	    $dealmoneyaaa=$deal_money+$deal_money*$v['rate']*$v['repay_time']/1200;
-		$nice+=$dealmoneyaaa-$v['repay_time'];
+		$nice+=$dealmoneyaaa-$v['repay_money'];
 	    $nice+=$deal_unjh_pfcfb;
 	    $nice+=$deal_virtual_money;
 	    $daishou_zong+=$nice;
@@ -269,7 +269,7 @@ class ArticleAction extends CommonAction{
 	    $dealmoneyaaa=$deal_money+$deal_money*$v['rate']*$v['repay_time']/1200;
 	    $nice+=$deal_unjh_pfcfb*$v['rate']*$v['repay_time']/1200;
 	    $nice+=$deal_virtual_money*$v['rate']*$v['repay_time']/1200;		
-		$nice+=$dealmoneyaaa-$v['repay_time'];
+		$nice+=$dealmoneyaaa-$v['repay_money'];
 	    $daishou_zong+=$nice;
   }
   $daishou_zong+=$user_money+$user_lock_money+$user_pfcfb;
