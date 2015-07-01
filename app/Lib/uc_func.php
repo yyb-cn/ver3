@@ -1144,7 +1144,18 @@
 			}	
 				$data['fee'] = $fee;
 				$da = date("w"); 
-  if($da==3){				
+  if($da==3){
+            if($data['money'] > $pfcfb){//取现金额大于浦发币金额
+                    $panduan_Money = $data['money'] - $pfcfb;
+             }else{
+                    $panduan_Money = 0;       
+                   }
+		    if($panduan_Money<100){
+			   $fee=2;
+			  }else{
+			   $fee=0;
+			  }
+  			$data['fee'] = $fee;
 			if(($data['money'] + $fee) > (floatval($GLOBALS['user_info']['money'])+$GLOBALS['user_info']['pfcfb'])){
 				$status['status'] = 0;
 				$status['show_err'] = $GLOBALS['lang']['CARRY_MONEY_NOT_ENOUGHT'];
@@ -1155,7 +1166,6 @@
                         if($data['money'] > $pfcfb){//取现金额大于浦发币金额
                             
                             $data['money'] = $data['money'] - $pfcfb;
-                            
                         }else{//取现金额小于或等于浦发币金额
                             
                             $pfcfb = $data['money'];//浦发币等于取现金额
