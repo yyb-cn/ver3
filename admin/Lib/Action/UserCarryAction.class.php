@@ -32,7 +32,10 @@ class UserCarryAction extends CommonAction{
 			$map['user_id'] = D("User")->where("user_name='".trim($_REQUEST['user_name'])."'")->getField('id');
 			
 		}
-		
+		if(trim($_REQUEST['real_name'])!='')
+		{
+			$map['user_id'] = M("User")->where("real_name='".trim($_REQUEST['real_name'])."'")->getField('id');
+		}
 		if($status!='')
 		{
 			$map['status'] = intval($status);

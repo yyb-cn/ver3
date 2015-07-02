@@ -48,6 +48,7 @@
 <div class="search_row">
 	<form name="search" action="__APP__" method="get">	
 		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+                真实姓名：<input type="text" class="textbox" name="real_name" value="{:trim($_REQUEST['real_name'])}" style="width:100px;" />
 		<if condition="ACTION_NAME eq 'index'">
 		状态：<select name="status">
 			<option value="">{%ALL}</option>
