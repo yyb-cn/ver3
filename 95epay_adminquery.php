@@ -20,8 +20,9 @@ $end_time = ($_REQUEST['end_time1']=='')?'1412040068':$_REQUEST['end_time1'];
 	$MD5key = "aWOv]Fct";
         $MerUrl = "http://www.pfcf88.com/95epay_callback.php?act=query";
         $post_data = array();
-        $order = $GLOBALS['db']->getAll("select notice_sn from ".DB_PREFIX."payment_notice where is_paid = 0 and create_time >".$start_time ." and create_time< ".$end_time);//查询订单	
- 	echo $GLOBALS['db']->getLastSql();exit;
+        //$order = $GLOBALS['db']->getAll("select notice_sn from ".DB_PREFIX."payment_notice where is_paid = 0 and create_time >".$start_time ." and create_time<".$end_time);//查询订单	
+		 $order=M("DealLoad")->where(is_paid = 0 and create_time >".$start_time  and create_time<".$end_time)->findAll()
+ 	echo M("DealLoad")->getLastSql();exit;
 		  print_r($order);exit;;
         foreach ($order as $key => $value) {
             
