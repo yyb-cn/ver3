@@ -30,7 +30,7 @@ $end_time = ($_REQUEST['end_time1']=='')?'1412040068':$_REQUEST['end_time1'];
 		$sql="select notice_sn from fanwe_payment_notice where create_time >".$start_time ." and create_time<".$end_time;
 		$query=mysql_query($sql);
 	    $one=mysql_fetch_assoc($query);
-		 print_r($end_time); print_r($one);exit;;
+		 print_r($one);exit;
         foreach ($order as $key => $value) {
             
             $BillNo = $value['notice_sn'];
