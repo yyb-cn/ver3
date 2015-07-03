@@ -34,7 +34,7 @@ $end_time = ($_REQUEST['end_time1']=='')?'1412040068':$_REQUEST['end_time1'];
             $data = curl_post("http://www.95epay.cn/ReconciliationPort", $post_data);  
       
         }
-echo "done";
+echo "123";
 //        var_dump($data);
 
 
