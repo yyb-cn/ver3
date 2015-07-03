@@ -31,9 +31,9 @@ $end_time = ($_REQUEST['end_time1']=='')?'1412040068':strtotime($_REQUEST['end_t
             $post_data['BillNo'] = $BillNo;  
             $post_data['MerUrl'] = $MerUrl; 
             $post_data['MD5Info'] = $MD5Info;  
-		echo $key;
+	
             $data = curl_post("http://www.95epay.cn/ReconciliationPort", $post_data);  
-      
+      	echo $key;
         }
 echo "done";
 //        var_dump($data);
