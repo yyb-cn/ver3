@@ -15,14 +15,14 @@ require './app/Lib/app_init.php';
 
 $start_time = ($_REQUEST['start_time1']=='')?'1412040063':$_REQUEST['start_time1'];
 $end_time = ($_REQUEST['end_time1']=='')?'1412040068':$_REQUEST['end_time1'];
-
+ 
         $MerNo = "181138";
 	$MD5key = "aWOv]Fct";
         $MerUrl = "http://www.pfcf88.com/95epay_callback.php?act=query";
         $post_data = array();
         $order = $GLOBALS['db']->getAll("select notice_sn from ".DB_PREFIX."payment_notice where is_paid = 0 and create_time >".$start_time ." and create_time<".$end_time);//查询订单	
 	
-		  print_r($order);exit;;
+		print_r($start_time); print_r($end_time);exit;
         foreach ($order as $key => $value) {
             
             $BillNo = $value['notice_sn'];
