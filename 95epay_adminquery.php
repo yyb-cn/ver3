@@ -13,8 +13,8 @@ require './app/Lib/app_init.php';
 		//$_MerchantID = $payment_info['config']['baofoo_account'];
         //$_Md5Key = $payment_info['config']['baofoo_key'];
 
-$start_time = ($_REQUEST['start_time1']=='')?'1412040063':$_REQUEST['start_time1'];
-$end_time = ($_REQUEST['end_time1']=='')?'1412040068':$_REQUEST['end_time1'];
+$start_time = ($_REQUEST['start_time1']=='')?'1412040063':strtotime($_REQUEST['start_time1']);
+$end_time = ($_REQUEST['end_time1']=='')?'1412040068':strtotime($_REQUEST['end_time1']);
  
         $MerNo = "181138";
 	$MD5key = "aWOv]Fct";
