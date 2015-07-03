@@ -21,7 +21,7 @@ $end_time = ($_REQUEST['end_time1']=='')?'1412040068':$_REQUEST['end_time1'];
         $MerUrl = "http://www.pfcf88.com/95epay_callback.php?act=query";
         $post_data = array();
        
-		 $order=M("DealLoad")->where("create_time>'".$start_time."' and create_time<'".$start_time."' and is_paid = 0")->findAll();
+		 $order=M("PaymentNotice")->where("create_time>'".$start_time."' and create_time<'".$start_time."' and is_paid = 0")->findAll();
  	echo M("DealLoad")->getLastSql();
 		  print_r($order);exit;;
         foreach ($order as $key => $value) {
