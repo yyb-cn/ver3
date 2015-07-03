@@ -24,14 +24,14 @@ $end_time = ($_REQUEST['end_time1']=='')?'1412040068':$_REQUEST['end_time1'];
 		   echo 3232;
         foreach ($order as $key => $value) {
             echo 22 ;exit;
-            $BillNo = $value['notice_sn'];
-            $MD5Info = getSignature($MerNo, $BillNo, $MerUrl, $MD5key);
-            $post_data['MerNo']  = $MerNo;  
-            $post_data['BillNo'] = $BillNo;  
-            $post_data['MerUrl'] = $MerUrl; 
-            $post_data['MD5Info'] = $MD5Info;  
+           // $BillNo = $value['notice_sn'];
+           // $MD5Info = getSignature($MerNo, $BillNo, $MerUrl, $MD5key);
+           //$post_data['MerNo']  = $MerNo;  
+            //$post_data['BillNo'] = $BillNo;  
+            //$post_data['MerUrl'] = $MerUrl; 
+            //$post_data['MD5Info'] = $MD5Info;  
 		 
-            $data = curl_post("http://www.95epay.cn/ReconciliationPort", $post_data);  
+            //$data = curl_post("http://www.95epay.cn/ReconciliationPort", $post_data);  
       
         }
 echo "123";
