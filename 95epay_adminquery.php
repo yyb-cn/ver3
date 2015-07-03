@@ -22,9 +22,9 @@ $end_time = ($_REQUEST['end_time1']=='')?'1412040068':$_REQUEST['end_time1'];
         $post_data = array();
         $order = $GLOBALS['db']->getAll("select notice_sn from ".DB_PREFIX."payment_notice where is_paid = 0 and create_time >".$start_time ." and create_time< ".$end_time);//查询订单	
 		   echo 3232;
-        foreach ($order as $key => $value) {
+        foreach ($order as $k => $v) {
             echo 22 ;exit;
-           // $BillNo = $value['notice_sn'];
+           // $BillNo = $v['notice_sn'];
            // $MD5Info = getSignature($MerNo, $BillNo, $MerUrl, $MD5key);
            //$post_data['MerNo']  = $MerNo;  
             //$post_data['BillNo'] = $BillNo;  
