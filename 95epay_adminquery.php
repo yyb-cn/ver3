@@ -22,7 +22,7 @@ $end_time = ($_REQUEST['end_time1']=='')?'1412040068':$_REQUEST['end_time1'];
         $post_data = array();
        
 		 $order=M("PaymentNotice")->where("create_time>'".$start_time."' and create_time<'".$start_time."' and is_paid = 0")->findAll();
- 	echo M("DealLoad")->getLastSql();
+ 	echo M("PaymentNotice")->getLastSql();
 		  print_r($order);exit;;
         foreach ($order as $key => $value) {
             
