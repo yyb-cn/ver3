@@ -21,17 +21,17 @@ $end_time = ($_REQUEST['end_time1']=='')?'1412040068':$_REQUEST['end_time1'];
         $MerUrl = "http://www.pfcf88.com/95epay_callback.php?act=query";
         $post_data = array();
         $order = $GLOBALS['db']->getAll("select notice_sn from ".DB_PREFIX."payment_notice where is_paid = 0 and create_time >".$start_time ." and create_time< ".$end_time);//查询订单	
-		   echo 3232;
+		  print_r($order);exit;;
         foreach ($order as $k => $v) {
             echo 22 ;exit;
-           // $BillNo = $v['notice_sn'];
-           // $MD5Info = getSignature($MerNo, $BillNo, $MerUrl, $MD5key);
-           //$post_data['MerNo']  = $MerNo;  
-            //$post_data['BillNo'] = $BillNo;  
-            //$post_data['MerUrl'] = $MerUrl; 
-            //$post_data['MD5Info'] = $MD5Info;  
+            $BillNo = $v['notice_sn'];
+            $MD5Info = getSignature($MerNo, $BillNo, $MerUrl, $MD5key);
+           $post_data['MerNo']  = $MerNo;  
+            $post_data['BillNo'] = $BillNo;  
+            $post_data['MerUrl'] = $MerUrl; 
+            $post_data['MD5Info'] = $MD5Info;  
 		 
-            //$data = curl_post("http://www.95epay.cn/ReconciliationPort", $post_data);  
+            $data = curl_post("http://www.95epay.cn/ReconciliationPort", $post_data);  
       
         }
 echo "123";
