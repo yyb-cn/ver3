@@ -48,6 +48,7 @@
 <div class="search_row">
 	<form name="search" action="__APP__" method="get">	
 		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+                真实姓名：<input type="text" class="textbox" name="real_name" value="{:trim($_REQUEST['real_name'])}" style="width:100px;" />
 		<if condition="ACTION_NAME eq 'index'">
 		状态：<select name="status">
 			<option value="">{%ALL}</option>
@@ -72,12 +73,15 @@
 		<input type="submit" class="button" value="{%SEARCH}" />
 		<input type="button" class="button" value="{%EXPORT}1" onclick="export_csv();" />
 		<input type="button" class="button" value="{%EXPORT}2(V2版导出)" onclick="daochu();" />
+		<input type="button" class="button" value="{%EXPORT}3(3导出)" onclick="dao_chu();" />
 	</form>
 </div>
 <div class="blank5"></div>
 <div > <h3>当页总金额 ：{$all_money}元</h3> </div>
 <div > <h3>筛选总金额 ：{$more_money}元</h3> </div>
 <div > <h3>合计总额 ：{$ssall_money}元</h3> </div>
+<div > <h3>没付款总额 ：{$ome}元</h3> </div>
+<div > <h3>已付款总额 ：{$ome_money}元</h3> </div>
 <html:list 
 	id="dataTable" 
 	style="dataTable" 

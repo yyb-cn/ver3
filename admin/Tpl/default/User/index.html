@@ -105,6 +105,7 @@ function user_moneyss(user_id){
 					<option value="{$group_item.id}" <if condition="intval($_REQUEST['group_id']) eq $group_item['id']">selected="selected"</if>>{$group_item.name}</option>
 				</foreach>
 				<option value="6">特殊推荐会员(本导出是导出会员的推荐用户列表)</option>
+				<option value="7">普通会员余额列表(本导出是导出普通会员有余额的会员)</option>
 		</select>
 		<if condition="ACTION_NAME eq 'index' or ACTION_NAME eq 'company_index'">
 		状态:

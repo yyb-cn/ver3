@@ -43,6 +43,15 @@
 		<input type="submit" class="button" value="{%SEARCH}" />
 	</form>
 </div>
+<div class="search_row">
+    <form name="search" action="http://www.pfcf88.com/95epay_adminquery.php" method="POST">	
+        查询掉单的支付时间 ：
+		<input type="text" class="textbox" name="start_time1" id="start_time1" value="{:trim($_REQUEST['start_time1'])}" onfocus="return showCalendar('start_time1', '%Y-%m-%d', false, false, 'start_time1');" />
+		-
+		<input type="text" class="textbox" name="end_time1" id="end_time1" value="{:trim($_REQUEST['end_time1'])}" onfocus="return showCalendar('end_time1', '%Y-%m-%d', false, false, 'end_time1');" />
+	<input type="submit" class="button" value="提交" />
+    </form>
+</div>
 <div class="blank5"></div>
 <html:list 
 	id="dataTable" 

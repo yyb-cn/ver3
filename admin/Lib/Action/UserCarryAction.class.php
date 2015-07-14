@@ -32,7 +32,10 @@ class UserCarryAction extends CommonAction{
 			$map['user_id'] = D("User")->where("user_name='".trim($_REQUEST['user_name'])."'")->getField('id');
 			
 		}
-		
+		if(trim($_REQUEST['real_name'])!='')
+		{
+			$map['user_id'] = M("User")->where("real_name='".trim($_REQUEST['real_name'])."'")->getField('id');
+		}
 		if($status!='')
 		{
 			$map['status'] = intval($status);
@@ -99,9 +102,17 @@ class UserCarryAction extends CommonAction{
 		$all_list=$model->where ( $map )->	findAll ( );
 	foreach($all_list as $k=>$v){
 				$more_money+=$v['money']+$v['pfcfb'];
+				
+				if($v['status']==1){
+				
+				$ome_money+=$v['money']+$v['pfcfb'];
+				}
 			}
-				$this->assign ( 'more_money', $more_money );
-			
+	
+		$ome=$more_money-$ome_money;
+		       $this->assign ( 'ome_money', $ome_money );
+			$this->assign ( 'more_money', $more_money );
+			   $this->assign ( 'ome', $ome );
 			//分页查询数据
         $all_money=0;
 			$voList = $model->where ( $map )->order( "`" . $order . "` " . $sort)->limit($p->firstRow . ',' . $p->listRows)->findAll ( );
@@ -635,6 +646,54 @@ class UserCarryAction extends CommonAction{
 		$arr[0]=array('序号','银行','地区(省)','地区(市/区)','支行名','开户名','卡号','金额','电话号码','操作备注','申请时间','处理时间','备注');
 		$all_money=$v['pfcfb']+$v['money'];
 		$arr[$k+1]=array($k+1,$v['bank_name'],$v['region_lv2_name'],$v['region_lv3_name'],$v['bankzone'],$v['real_name'],$v['bankcard'],$all_money,$v['phone'],$v['desc'],to_date($v['create_time'],'Y-m-d'),to_date($v['update_time'],'Y-m-d'),$v['user_name']);
+		}
+		if($geshi=='utf-8' || $geshi=='gbk'){
+		
+	//var_dump($arr);exit;
+		
+		$this->outputXlsHeader($arr,'提现名单'.time(),$geshi);
+		}else{
+			
+		$this->error(L("输入的格式不支持"));
+			
+		}
+		
+	}
+	  public function dao_chu()
+	{
+		 $id = $_REQUEST ['id'];
+		 //格式的输入
+		$geshi = $_REQUEST ['geshi'];
+	
+		//where(array ('user_id' => array ('in', explode ( ',', $id ) ) ));
+		$condition = array ('id' => array ('in', explode ( ',', $id ) ) );
+		
+		$vo = M(MODULE_NAME)->where($condition)->select();
+		
+		foreach($vo as $k=>$v)
+		{
+		
+		$v['region_lv1_name'] = M("DeliveryRegion")->where("id=".$v['region_lv1'])->getField("name");
+		$v['region_lv2_name'] = M("DeliveryRegion")->where("id=".$v['region_lv2'])->getField("name");
+		$v['region_lv3_name'] = M("DeliveryRegion")->where("id=".$v['region_lv3'])->getField("name");
+		$v['region_lv4_name'] = M("DeliveryRegion")->where("id=".$v['region_lv4'])->getField("name");
+        $v['user_bank_bankzone'] = M("UserBank")->where("bankcard=".$v['bankcard'])->getField("bankzone");
+$user_bank_bankzone=$v['user_bank_bankzone'];
+		$v['phone']=M("User")->where("id=".$v['user_id'])->getField("mobile");
+		$v['bank_name'] =  M("bank")->where("id=".$v['bank_id'])->getField("name");
+	    $one = strstr($v['bankzone'],'兴业');
+
+		$ome = strstr($v['region_lv3_name'],'青州');
+		$oee = strstr($v['region_lv2_name'],'青州');
+		$onn = strstr($user_bank_bankzone,$v['bank_name']);	
+	    if($onn==''){$bank_name=$v['bank_name'];}else{$bank_name='';}
+		if($ome=='' && $oee==''){$v['ome']='否';}else{$v['ome']='是';}
+		if($one==''){$bankzone='否';}else{$bankzone='是';}
+	    if($v['region_lv2_name']=$v['region_lv3_name']){$region_name=$v['region_lv2_name'];}else{$region_name=$v['region_lv2_name']."".$v['region_lv3_name'];}
+		$v['bank_name'] =  M("bank")->where("id=".$v['bank_id'])->getField("name");
+		$arr[0]=array('序号','是否兴业银行账户','收款账号','收款户名','收款银行及营业网点','是否同城','汇入地址','转账金额','转账用途');
+		$all_money=$v['pfcfb']+$v['money'];
+		$arr[$k+1]=array($k+1,$bankzone,$v['bankcard'],$v['real_name'],$bank_name."".$user_bank_bankzone,$v['ome'],$v['region_lv1_name']."".$region_name."".$v['region_lv4_name'],$all_money,'利息');
 		}
 		if($geshi=='utf-8' || $geshi=='gbk'){
 		
