@@ -217,10 +217,15 @@
 			<option value="0" <if condition="$_REQUEST['is_has_received'] neq 'all' && trim($_REQUEST['is_has_received']) neq '' && intval($_REQUEST['is_has_received']) eq 0">selected="selected"</if>>未返还</option>
 			<option value="1" <if condition="intval($_REQUEST['is_has_received']) eq 1">selected="selected"</if>>已返还</option>
 		</select>
+		一键满标出错修正（配合贷款时间进行修正）
+		<select name="is_scale">
+		    <option value="0">不修正（默认）</option>
+			<option value="1">进行修正</option>
+		</select>
 		</if>
 		<input type="hidden" value="Deal" name="m" />
 		<input type="hidden" value="<php>echo ACTION_NAME;</php>" name="a" />
-		<input type="submit" class="button" value="{%SEARCH}" />
+		<input type="submit" class="button" value="{%SEARCH}（修正）" />
 	</form>
 </div>
 <div class="blank5"></div>
