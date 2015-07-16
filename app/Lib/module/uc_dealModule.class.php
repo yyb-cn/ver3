@@ -34,10 +34,13 @@ class uc_dealModule extends SiteBaseModule
 			$deal_status = 5;
 		}
 		$deal_name=trim($_REQUEST['deal_name']);
+		
+		
 		$result = get_deal_list($limit,0,"deal_status =$deal_status AND  create_time>1433952000  AND user_id=".$user_id,"id DESC");
 		if($deal_name!='')
 		{
-		$result = get_deal_list($limit,0,"deal_status =$deal_status AND name='$deal_name' create_time>1433952000  AND and user_id=".$user_id,"id DESC");
+		$result = get_deal_list($limit,0,"deal_status =$deal_status AND name='$deal_name' AND  create_time>1433952000  AND user_id=".$user_id,"id DESC");
+		
 		}
 		$deal_ids = array();
 		foreach($result['list'] as $k=>$v){

@@ -10,7 +10,7 @@
 class DealAction extends CommonAction{
 	public function index()
 	{ 	
-	     if(intval($_REQUEST['is_scale'])==1){
+	    /* if(intval($_REQUEST['is_scale'])==1){
 			 if($_REQUEST['begin_time'] || $_REQUEST['end_time']){
 			$begin_time  = trim($_REQUEST['begin_time'])==''?0:to_timespan($_REQUEST['begin_time']);
 			$end_time  = trim($_REQUEST['end_time'])==''?0:to_timespan($_REQUEST['end_time']);
@@ -31,7 +31,7 @@ class DealAction extends CommonAction{
              $this->success(L("操作成功")); 
               
 			}
-		 }}
+		 }}*/
 		// 开始加载搜索条件
 		$map['is_delete'] = 0;
 		$map['publish_wait'] = 0;
