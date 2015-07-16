@@ -565,7 +565,7 @@ function export_csv()
 
 }
 //临时导出
-function export_one()
+function export_user()
 {
     var inputs = $(".search_row").find("input");
     var selects = $(".search_row").find("select");
@@ -579,7 +579,9 @@ function export_one()
     {
         param += "&"+selects[i].name+"="+$(selects[i]).val();
     }
-    var url= ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_one";
+
+    var url= ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_user";
+
     location.href = url+param;
 
 }

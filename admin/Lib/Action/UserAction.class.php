@@ -1034,7 +1034,7 @@ class UserAction extends CommonAction{
 		
 	}
     //临时导出
-    public function export_one($page = 1)
+    public function export_user($page = 1)
     {
         //导出的数量
         $limit = '';
