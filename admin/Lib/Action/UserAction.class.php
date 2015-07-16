@@ -15,8 +15,7 @@ class UserAction extends CommonAction{
 	}
 	public function index()
 	{
-		
-		
+
 //		$ca=0;
 //	$usercongji=M("User")->where("create_time>1431532800")->findAll();
 //	foreach($usercongji as $k=>$v){
@@ -894,7 +893,7 @@ class UserAction extends CommonAction{
 	}
 	
 	public function export_csv($page = 1)
-	{   
+	{
 		//set_time_limit(0);
 		//$limit = (($page - 1)*intval(app_conf("BATCH_PAGE_SIZE"))).",".(intval(app_conf("BATCH_PAGE_SIZE")));
 		//导出的数量
@@ -1021,9 +1020,7 @@ class UserAction extends CommonAction{
 				}
 			
 				$content .= implode(",", $user_value) . "\n";*/
-			}	
-			
-			
+			}
 			//header("Content-Disposition: attachment; filename=user_list.csv");
 	    	//echo $content;  
 		
@@ -1036,6 +1033,99 @@ class UserAction extends CommonAction{
 		}
 		
 	}
+    //临时导出
+    public function export_one($page = 1)
+    {
+        //导出的数量
+        $limit = '';
+        //定义条件
+        $map[DB_PREFIX.'user.is_delete'] = 0;
+
+        if(intval($_REQUEST['group_id'])>0&&intval($_REQUEST['group_id'])!=6)
+        {
+            $map[DB_PREFIX.'user.group_id'] = intval($_REQUEST['group_id']);
+        }
+        if(intval($_REQUEST['group_id'])==6)
+        {   $uc= array('in','1871,959,1877,1995,2006,2054');
+            $map[DB_PREFIX.'user.pid'] =$uc;
+            $lest = 1;
+        }
+        if(intval($_REQUEST['group_id'])==7)
+        {   $uc=1;
+            $map[DB_PREFIX.'user.group_id'] =$uc;
+            $lsst = 1;
+        }
+        if(trim($_REQUEST['user_name'])!='')
+        {
+            $map[DB_PREFIX.'user.user_name'] = array('like','%'.trim($_REQUEST['user_name']).'%');
+        }
+        if(trim($_REQUEST['email'])!='')
+        {
+            $map[DB_PREFIX.'user.email'] = array('like','%'.trim($_REQUEST['email']).'%');
+        }
+        if(trim($_REQUEST['mobile'])!='')
+        {
+            $map[DB_PREFIX.'user.mobile'] = array('like','%'.trim($_REQUEST['mobile']).'%');
+        }
+        if(trim($_REQUEST['pid_name'])!='')
+        {
+            $pid = M("User")->where("user_name='".trim($_REQUEST['pid_name'])."'")->getField("id");
+            $map[DB_PREFIX.'user.pid'] = $pid;
+        }
+        $map[DB_PREFIX.'user.user_type'] = intval($_REQUEST['user_type']);
+
+        $list = M(MODULE_NAME)
+            ->where($map)
+            ->join(DB_PREFIX.'user_level ON '.DB_PREFIX.'user.level_id = '.DB_PREFIX.'user_level.id')
+            ->field(DB_PREFIX.'user.*,'.DB_PREFIX.'user_level.name')
+            ->limit($limit)->findAll();
+        if($list)
+        {
+            register_shutdown_function(array(&$this, 'export_csv'), $page+1);
+
+            if($page == 1)
+
+                foreach($list as $k=>$v)
+                {		  $pid = M("User")->where("id='".$v['pid']."'")->getField("user_name");
+                    $bankcard = M("User_bank")->where("user_id='".$v['id']."'")->getField("bankcard");
+                    $create_time = M("User")->where("id='".$v['pid']."'")->getField("create_time");
+                    if($v['name']=='HR'){
+                        $v['name']='普通';
+                    }
+                    if($lsst && $v['money']!=0)
+                    {    $user_money+=$v['money'];
+                        $arr[0]=array('总余额',':',$user_money);
+                        $arr[1]=array('编号','用户名','余额','身份证名称');
+                        $arr[$k+2]=array($v['id'],$v['user_name'],$v['money'],$v['real_name']);
+
+                    }
+                    if($lest){
+                        if($v['create_time']>1431532800){
+                            if(M("DealLoad")->where("user_id='".$v['id']."'")->findAll()){
+
+                                $arr[0]=array('序号','推荐人','用户名','真实姓名','电子邮箱','身份证','会员组','银行卡号','可用余额');
+                                $arr[$k+1]=array($k+1,"$pid",$v['user_name'],$v['real_name'],$v['email'],$v['idno'],$v['name'],"$bankcard",$v['money']+$v['pfcfb']);
+
+                            }
+                        }
+                    }
+                    if($lsst!=1 &&$lest!=1 ){
+
+                        $arr[0]=array('序号','用户名','真实姓名','身份证','手机号码','电子邮箱','余额');
+                        $arr[$k+1]=array($k+1,$v['user_name'],$v['real_name'],$v['idno'],$v['mobile'],$v['email'],$v['money']);
+                    }
+
+                }
+
+            $this->outputXlsHeader($arr,'用户资料'.time());
+        }
+        else
+        {
+            if($page==1)
+                $this->error(L("NO_RESULT"));
+        }
+
+    }
 	
 	public function daochu($page = 1)
 	{

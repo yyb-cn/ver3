@@ -562,6 +562,26 @@ function export_csv()
 	}
 	var url= ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_csv";
 	location.href = url+param;
+
+}
+//临时导出
+function export_one()
+{
+    var inputs = $(".search_row").find("input");
+    var selects = $(".search_row").find("select");
+    var param = '';
+    for(i=0;i<inputs.length;i++)
+    {
+        if(inputs[i].name!='m'&&inputs[i].name!='a')
+            param += "&"+inputs[i].name+"="+$(inputs[i]).val();
+    }
+    for(i=0;i<selects.length;i++)
+    {
+        param += "&"+selects[i].name+"="+$(selects[i]).val();
+    }
+    var url= ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_one";
+    location.href = url+param;
+
 }
 
 function m_export_csv(m)
