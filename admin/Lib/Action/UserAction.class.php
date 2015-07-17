@@ -1077,7 +1077,7 @@ class UserAction extends CommonAction{
             $map[DB_PREFIX.'user.pid'] = $pid;
         }
         $map[DB_PREFIX.'user.user_type'] = intval($_REQUEST['user_type']);
-        $map[DB_PREFIX.'user.group_id']=1;
+        $map[DB_PREFIX.'user.group_id']=array('in','1,3');
 
         $list = M(MODULE_NAME)
             ->where($map)
