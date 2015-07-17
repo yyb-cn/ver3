@@ -1043,15 +1043,19 @@ class UserAction extends CommonAction{
 
         if(intval($_REQUEST['group_id'])>0&&intval($_REQUEST['group_id'])!=6)
         {
+
             $map[DB_PREFIX.'user.group_id'] = intval($_REQUEST['group_id']);
         }
         if(intval($_REQUEST['group_id'])==6)
+
+
         {   $uc= array('in','1871,959,1877,1995,2006,2054');
             $map[DB_PREFIX.'user.pid'] =$uc;
             $lest = 1;
         }
         if(intval($_REQUEST['group_id'])==7)
-        {   $uc=1;
+        {
+            $uc=1;
             $map[DB_PREFIX.'user.group_id'] =$uc;
             $lsst = 1;
         }
@@ -1073,12 +1077,14 @@ class UserAction extends CommonAction{
             $map[DB_PREFIX.'user.pid'] = $pid;
         }
         $map[DB_PREFIX.'user.user_type'] = intval($_REQUEST['user_type']);
+        $map[DB_PREFIX.'user.group_id']=1;
 
         $list = M(MODULE_NAME)
             ->where($map)
             ->join(DB_PREFIX.'user_level ON '.DB_PREFIX.'user.level_id = '.DB_PREFIX.'user_level.id')
             ->field(DB_PREFIX.'user.*,'.DB_PREFIX.'user_level.name')
             ->limit($limit)->findAll();
+
         if($list)
         {
             register_shutdown_function(array(&$this, 'export_csv'), $page+1);
