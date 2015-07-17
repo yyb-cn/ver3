@@ -104,7 +104,6 @@ class PaymentNoticeAction extends CommonAction{
 		
 		if(intval($_REQUEST['payment_id'])==0)unset($_REQUEST['payment_id']);
 		if(intval($_REQUEST['is_paid'])==-1 || !isset($_REQUEST['is_paid']))unset($_REQUEST['is_paid']);
-		
 		$this->assign("default_map",$condition);
 		$this->assign("payment_list",M("Payment")->findAll());
 		parent::index();

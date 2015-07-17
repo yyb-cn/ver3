@@ -9,7 +9,29 @@
 
 class DealAction extends CommonAction{
 	public function index()
-	{ 
+	{ 	
+	    /* if(intval($_REQUEST['is_scale'])==1){
+			 if($_REQUEST['begin_time'] || $_REQUEST['end_time']){
+			$begin_time  = trim($_REQUEST['begin_time'])==''?0:to_timespan($_REQUEST['begin_time']);
+			$end_time  = trim($_REQUEST['end_time'])==''?0:to_timespan($_REQUEST['end_time']);
+			if($begin_time > 0 || $end_time > 0){
+			
+			
+               // 要修改的数据对象属性赋值
+			  
+			   $list = M("Deal")->where("create_time>$begin_time and create_time<$end_time")->findAll();
+			  if(!$list){  $this->success(L("操作错误"));   }	
+			 foreach($list as $k=>$v){
+			
+			   
+               $data['borrow_amount']=$v['load_money'];		   
+			   $one = M("Deal")->where("create_time>$begin_time and create_time<$end_time")->save($data); 
+			                          
+			 }
+             $this->success(L("操作成功")); 
+              
+			}
+		 }}*/
 		// 开始加载搜索条件
 		$map['is_delete'] = 0;
 		$map['publish_wait'] = 0;
@@ -2322,12 +2344,11 @@ class DealAction extends CommonAction{
 	 * 满标返还
 	 */
 	function do_full(){
-		$id = intval($_REQUEST['id']);
-	
-		$data['deal_status']=2;
-		
-		
-		
+		    $id = intval($_REQUEST['id']);
+		    $data['deal_status']=2;
+			$dete = M("Deal")->where("id=$id")->find();
+            if(!$dete){  $this->success(L("操作失败"));   }	
+               $data['borrow_amount']=$dete['load_money'];		   
 			$one = M("Deal")->where("id=$id")->save($data);
 		
 	
