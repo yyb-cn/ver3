@@ -586,7 +586,7 @@ function export_user()
 
 }
 //临时导出
-function export_user()
+function export_one()
 {
     var inputs = $(".search_row").find("input");
     var selects = $(".search_row").find("select");
@@ -601,7 +601,7 @@ function export_user()
         param += "&"+selects[i].name+"="+$(selects[i]).val();
     }
 
-    var url= ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_user";
+    var url= ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_one";
 
     location.href = url+param;
 
